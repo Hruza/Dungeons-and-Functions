@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
    
     /// <summary>
     /// Aktualni hrac, typ GameObject
@@ -10,9 +11,149 @@ public class Player : MonoBehaviour {
     static public GameObject player;
 
     static public Rigidbody2D rbody;
+    /// <summary>
+    /// Aktualni zdravi hrace. Vlastnost si sama hlida maximalni mozne HP.
+    /// </summary>
+    public int HP
+    {
+        get
+        {
+            return HP;
+        }
+        private set
+        {
+            HP = value;
+            HP = Mathf.Min(HP, MaxHP);
+        }
+    }
+    /// <summary>
+    /// maximalni zdravi hrace
+    /// </summary>
+    public int MaxHP
+    {
+        get
+        {
+            return MaxHP;
+        }
+        private set
+        {
+            if (value > 0)
+                MaxHP = value;
+            else
+                Debug.Log("Pokousis se do Player.MaxHP dosadit " + value.ToString() + ". To asi nebude spravne.");
+        }
+    }
+    /// <summary>
+    /// brneni hrace (snizuje o konstantu, ne procentualne)
+    /// </summary>
+    public int Armor
+    {
+        get
+        {
+            return Armor;
+        }
+        private set
+        {
+            if (value >= 0)
+                Armor = value;
+            else
+                Debug.Log("Pokousis se do Player.Armor dosadit " + value.ToString() + ". To asi nebude spravne.");
+        }
+    }
+    /// <summary>
+    /// regenerace hrace (regenerace je prevedena kazdou sekundu)
+    /// </summary>
+    public int Regeneration
+    {
+        get
+        {
+            return Regeneration;
+        }
+        private set
+        {
+            if (value >= 0)
+                Regeneration = value;
+            else
+                Debug.Log("Pokousis se do Player.Regenration dosadit " + value.ToString() + ". To asi nebude spravne.");
+        }
+    }
 
 	void Start () {
         player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
+
+        //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
+        MaxHP = 100;
+        HP = 100; 
+        Armor = 0;
+        Regeneration = 0;
+
+        if (Regeneration > 0)
+            InvokeRepeating("Regenerate", 1, 1);        
 	}
+
+    /// <summary>
+    /// Vyleci hraci nejake body zraneni.
+    /// </summary>
+    /// <param name="heal">velikost vyleceni (musi byt vetsi nez 0)</param>
+    public void Heal(int heal)
+    {
+        if (heal <= 0) //heal nemuze byt zaporny
+            Debug.Log("Heal je " + heal.ToString() + ", je to správně?", this);
+        else
+            HP = HP + heal;
+    }
+
+    /// <summary>
+    /// Hrac obdrzi poskozeni, ktere muze byt snizeno o jeho brneni.
+    /// </summary>
+    /// <param name="damage">obdrzene poskozeni</param>
+    public void GetDamage(int damage)
+    {
+        //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
+        HP -= Mathf.Max(1, damage - Armor);
+        if (HP <= 0)
+            Die();
+    }
+
+    //TODO - lehce provizorni
+    /// <summary>
+    /// smrt hrace
+    /// </summary>
+    private void Die()
+    {
+        //TODO - pouze provizorni
+        Debug.Log("Hrac zemrel");
+        Destroy(this);
+    }
+
+    /// <summary>
+    /// Metoda, ktera nastavi brneni hrace.
+    /// </summary>
+    /// <param name="armor">brneni hrace</param>
+    public void SetArmor(int armor)
+    {
+        Armor = armor;
+    }
+
+    /// <summary>
+    /// Nastaveni regenerace hrace.
+    /// </summary>
+    /// <param name="regeneration">nova regenerace hrace</param>
+    public void SetRegeneration (int regeneration)
+    {
+        Regeneration = regeneration;
+        if (Regeneration == 0)
+            CancelInvoke("Regenerate");
+        else
+            InvokeRepeating("Regenerate", 1, 1);
+    }
+
+    /// <summary>
+    /// metoda slouzici pro regeneraci hrace (je volana kazdou sekundu, pokud je regenerace vetsi nez 0);
+    /// </summary>
+    private void Regenerate()
+    {
+        HP += Regeneration;
+    }
 }
