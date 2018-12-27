@@ -5,6 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Projectile : MonoBehaviour {
     public int damage=1;
+    public float lifetime = 10;
+
+    private void Start()
+    {
+        Destroy(this.gameObject,lifetime);
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
