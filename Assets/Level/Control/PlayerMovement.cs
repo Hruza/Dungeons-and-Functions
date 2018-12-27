@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public float acceleration = 5f;
 
-    private Vector2 lookDir;
+    static private Vector2 lookDir;
     /// <summary>
     /// Sklon kamery
     /// </summary>
@@ -19,14 +19,13 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D rbody;
     private Vector2 moveDir;
 
-    public GameObject ball;
 
     void Start () {
         slope = Mathf.Cos(Mathf.Abs(Camera.main.transform.rotation.eulerAngles.x % 180));
         rbody = GetComponent<Rigidbody2D>();
     }
 
-    public Vector3 forward() {
+    static public Vector3 forward() {
         Vector3 vect=new Vector3(lookDir.x,lookDir.y,0);
         return vect;
     }
@@ -37,12 +36,7 @@ public class PlayerMovement : MonoBehaviour {
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        { 
-            GameObject projectile = (GameObject)Instantiate(ball, transform.position + forward(), transform.rotation);
-            projectile.GetComponent<Rigidbody2D>().velocity = forward() * 10;
-            Destroy(projectile, 15);
-        }
+
 	}
 
 
@@ -53,7 +47,11 @@ public class PlayerMovement : MonoBehaviour {
     void Move() {
         moveDir.x = Input.GetAxis("Horizontal");
         moveDir.y = Input.GetAxis("Vertical");
-        //moveDir.Normalize();
+
+        //mapping square input into unit circle
+        moveDir.y *= Mathf.Sqrt(1 - moveDir.x * moveDir.x * 0.5f);
+        moveDir.x *= Mathf.Sqrt(1 - moveDir.y * moveDir.y * 0.5f);
+
         moveDir *= speed;
         rbody.velocity = moveDir;
 
