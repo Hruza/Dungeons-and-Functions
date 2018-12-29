@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     static public GameObject player;
 
     static public Rigidbody2D rbody;
+
+    private int hp;
     /// <summary>
     /// Aktualni zdravi hrace. Vlastnost si sama hlida maximalni mozne HP.
     /// </summary>
@@ -18,14 +20,15 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return HP;
+            return hp;
         }
         private set
         {
-            HP = value;
-            HP = Mathf.Min(HP, MaxHP);
+            hp = value;
+            hp = Mathf.Min(hp, MaxHP);
         }
     }
+    private int maxHP;
     /// <summary>
     /// maximalni zdravi hrace
     /// </summary>
@@ -33,16 +36,17 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return MaxHP;
+            return maxHP;
         }
         private set
         {
             if (value > 0)
-                MaxHP = value;
+                maxHP = value;
             else
                 Debug.Log("Pokousis se do Player.MaxHP dosadit " + value.ToString() + ". To asi nebude spravne.");
         }
     }
+    private int armor;
     /// <summary>
     /// brneni hrace (snizuje o konstantu, ne procentualne)
     /// </summary>
@@ -50,16 +54,17 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return Armor;
+            return armor;
         }
         private set
         {
             if (value >= 0)
-                Armor = value;
+                armor = value;
             else
                 Debug.Log("Pokousis se do Player.Armor dosadit " + value.ToString() + ". To asi nebude spravne.");
         }
     }
+    private int regeneration;
     /// <summary>
     /// regenerace hrace (regenerace je prevedena kazdou sekundu)
     /// </summary>
@@ -67,12 +72,12 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return Regeneration;
+            return regeneration;
         }
         private set
         {
             if (value >= 0)
-                Regeneration = value;
+                regeneration = value;
             else
                 Debug.Log("Pokousis se do Player.Regenration dosadit " + value.ToString() + ". To asi nebude spravne.");
         }
