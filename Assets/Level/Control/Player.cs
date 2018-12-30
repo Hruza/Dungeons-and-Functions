@@ -10,6 +10,27 @@ public class Player : MonoBehaviour
     /// </summary>
     static public GameObject player;
 
+    /*nápady na to jak by to mohlo být
+    static public float damageMultiplier=1;
+
+    static public void AddDamageMultiplier(float increment)
+    {
+        damageMultiplier += increment;
+    }
+
+    public void AddDamageMultiplier(float increment, float time) {
+        StartCoroutine(addDamageMultiplier(increment,time));
+    }
+
+    private static IEnumerator addDamageMultiplier(float increment,float time)
+    {
+        damageMultiplier += increment;
+        yield return new WaitForSeconds(time);
+        damageMultiplier -= increment;
+        yield return null;
+    }
+    */
+
     static public Rigidbody2D rbody;
 
     private int hp;
