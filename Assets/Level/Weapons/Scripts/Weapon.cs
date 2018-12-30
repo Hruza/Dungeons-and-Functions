@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour {
 
+    public virtual int Level{
+        get;
+        set;
+    }
 
     protected virtual void Update() {
         if (Input.GetButtonDown("Fire1")) Primary();

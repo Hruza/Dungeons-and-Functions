@@ -48,7 +48,6 @@ public class Room : MonoBehaviour {
         if (!selfInitialize) roomCollider.size = new Vector2(tileSize * x - 0.5f, tileSize * y - 0.5f);
         else {
             dimensions = roomCollider.size/5;
-            Debug.Log(dimensions);
             }
     }
 

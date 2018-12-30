@@ -9,30 +9,30 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1023424732719212}
+  m_RootGameObject: {fileID: 1892033328784222}
   m_IsPrefabAsset: 1
---- !u!1 &1023424732719212
+--- !u!1 &1892033328784222
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4877179145901266}
-  - component: {fileID: 114693784368529470}
+  - component: {fileID: 4298107053756460}
+  - component: {fileID: 114507588231389100}
   m_Layer: 0
-  m_Name: IntegralThrower
+  m_Name: IntegralSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4877179145901266
+--- !u!4 &4298107053756460
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1023424732719212}
+  m_GameObject: {fileID: 1892033328784222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,16 +40,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114693784368529470
+--- !u!114 &114507588231389100
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1023424732719212}
+  m_GameObject: {fileID: 1892033328784222}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2c2e80cb59fcbe45b27566cb3b13be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 10
+  velocity: 50
   projectile: {fileID: 1964618269413152, guid: 2b76f2c9c139a76458a268ab2a917f0c, type: 2}
+  baseDamage: 1
+  damageIncresePerLevel: 20
+  delay: 0
+  autoFire: 0
