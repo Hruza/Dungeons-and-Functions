@@ -33,6 +33,11 @@ public class Player : MonoBehaviour
 
     static public Rigidbody2D rbody;
 
+    private EquipManager equip;
+    /// <summary>
+    /// jméno hráče
+    /// </summary>
+    public string Name { get; private set; }
     private int hp;
     /// <summary>
     /// Aktualni zdravi hrace. Vlastnost si sama hlida maximalni mozne HP.
@@ -109,6 +114,7 @@ public class Player : MonoBehaviour
         rbody = GetComponent<Rigidbody2D>();
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
+        Name = "Player";
         MaxHP = 100;
         HP = 100; 
         Armor = 0;
@@ -134,12 +140,22 @@ public class Player : MonoBehaviour
     /// Hrac obdrzi poskozeni, ktere muze byt snizeno o jeho brneni.
     /// </summary>
     /// <param name="damage">obdrzene poskozeni</param>
-    public void GetDamage(int damage)
+    public void TakeDamage(int damage)
     {
         //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
         HP -= Mathf.Max(1, damage - Armor);
         if (HP <= 0)
             Die();
+    }
+
+    /// <summary>
+    /// poškození udělené hráčem
+    /// </summary>
+    /// <returns>udělené poškození</returns>
+    public int DealDamage()
+    {
+        int damage = equip.BaseDamage * equip.TotalMultiplicativeDamage + equip.TotalAdditiveDamage;
+        return damage;
     }
 
     //TODO - lehce provizorni
@@ -157,18 +173,18 @@ public class Player : MonoBehaviour
     /// Metoda, ktera nastavi brneni hrace.
     /// </summary>
     /// <param name="armor">brneni hrace</param>
-    public void SetArmor(int armor)
+    public void SetArmor()
     {
-        Armor = armor;
+        Armor = equip.BaseArmor * equip.TotalMultiplicativeArmor + equip.TotalAdditiveArmor;
     }
 
     /// <summary>
     /// Nastaveni regenerace hrace.
     /// </summary>
     /// <param name="regeneration">nova regenerace hrace</param>
-    public void SetRegeneration (int regeneration)
+    public void SetRegeneration ()
     {
-        Regeneration = regeneration;
+        Regeneration = equip.Regeneration;
         if (Regeneration == 0)
             CancelInvoke("Regenerate");
         else
