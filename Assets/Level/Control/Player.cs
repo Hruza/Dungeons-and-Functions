@@ -32,6 +32,13 @@ public class Player : MonoBehaviour
     */
 
     static public Rigidbody2D rbody;
+
+    private EquipManager equip;
+    /// <summary>
+    /// jméno hráče
+    /// </summary>
+    public string Name { get; private set; }
+    private int hp;
     /// <summary>
     /// Aktualni zdravi hrace. Vlastnost si sama hlida maximalni mozne HP.
     /// </summary>
@@ -39,14 +46,15 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return HP;
+            return hp;
         }
         private set
         {
-            HP = value;
-            HP = Mathf.Min(HP, MaxHP);
+            hp = value;
+            hp = Mathf.Min(hp, MaxHP);
         }
     }
+    private int maxHP;
     /// <summary>
     /// maximalni zdravi hrace
     /// </summary>
@@ -54,16 +62,17 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return MaxHP;
+            return maxHP;
         }
         private set
         {
             if (value > 0)
-                MaxHP = value;
+                maxHP = value;
             else
                 Debug.Log("Pokousis se do Player.MaxHP dosadit " + value.ToString() + ". To asi nebude spravne.");
         }
     }
+    private int armor;
     /// <summary>
     /// brneni hrace (snizuje o konstantu, ne procentualne)
     /// </summary>
@@ -71,16 +80,17 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return Armor;
+            return armor;
         }
         private set
         {
             if (value >= 0)
-                Armor = value;
+                armor = value;
             else
                 Debug.Log("Pokousis se do Player.Armor dosadit " + value.ToString() + ". To asi nebude spravne.");
         }
     }
+    private int regeneration;
     /// <summary>
     /// regenerace hrace (regenerace je prevedena kazdou sekundu)
     /// </summary>
@@ -88,12 +98,12 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return Regeneration;
+            return regeneration;
         }
         private set
         {
             if (value >= 0)
-                Regeneration = value;
+                regeneration = value;
             else
                 Debug.Log("Pokousis se do Player.Regenration dosadit " + value.ToString() + ". To asi nebude spravne.");
         }
@@ -104,6 +114,7 @@ public class Player : MonoBehaviour
         rbody = GetComponent<Rigidbody2D>();
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
+        Name = "Player";
         MaxHP = 100;
         HP = 100; 
         Armor = 0;
@@ -129,7 +140,7 @@ public class Player : MonoBehaviour
     /// Hrac obdrzi poskozeni, ktere muze byt snizeno o jeho brneni.
     /// </summary>
     /// <param name="damage">obdrzene poskozeni</param>
-    public void GetDamage(int damage)
+    public void TakeDamage(int damage)
     {
         //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
         HP -= Mathf.Max(1, damage - Armor);
@@ -152,18 +163,18 @@ public class Player : MonoBehaviour
     /// Metoda, ktera nastavi brneni hrace.
     /// </summary>
     /// <param name="armor">brneni hrace</param>
-    public void SetArmor(int armor)
+    public void SetArmor()
     {
-        Armor = armor;
+        Armor = equip.BaseArmor * equip.TotalArmorMultiplicative + equip.TotalArmorMultiplicative;
     }
 
     /// <summary>
     /// Nastaveni regenerace hrace.
     /// </summary>
     /// <param name="regeneration">nova regenerace hrace</param>
-    public void SetRegeneration (int regeneration)
+    public void SetRegeneration ()
     {
-        Regeneration = regeneration;
+        Regeneration = equip.Regeneration;
         if (Regeneration == 0)
             CancelInvoke("Regenerate");
         else
