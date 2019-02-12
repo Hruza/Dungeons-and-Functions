@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Name: Enemy
   m_EditorClassIdentifier: 
   name: Enemy
-  level: 1
-  EnemyGameObject: {fileID: 1964618269413152, guid: 2b76f2c9c139a76458a268ab2a917f0c,
+  EnemyGameObject: {fileID: 1081113949700632, guid: 38d0c6f7ac814744ea3da5e0943c935a,
     type: 2}

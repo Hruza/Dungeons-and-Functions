@@ -48,6 +48,7 @@ public class Sequence : NPC {
     {
         player = Player.player;
         StartCoroutine(FollowTargetOnce(player,playerDistance));
+    //    GoToTarget(player.transform.position);
         state = State.gettingCloser;
     }
 
@@ -64,22 +65,13 @@ public class Sequence : NPC {
     }
 
     private IEnumerator Shoot() {
-        Debug.Log("WTF");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(timeToStartShooting);
         for (int i = 0; i < barrageCount; i++)
         {
-         //   ShootProjectileTowardsPlayer(projectile, projectileVelocity, Damage);
-            Vector3 forward = (Player.player.transform.position - transform.position).normalized;
-            GameObject ball = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
-            ball.GetComponent<Rigidbody2D>().velocity = forward * velocity;
-            ball.GetComponent<Projectile>().damage = Damage;
-
-            Debug.Log(i);
-            yield return new WaitForFixedUpdate();
-            Debug.Log(i);
+            ShootProjectileTowardsPlayer(projectile, projectileVelocity, Damage);
+            yield return new WaitForSeconds(barrageDelay);
         }
         yield return new WaitForSeconds(timeToStartMoving);
-        ShootProjectileTowardsPlayer(projectile, projectileVelocity, Damage);
         Decide();
     }
 
@@ -112,10 +104,7 @@ public class Sequence : NPC {
 
     protected void Decide()
     {
-
-        //ToDo: tohle by tu nemělo byt, ale bez toho to nefunguje
-       // StopAllCoroutines();
-
+        Debug.Log(state);
         switch (state)
         {   
             case State.gettingCloser:
@@ -149,6 +138,7 @@ public class Sequence : NPC {
             default:
                 break;
         }
+        Debug.Log("Konec:");
         Debug.Log(state);
     }
 }

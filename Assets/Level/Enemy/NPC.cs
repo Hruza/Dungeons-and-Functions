@@ -43,26 +43,12 @@ public abstract class NPC : MonoBehaviour
     /// <summary>
     /// aktulni zdravi nepritele
     /// </summary>
-    private int hp=1;
-    public int HP
-    {
-        get
-        {
-            return hp;
-        }
-        protected set
-        {
-            if (value >= 0)
-            {
-                hp = Mathf.Min(value, MaxHP);
-            }
-        }
-    }
+    private int HP=1;
 
     /// <summary>
     /// damage nepritele
     /// </summary>
-    private int damage=0;
+    private int damage=1;
     public int Damage
     {
         get
@@ -194,7 +180,7 @@ public abstract class NPC : MonoBehaviour
         isWalking = true;
         WalkStarted();
         if (rb == null) rb = GetComponent<Rigidbody2D>();
-        while (Vector3.SqrMagnitude(transform.position - target) > tolerance * tolerance)
+        while (Vector2.SqrMagnitude(transform.position - target) > tolerance * tolerance)
         {
             Vector2 walkDir = target - transform.position;
             rb.AddForce(walkDir.normalized * velocity);
@@ -228,16 +214,18 @@ public abstract class NPC : MonoBehaviour
     //===============================================Combat===================================================
     protected void ShootProjectile(GameObject projectile,Vector3 target,float velocity,int damage) {
         Vector3 forward = (target-transform.position).normalized;
-        GameObject ball = (GameObject)Instantiate(projectile, transform.position + forward, transform.rotation);
+        GameObject ball = (GameObject)Instantiate(projectile, transform.position + forward*0.5f, transform.rotation);
         ball.GetComponent<Rigidbody2D>().velocity = forward.normalized * velocity;
-        ball.GetComponent<Projectile>().damage = damage;
+        if (ball.GetComponent<Projectile>() != null)
+            ball.GetComponent<Projectile>().damage = damage;
     }
 
     protected void ShootProjectileTowardsPlayer(GameObject projectile, float velocity, int damage ) {
         Vector3 forward = (Player.player.transform.position-transform.position).normalized;
-        GameObject ball = (GameObject)Instantiate(projectile, transform.position , transform.rotation);
+        GameObject ball = (GameObject)Instantiate(projectile, transform.position+forward*0.5f , transform.rotation);
         ball.GetComponent<Rigidbody2D>().velocity = forward * velocity;
-        ball.GetComponent<Projectile>().damage = damage;
+        if (ball.GetComponent<Projectile>() != null)
+            ball.GetComponent<Projectile>().damage = damage;
     }
 
 
@@ -247,6 +235,6 @@ public abstract class NPC : MonoBehaviour
     /// </summary>
     protected void Die()
     {
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 }

@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - New tag
+  - Enemy
+  - Destroyable
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Map
   - WalkBarrier
   - EnemyProjectile
-  - 
+  - Enemy
   - 
   - 
   - 

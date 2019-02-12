@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Třída reprezentující předmět, který může hráč získat.
 /// </summary>
-public class Item : MonoBehaviour
+public class Item : ScriptableObject
 {
     /// <summary>
     /// výčtový typ určující typ předmětu
