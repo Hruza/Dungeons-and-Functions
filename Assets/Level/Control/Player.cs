@@ -148,16 +148,6 @@ public class Player : MonoBehaviour
             Die();
     }
 
-    /// <summary>
-    /// poškození udělené hráčem
-    /// </summary>
-    /// <returns>udělené poškození</returns>
-    public int DealDamage()
-    {
-        int damage = equip.BaseDamage * equip.TotalMultiplicativeDamage + equip.TotalAdditiveDamage;
-        return damage;
-    }
-
     //TODO - lehce provizorni
     /// <summary>
     /// smrt hrace
@@ -175,7 +165,7 @@ public class Player : MonoBehaviour
     /// <param name="armor">brneni hrace</param>
     public void SetArmor()
     {
-        Armor = equip.BaseArmor * equip.TotalMultiplicativeArmor + equip.TotalAdditiveArmor;
+        Armor = equip.BaseArmor * equip.TotalArmorMultiplicative + equip.TotalArmorMultiplicative;
     }
 
     /// <summary>

@@ -19,11 +19,11 @@ public class EquipManager : MonoBehaviour
     /// <summary>
     /// celkový aditivní bonus k poškození
     /// </summary>
-    public int TotalAdditiveDamage { get; private set; }
+    public int TotalDamageAdditive { get; private set; }
     /// <summary>
     /// celkový multiplikativní bonus k pokození
     /// </summary>
-    public int TotalMultiplicativeDamage { get; private set; }
+    public int TotalDamageMultiplicative { get; private set; }
     /// <summary>
     /// základní brnění hráče
     /// </summary>
@@ -31,11 +31,11 @@ public class EquipManager : MonoBehaviour
     /// <summary>
     /// celkový aditivní bonus k brnění
     /// </summary>
-    public int TotalAdditiveArmor { get; private set; }
+    public int TotalArmorAdditive { get; private set; }
     /// <summary>
     /// celkový multiplikativní bonus k brnění
     /// </summary>
-    public int TotalMultiplicativeArmor { get; private set; }
+    public int TotalArmorMultiplicative { get; private set; }
     /// <summary>
     /// celková regenerace hráče
     /// </summary>
@@ -54,21 +54,21 @@ public class EquipManager : MonoBehaviour
     {
         //vynulování všech vlastností
         BaseDamage = 0;
-        TotalAdditiveDamage = 0;
-        TotalMultiplicativeDamage = 1;
+        TotalDamageAdditive = 0;
+        TotalDamageMultiplicative = 1;
         BaseArmor = 0;
-        TotalAdditiveArmor = 0;
-        TotalMultiplicativeArmor = 1;
+        TotalArmorAdditive = 0;
+        TotalArmorMultiplicative = 1;
         Regeneration = 0;
         //projití všech předmětů, přečtení všech vlastností a jejich sečtení
         foreach (Item i in EquippedItems)
         {
             BaseDamage += i.Damage;
-            TotalAdditiveDamage += i.BonusDamageAdditive;
-            TotalMultiplicativeDamage += i.BonusDamageMultiplicative;
+            TotalDamageAdditive += i.BonusDamageAdditive;
+            TotalDamageMultiplicative += i.BonusDamageMultiplicative;
             BaseArmor += i.Armor;
-            TotalAdditiveArmor += i.BonusArmorAdditive;
-            TotalMultiplicativeArmor += i.BonusDamageMultiplicative;
+            TotalArmorAdditive += i.BonusArmorAdditive;
+            TotalArmorMultiplicative += i.BonusDamageMultiplicative;
             Regeneration += i.Regeneration;
         }
     }
