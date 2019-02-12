@@ -18,8 +18,8 @@ TagManager:
   - Player
   - Room
   - Map
-  - 
-  - 
+  - WalkBarrier
+  - EnemyProjectile
   - 
   - 
   - 

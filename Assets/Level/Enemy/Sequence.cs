@@ -2,11 +2,153 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sequence : Enemy {
+public class Sequence : NPC {
+
+    public GameObject projectile;
+    public float playerDistance=5f;
+    private enum State { gettingCloser , shooting ,moving};
+    private State state;
+    public float projectileVelocity=10;
+
+    /// <summary>
+    /// Jak dlouho po zastaveni zacne enemy strilet na hrace
+    /// </summary>
+    public float timeToStartShooting=0.5f;
+
+    /// <summary>
+    /// Jak dlouho po strileni se zacne enemy znovu pohybovat
+    /// </summary>
+    public float timeToStartMoving = 0.5f;
+
+    /// <summary>
+    /// Jak daleko se bude enemy pohybovat
+    /// </summary>
+    public float movingDistance = 2;
+
+    /// <summary>
+    /// Kolikrat vystreli enemy na hrace v jednom strileni
+    /// </summary>
+    public int barrageCount=2;
+
+    /// <summary>
+    /// Doba mezi jednotlivymi vystrely
+    /// </summary>
+    public float barrageDelay = 0.5f;
+
+
+    private GameObject player;
 
     public override void Initialize(int level)
     {
         this.Level = level;
+        Damage = level;
     }
 
+    private void Start()
+    {
+        player = Player.player;
+        StartCoroutine(FollowTargetOnce(player,playerDistance));
+        state = State.gettingCloser;
+    }
+
+
+    protected override void WalkStarted()
+    {
+        GetComponent<Animator>().SetBool("isWalking", isWalking);
+    }
+
+    protected override void WalkEnded()
+    {
+        GetComponent<Animator>().SetBool("isWalking", isWalking);
+        Decide();
+    }
+
+    private IEnumerator Shoot() {
+        Debug.Log("WTF");
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < barrageCount; i++)
+        {
+         //   ShootProjectileTowardsPlayer(projectile, projectileVelocity, Damage);
+            Vector3 forward = (Player.player.transform.position - transform.position).normalized;
+            GameObject ball = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
+            ball.GetComponent<Rigidbody2D>().velocity = forward * velocity;
+            ball.GetComponent<Projectile>().damage = Damage;
+
+            Debug.Log(i);
+            yield return new WaitForFixedUpdate();
+            Debug.Log(i);
+        }
+        yield return new WaitForSeconds(timeToStartMoving);
+        ShootProjectileTowardsPlayer(projectile, projectileVelocity, Damage);
+        Decide();
+    }
+
+    private void MoveAroundPlayer() {
+        Vector3 dir = player.transform.position - transform.position;
+        dir.z = 0;
+        float temp=dir.x;
+        dir.x = -dir.y;
+        dir.y = temp;
+        if (Random.Range(0, 2) == 1) dir *= -1;
+        dir = dir.normalized * movingDistance;
+        GoToTarget(transform.position+dir);
+    }
+
+    private void TryToShoot() {
+        Vector2 dir = player.transform.position - transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position,dir , dir.magnitude, 13);
+        Debug.Log(hit.collider);
+        if (hit==true)
+        {
+            state = State.shooting;
+            StartCoroutine(Shoot());
+        }
+        else
+        {
+            state = State.moving;
+            MoveAroundPlayer();
+        }
+    }
+
+    protected void Decide()
+    {
+
+        //ToDo: tohle by tu nemělo byt, ale bez toho to nefunguje
+       // StopAllCoroutines();
+
+        switch (state)
+        {   
+            case State.gettingCloser:
+                TryToShoot();
+                break;
+            case State.shooting:
+
+                if ((player.transform.position - transform.position).sqrMagnitude > playerDistance* playerDistance*2)
+                {
+                    state = State.gettingCloser;
+                    StartCoroutine(FollowTargetOnce(player, playerDistance));
+                }
+                else
+                {
+                    state = State.moving;
+                    MoveAroundPlayer();
+                }
+
+                break;
+            case State.moving:
+
+                if ((player.transform.position - transform.position).sqrMagnitude > playerDistance* playerDistance*2)
+                {
+                    state = State.gettingCloser;
+                    StartCoroutine(FollowTargetOnce(player, playerDistance));
+                }
+                else
+                    TryToShoot();
+
+                break;
+            default:
+                break;
+        }
+        Debug.Log(state);
+    }
 }

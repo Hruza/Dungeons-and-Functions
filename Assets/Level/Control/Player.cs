@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-   
+
     /// <summary>
     /// Aktualni hrac, typ GameObject
     /// </summary>
-    static public GameObject player;
+    static public GameObject player {
+        get {
+            return GameObject.FindGameObjectWithTag("Player");
+        }
+        set { }
+    }
 
     /*nápady na to jak by to mohlo být
     static public float damageMultiplier=1;
@@ -110,7 +115,7 @@ public class Player : MonoBehaviour
     }
 
 	void Start () {
-        player = this.gameObject;
+    //  player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)

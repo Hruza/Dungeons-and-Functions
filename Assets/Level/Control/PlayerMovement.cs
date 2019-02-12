@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour {
     /// <summary>
     /// Posune objekt ve směru dir ve 2d.
     /// </summary>
-    /// <param name="dir"></param>
     void Move() {
         moveDir.x = Input.GetAxis("Horizontal");
         moveDir.y = Input.GetAxis("Vertical");

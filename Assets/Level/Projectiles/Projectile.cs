@@ -16,4 +16,9 @@ public class Projectile : MonoBehaviour {
     {
         collision.collider.SendMessage("GetDamage",damage,SendMessageOptions.DontRequireReceiver);
     }
+
+    private void OnTriggerEnter2D (Collider2D collision)
+    {
+        collision.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
+    }
 }
