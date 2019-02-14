@@ -879,53 +879,44 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4074968901570564, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+    - target: {fileID: 4230331403359612, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
       propertyPath: m_LocalPosition.x
       value: 17.46
       objectReference: {fileID: 0}
-    - target: {fileID: 4074968901570564, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+    - target: {fileID: 4230331403359612, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
       propertyPath: m_LocalPosition.y
       value: 2.31
       objectReference: {fileID: 0}
-    - target: {fileID: 4074968901570564, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+    - target: {fileID: 4230331403359612, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4074968901570564, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+    - target: {fileID: 4230331403359612, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4074968901570564, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+    - target: {fileID: 4230331403359612, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4074968901570564, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+    - target: {fileID: 4230331403359612, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4074968901570564, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+    - target: {fileID: 4230331403359612, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4074968901570564, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+    - target: {fileID: 4230331403359612, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 1081113949700632, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+    - target: {fileID: 1542212541991514, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114807147831547002, guid: 38d0c6f7ac814744ea3da5e0943c935a,
-        type: 2}
-      propertyPath: movingDistance
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1081113949700632, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
-      propertyPath: m_TagString
-      value: Enemy
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
+  m_SourcePrefab: {fileID: 100100000, guid: bd9fe3770e7873f478f429de5aa60cd6, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &55425617
 GameObject:
@@ -940,7 +931,7 @@ GameObject:
   - component: {fileID: 55425619}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1345,7 +1336,7 @@ GameObject:
   - component: {fileID: 83171780}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1665,7 +1656,7 @@ GameObject:
   - component: {fileID: 85537821}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2024,7 +2015,7 @@ GameObject:
   - component: {fileID: 102227924}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2255,7 +2246,7 @@ GameObject:
   - component: {fileID: 116004857}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2558,7 +2549,7 @@ GameObject:
   - component: {fileID: 129703621}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2771,7 +2762,7 @@ GameObject:
   - component: {fileID: 133606672}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3120,7 +3111,7 @@ GameObject:
   - component: {fileID: 142896156}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3455,7 +3446,7 @@ GameObject:
   - component: {fileID: 166208275}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3540,7 +3531,7 @@ GameObject:
   - component: {fileID: 175337326}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3961,7 +3952,7 @@ GameObject:
   - component: {fileID: 188131645}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4339,7 +4330,7 @@ GameObject:
   - component: {fileID: 201346281}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4640,7 +4631,7 @@ GameObject:
   - component: {fileID: 220173972}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4858,7 +4849,7 @@ GameObject:
   - component: {fileID: 228285056}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5292,7 +5283,7 @@ GameObject:
   - component: {fileID: 251833341}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5654,7 +5645,7 @@ GameObject:
   - component: {fileID: 273930846}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5885,7 +5876,7 @@ GameObject:
   - component: {fileID: 282380635}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6620,7 +6611,7 @@ GameObject:
   - component: {fileID: 311616675}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6649,7 +6640,7 @@ GameObject:
   - component: {fileID: 312106108}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7600,7 +7591,7 @@ GameObject:
   - component: {fileID: 367741805}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8612,7 +8603,7 @@ GameObject:
   - component: {fileID: 394069286}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9376,7 +9367,7 @@ GameObject:
   - component: {fileID: 425057775}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9522,7 +9513,7 @@ GameObject:
   - component: {fileID: 440604912}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9609,7 +9600,7 @@ GameObject:
   - component: {fileID: 446543869}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9641,7 +9632,7 @@ GameObject:
   - component: {fileID: 447707860}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9798,7 +9789,7 @@ GameObject:
   - component: {fileID: 455937997}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10131,7 +10122,7 @@ GameObject:
   - component: {fileID: 465160293}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10421,7 +10412,7 @@ GameObject:
   - component: {fileID: 475035497}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10594,7 +10585,7 @@ GameObject:
   - component: {fileID: 481492774}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10623,7 +10614,7 @@ GameObject:
   - component: {fileID: 482810671}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11085,7 +11076,7 @@ GameObject:
   - component: {fileID: 501282415}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11359,7 +11350,7 @@ GameObject:
   - component: {fileID: 517353495}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11598,7 +11589,7 @@ GameObject:
   - component: {fileID: 525841910}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11712,7 +11703,7 @@ GameObject:
   - component: {fileID: 529469159}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11885,7 +11876,7 @@ GameObject:
   - component: {fileID: 542593169}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12058,7 +12049,7 @@ GameObject:
   - component: {fileID: 546193243}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12087,7 +12078,7 @@ GameObject:
   - component: {fileID: 547717027}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12116,7 +12107,7 @@ GameObject:
   - component: {fileID: 552212520}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12683,7 +12674,7 @@ GameObject:
   - component: {fileID: 574475267}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12970,7 +12961,7 @@ GameObject:
   - component: {fileID: 584349873}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13071,7 +13062,7 @@ GameObject:
   - component: {fileID: 591113722}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13273,7 +13264,7 @@ GameObject:
   - component: {fileID: 595351741}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13374,7 +13365,7 @@ GameObject:
   - component: {fileID: 600225455}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13432,7 +13423,7 @@ GameObject:
   - component: {fileID: 609239197}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13533,7 +13524,7 @@ GameObject:
   - component: {fileID: 610838950}
   - component: {fileID: 610838952}
   - component: {fileID: 610838951}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: New Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13622,7 +13613,7 @@ GameObject:
   - component: {fileID: 612566410}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13779,7 +13770,7 @@ GameObject:
   - component: {fileID: 620037134}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14229,7 +14220,7 @@ GameObject:
   - component: {fileID: 643157801}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14681,7 +14672,7 @@ GameObject:
   - component: {fileID: 656425415}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16079,7 +16070,7 @@ GameObject:
   - component: {fileID: 709161019}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16558,7 +16549,7 @@ GameObject:
   - component: {fileID: 738134341}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16960,7 +16951,7 @@ GameObject:
   - component: {fileID: 751385479}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17133,7 +17124,7 @@ GameObject:
   - component: {fileID: 759369488}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17234,7 +17225,7 @@ GameObject:
   - component: {fileID: 762840730}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17972,7 +17963,7 @@ GameObject:
   - component: {fileID: 780007630}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18073,7 +18064,7 @@ GameObject:
   - component: {fileID: 788324060}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18246,7 +18237,7 @@ GameObject:
   - component: {fileID: 796077697}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18896,7 +18887,7 @@ GameObject:
   - component: {fileID: 814834472}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19372,7 +19363,7 @@ GameObject:
   - component: {fileID: 835094368}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19616,7 +19607,7 @@ GameObject:
   - component: {fileID: 853855050}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19818,7 +19809,7 @@ GameObject:
   - component: {fileID: 868149742}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20588,7 +20579,7 @@ GameObject:
   - component: {fileID: 896226586}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20673,7 +20664,7 @@ GameObject:
   - component: {fileID: 898488975}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20990,7 +20981,7 @@ GameObject:
   - component: {fileID: 914832174}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21254,7 +21245,7 @@ GameObject:
   - component: {fileID: 922308882}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21342,7 +21333,7 @@ GameObject:
   - component: {fileID: 923432354}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21601,7 +21592,7 @@ GameObject:
   - component: {fileID: 935030771}
   m_Layer: 11
   m_Name: Map
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22079,7 +22070,7 @@ GameObject:
   - component: {fileID: 953646916}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22369,7 +22360,7 @@ GameObject:
   - component: {fileID: 958928089}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22457,7 +22448,7 @@ GameObject:
   - component: {fileID: 961041376}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22760,7 +22751,7 @@ GameObject:
   - component: {fileID: 973439361}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23239,7 +23230,7 @@ GameObject:
   - component: {fileID: 998313493}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23775,7 +23766,7 @@ GameObject:
   - component: {fileID: 1032146080}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24512,7 +24503,7 @@ GameObject:
   - component: {fileID: 1066271066}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24847,7 +24838,7 @@ GameObject:
   - component: {fileID: 1088364091}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25179,7 +25170,7 @@ GameObject:
   - component: {fileID: 1095988941}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25338,7 +25329,7 @@ GameObject:
   - component: {fileID: 1104763809}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25367,7 +25358,7 @@ GameObject:
   - component: {fileID: 1108842439}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25399,7 +25390,7 @@ GameObject:
   - component: {fileID: 1108848107}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25572,7 +25563,7 @@ GameObject:
   - component: {fileID: 1114201444}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26062,7 +26053,7 @@ GameObject:
   - component: {fileID: 1148899201}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26643,7 +26634,7 @@ GameObject:
   - component: {fileID: 1177967055}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27444,7 +27435,7 @@ GameObject:
   - component: {fileID: 1204099680}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27897,7 +27888,7 @@ GameObject:
   - component: {fileID: 1226124254}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28738,8 +28729,45 @@ Prefab:
         type: 2}
     - target: {fileID: 1912209089370650, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1912209089370650, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 2}
+      propertyPath: m_Name
+      value: Sequence
+      objectReference: {fileID: 0}
+    - target: {fileID: 114177666732135972, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
+        type: 2}
+      propertyPath: playerDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114177666732135972, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
+        type: 2}
+      propertyPath: barrageDelay
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114177666732135972, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
+        type: 2}
+      propertyPath: barrageCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912209089370650, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932191154363954, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912209089370650, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114177666732135972, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
+        type: 2}
+      propertyPath: messageText
+      value: 
+      objectReference: {fileID: 1564295325502522, guid: 3b9c651deadefeb4cb9a48910ff4af20,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 2}
   m_IsPrefabAsset: 0
@@ -28753,7 +28781,7 @@ GameObject:
   - component: {fileID: 1256111438}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28981,7 +29009,7 @@ GameObject:
   - component: {fileID: 1262471318}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29010,7 +29038,7 @@ GameObject:
   - component: {fileID: 1264651556}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29372,7 +29400,7 @@ GameObject:
   - component: {fileID: 1289122276}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29401,7 +29429,7 @@ GameObject:
   - component: {fileID: 1289622632}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29430,7 +29458,7 @@ GameObject:
   - component: {fileID: 1292382450}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29459,7 +29487,7 @@ GameObject:
   - component: {fileID: 1292619823}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29880,7 +29908,7 @@ GameObject:
   - component: {fileID: 1300536863}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29909,7 +29937,7 @@ GameObject:
   - component: {fileID: 1310352415}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30058,7 +30086,7 @@ GameObject:
   - component: {fileID: 1312373100}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30143,7 +30171,7 @@ GameObject:
   - component: {fileID: 1315373401}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30263,7 +30291,7 @@ GameObject:
   - component: {fileID: 1324066888}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30638,7 +30666,7 @@ GameObject:
   - component: {fileID: 1343384037}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31290,7 +31318,7 @@ GameObject:
   - component: {fileID: 1370671781}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31538,7 +31566,7 @@ GameObject:
   - component: {fileID: 1376651740}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32231,7 +32259,7 @@ GameObject:
   - component: {fileID: 1397212818}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32815,7 +32843,7 @@ GameObject:
   - component: {fileID: 1408281611}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33149,7 +33177,7 @@ GameObject:
   - component: {fileID: 1434151236}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33237,7 +33265,7 @@ GameObject:
   - component: {fileID: 1434338728}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33325,7 +33353,7 @@ GameObject:
   - component: {fileID: 1435834866}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34248,7 +34276,7 @@ GameObject:
   - component: {fileID: 1462355717}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34509,7 +34537,7 @@ GameObject:
   - component: {fileID: 1472324257}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34685,7 +34713,7 @@ GameObject:
   - component: {fileID: 1481067252}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35021,7 +35049,7 @@ GameObject:
   - component: {fileID: 1491225523}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35269,7 +35297,7 @@ GameObject:
   - component: {fileID: 1492193168}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35676,7 +35704,7 @@ GameObject:
   - component: {fileID: 1501294012}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35705,7 +35733,7 @@ GameObject:
   - component: {fileID: 1502415661}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35737,7 +35765,7 @@ GameObject:
   - component: {fileID: 1502796545}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35909,7 +35937,7 @@ GameObject:
   - component: {fileID: 1512300834}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35938,7 +35966,7 @@ GameObject:
   - component: {fileID: 1515304590}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36143,7 +36171,7 @@ GameObject:
   - component: {fileID: 1522499078}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36228,7 +36256,7 @@ GameObject:
   - component: {fileID: 1523211822}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36358,7 +36386,7 @@ GameObject:
   - component: {fileID: 1532146044}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36390,7 +36418,7 @@ GameObject:
   - component: {fileID: 1533072189}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36968,7 +36996,7 @@ GameObject:
   - component: {fileID: 1552981220}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37577,7 +37605,7 @@ GameObject:
   - component: {fileID: 1577329122}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37878,7 +37906,7 @@ GameObject:
   - component: {fileID: 1580335203}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37907,7 +37935,7 @@ GameObject:
   - component: {fileID: 1585163005}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38500,7 +38528,7 @@ GameObject:
   - component: {fileID: 1610627557}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38601,7 +38629,7 @@ GameObject:
   - component: {fileID: 1613594166}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38805,7 +38833,7 @@ GameObject:
   - component: {fileID: 1625709445}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38906,7 +38934,7 @@ GameObject:
   - component: {fileID: 1631252024}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39329,7 +39357,7 @@ GameObject:
   - component: {fileID: 1652756687}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39459,7 +39487,7 @@ GameObject:
   - component: {fileID: 1668438994}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39576,7 +39604,7 @@ GameObject:
   - component: {fileID: 1672505335}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39605,7 +39633,7 @@ GameObject:
   - component: {fileID: 1678120320}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39634,7 +39662,7 @@ GameObject:
   - component: {fileID: 1680730760}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40790,7 +40818,7 @@ GameObject:
   - component: {fileID: 1741247624}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41107,7 +41135,7 @@ GameObject:
   - component: {fileID: 1748906143}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41309,7 +41337,7 @@ GameObject:
   - component: {fileID: 1756267449}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41626,7 +41654,7 @@ GameObject:
   - component: {fileID: 1770794326}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41727,7 +41755,7 @@ GameObject:
   - component: {fileID: 1778073093}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41857,7 +41885,7 @@ GameObject:
   - component: {fileID: 1783015136}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43361,7 +43389,7 @@ GameObject:
   - component: {fileID: 1877641032}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44562,7 +44590,7 @@ GameObject:
   - component: {fileID: 1929290035}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45006,7 +45034,7 @@ GameObject:
   - component: {fileID: 1947596803}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45126,7 +45154,7 @@ GameObject:
   - component: {fileID: 1953675746}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45330,7 +45358,7 @@ GameObject:
   - component: {fileID: 1965728072}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46650,7 +46678,7 @@ GameObject:
   - component: {fileID: 2030095861}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46679,7 +46707,7 @@ GameObject:
   - component: {fileID: 2030654404}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46708,7 +46736,7 @@ GameObject:
   - component: {fileID: 2047800402}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47561,7 +47589,7 @@ GameObject:
   - component: {fileID: 2092723827}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48096,7 +48124,7 @@ GameObject:
   - component: {fileID: 2115029803}
   m_Layer: 11
   m_Name: Wall tile (Destroyable)(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48268,7 +48296,7 @@ GameObject:
   - component: {fileID: 2118882260}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48902,7 +48930,7 @@ GameObject:
   - component: {fileID: 2141335537}
   m_Layer: 11
   m_Name: Tile 1(Clone)
-  m_TagString: Untagged
+  m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

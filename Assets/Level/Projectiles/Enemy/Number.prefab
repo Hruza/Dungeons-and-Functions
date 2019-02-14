@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4138705481201072}
   - component: {fileID: 23958658725169250}
   - component: {fileID: 102934830403881078}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,8 @@ GameObject:
   - component: {fileID: 58904232557710308}
   - component: {fileID: 95231927479450590}
   - component: {fileID: 114270930989318526}
-  m_Layer: 0
+  - component: {fileID: 114229656674192526}
+  m_Layer: 13
   m_Name: Number
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,12 +178,24 @@ TextMesh:
   m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 50
-  m_FontStyle: 0
+  m_FontStyle: 1
   m_RichText: 1
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4278190335
+--- !u!114 &114229656674192526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1688038456248938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cef26c02e7d24d4296c93706a0be54f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cislo: {fileID: 102934830403881078}
 --- !u!114 &114270930989318526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,3 +211,6 @@ MonoBehaviour:
   lifetime: 10
   damageEnemies: 0
   damagePlayer: 1
+  damageDestroyables: 0
+  destroyOnDamageDealt: 1
+  destroyOnCollision: 1

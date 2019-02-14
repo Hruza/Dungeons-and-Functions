@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+interface ISequence {
+    void Limit();
+}
 
 public abstract class NPC : MonoBehaviour
 {
@@ -43,7 +46,7 @@ public abstract class NPC : MonoBehaviour
     /// <summary>
     /// aktulni zdravi nepritele
     /// </summary>
-    private int HP=1;
+    private int HP=100;
 
     /// <summary>
     /// damage nepritele
@@ -100,6 +103,7 @@ public abstract class NPC : MonoBehaviour
     {
         if (invincible) return;
         HP -= damage;
+        //ToDo:ThrowMessage(damage.ToString(),Color.red);
         if (HP <= 0)
            Die();
     }
@@ -134,7 +138,13 @@ public abstract class NPC : MonoBehaviour
     /// <param name="target">Sledovany</param>
     /// <param name="tolerance">Do jakou minimalni vzdalenost si enemy od target udrzovat</param>
     /// <returns></returns>
-    protected IEnumerator FollowTargetOnce(GameObject target, float tolerance)
+    protected void GoToTarget(GameObject target, float tolerance) {
+        if (currentWalk != null) StopCoroutine(currentWalk);
+        currentWalk = GoToGameObject(target, tolerance);
+        StartCoroutine(currentWalk);
+    }
+
+    private IEnumerator GoToGameObject(GameObject target, float tolerance)
     {
         isWalking = true;
         WalkStarted();
@@ -142,6 +152,7 @@ public abstract class NPC : MonoBehaviour
         while (Vector3.SqrMagnitude(transform.position - target.transform.position) > tolerance * tolerance)
         {
             Vector2 walkDir = target.transform.position - transform.position;
+            if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map"))) break;
             rb.AddForce(walkDir.normalized * velocity);
             yield return new WaitForFixedUpdate();
         }
@@ -183,6 +194,7 @@ public abstract class NPC : MonoBehaviour
         while (Vector2.SqrMagnitude(transform.position - target) > tolerance * tolerance)
         {
             Vector2 walkDir = target - transform.position;
+            if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map"))) break;
             rb.AddForce(walkDir.normalized * velocity);
             yield return new WaitForFixedUpdate();
         }
@@ -228,7 +240,25 @@ public abstract class NPC : MonoBehaviour
             ball.GetComponent<Projectile>().damage = damage;
     }
 
+    //================================================Other====================================================
+    //ToDo: jinak!
+    public GameObject messageText;   
 
+    protected void ThrowMessage(string message) {
+        ThrowMessage(message, Color.white);   
+    }
+
+    protected void ThrowMessage(string message, Color color)
+    {
+        if (messageText != null)
+        {
+            GameObject msg=(GameObject)Instantiate(messageText,transform);
+            TextMesh textComp = msg.GetComponent<TextMesh>();
+            textComp.color = color;
+            textComp.text = message;
+            Destroy(msg, 1);
+        }
+    }
 
     /// <summary>
     /// smrt nepritele

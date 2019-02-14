@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sequence : NPC {
+public class ShootingEnemy: NPC {
 
     public GameObject projectile;
-    public float playerDistance=5f;
+    public float playerDistance=15f;
     private enum State { gettingCloser , shooting ,moving};
     private State state;
     public float projectileVelocity=10;
@@ -47,7 +47,7 @@ public class Sequence : NPC {
     private void Start()
     {
         player = Player.player;
-        StartCoroutine(FollowTargetOnce(player,playerDistance));
+        GoToTarget(player,playerDistance);
     //    GoToTarget(player.transform.position);
         state = State.gettingCloser;
     }
@@ -88,9 +88,9 @@ public class Sequence : NPC {
 
     private void TryToShoot() {
         Vector2 dir = player.transform.position - transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position,dir , dir.magnitude, 13);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, playerDistance*2, LayerMask.GetMask("Player", "Map"));
         Debug.Log(hit.collider);
-        if (hit==true)
+        if (hit==true && hit.collider.tag=="Player")
         {
             state = State.shooting;
             StartCoroutine(Shoot());
@@ -104,7 +104,6 @@ public class Sequence : NPC {
 
     protected void Decide()
     {
-        Debug.Log(state);
         switch (state)
         {   
             case State.gettingCloser:
@@ -115,7 +114,7 @@ public class Sequence : NPC {
                 if ((player.transform.position - transform.position).sqrMagnitude > playerDistance* playerDistance*2)
                 {
                     state = State.gettingCloser;
-                    StartCoroutine(FollowTargetOnce(player, playerDistance));
+                    GoToTarget(player, playerDistance);
                 }
                 else
                 {
@@ -129,7 +128,7 @@ public class Sequence : NPC {
                 if ((player.transform.position - transform.position).sqrMagnitude > playerDistance* playerDistance*2)
                 {
                     state = State.gettingCloser;
-                    StartCoroutine(FollowTargetOnce(player, playerDistance));
+                    GoToTarget(player, playerDistance);
                 }
                 else
                     TryToShoot();
@@ -138,7 +137,5 @@ public class Sequence : NPC {
             default:
                 break;
         }
-        Debug.Log("Konec:");
-        Debug.Log(state);
     }
 }

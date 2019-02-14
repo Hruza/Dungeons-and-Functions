@@ -9,7 +9,8 @@ public class Projectile : MonoBehaviour {
     public bool damageEnemies = true;
     public bool damagePlayer = false;
     public bool damageDestroyables = true;
-    public bool destroyOnCollision = true;
+    public bool destroyOnDamageDealt = true;
+    public bool destroyOnCollision = false;
     private void Start()
     {
         Destroy(this.gameObject, lifetime);
@@ -17,21 +18,25 @@ public class Projectile : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        string tag = collision.gameObject.tag;
-        if ((tag == "Enemy" && damageEnemies) || (tag == "Player" && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
-        {
-            collision.collider.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
-            if (destroyOnCollision) Destroy(gameObject);
-        }
+        Collided(collision.collider);   
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Collided(collision);
+    }
+
+    private void Collided(Collider2D collision) {
         string tag = collision.gameObject.tag;
         if ((tag == "Enemy" && damageEnemies) || (tag == "Player" && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
         {
             collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
-            if (destroyOnCollision) Destroy(gameObject);
+            if (destroyOnDamageDealt) Destroy(gameObject);
         }
+        else if (tag == "Destroyable" && damageDestroyables)
+        {
+            collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
+        }
+        if (destroyOnCollision) Destroy(gameObject);
     }
 }
