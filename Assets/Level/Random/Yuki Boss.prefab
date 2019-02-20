@@ -207,10 +207,11 @@ MonoBehaviour:
   invincible: 0
   isWalking: 0
   velocity: 15
+  messageText: {fileID: 0}
   projectile: {fileID: 1081113949700632, guid: 38d0c6f7ac814744ea3da5e0943c935a, type: 2}
   playerDistance: 10
   projectileVelocity: 100
-  timeToStartShooting: 0.5
+  timeToStartShooting: 1.5
   timeToStartMoving: 0.5
   movingDistance: 5
   barrageCount: 5

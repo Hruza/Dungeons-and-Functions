@@ -89,9 +89,9 @@ public abstract class NPC : MonoBehaviour
     public virtual void Initialize(int level)
     {
         Level = level;
-        MaxHP = level;
+        MaxHP = 10*level;
         HP = MaxHP;
-        Damage = Level;
+        Damage = Level*2;
         Debug.Log("Zapomínáš inicializovat!!!");
     }
 

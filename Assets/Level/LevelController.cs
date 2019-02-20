@@ -7,7 +7,7 @@ public class LevelController : MonoBehaviour {
     
     //Setup of level
 	void Start () {
-        map.GetComponent<LevelGenerator>().Generate(50, 50);
+      //ToDo:  map.GetComponent<LevelGenerator>().Generate(50, 50);
         //LevelMasterUI.difficulty
         //LevelMasterUI.velikost
         //

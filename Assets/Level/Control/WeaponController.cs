@@ -55,7 +55,7 @@ public class WeaponController : MonoBehaviour {
             currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
             currentWeapon.GetComponent<Weapon>().Level = weapons[currentWeaponIndex].level;
         }
-        if (currentWeapon.GetComponent<Weapon>().ReadyToChange()) {
+        else if (currentWeapon.GetComponent<Weapon>().ReadyToChange()) {
             Destroy(currentWeapon);
             Debug.Log(weapons[currentWeaponIndex]);
             currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);

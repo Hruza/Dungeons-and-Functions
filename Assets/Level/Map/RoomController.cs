@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class Room : MonoBehaviour {
+public class RoomController : MonoBehaviour {
     const int tileSize = 5;
     int enemyCount;
     public GameObject[] triggerOnClear;
@@ -12,7 +12,16 @@ public class Room : MonoBehaviour {
     Vector2 dimensions;
     
     //todo: Public jen pro testovani
-    public List<EnemyProperties> enemiesToSpawn;
+    public EnemyProperties[] enemiesToSpawn;
+    public EnemyProperties[] EnemiesToSpawn {
+        private get {
+            return enemiesToSpawn;
+        }
+        set {
+            if (entered) Debug.LogError("Adding enemeies in entered room " + this.ToString());
+            else enemiesToSpawn = value;
+        }
+    }
     
     bool entered = false;
     bool initiated=false;
@@ -25,11 +34,7 @@ public class Room : MonoBehaviour {
 
 	
 	void Start () {
-        livingEnemies = new List<GameObject>();
-     
-        roomCollider = GetComponent<BoxCollider2D>();
-        enemyCount = 0;
-        if(!selfInitialize) enemiesToSpawn = new List<EnemyProperties>();
+        
 
         if(selfInitialize) Initialize(1, 1);
         
@@ -42,6 +47,12 @@ public class Room : MonoBehaviour {
     /// <param name="y">Vyska mistnosti</param>
     public void Initialize(int x,int y)
     {
+        initiated = true;
+        livingEnemies = new List<GameObject>();
+
+        roomCollider = GetComponent<BoxCollider2D>();
+        enemyCount = 0;
+
         dimensions.x = x;
         dimensions.y = y;
 
@@ -59,22 +70,12 @@ public class Room : MonoBehaviour {
         {
             enemyCount++;
             Vector3 randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * tileSize);
-            livingEnemies.Add((GameObject)Instantiate(enemy.EnemyGameObject, transform.position + randPos, transform.rotation));
+            GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, transform.position + randPos, transform.rotation);
+            currentEnemy.GetComponent<NPC>().Initialize(enemy.Level);
+            livingEnemies.Add(currentEnemy);
         }
-       
-
-        
     }
 
-    /// <summary>
-    /// Prida enemy do seznamu enemiesToSpawn, enemies z tohoto seznamu se spawnou po prichodu do mistnosti
-    /// </summary>
-    /// <param name="enemy"></param>
-    public void AddEnemy(EnemyProperties enemy)
-    {
-        if (entered) Debug.LogError("Adding enemeies in entered room "+this.ToString());
-        enemiesToSpawn.Add(enemy);
-    }
 
 	// Update is called once per frame
 	void Update () {

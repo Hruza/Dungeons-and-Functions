@@ -8,9 +8,11 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Aktualni hrac, typ GameObject
     /// </summary>
+    static GameObject playerObject;
     static public GameObject player {
         get {
-            return GameObject.FindGameObjectWithTag("Player");
+            if(playerObject==null) playerObject= GameObject.FindGameObjectWithTag("Player");
+            return playerObject;
         }
         set { }
     }
