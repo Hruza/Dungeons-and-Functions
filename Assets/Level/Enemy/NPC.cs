@@ -151,10 +151,10 @@ public abstract class NPC : MonoBehaviour
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         while (Vector3.SqrMagnitude(transform.position - target.transform.position) > tolerance * tolerance)
         {
+            yield return new WaitForFixedUpdate();
             Vector2 walkDir = target.transform.position - transform.position;
             if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map"))) break;
             rb.AddForce(walkDir.normalized * velocity);
-            yield return new WaitForFixedUpdate();
         }
         isWalking = false;
         WalkEnded();

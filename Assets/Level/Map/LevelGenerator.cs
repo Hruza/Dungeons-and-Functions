@@ -41,7 +41,9 @@ public class LevelGenerator : MonoBehaviour {
         //ToDo:Random.seed = seed;
 
         int totalEnemies = enemies.Length;
+        int chosenEnemiesCount = 0;
         int enemyCount = 1;
+
 
         //starting room
         Room start = new Room(Vector2Int.zero, 3, 3);
@@ -62,7 +64,11 @@ public class LevelGenerator : MonoBehaviour {
         roomList.Add(start);
         for (int i = 0; i < roomCount; i++)
         {
-            //ToDo:set enemy count
+            if (roomCount - i < totalEnemies - 1-chosenEnemiesCount)
+            {
+                enemyCount = Random.Range(1, totalEnemies-chosenEnemiesCount - (roomCount - i));
+            }
+            else enemyCount = 0;
 
             //CreateVectors
             dir = Random.insideUnitCircle;
@@ -77,7 +83,7 @@ public class LevelGenerator : MonoBehaviour {
 
             //move until it doesn't intersects
             offset = 0;
-            int minOffset = Random.Range(roomSpread, roomSpread+2);
+            int minOffset = Random.Range(roomSpread, roomSpread + 2);
             while (offset < minOffset)
             {
                 realPos += dir;
@@ -96,7 +102,14 @@ public class LevelGenerator : MonoBehaviour {
             }
 
             //ToDo:set enemies and generate
-            current.enemies = enemies;
+            EnemyProperties[] chosenEnemies = new EnemyProperties[enemyCount];
+                for (int k = 0; k < enemyCount; k++)
+
+                {
+                    chosenEnemies[k] = enemies[chosenEnemiesCount + k];
+                }
+            current.enemies = chosenEnemies;
+            chosenEnemiesCount += enemyCount;
 
             //set boundaries
             int horizontal = current.width / 2;
@@ -106,7 +119,6 @@ public class LevelGenerator : MonoBehaviour {
             if (pos.x + horizontal > rMost) rMost = pos.x + horizontal;
             if (pos.y + vertical > tMost) tMost = pos.y + vertical;
             if (pos.y - vertical < bMost) bMost = pos.y - vertical;
-
 
 
             //add to list

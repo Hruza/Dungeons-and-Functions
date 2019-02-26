@@ -13,7 +13,6 @@ public class EnemyProperties : ScriptableObject {
     /// </summary>
     public new string name;
 
-    public int f;
     private int level;
     public int Level {
         get
