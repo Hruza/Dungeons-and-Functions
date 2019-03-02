@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6565ba7d729cdd45bcdbb275a36555e, type: 3}
   m_Name: Level infinity
   m_EditorClassIdentifier: 
-  id: 9000
+  progressID: 0
   difficulty: 9000
-  enemies: []
+  enemies:
+  - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  roomCount: 1

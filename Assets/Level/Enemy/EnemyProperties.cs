@@ -13,6 +13,12 @@ public class EnemyProperties : ScriptableObject {
     /// </summary>
     public new string name;
 
+    public int baseHP;
+    public int perLevelHPIncrement;
+
+    public int baseDamage;
+    public int perLevelDamageIncrement;
+
     private int level;
     public int Level {
         get
@@ -21,7 +27,7 @@ public class EnemyProperties : ScriptableObject {
         }
         set
         {
-            level = Mathf.Max(1, level);
+            level = Mathf.Max(0, value);
         }
     }
 

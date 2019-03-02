@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public float acceleration = 5f;
 
+    public float knockbackResistance = 0.2f;
+
     static private Vector2 lookDir;
     /// <summary>
     /// Sklon kamery
@@ -19,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D rbody;
     private Vector2 moveDir;
 
+    private bool knockbacked=false;
 
     void Start () {
         slope = Mathf.Cos(Mathf.Abs(Camera.main.transform.rotation.eulerAngles.x % 180));
@@ -31,7 +34,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Move();
+        if (!knockbacked) Move();
         Rotate();
     }
     void Update()
@@ -39,6 +42,21 @@ public class PlayerMovement : MonoBehaviour {
 
 	}
 
+    public void Knockback(Vector2 direction) {
+        knockbacked = true;
+        StartCoroutine(Knocking(direction));
+    }
+
+    private IEnumerator Knocking(Vector2 direction) {
+        Vector2 dampen = direction.normalized*knockbackResistance;
+        while (dampen.x*direction.x>0) {
+            rbody.velocity = direction;
+            direction -= dampen*Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        knockbacked = false;
+        yield return null;
+    }
 
     /// <summary>
     /// Posune objekt ve směru dir ve 2d.
@@ -53,7 +71,6 @@ public class PlayerMovement : MonoBehaviour {
 
         moveDir *= speed;
         rbody.velocity = moveDir;
-
 
     }
 

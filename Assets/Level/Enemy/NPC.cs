@@ -86,13 +86,17 @@ public abstract class NPC : MonoBehaviour
         }
     }
 
-    public virtual void Initialize(int level)
+    public virtual void Initialize(EnemyProperties properties)
     {
-        Level = level;
-        MaxHP = 10*level;
+        Level = properties.Level;
+        MaxHP = properties.baseHP+(Level*properties.perLevelHPIncrement);
         HP = MaxHP;
-        Damage = Level*2;
-        Debug.Log("Zapomínáš inicializovat!!!");
+        Damage = properties.baseDamage+(Level*properties.perLevelDamageIncrement);
+    }
+
+    public virtual void Initialize(int maxHP) {
+        MaxHP = maxHP;
+        HP = maxHP;
     }
 
     /// <summary>
@@ -118,7 +122,7 @@ public abstract class NPC : MonoBehaviour
 
     private IEnumerator currentWalk;
 
-    /// <summary>
+  /*  /// <summary>
     /// Enemy bude sledovat GameObject target
     /// </summary>
     /// <param name="target">Sledovany</param>
@@ -131,6 +135,7 @@ public abstract class NPC : MonoBehaviour
             yield return new WaitForSeconds(followDelay);
         }
     }
+    */
 
     /// <summary>
     /// Enemy bude sledovat GameObject target, dokud se k nemu nedostane

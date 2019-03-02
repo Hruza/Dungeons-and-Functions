@@ -11,9 +11,12 @@ public class LevelController : MonoBehaviour {
 
     //Setup of level
 	void Start () {
-       // map.GetComponent<LevelGenerator>().Generate();
+        Level level = MenuController.selectedLevel;
+        map.GetComponent<LevelGenerator>().Generate(level.roomCount,level.enemies,level.difficulty);
         //ToDo: Pridat veci
+
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {

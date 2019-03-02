@@ -28,15 +28,16 @@ public class LevelGenerator : MonoBehaviour {
 
     public EnemyProperties[] enemies;
     public int minRoomSizeVariability = 2;
+    public bool debug = false;
     void Start () {
-        Generate(roomCount,enemies);
+        if(debug) Generate(roomCount,enemies,1);
     }
 	
 	void Update () {
         
 	}
 
-    public void Generate(int roomCount,EnemyProperties[] enemies) {
+    public void Generate(int roomCount,EnemyProperties[] enemies,int difficulty) {
         if (roomCount <= 0) return;
         //ToDo:Random.seed = seed;
 
@@ -64,12 +65,14 @@ public class LevelGenerator : MonoBehaviour {
         roomList.Add(start);
         for (int i = 0; i < roomCount; i++)
         {
-            if (roomCount - i < totalEnemies - 1-chosenEnemiesCount)
+            int maxEnemyCount = totalEnemies - chosenEnemiesCount - (roomCount - i)+1;
+            if (i + 1 == roomCount) enemyCount = maxEnemyCount;
+            else if (maxEnemyCount >= 1)
             {
-                enemyCount = Random.Range(1, totalEnemies-chosenEnemiesCount - (roomCount - i));
+                enemyCount = Random.Range(1, maxEnemyCount);
             }
             else enemyCount = 0;
-
+            Debug.Log(enemyCount);
             //CreateVectors
             dir = Random.insideUnitCircle;
             if (dir == Vector2.zero) dir = Vector2.up;
@@ -77,8 +80,8 @@ public class LevelGenerator : MonoBehaviour {
             dir.Normalize();
 
             //Create room
-            int h = minRoomSize + Random.Range(enemyCount - 1, enemyCount + minRoomSizeVariability);
-            int w = minRoomSize + Random.Range(enemyCount - 1, enemyCount + minRoomSizeVariability);
+            int h = minRoomSize + Random.Range(enemyCount - 1, Mathf.FloorToInt(Mathf.Sqrt(enemyCount )) + minRoomSizeVariability);
+            int w = minRoomSize + Random.Range(enemyCount - 1, Mathf.FloorToInt(Mathf.Sqrt(enemyCount )) + minRoomSizeVariability);
             Room current = new Room(Vector2Int.FloorToInt(realPos), h, w);
 
             //move until it doesn't intersects
@@ -101,12 +104,13 @@ public class LevelGenerator : MonoBehaviour {
                 else offset = 0;
             }
 
-            //ToDo:set enemies and generate
+            
             EnemyProperties[] chosenEnemies = new EnemyProperties[enemyCount];
                 for (int k = 0; k < enemyCount; k++)
-
                 {
                     chosenEnemies[k] = enemies[chosenEnemiesCount + k];
+                    chosenEnemies[k].Level = difficulty;
+                
                 }
             current.enemies = chosenEnemies;
             chosenEnemiesCount += enemyCount;

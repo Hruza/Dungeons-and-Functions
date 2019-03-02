@@ -38,12 +38,6 @@ public class ShootingEnemy: NPC {
 
     private GameObject player;
 
-    public override void Initialize(int level)
-    {
-        this.Level = level;
-        Damage = level;
-    }
-
     private void Start()
     {
         player = Player.player;

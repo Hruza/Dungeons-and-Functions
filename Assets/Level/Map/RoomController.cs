@@ -71,7 +71,7 @@ public class RoomController : MonoBehaviour {
             enemyCount++;
             Vector3 randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * tileSize);
             GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, transform.position + randPos, transform.rotation);
-            currentEnemy.GetComponent<NPC>().Initialize(enemy.Level);
+            currentEnemy.GetComponent<NPC>().Initialize(enemy);
             livingEnemies.Add(currentEnemy);
         }
     }

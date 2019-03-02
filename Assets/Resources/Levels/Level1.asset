@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6565ba7d729cdd45bcdbb275a36555e, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  id: 1
+  progressID: 0
   difficulty: 1
   enemies:
   - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
@@ -20,3 +20,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
   - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
   - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  roomCount: 5
