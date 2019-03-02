@@ -112,6 +112,7 @@ public class Player : MonoBehaviour
 	void Start () {
         player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
+        equip = this.GetComponent<EquipManager>();
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
         Name = "Player";
@@ -165,7 +166,7 @@ public class Player : MonoBehaviour
     /// <param name="armor">brneni hrace</param>
     public void SetArmor()
     {
-        Armor = equip.BaseArmor * equip.TotalArmorMultiplicative + equip.TotalArmorMultiplicative;
+        Armor = equip.AllStats["Armor"] * equip.AllStats["ArmorMultiplicative"] / 100 + equip.AllStats["ArmorAdditive"];
     }
 
     /// <summary>
@@ -174,7 +175,7 @@ public class Player : MonoBehaviour
     /// <param name="regeneration">nova regenerace hrace</param>
     public void SetRegeneration ()
     {
-        Regeneration = equip.Regeneration;
+        Regeneration = equip.AllStats["Regeneration"];
         if (Regeneration == 0)
             CancelInvoke("Regenerate");
         else

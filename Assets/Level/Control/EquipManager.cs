@@ -8,42 +8,30 @@ using UnityEngine;
 public class EquipManager : MonoBehaviour
 {
     /// <summary>
-    /// seznam všech předmětů, které má hráč momentálně na sobě
+    /// seznam všech předmětů (NE ZBRANÍ), které má hráč momentálně na sobě
     /// </summary>
-    public List<Item> EquippedItems { get; private set; }
+    public static List<Item> EquippedItems { get; private set; }
+    /// <summary>
+    /// seznam všech zbraní, které hráč může využívat
+    /// </summary>
+    public static List<WeaponItem> EquippedWeapons { get; private set; }
 
     /// <summary>
-    /// základní poškození hráče
+    /// seznam a hodnota každého bonusového statu, který má hráč na sobě
     /// </summary>
-    public int BaseDamage { get; private set; }
-    /// <summary>
-    /// celkový aditivní bonus k poškození
-    /// </summary>
-    public int TotalDamageAdditive { get; private set; }
-    /// <summary>
-    /// celkový multiplikativní bonus k pokození
-    /// </summary>
-    public int TotalDamageMultiplicative { get; private set; }
-    /// <summary>
-    /// základní brnění hráče
-    /// </summary>
-    public int BaseArmor { get; private set; }
-    /// <summary>
-    /// celkový aditivní bonus k brnění
-    /// </summary>
-    public int TotalArmorAdditive { get; private set; }
-    /// <summary>
-    /// celkový multiplikativní bonus k brnění
-    /// </summary>
-    public int TotalArmorMultiplicative { get; private set; }
-    /// <summary>
-    /// celková regenerace hráče
-    /// </summary>
-    public int Regeneration { get; private set; }
-
+    public Dictionary<string, int> AllStats;
     // Start is called before the first frame update
     void Start()
     {
+        EquippedItems = new List<Item>();
+        EquippedWeapons = new List<WeaponItem>();
+        AllStats = new Dictionary<string, int>();
+
+        foreach (PossibleStat possibleStat in PossibleStat.AllPossibleStats)
+        {
+            AllStats.Add(possibleStat.name, 0);
+        }
+
         CountAllStats();
     }
 
@@ -52,41 +40,85 @@ public class EquipManager : MonoBehaviour
     /// </summary>
     private void CountAllStats()
     {
-        //vynulování všech vlastností
-        BaseDamage = 0;
-        TotalDamageAdditive = 0;
-        TotalDamageMultiplicative = 1;
-        BaseArmor = 0;
-        TotalArmorAdditive = 0;
-        TotalArmorMultiplicative = 1;
-        Regeneration = 0;
-        //projití všech předmětů, přečtení všech vlastností a jejich sečtení
-        foreach (Item i in EquippedItems)
-        {
-            BaseDamage += i.Damage;
-            TotalDamageAdditive += i.BonusDamageAdditive;
-            TotalDamageMultiplicative += i.BonusDamageMultiplicative;
-            BaseArmor += i.Armor;
-            TotalArmorAdditive += i.BonusArmorAdditive;
-            TotalArmorMultiplicative += i.BonusDamageMultiplicative;
-            Regeneration += i.Regeneration;
-        }
+        foreach (Item item in EquippedItems)
+            AddStats(item.itemStats);
+
+        foreach (WeaponItem weapon in EquippedWeapons)
+            AddStats(weapon.itemStats);
     }
 
     /// <summary>
-    /// přidá předmět hráčovi a přepočítá staty
+    /// přičte hodnoty statů k AllStats
+    /// </summary>
+    /// <param name="stats">seznam statů</param>
+    private void AddStats(Stat[] stats)
+    {
+        foreach (Stat stat in stats)
+            AllStats[stat.name] += stat.value;
+    }
+
+    /// <summary>
+    /// odečte hodnoty statů od AllStats
+    /// </summary>
+    /// <param name="stats">seznam statů</param>
+    private void DeductStats(Stat[] stats)
+    {
+        foreach (Stat stat in stats)
+            AllStats[stat.name] -= stat.value;
+    }
+    
+    /// <summary>
+    /// přidá předmět (NE ZBRAŇ) hráči a přepočítá staty
     /// </summary>
     /// <param name="item">přidávaný předmět</param>
     public void EquipItem(Item item)
     {
+        if (item.itemType == ItemType.Weapon)
+        {
+            Debug.Log("Máš tu menší fuckup, pro přidání předmětu hráči použij EquipWeapon.");
+            return;
+        }
+
+        //odebrání starého předmětu (pokud existuje)
+        var oldItem = EquippedItems.Find(i => i.itemType == item.itemType);
+        if (oldItem != null)
+        {
+            DeductStats(oldItem.itemStats);
+            EquippedItems.Remove(oldItem);
+        }
+
+        //přidání nové předmětu
+        AddStats(item.itemStats);
         EquippedItems.Add(item);
-        CountAllStats();
     }
 
-
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Vymění zbraň hráči.
+    /// </summary>
+    /// <param name="newWeapon">nová zbraň</param>
+    /// <param name="oldWeapon">stará zbraň, která má být odebrána</param>
+    public void EquipWeapon(WeaponItem newWeapon, WeaponItem oldWeapon)
     {
-        
+        //odebrání staré zbraně
+        if (oldWeapon != null)
+        {
+            DeductStats(oldWeapon.itemStats);
+            EquippedWeapons.Remove(oldWeapon);
+        }
+
+        //přidání nové zbraně
+        AddStats(newWeapon.itemStats);
+        EquippedWeapons.Add(newWeapon);
+    }
+
+    /// <summary>
+    /// Přidá zbraň hráči.
+    /// </summary>
+    /// <param name="newWeapon">nová zbraň, která má být přidána</param>
+    public void EquipWeapon(WeaponItem newWeapon)
+    {
+        //přidání nové zbraně
+        AddStats(newWeapon.itemStats);
+        EquippedWeapons.Add(newWeapon);
     }
 }
