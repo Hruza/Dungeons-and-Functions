@@ -17,9 +17,9 @@ public class WeaponController : MonoBehaviour {
 
     private void Start()
     {
-        //ToDo: GetWepons()
         currentWeaponIndex = 0;
-        if (weapons.Length < 1) Debug.LogError("Hele, nejak nerikas, co ma hrac za zbrane");
+        if (weapons.Length < 1)
+            Debug.LogError("Hele, nejak nerikas, co ma hrac za zbrane");
         currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
 
         //inicializace UI
@@ -32,12 +32,8 @@ public class WeaponController : MonoBehaviour {
         }
     }
     
-
-    private void GetWeapons() {
-        //zeptej se někoho povolaného
-    }
-
-    public void ChangeUI() {
+    public void ChangeUI()
+    {
         GameObject child;
         for (int i = 0; i < weaponPanel.transform.childCount; i++)
         {
@@ -50,8 +46,10 @@ public class WeaponController : MonoBehaviour {
 
     public void ChangeWeapon() {
         currentWeaponIndex++;
-        if (currentWeaponIndex >= weapons.Length) currentWeaponIndex = 0;
-        if (currentWeapon.GetComponent<Weapon>().ReadyToChange()) {
+        if (currentWeaponIndex >= weapons.Length)
+            currentWeaponIndex = 0;
+        if (currentWeapon.GetComponent<Weapon>().ReadyToChange())
+        {
             Destroy(currentWeapon);
             Debug.Log(weapons[currentWeaponIndex]);
             currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);

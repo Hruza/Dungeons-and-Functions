@@ -118,6 +118,14 @@ public class WeaponItem : Item
     /// rychlost útoku zbraně
     /// </summary>
     public int attackSpeed;
+    /// <summary>
+    /// sprite zbraně
+    /// </summary>
+    public Sprite sprite;
+    /// <summary>
+    /// game object zbraně
+    /// </summary>
+    public GameObject weaponGameObject;
 
     public static WeaponItem Generate()
     {
