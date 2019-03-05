@@ -1,14 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-   
+    public Slider hpBar;
     /// <summary>
     /// Aktualni hrac, typ GameObject
     /// </summary>
-    static public GameObject player;
+    static GameObject playerObject;
+    static public GameObject player {
+        get {
+            if(playerObject==null) playerObject= GameObject.FindGameObjectWithTag("Player");
+            return playerObject;
+        }
+        set { }
+    }
 
     /*nápady na to jak by to mohlo být
     static public float damageMultiplier=1;
@@ -31,6 +39,7 @@ public class Player : MonoBehaviour
     }
     */
 
+
     static public Rigidbody2D rbody;
 
     private EquipManager equip;
@@ -52,6 +61,7 @@ public class Player : MonoBehaviour
         {
             hp = value;
             hp = Mathf.Min(hp, MaxHP);
+            hpBar.value = hp;
         }
     }
     private int maxHP;
@@ -67,7 +77,10 @@ public class Player : MonoBehaviour
         private set
         {
             if (value > 0)
+            {
                 maxHP = value;
+                hpBar.maxValue = maxHP;
+            }
             else
                 Debug.Log("Pokousis se do Player.MaxHP dosadit " + value.ToString() + ". To asi nebude spravne.");
         }
@@ -110,7 +123,7 @@ public class Player : MonoBehaviour
     }
 
 	void Start () {
-        player = this.gameObject;
+    //  player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
         equip = this.GetComponent<EquipManager>();
 
@@ -141,7 +154,7 @@ public class Player : MonoBehaviour
     /// Hrac obdrzi poskozeni, ktere muze byt snizeno o jeho brneni.
     /// </summary>
     /// <param name="damage">obdrzene poskozeni</param>
-    public void TakeDamage(int damage)
+    public void GetDamage(int damage)
     {
         //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
         HP -= Mathf.Max(1, damage - Armor);

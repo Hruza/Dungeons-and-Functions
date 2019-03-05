@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootProjectile : Weapon {
-
+public class ShootProjectile : Weapon
+{
     public float velocity = 10f;
     public GameObject projectile;
     private int damage;
@@ -23,14 +23,15 @@ public class ShootProjectile : Weapon {
         if (Input.GetButtonDown("Fire2")) Secondary();
     }
 
-    public override int Level{
+    public override int Level
+    {
         get {
             Debug.LogError("Tady level zbrane nezjistis! Koukni se do WeaponProperties");
             return 0;
         }
-        set {
-            damage = baseDamage + (damageIncresePerLevel*value);
-            
+        set
+        {
+            damage = baseDamage + (damageIncresePerLevel*value);    
         }
     }
 

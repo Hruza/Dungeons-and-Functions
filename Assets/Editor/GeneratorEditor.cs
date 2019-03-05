@@ -18,10 +18,10 @@ public class GeneratorEditor : Editor {
         LevelGenerator myScript = (LevelGenerator)target;
        
 
-        param = (Vector2Int)EditorGUILayout.Vector2IntField("Map dimensions", param);
+        param = (Vector2Int)EditorGUILayout.Vector2IntField("dimensions", param);
         if (GUILayout.Button("Build Object"))
         {
-            myScript.Generate(param.y,param.y);
+            //myScript.Generate(param.y,param.y);
         }
     }
 }

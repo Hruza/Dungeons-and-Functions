@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour {
     
-    public WeaponProperty[] weapons; //ToDo: nebude public
+    public List<WeaponItem> weapons; //ToDo: nebude public
     private GameObject currentWeapon;
     private int currentWeaponIndex;
     public GameObject weaponPanel;
@@ -18,13 +18,13 @@ public class WeaponController : MonoBehaviour {
     private void Start()
     {
         currentWeaponIndex = 0;
-        if (weapons.Length < 1)
+        if (weapons.Count < 1)
             Debug.LogError("Hele, nejak nerikas, co ma hrac za zbrane");
         currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
 
         //inicializace UI
         GameObject child;
-        for (int i = 0; i < weapons.Length; i++)
+        for (int i = 0; i < weapons.Count; i++)
         {
             child = weaponPanel.transform.GetChild(i).GetChild(0).gameObject;
             child.SetActive(true);
@@ -46,14 +46,14 @@ public class WeaponController : MonoBehaviour {
 
     public void ChangeWeapon() {
         currentWeaponIndex++;
-        if (currentWeaponIndex >= weapons.Length)
+        if (currentWeaponIndex >= weapons.Count)
             currentWeaponIndex = 0;
         if (currentWeapon.GetComponent<Weapon>().ReadyToChange())
         {
             Destroy(currentWeapon);
             Debug.Log(weapons[currentWeaponIndex]);
             currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
-            currentWeapon.GetComponent<Weapon>().Level = weapons[currentWeaponIndex].level;
+            currentWeapon.GetComponent<Weapon>().Level = weapons[currentWeaponIndex].itemLevel;
         }
         ChangeUI();
 
