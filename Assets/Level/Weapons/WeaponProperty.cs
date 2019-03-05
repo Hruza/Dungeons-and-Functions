@@ -7,7 +7,7 @@ using UnityEngine;
 /// Trida, ktera obsahuje informace o zbrani a ukazatel na prefab
 /// </summary>
 [CreateAssetMenu(fileName = "Weapon", menuName = "Weapon")]
-public class WeaponProperty : ScriptableObject {
+public class WeaponProperty : Item {
    
     /// <summary>
     /// Jmeno zbrane

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour {
     
-    public WeaponProperty[] weapons; //ToDo: nebude public
+    public WeaponItem[] weapons; //ToDo: nebude public
     private GameObject currentWeapon;
     private int currentWeaponIndex;
     public GameObject weaponPanel;
@@ -53,7 +53,7 @@ public class WeaponController : MonoBehaviour {
             Destroy(currentWeapon);
             Debug.Log(weapons[currentWeaponIndex]);
             currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
-            currentWeapon.GetComponent<Weapon>().Level = weapons[currentWeaponIndex].level;
+            currentWeapon.GetComponent<Weapon>().Level = weapons[currentWeaponIndex].itemLevel;
         }
         ChangeUI();
 
