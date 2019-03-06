@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponController : MonoBehaviour {
+public class WeaponController : MonoBehaviour
+{
     
     public List<WeaponItem> weapons; //ToDo: nebude public
     private GameObject currentWeapon;
@@ -12,7 +13,8 @@ public class WeaponController : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab)) ChangeWeapon();
+        if (Input.GetKeyDown(KeyCode.Tab))
+            ChangeWeapon();
     }
 
     private void Start()
@@ -53,7 +55,8 @@ public class WeaponController : MonoBehaviour {
             Destroy(currentWeapon);
             Debug.Log(weapons[currentWeaponIndex]);
             currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
-            currentWeapon.GetComponent<Weapon>().Level = weapons[currentWeaponIndex].itemLevel;
+            currentWeapon.GetComponent<Weapon>().minDamage = Player.player.GetComponent<EquipManager>().TotalMinDamage(currentWeaponIndex);
+            currentWeapon.GetComponent<Weapon>().maxDamage = currentWeapon.GetComponent<Weapon>().minDamage + weapons[currentWeaponIndex].Range();
         }
         ChangeUI();
 

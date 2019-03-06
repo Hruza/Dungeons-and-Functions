@@ -133,6 +133,15 @@ public class WeaponItem : Item
         Debug.Log("Ehm, zatím nic.");
         return null;
     }
+
+    /// <summary>
+    /// Metoda vracející rozsah poškození zbraně (max damage - min damage).
+    /// </summary>
+    /// <returns>rozsah poškození</returns>
+    public int Range()
+    {
+        return maxDamage - minDamage;
+    }
 }
 
 /// <summary>

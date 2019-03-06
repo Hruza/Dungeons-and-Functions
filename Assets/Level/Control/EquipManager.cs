@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// třída spravující vybavení hráče
 /// </summary>
-public class EquipManager : MonoBehaviour
+public class EquipManager
 {
     /// <summary>
     /// seznam všech předmětů (NE ZBRANÍ), které má hráč momentálně na sobě
@@ -20,8 +20,8 @@ public class EquipManager : MonoBehaviour
     /// seznam a hodnota každého bonusového statu, který má hráč na sobě
     /// </summary>
     public Dictionary<string, int> AllStats;
-    // Start is called before the first frame update
-    void Start()
+    
+    public EquipManager()
     {
         EquippedItems = new List<Item>();
         EquippedWeapons = new List<WeaponItem>();
@@ -120,5 +120,15 @@ public class EquipManager : MonoBehaviour
         //přidání nové zbraně
         AddStats(newWeapon.itemStats);
         EquippedWeapons.Add(newWeapon);
+    }
+
+    /// <summary>
+    /// Vypočítá nejmenší možné poškození, které hráč může udělit v závislosti na zbrani.
+    /// </summary>
+    /// <param name="weapon">Index zbraně, ze které má být vypočítáno nejmenší možnéé poškození.</param>
+    /// <returns>nejmenší možné poškození</returns>
+    public int TotalMinDamage(int weaponIndex)
+    {
+        return EquippedWeapons[weaponIndex].minDamage * (100 + AllStats["DamageMultiplicative"]) / 100 + AllStats["DamageAdditive"];
     }
 }

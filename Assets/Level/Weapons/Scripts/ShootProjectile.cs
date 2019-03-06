@@ -6,9 +6,6 @@ public class ShootProjectile : Weapon
 {
     public float velocity = 10f;
     public GameObject projectile;
-    private int damage;
-    public int baseDamage;
-    public int damageIncresePerLevel;
     public float delay=0.5f;
     public bool autoFire=false;
     private bool ready = true;
@@ -23,18 +20,6 @@ public class ShootProjectile : Weapon
         if (Input.GetButtonDown("Fire2")) Secondary();
     }
 
-    public override int Level
-    {
-        get {
-            Debug.LogError("Tady level zbrane nezjistis! Koukni se do WeaponProperties");
-            return 0;
-        }
-        set
-        {
-            damage = baseDamage + (damageIncresePerLevel*value);    
-        }
-    }
-
     private void Reset()
     {
         ready = true;
@@ -47,6 +32,6 @@ public class ShootProjectile : Weapon
         Vector3 forward = PlayerMovement.forward();
         GameObject ball  = (GameObject)Instantiate(projectile, transform.position +forward, transform.rotation);
         ball.GetComponent<Rigidbody2D>().velocity = forward * velocity;
-        ball.GetComponent<Projectile>().damage = damage;
+        ball.GetComponent<Projectile>().damage = Random.Range(minDamage, maxDamage + 1);
     }
 }
