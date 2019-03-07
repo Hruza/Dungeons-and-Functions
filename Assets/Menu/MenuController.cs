@@ -11,6 +11,8 @@ public class MenuController : MonoBehaviour
     /// </summary>
     static public PlayerProgress playerProgress;
 
+    static public EquipManager equipManager;
+
     /// <summary>
     /// Reference na kartu levelu
     /// </summary>
@@ -30,11 +32,14 @@ public class MenuController : MonoBehaviour
     /// Vybrany level, zapte se na nej generator
     /// </summary>
     static public Level selectedLevel;
+
     // Start is called before the first frame update
     void Start()
     {
         //ToDo:load progress
         playerProgress = new PlayerProgress();
+
+        equipManager = new EquipManager();
 
         levels = Resources.LoadAll<Level>("Levels");
         levels = levels.OrderBy(s => s.progressID).ToArray<Level>();

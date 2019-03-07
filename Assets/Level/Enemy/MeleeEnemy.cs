@@ -64,8 +64,8 @@ public class MeleeEnemy : NPC
         {
             if (col.tag == "Player")
             {
-                col.GetComponent<PlayerMovement>().Knockback((col.transform.position - transform.position)*knockback);
-                col.SendMessage("GetDamage", Damage);
+                col.GetComponent<PlayerMovement>().Knockback((col.transform.position - transform.position).normalized*knockback);
+                col.SendMessage("GetDamage", Damage,SendMessageOptions.DontRequireReceiver);
             }
         } 
         Decide();
@@ -91,8 +91,7 @@ public class MeleeEnemy : NPC
 
     protected void Decide()
     {
-        Debug.Log("Deciding");
-        bool playerIsClose = (player.transform.position - transform.position).sqrMagnitude < playerDistance * playerDistance * 2;
+        bool playerIsClose = (player.transform.position - transform.position).sqrMagnitude < playerDistance * playerDistance * 1.5f;
         switch (state)
         {
             case State.attacking:

@@ -80,7 +80,7 @@ public abstract class NPC : MonoBehaviour
         protected set
         {
             if (value > 0)
-                MaxHP = value;
+                level = value;
             else
                 Debug.Log("Pokousis se do " + this.ToString() + ".Level dosadit " + value.ToString() + ". To asi nebude spravne.");
         }

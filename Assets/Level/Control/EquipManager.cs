@@ -10,11 +10,11 @@ public class EquipManager
     /// <summary>
     /// seznam všech předmětů (NE ZBRANÍ), které má hráč momentálně na sobě
     /// </summary>
-    public static List<Item> EquippedItems { get; private set; }
+    public List<Item> EquippedItems { get; private set; }
     /// <summary>
     /// seznam všech zbraní, které hráč může využívat
     /// </summary>
-    public static List<WeaponItem> EquippedWeapons { get; private set; }
+    public List<WeaponItem> EquippedWeapons { get; private set; }
 
     /// <summary>
     /// seznam a hodnota každého bonusového statu, který má hráč na sobě
@@ -27,13 +27,13 @@ public class EquipManager
         EquippedWeapons = new List<WeaponItem>();
         AllStats = new Dictionary<string, int>();
 
-        foreach (PossibleStat possibleStat in PossibleStat.AllPossibleStats)
+/*        foreach (PossibleStat possibleStat in PossibleStat.AllPossibleStats)
         {
             AllStats.Add(possibleStat.name, 0);
         }
 
         CountAllStats();
-    }
+*/    }
 
     /// <summary>
     /// metoda, která projde všechny předměty a přepočítá všechny vlastnosti

@@ -72,7 +72,6 @@ public class LevelGenerator : MonoBehaviour {
                 enemyCount = Random.Range(1, maxEnemyCount);
             }
             else enemyCount = 0;
-            Debug.Log(enemyCount);
             //CreateVectors
             dir = Random.insideUnitCircle;
             if (dir == Vector2.zero) dir = Vector2.up;

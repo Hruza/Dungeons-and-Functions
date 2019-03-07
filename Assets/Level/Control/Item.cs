@@ -49,6 +49,11 @@ public class Item : ScriptableObject
     /// <summary>
     /// seznam všech bpnusových statů, které má předmět
     /// </summary>
+    /// <summary>
+    /// sprite itemu
+    /// </summary>
+    public Sprite sprite;
+
     public Stat[] itemStats;
 
     /// <summary>
@@ -104,6 +109,7 @@ public class ArmorItem : Item
     }
 }
 
+[CreateAssetMenu(fileName = "Weapon", menuName = "Weapon")]
 public class WeaponItem : Item
 {
     /// <summary>
@@ -118,10 +124,6 @@ public class WeaponItem : Item
     /// rychlost útoku zbraně
     /// </summary>
     public int attackSpeed;
-    /// <summary>
-    /// sprite zbraně
-    /// </summary>
-    public Sprite sprite;
     /// <summary>
     /// game object zbraně
     /// </summary>

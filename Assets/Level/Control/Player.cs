@@ -59,8 +59,7 @@ public class Player : MonoBehaviour
         }
         private set
         {
-            hp = value;
-            hp = Mathf.Min(hp, MaxHP);
+            hp = Mathf.Min(value, MaxHP);
             hpBar.value = hp;
         }
     }
@@ -125,7 +124,6 @@ public class Player : MonoBehaviour
 	void Start () {
     //  player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
-        equip = this.GetComponent<EquipManager>();
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
         Name = "Player";
@@ -135,7 +133,8 @@ public class Player : MonoBehaviour
         Regeneration = 0;
 
         if (Regeneration > 0)
-            InvokeRepeating("Regenerate", 1, 1);        
+            InvokeRepeating("Regenerate", 1, 1);
+
 	}
 
     /// <summary>
@@ -156,6 +155,7 @@ public class Player : MonoBehaviour
     /// <param name="damage">obdrzene poskozeni</param>
     public void GetDamage(int damage)
     {
+        Debug.Log("Hrac dostal "+damage.ToString()+" damage");
         //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
         HP -= Mathf.Max(1, damage - Armor);
         if (HP <= 0)
@@ -170,7 +170,6 @@ public class Player : MonoBehaviour
     {
         //TODO - pouze provizorni
         Debug.Log("Hrac zemrel");
-        Destroy(this);
     }
 
     /// <summary>

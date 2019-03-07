@@ -83,7 +83,6 @@ public class ShootingEnemy: NPC {
     private void TryToShoot() {
         Vector2 dir = player.transform.position - transform.position;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, playerDistance*2, LayerMask.GetMask("Player", "Map"));
-        Debug.Log(hit.collider);
         if (hit==true && hit.collider.tag=="Player")
         {
             state = State.shooting;

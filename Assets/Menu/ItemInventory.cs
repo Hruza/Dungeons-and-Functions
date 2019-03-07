@@ -1,18 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemInventory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public InventoryPanel weaponPanel;
+    public InventoryPanel armorPanel;
+    public InventoryPanel otherPanel;
+    public GameObject tooltipPrefab;
+    
+
+
+    private PlayerProgress progress;
+
+    private void OnEnable()
     {
-        
+        progress = MenuController.playerProgress;
+        weaponPanel.Items = progress.weapons;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+    private GameObject tooltip;
+
+    public void ShowTooltip(Button sender) {
+        if(tooltipPrefab!=null)
+            tooltip = (GameObject)Instantiate(tooltipPrefab);
+    }
+
+    public void ButtonClick(Item item) {
+        MenuController.equipManager.EquipWeapon((WeaponItem)item);
+    }
+
+    public void DeleteTooltip() {
+        if(tooltip!=null)
+            Destroy(tooltip);
     }
 }
