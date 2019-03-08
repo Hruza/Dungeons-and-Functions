@@ -27,9 +27,9 @@ public class EquipManager
         EquippedWeapons = new List<WeaponItem>();
         AllStats = new Dictionary<string, int>();
 
-/*        foreach (PossibleStat possibleStat in PossibleStat.AllPossibleStats)
+        foreach (StatPattern statPattern in StatPattern.AllStatPatterns)
         {
-            AllStats.Add(possibleStat.name, 0);
+            AllStats.Add(statPattern.name, 0);
         }
 
         CountAllStats();

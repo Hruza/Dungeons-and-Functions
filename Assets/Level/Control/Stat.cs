@@ -14,7 +14,7 @@ public class Stat : MonoBehaviour
     public int value;
 }
 
-public class PossibleStat
+public class StatPattern
 {
     /// <summary>
     /// jméno typu bonusového statu
@@ -37,9 +37,9 @@ public class PossibleStat
     /// </summary>
     public List<ItemType> possibleItems;
 
-    public static List<PossibleStat> AllPossibleStats = new List<PossibleStat>
+    public static List<StatPattern> AllStatPatterns = new List<StatPattern>
     {
-        new PossibleStat
+        new StatPattern
         {
             name = "DamageAdditive",
             lowerRange = 1,
@@ -47,7 +47,7 @@ public class PossibleStat
             incrementPerLvl = 1,
             possibleItems = { ItemType.Weapon }
         },
-        new PossibleStat
+        new StatPattern
         {
             name = "DamageMultiplicative",
             lowerRange = 1,
@@ -55,7 +55,7 @@ public class PossibleStat
             incrementPerLvl = 1,
             possibleItems = { ItemType.Weapon }
         },
-        new PossibleStat
+        new StatPattern
         {
             name = "DamageAdditive",
             lowerRange = 1,
@@ -63,7 +63,7 @@ public class PossibleStat
             incrementPerLvl = 1,
             possibleItems = { ItemType.Armor }
         },
-        new PossibleStat
+        new StatPattern
         {
             name = "ArmorMultiplicative",
             lowerRange = 1,
@@ -71,7 +71,7 @@ public class PossibleStat
             incrementPerLvl = 1,
             possibleItems = { ItemType.Armor }
         },
-        new PossibleStat
+        new StatPattern
         {
             name = "Regeneration",
             lowerRange = 1,

@@ -10,7 +10,7 @@ public enum ItemType { Armor, Weapon };
 /// <summary>
 /// všechny možné typy zbraní
 /// </summary>
-public enum WeaponType { Meele, Ranged };
+public enum WeaponType { Melee, Ranged };
 /// <summary>
 /// možné kvality předmětů
 /// </summary>
@@ -76,6 +76,13 @@ public class Item : ScriptableObject
     }
 
     /// <summary>
+    /// Delegát obsahující metodu sloužící pro vygenerování předmětu.
+    /// </summary>
+    /// <param name="item">základ předmětu</param>
+    /// <returns>vygenerovaný předmět</returns>
+    private delegate Item GeneratingMethods(Item item);
+
+    /// <summary>
     /// statická metoda sloužící pro generování náhodného itemu
     /// </summary>
     /// <param name="itemLevel">level vygenerovaného itemu (stejný, jako level monstra, ze kterého dropnul)</param>
@@ -84,9 +91,17 @@ public class Item : ScriptableObject
     {
         Item item = new Item(itemLevel);
 
-        //ToDo
-        Debug.Log("Ehm, zatím nic.");
-        return null;
+        //Seznam všech metod, které slouří pro generovnání náhodných předmětů.
+        var listOfMethods = new List<GeneratingMethods>
+        {
+            WeaponItem.Generate,
+            ArmorItem.Generate
+        };
+
+        //Zavolání náhodné metody, která vrátí náhodný předmět.
+        item = listOfMethods[UnityEngine.Random.Range(0, listOfMethods.Count)](item);
+
+        return item;
     }
 }
 
@@ -97,21 +112,47 @@ public class ArmorItem : Item
     /// </summary>
     public int armor;
     /// <summary>
-    /// upomalení hráče
+    /// zpomalení hráče
     /// </summary>
     public int movementSpeedReduction;
 
-    public static ArmorItem Generate()
+    public static ArmorItem Generate(Item item)
     {
-        //ToDo
-        Debug.Log("Ehm, zatím nic.");
-        return null;
+        //vygenerování náhodného vzoru
+        var pattern = ArmorPattern.AllArmorPatterns.Find(w => (w.lowerItemLevel >= item.itemLevel && w.upperItemLevel <= item.itemLevel));
+
+        if (pattern == null)
+        {
+            Debug.Log("Neexistuje zbraň s daným item levelem.");
+            return null;
+        }
+
+        //přiřazení vlastností, které mají všechny předměty společné
+        ArmorItem armor = new ArmorItem();
+        armor.itemLevel = item.itemLevel;
+        armor.rarity = item.rarity;
+        armor.quality = item.quality;
+        armor.itemType = ItemType.Weapon;
+
+        //přiřazení vlastností, které vycházejí ze vzoru
+        armor.name = pattern.name;
+        armor.movementSpeedReduction = pattern.movementSpeedReduction;
+        armor.armor = UnityEngine.Random.Range(pattern.lowerArmor, pattern.upperArmor + 1);
+
+        if (armor.quality > Quality.Basic)
+            Debug.Log("a");
+
+        return armor;
     }
 }
 
 [CreateAssetMenu(fileName = "Weapon", menuName = "Weapon")]
 public class WeaponItem : Item
 {
+    /// <summary>
+    /// typ zbraně
+    /// </summary>
+    public WeaponType weaponType;
     /// <summary>
     /// minimální poškození zbraně
     /// </summary>
@@ -129,11 +170,34 @@ public class WeaponItem : Item
     /// </summary>
     public GameObject weaponGameObject;
 
-    public static WeaponItem Generate()
+    public static WeaponItem Generate(Item item)
     {
-        //ToDo
-        Debug.Log("Ehm, zatím nic.");
-        return null;
+        //vygenerování náhodného vzoru
+        var pattern = WeaponPattern.AllWeaponPatterns.Find(w => (w.lowerItemLevel >= item.itemLevel && w.upperItemLevel <= item.itemLevel));
+
+        if (pattern == null)
+        {
+            Debug.Log("Neexistuje zbraň s daným item levelem.");
+            return null;
+        }
+
+        //přiřazení vlastností, které mají všechny předměty společné
+        WeaponItem weapon = new WeaponItem();
+        weapon.itemLevel = item.itemLevel;
+        weapon.rarity = item.rarity;
+        weapon.quality = item.quality;
+        weapon.itemType = ItemType.Weapon;
+
+        //přiřazení vlastností, které vycházejí ze vzoru
+        weapon.attackSpeed = pattern.attackSpeed;
+        weapon.sprite = pattern.sprite;
+        weapon.name = pattern.name;
+        weapon.weaponType = pattern.weaponType;
+        weapon.weaponGameObject = pattern.gameObject;
+        weapon.minDamage = UnityEngine.Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1);
+        weapon.maxDamage = UnityEngine.Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1);
+
+        return weapon;
     }
 
     /// <summary>
@@ -212,6 +276,27 @@ public static class Probability
         }
 
         return Rarity.Common;
+    }
+
+    /// <summary>
+    /// Náhodně zamíchá List.
+    /// </summary>
+    /// <typeparam name="T">Nějaký parametr listu.</typeparam>
+    /// <param name="list">List který bude zamíchán.</param>
+    /// <returns>zamíchaný list</returns>
+    public static List<T> Shuffle<T>(List<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = UnityEngine.Random.Range(0, n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+
+        return list;
     }
 }
 
