@@ -15,7 +15,6 @@ public class EquipManager
     /// seznam všech zbraní, které hráč může využívat
     /// </summary>
     public static List<WeaponItem> EquippedWeapons { get; private set; }
-
     /// <summary>
     /// seznam a hodnota každého bonusového statu, který má hráč na sobě
     /// </summary>
@@ -27,9 +26,9 @@ public class EquipManager
         EquippedWeapons = new List<WeaponItem>();
         AllStats = new Dictionary<string, int>();
 
-        foreach (PossibleStat possibleStat in PossibleStat.AllPossibleStats)
+        foreach (StatPattern statPattern in StatPattern.AllStatPatterns)
         {
-            AllStats.Add(possibleStat.name, 0);
+            AllStats.Add(statPattern.name, 0);
         }
 
         CountAllStats();
