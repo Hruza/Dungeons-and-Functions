@@ -33,7 +33,7 @@ public class EquipManager
         }
 
         CountAllStats();
-*/    }
+    }
 
     /// <summary>
     /// metoda, která projde všechny předměty a přepočítá všechny vlastnosti

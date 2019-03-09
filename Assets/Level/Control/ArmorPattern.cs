@@ -22,7 +22,7 @@ public class ArmorPattern : ItemPattern
     /// <summary>
     /// databáze všech možných brnění
     /// </summary>
-    public static List<ArmorPattern> AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
+    public static List<ArmorPattern> AllArmorPatterns;
     /*new List<ArmorPattern>
 {
     new ArmorPattern

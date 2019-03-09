@@ -16097,8 +16097,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - {fileID: 11400000, guid: ae22c3df24f0b2a43b085a3018030343, type: 2}
-  - {fileID: 11400000, guid: 4655c586ed161b5489a2844a23dfd855, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   weaponPanel: {fileID: 1449974375}
 --- !u!1 &652645252
 GameObject:

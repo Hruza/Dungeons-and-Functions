@@ -39,6 +39,9 @@ public class MenuController : MonoBehaviour
         //ToDo:load progress
         playerProgress = new PlayerProgress();
 
+
+        WeaponPattern.AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
+        ArmorPattern.AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
         equipManager = new EquipManager();
 
         levels = Resources.LoadAll<Level>("Levels");

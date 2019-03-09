@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 944944ffa1a37094ab5c58a6e182ef94, type: 3}
+  m_Name: Chalk
+  m_EditorClassIdentifier: 
+  itemLevel: 1
+  name: Piece of Chalk
+  quality: 0
+  rarity: 0
+  itemType: 1
+  sprite: {fileID: 21300000, guid: f7bbeb1617f755242a020cce8f7fd0f6, type: 3}
+  itemStats: []
+  weaponType: 1
+  minDamage: 5
+  maxDamage: 10
+  attackSpeed: 5
+  weaponGameObject: {fileID: 1305185763060277112, guid: 2f215e75da236f944b2704d93ced9b35,
+    type: 3}

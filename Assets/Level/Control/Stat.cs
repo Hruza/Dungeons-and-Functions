@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Stat : MonoBehaviour
 {
     /// <summary>
@@ -37,47 +38,60 @@ public class StatPattern
     /// </summary>
     public List<ItemType> possibleItems;
 
-    public static List<StatPattern> AllStatPatterns = new List<StatPattern>
-    {
-        new StatPattern
-        {
-            name = "DamageAdditive",
-            lowerRange = 1,
-            upperRange = 5,
-            incrementPerLvl = 1,
-            possibleItems = { ItemType.Weapon }
-        },
-        new StatPattern
-        {
-            name = "DamageMultiplicative",
-            lowerRange = 1,
-            upperRange = 3,
-            incrementPerLvl = 1,
-            possibleItems = { ItemType.Weapon }
-        },
-        new StatPattern
-        {
-            name = "DamageAdditive",
-            lowerRange = 1,
-            upperRange = 5,
-            incrementPerLvl = 1,
-            possibleItems = { ItemType.Armor }
-        },
-        new StatPattern
-        {
-            name = "ArmorMultiplicative",
-            lowerRange = 1,
-            upperRange = 3,
-            incrementPerLvl = 1,
-            possibleItems = { ItemType.Armor }
-        },
-        new StatPattern
-        {
-            name = "Regeneration",
-            lowerRange = 1,
-            upperRange = 3,
-            incrementPerLvl = 1,
-            possibleItems = { ItemType.Armor, ItemType.Weapon }
+    public static List<StatPattern> AllStatPatterns {
+        get {
+            if (allStatPatterns == null)
+            {
+                allStatPatterns = new List<StatPattern>
+                    {
+                        new StatPattern
+                        {
+                            name = "DamageAdditive",
+                            lowerRange = 1,
+                            upperRange = 5,
+                            incrementPerLvl = 1,
+                            possibleItems = new List<ItemType>{ItemType.Weapon}
+                        },
+                        new StatPattern
+                        {
+                            name = "DamageMultiplicative",
+                            lowerRange = 1,
+                            upperRange = 3,
+                            incrementPerLvl = 1,
+                            possibleItems = new List<ItemType>{ItemType.Weapon}
+                        },
+                        new StatPattern
+                        {
+                            name = "ArmorAdditive",
+                            lowerRange = 1,
+                            upperRange = 5,
+                            incrementPerLvl = 1,
+                            possibleItems = new List<ItemType>{ItemType.Armor}
+                        },
+                        new StatPattern
+                        {
+                            name = "ArmorMultiplicative",
+                            lowerRange = 1,
+                            upperRange = 3,
+                            incrementPerLvl = 1,
+                            possibleItems = new List<ItemType>{ItemType.Armor}
+                        },
+                        new StatPattern
+                        {
+                            name = "Regeneration",
+                            lowerRange = 1,
+                            upperRange = 3,
+                            incrementPerLvl = 1,
+                            possibleItems = new List<ItemType>{ ItemType.Armor, ItemType.Weapon }
+                        }
+                };
+            }
+            return allStatPatterns;
         }
-    };
+        set {
+            allStatPatterns = value;
+        }
+    }
+
+    public static List<StatPattern> allStatPatterns; 
 }

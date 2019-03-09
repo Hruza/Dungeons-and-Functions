@@ -38,7 +38,7 @@ public class WeaponPattern : ItemPattern
     /// <summary>
     /// databáze všech možných zbraní
     /// </summary>
-    public static List<WeaponPattern> AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
+    public static List<WeaponPattern> AllWeaponPatterns;
     /*new List<WeaponPattern>1
     {
         new WeaponPattern

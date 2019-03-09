@@ -22,4 +22,4 @@ MonoBehaviour:
   lowerMaxDamage: 5
   upperMaxDamage: 10
   attackSpeed: 1
-  gameObject: {fileID: 0}
+  gameObject: {fileID: 1892033328784222, guid: 16dbbb6aa0e3ab941bebfdf8f626afe2, type: 3}
