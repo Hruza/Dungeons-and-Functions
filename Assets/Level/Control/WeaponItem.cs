@@ -29,6 +29,7 @@ public class WeaponItem : Item
     public static WeaponItem Generate(Item item)
     {
         //vygenerování náhodného vzoru
+        WeaponPattern.AllWeaponPatterns = WeaponPattern.AllWeaponPatterns.Shuffle();
         var pattern = WeaponPattern.AllWeaponPatterns.Find(w => (w.lowerItemLevel >= item.itemLevel && w.upperItemLevel <= item.itemLevel));
 
         if (pattern == null)

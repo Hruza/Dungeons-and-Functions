@@ -42,6 +42,7 @@ public class MenuController : MonoBehaviour
 
         WeaponPattern.AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
         ArmorPattern.AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
+        StatPattern.AllStatPatterns = Resources.LoadAll<StatPattern>("Stats").ToList<StatPattern>();
         equipManager = new EquipManager();
 
         levels = Resources.LoadAll<Level>("Levels");

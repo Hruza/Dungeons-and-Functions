@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// všechny možné typy předmětů
@@ -15,11 +16,15 @@ public enum WeaponType { Melee, Ranged };
 /// možné kvality předmětů
 /// </summary>
 public enum Quality { Basic, C, Cplusplus, Csharp };
-
 /// <summary>
 /// možné rarity zbraní
 /// </summary>
-public enum Rarity { Common, Rare, Unique };
+public enum Rarity
+{
+    Common = 0,
+    Rare = 1,
+    Unique = 2
+};
 
 /// <summary>
 /// Třída reprezentující předmět, který může hráč získat.
@@ -55,6 +60,15 @@ public class Item : ScriptableObject
     public Sprite sprite;
 
     public Stat[] itemStats;
+
+    /// <summary>
+    /// Konstanta určující, o kolik je vylepšen předmět.
+    /// </summary>
+    public const double qualityUpgrade = 1.07;
+    /// <summary>
+    /// Konstanta, která určuje o koik je lepší předmět vyšší rarity.
+    /// </summary>
+    public const double rarityUpgrade = 1.1;
 
     /// <summary>
     /// bezparametrický kontruktor (nic neudělá)
@@ -103,6 +117,34 @@ public class Item : ScriptableObject
 
         return item;
     }
+
+    /// <summary>
+    /// metoda, která generuje náhodné staty pro předmět
+    /// </summary>
+    public void GenerateStats()
+    {
+        int numberOfStats = UnityEngine.Random.Range(0, 2) +  (int)rarity;
+        List<StatPattern> possibleStatPatterns = StatPattern.AllStatPatterns.Where<StatPattern>
+                                                (s => (s.possibleItems.Contains(itemType) == true)).ToList();
+
+        if (possibleStatPatterns.Count == 0)
+        {
+            Debug.Log("Neexistují vhodné staty pro předmět.", this);
+            return;
+        }
+        possibleStatPatterns = possibleStatPatterns.Shuffle();
+
+        numberOfStats = Math.Min(numberOfStats, possibleStatPatterns.Count); //může se stát, že nebude dost statů
+        itemStats = new Stat[numberOfStats];
+        for (int i = 0; i < numberOfStats; i++)
+        {
+            Stat stat = new Stat();
+            stat.name = possibleStatPatterns[i].name;
+            stat.value = UnityEngine.Random.Range(possibleStatPatterns[i].lowerRange, possibleStatPatterns[i].upperRange + 1);
+            stat.value += possibleStatPatterns[i].incrementPerLvl * (itemLevel - 1);
+            itemStats[i] = stat;
+        }
+    }
 }
 
 public class ArmorItem : Item
@@ -116,33 +158,74 @@ public class ArmorItem : Item
     /// </summary>
     public int movementSpeedReduction;
 
+    public ArmorItem()
+    {
+    }
+
+    public ArmorItem(Item item)
+    {
+        itemLevel = item.itemLevel;
+        rarity = item.rarity;
+        quality = item.quality;
+        itemType = ItemType.Weapon;
+    }
+
     public static ArmorItem Generate(Item item)
     {
         //vygenerování náhodného vzoru
+        ArmorPattern.AllArmorPatterns = ArmorPattern.AllArmorPatterns.Shuffle();
         var pattern = ArmorPattern.AllArmorPatterns.Find(w => (w.lowerItemLevel >= item.itemLevel && w.upperItemLevel <= item.itemLevel));
 
         if (pattern == null)
         {
-            Debug.Log("Neexistuje zbraň s daným item levelem.");
+            Debug.Log("Neexistuje brnění s daným item levelem.");
             return null;
         }
 
+        ArmorItem armor = Generate(item, pattern);   
+
+        return armor;
+    }
+
+    public static ArmorItem Generate(Item item, ArmorPattern pattern)
+    {
         //přiřazení vlastností, které mají všechny předměty společné
-        ArmorItem armor = new ArmorItem();
-        armor.itemLevel = item.itemLevel;
-        armor.rarity = item.rarity;
-        armor.quality = item.quality;
-        armor.itemType = ItemType.Weapon;
+        ArmorItem armor = new ArmorItem(item);
 
         //přiřazení vlastností, které vycházejí ze vzoru
         armor.name = pattern.name;
         armor.movementSpeedReduction = pattern.movementSpeedReduction;
         armor.armor = UnityEngine.Random.Range(pattern.lowerArmor, pattern.upperArmor + 1);
 
-        if (armor.quality > Quality.Basic)
-            Debug.Log("a");
+        //vylepšení brnění v případě, že má vyšší kvalitu
+        if (armor.quality == Quality.C)
+        {
+            armor.Upgrade();
+            armor.quality = Quality.C;
+        }
+
+        //vylepšení brnění v případě, že má vyšší raritu
+        if (armor.rarity == Rarity.Rare)
+            armor.armor = (int)(armor.armor * rarityUpgrade);
+        if (armor.rarity == Rarity.Unique)
+            armor.armor = (int)(armor.armor * qualityUpgrade * qualityUpgrade);
 
         return armor;
+    }
+
+    /// <summary>
+    /// Metoda sloužící pro vylepšování brnění (zvyšuje kvalitu).
+    /// </summary>
+    public void Upgrade()
+    {
+        if (quality == Quality.Csharp)
+        {
+            Debug.Log("Pokoušíš se vylepšit předmět, který už vylepšit nelze.");
+            return;
+        }
+        quality = Extensions.NextElement(quality);
+
+        armor = (int)(armor * qualityUpgrade);
     }
 }
 
@@ -214,13 +297,37 @@ public static class Probability
         return Rarity.Common;
     }
 
+    
+}
+
+/// <summary>
+/// třída obsahující rozšiřující metody
+/// </summary>
+public static class Extensions
+{
+    /// <summary>
+    /// Metoda sloužící k najití dalšího prvku ve výčtovém typu.
+    /// </summary>
+    /// <typeparam name="T">výčtový typ (enum)</typeparam>
+    /// <param name="src">prvek výčtového typu</param>
+    /// <returns>Další prvek výčtového typu v pořadí</returns>
+    public static T NextElement<T>(this T src) where T : struct
+    {
+        if (!typeof(T).IsEnum)
+            throw new ArgumentException(String.Format("Argument {0} is not an Enum", typeof(T).FullName));
+
+        T[] Arr = (T[])Enum.GetValues(src.GetType());
+        int j = Array.IndexOf<T>(Arr, src) + 1;
+        return (Arr.Length == j) ? Arr[0] : Arr[j];
+    }
+
     /// <summary>
     /// Náhodně zamíchá List.
     /// </summary>
     /// <typeparam name="T">Nějaký parametr listu.</typeparam>
     /// <param name="list">List který bude zamíchán.</param>
     /// <returns>zamíchaný list</returns>
-    public static List<T> Shuffle<T>(List<T> list)
+    public static List<T> Shuffle<T>(this List<T> list)
     {
         int n = list.Count;
         while (n > 1)
