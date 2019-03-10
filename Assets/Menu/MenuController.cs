@@ -58,13 +58,13 @@ public class MenuController : MonoBehaviour
             selected = (selected + dif+ levels.Length) % levels.Length;
             levels[selected].Playable = (playerProgress.ProgressLevel>=levels[selected].progressID);
             card.Info = levels[selected];
+            selectedLevel = levels[selected];
         }
         else Debug.LogWarning("No levels found");
     }
 
-    public void PlayLevel() {
+    static public void PlayLevel() {
         //ToDo:pridat komunikaci s levelem
-        selectedLevel = levels[selected];
         SceneManager.LoadScene(1);
     }
 

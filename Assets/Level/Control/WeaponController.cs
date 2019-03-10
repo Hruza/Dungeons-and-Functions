@@ -22,10 +22,10 @@ public class WeaponController : MonoBehaviour
     {
         equip = MenuController.equipManager;
         weapons = equip.EquippedWeapons;
-        currentWeaponIndex = 0;
+        currentWeaponIndex = -1;
         if (weapons.Count < 1)
             Debug.LogError("Hele, nejak nerikas, co ma hrac za zbrane");
-        currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
+        ChangeWeapon();
 
         //inicializace UI
         GameObject child;
@@ -53,9 +53,9 @@ public class WeaponController : MonoBehaviour
         currentWeaponIndex++;
         if (currentWeaponIndex >= weapons.Count)
             currentWeaponIndex = 0;
-        if (currentWeapon.GetComponent<Weapon>().ReadyToChange())
+        if (currentWeapon == null || currentWeapon.GetComponent<Weapon>().ReadyToChange())
         {
-            Destroy(currentWeapon);
+            if(currentWeapon==null) Destroy(currentWeapon);
             currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
             currentWeapon.GetComponent<Weapon>().minDamage = equip.TotalMinDamage(currentWeaponIndex);
             currentWeapon.GetComponent<Weapon>().maxDamage = currentWeapon.GetComponent<Weapon>().minDamage + weapons[currentWeaponIndex].Range();

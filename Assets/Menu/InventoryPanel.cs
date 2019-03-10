@@ -12,8 +12,8 @@ public class InventoryPanel : MonoBehaviour
     private int delta;
     private int maxColumns;
 
-    private List<WeaponItem> items;
-    public List<WeaponItem> Items {
+    private List<Item> items;
+    public List<Item> Items {
         get {
             return items;
         }
