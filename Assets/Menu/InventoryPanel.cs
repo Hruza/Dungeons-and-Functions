@@ -49,7 +49,7 @@ public class InventoryPanel : MonoBehaviour
 
             InventoryButton buttonComp = button.GetComponent<InventoryButton>();
             buttonComp.CarriedItem = item;
-            buttonComp.itemInventory = itemInventory;
+            if(itemInventory!=null)buttonComp.itemInventory = itemInventory;
 
             buttons.Add(button);
             i++;

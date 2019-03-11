@@ -7,11 +7,14 @@ using UnityEngine.SceneManagement;
 public class LevelController : MonoBehaviour {
     public GameObject map;
     public GameObject menu;
+    public GameObject playerDiedMenu;
     private bool menuOpened=false;
     private EquipManager equip;
+    public static LevelController levelController;
 
     //Setup of level
 	void Start () {
+        levelController = this;
         equip = MenuController.equipManager;
         Level level = MenuController.selectedLevel;
         map.GetComponent<LevelGenerator>().Generate(level.roomCount,EnemyBundle.Merge(level.enemies),level.difficulty);
@@ -35,10 +38,24 @@ public class LevelController : MonoBehaviour {
     }
 
     /// <summary>
+    /// Zavola se pri zabiti hrace
+    /// </summary>
+    public void PlayerDied() {
+        playerDiedMenu.SetActive(true);
+    }
+
+    /// <summary>
+    /// Zavola se pri uspesnem ukonceni levelu
+    /// </summary>
+    public static void LevelSuccesfulyExit() {
+        MenuController.LevelExit(true);
+    }
+
+    /// <summary>
     /// navrat do hlavniho menu
     /// </summary>
     public void Exit() {
-        SceneManager.LoadScene(0);
+        MenuController.LevelExit(false);
     }
 
 }

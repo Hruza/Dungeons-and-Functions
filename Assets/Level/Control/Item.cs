@@ -38,7 +38,7 @@ public class Item : ScriptableObject
     /// <summary>
     /// jméno předmětu
     /// </summary>
-    public string name;
+    public string itemName;
     /// <summary>
     /// kvalita předmětu
     /// </summary>
@@ -84,7 +84,7 @@ public class Item : ScriptableObject
     public Item(int itemLevel)
     {
         this.itemLevel = itemLevel;
-        name = "GenericItem";
+        itemName = "GenericItem";
         quality = Probability.RandomQuality();
         rarity = Probability.RandomRarity();
     }

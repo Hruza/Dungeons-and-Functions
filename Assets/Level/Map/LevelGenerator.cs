@@ -103,7 +103,7 @@ public class LevelGenerator : MonoBehaviour {
                 else offset = 0;
             }
 
-            
+            //addEnemies
             EnemyProperties[] chosenEnemies = new EnemyProperties[enemyCount];
                 for (int k = 0; k < enemyCount; k++)
                 {
@@ -130,6 +130,8 @@ public class LevelGenerator : MonoBehaviour {
 
         //ToDo: add something interesting
 
+        Room exit = new Room(new Vector2Int(rMost+5,0),1,1);
+        rMost += 5;
 
         //initialize map
         Vector2Int center = new Vector2Int(-lMost+1,-bMost+1);
@@ -154,6 +156,10 @@ public class LevelGenerator : MonoBehaviour {
         foreach (Room room in roomList) {
             CreatePath(room, roomList[Random.Range(0, roomCount)]);
         }
+
+        exit.position += center;
+        map[exit.position.x, exit.position.y] = 3;
+        CreatePath(exit, roomList[Random.Range(0, roomCount)]);
 
         //generate map
         CreateMap(mapWidth,mapHeight);

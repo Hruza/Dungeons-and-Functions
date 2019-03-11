@@ -168,8 +168,9 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Die()
     {
-        //TODO - pouze provizorni
-        Debug.Log("Hrac zemrel");
+        LevelController.levelController.PlayerDied();
+        gameObject.GetComponent<Rigidbody2D>().Sleep();
+        this.enabled = false;
     }
 
     /// <summary>

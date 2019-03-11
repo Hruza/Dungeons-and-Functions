@@ -49,7 +49,7 @@ public class ArmorItem : Item
         ArmorItem armor = new ArmorItem(item);
 
         //přiřazení vlastností, které vycházejí ze vzoru
-        armor.name = pattern.name;
+        armor.itemName = pattern.name;
         armor.movementSpeedReduction = pattern.movementSpeedReduction;
         armor.armor = UnityEngine.Random.Range(pattern.lowerArmor, pattern.upperArmor + 1);
 

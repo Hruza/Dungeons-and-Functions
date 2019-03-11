@@ -48,7 +48,7 @@ public class WeaponItem : Item
         //přiřazení vlastností, které vycházejí ze vzoru
         weapon.attackSpeed = pattern.attackSpeed;
         weapon.sprite = pattern.sprite;
-        weapon.name = pattern.name;
+        weapon.itemName = pattern.name;
         weapon.weaponType = pattern.weaponType;
         weapon.weaponGameObject = pattern.gameObject;
         weapon.minDamage = UnityEngine.Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1);

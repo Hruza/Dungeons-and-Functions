@@ -15,7 +15,7 @@ public class InvTooltip : MonoBehaviour
         }
         set {
             item = value;
-            itemName.text= item.name;
+            itemName.text= item.itemName;
             StringBuilder sb=new StringBuilder();
             sb.AppendFormat("{0} level {1}\n",item.itemType, item.itemLevel);
             sb.AppendLine(item.rarity.ToString());
