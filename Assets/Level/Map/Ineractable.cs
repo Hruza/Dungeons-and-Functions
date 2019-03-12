@@ -6,7 +6,8 @@ public class Ineractable : MonoBehaviour
 {
     public enum InteractableType {exit,treasure };
     public InteractableType type;
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (type)
         {

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
-  m_Name: Integral Sword
+  m_Name: log ruler
   m_EditorClassIdentifier: 
-  name: Integral Sword
+  name: Log Ruler
   lowerItemLevel: 1
-  upperItemLevel: 1000
+  upperItemLevel: 10000
   sprite: {fileID: 0}
   weaponType: 0
   lowerMinDamage: 1
@@ -22,4 +22,5 @@ MonoBehaviour:
   lowerMaxDamage: 5
   upperMaxDamage: 10
   attackSpeed: 1
-  gameObject: {fileID: 1892033328784222, guid: 16dbbb6aa0e3ab941bebfdf8f626afe2, type: 3}
+  gameObject: {fileID: 9195056921275180072, guid: 832865a4c80ce784c93824186515e366,
+    type: 3}

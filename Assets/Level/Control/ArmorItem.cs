@@ -23,14 +23,14 @@ public class ArmorItem : Item
         itemLevel = item.itemLevel;
         rarity = item.rarity;
         quality = item.quality;
-        itemType = ItemType.Weapon;
+        itemType = ItemType.Armor;
     }
 
     public static ArmorItem Generate(Item item)
     {
         //vygenerování náhodného vzoru
         ArmorPattern.AllArmorPatterns = ArmorPattern.AllArmorPatterns.Shuffle();
-        var pattern = ArmorPattern.AllArmorPatterns.Find(w => (w.lowerItemLevel >= item.itemLevel && w.upperItemLevel <= item.itemLevel));
+        var pattern = ArmorPattern.AllArmorPatterns.Find(w => (w.lowerItemLevel <= item.itemLevel && w.upperItemLevel >= item.itemLevel));
 
         if (pattern == null)
         {
@@ -46,12 +46,18 @@ public class ArmorItem : Item
     public static ArmorItem Generate(Item item, ArmorPattern pattern)
     {
         //přiřazení vlastností, které mají všechny předměty společné
-        ArmorItem armor = new ArmorItem(item);
+        ArmorItem armor = ScriptableObject.CreateInstance<ArmorItem>();
+        armor.itemLevel = item.itemLevel;
+        armor.rarity = item.rarity;
+        armor.quality = item.quality;
+        armor.itemType = ItemType.Armor;
+        armor.itemStats = new Stat[0];
 
         //přiřazení vlastností, které vycházejí ze vzoru
         armor.itemName = pattern.name;
+        armor.sprite = pattern.sprite;
         armor.movementSpeedReduction = pattern.movementSpeedReduction;
-        armor.armor = UnityEngine.Random.Range(pattern.lowerArmor, pattern.upperArmor + 1);
+        armor.armor = item.itemLevel * pattern.armorIncrementPerLevel + Random.Range(pattern.lowerArmor, pattern.upperArmor + 1);
 
         //vylepšení brnění v případě, že má vyšší kvalitu
         if (armor.quality == Quality.C)

@@ -38,7 +38,8 @@ public class InventoryButton : MonoBehaviour
     public void ShowTooltip() {
         if (item != null && tooltip == null)
         {
-            tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, itemInventory.transform);
+            if(itemInventory!=null) tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, itemInventory.transform);
+            else tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, transform.parent.parent);
             tooltip.GetComponent<InvTooltip>().Item = item;
             StartCoroutine(MoveTooltip());
         }

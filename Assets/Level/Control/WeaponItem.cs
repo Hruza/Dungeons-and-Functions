@@ -30,7 +30,7 @@ public class WeaponItem : Item
     {
         //vygenerování náhodného vzoru
         WeaponPattern.AllWeaponPatterns = WeaponPattern.AllWeaponPatterns.Shuffle();
-        var pattern = WeaponPattern.AllWeaponPatterns.Find(w => (w.lowerItemLevel >= item.itemLevel && w.upperItemLevel <= item.itemLevel));
+        var pattern = WeaponPattern.AllWeaponPatterns.Find(w => (w.lowerItemLevel <= item.itemLevel && w.upperItemLevel >= item.itemLevel));
 
         if (pattern == null)
         {
@@ -39,11 +39,12 @@ public class WeaponItem : Item
         }
 
         //přiřazení vlastností, které mají všechny předměty společné
-        WeaponItem weapon = new WeaponItem();
+        WeaponItem weapon = ScriptableObject.CreateInstance<WeaponItem>();
         weapon.itemLevel = item.itemLevel;
         weapon.rarity = item.rarity;
         weapon.quality = item.quality;
         weapon.itemType = ItemType.Weapon;
+        weapon.itemStats = new Stat[0];
 
         //přiřazení vlastností, které vycházejí ze vzoru
         weapon.attackSpeed = pattern.attackSpeed;
@@ -51,8 +52,8 @@ public class WeaponItem : Item
         weapon.itemName = pattern.name;
         weapon.weaponType = pattern.weaponType;
         weapon.weaponGameObject = pattern.gameObject;
-        weapon.minDamage = UnityEngine.Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1);
-        weapon.maxDamage = UnityEngine.Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1);
+        weapon.minDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1);
+        weapon.maxDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1);
 
         return weapon;
     }

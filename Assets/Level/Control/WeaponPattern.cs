@@ -27,6 +27,10 @@ public class WeaponPattern : ItemPattern
     /// </summary>
     public int upperMaxDamage;
     /// <summary>
+    /// Kolik damage za level se prida k zakladu
+    /// </summary>
+    public int damageIncrementPerLevel;
+    /// <summary>
     /// rychlost útoku zbraně
     /// </summary>
     public int attackSpeed;
