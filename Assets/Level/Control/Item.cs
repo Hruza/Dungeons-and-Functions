@@ -103,7 +103,8 @@ public class Item : ScriptableObject
     /// <returns>vygenerovaný item</returns>
     public static Item Generate(int itemLevel)
     {
-        Item item = new Item(itemLevel);
+        Item item = ScriptableObject.CreateInstance<Item>();
+        item.itemLevel = itemLevel;
 
         //Seznam všech metod, které slouří pro generovnání náhodných předmětů.
         var listOfMethods = new List<GeneratingMethods>

@@ -23,7 +23,8 @@ public class LevelExit : MonoBehaviour
             //tady uz ne
 
             panel.Items = reward;
-            MenuController.playerProgress.items.AddRange(reward.FindAll(x => x.itemType != ItemType.Weapon));
+            Debug.Log(reward.Count);
+            MenuController.playerProgress.items.AddRange(reward.FindAll(x => (x.itemType != ItemType.Weapon)));
             MenuController.playerProgress.weapons.AddRange(reward.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
         }
         else

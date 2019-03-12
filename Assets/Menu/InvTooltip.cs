@@ -40,6 +40,7 @@ public class InvTooltip : MonoBehaviour
                 default:
                     break;
             }
+            if(item.itemStats!=null)
             foreach (Stat stat in item.itemStats)
             {
                 sb.AppendFormat("  {0} +{1}", stat.name, stat.value);

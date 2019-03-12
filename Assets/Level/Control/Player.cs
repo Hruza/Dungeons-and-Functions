@@ -132,6 +132,10 @@ public class Player : MonoBehaviour
         Armor = 0;
         Regeneration = 0;
 
+        equip = MenuController.equipManager;
+        SetArmor();
+        SetRegeneration();
+
         if (Regeneration > 0)
             InvokeRepeating("Regenerate", 1, 1);
 
@@ -169,8 +173,7 @@ public class Player : MonoBehaviour
     private void Die()
     {
         LevelController.levelController.PlayerDied();
-        gameObject.GetComponent<Rigidbody2D>().Sleep();
-        this.enabled = false;
+        gameObject.GetComponent<PlayerMovement>().enabled = false;
     }
 
     /// <summary>
