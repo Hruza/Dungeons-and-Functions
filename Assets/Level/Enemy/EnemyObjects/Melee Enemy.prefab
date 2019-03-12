@@ -170,7 +170,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815213991594189172}
-  m_Text: a
+  m_Text: b
   m_OffsetZ: 0
   m_CharacterSize: 0.2
   m_LineSpacing: 1
@@ -332,7 +332,7 @@ MonoBehaviour:
   messageText: {fileID: 1564295325502522, guid: 3b9c651deadefeb4cb9a48910ff4af20,
     type: 3}
   playerDistance: 2
-  attackRadius: 3
+  attackRadius: 2.5
   timeToStartAttacking: 0.2
   attackDelay: 0.5
   attackDuration: 0.5

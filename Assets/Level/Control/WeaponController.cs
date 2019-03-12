@@ -55,7 +55,7 @@ public class WeaponController : MonoBehaviour
             currentWeaponIndex = 0;
         if (currentWeapon == null || currentWeapon.GetComponent<Weapon>().ReadyToChange())
         {
-            if(currentWeapon==null) Destroy(currentWeapon);
+            if(currentWeapon!=null) Destroy(currentWeapon);
             currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
             currentWeapon.GetComponent<Weapon>().minDamage = equip.TotalMinDamage(currentWeaponIndex);
             currentWeapon.GetComponent<Weapon>().maxDamage = currentWeapon.GetComponent<Weapon>().minDamage + weapons[currentWeaponIndex].Range();

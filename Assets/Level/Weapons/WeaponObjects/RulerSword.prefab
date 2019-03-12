@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 819696523489097829}
   - component: {fileID: 7893585234427994718}
-  m_Layer: 0
+  - component: {fileID: 3854813890872373688}
+  m_Layer: 8
   m_Name: logRuler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &819696523489097829
 Transform:
   m_ObjectHideFlags: 0
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 655780302609189670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1163536, y: 0.1163536, z: 0.1163536}
   m_Children: []
   m_Father: {fileID: 9192579514516428634}
   m_RootOrder: 0
@@ -70,8 +71,8 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f3176739204f3c84293c47e58eb2792f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
+  m_FlipX: 1
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 18.38, y: 5.22}
   m_AdaptiveModeThreshold: 0.5
@@ -79,6 +80,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &3854813890872373688
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655780302609189670}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 9.19, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 1, y: 0.5}
+    oldSize: {x: 18.38, y: 5.22}
+    newSize: {x: 18.38, y: 5.22}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 18.38, y: 4.198027}
+  m_EdgeRadius: 0
 --- !u!1 &9195056921275180072
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,6 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9192579514516428634}
   - component: {fileID: 4730803693654107457}
+  - component: {fileID: 3267352998927893802}
   m_Layer: 8
   m_Name: RulerSword
   m_TagString: Untagged
@@ -129,5 +157,27 @@ MonoBehaviour:
   angleOfSwing: 120
   swingingThing: {fileID: 655780302609189670}
   delay: 0
-  knockback: 1
-  autoAttack: 0
+  knockback: 20
+  autoAttack: 1
+  changeDirections: 1
+--- !u!50 &3267352998927893802
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9195056921275180072}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
