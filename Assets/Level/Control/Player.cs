@@ -179,7 +179,11 @@ public class Player : MonoBehaviour
     /// <param name="armor">brneni hrace</param>
     public void SetArmor()
     {
-        Armor = equip.AllStats["Armor"] * (100 + equip.AllStats["ArmorMultiplicative"]) / 100 + equip.AllStats["ArmorAdditive"];
+        var armor = equip.EquippedItems.Find(i => i.itemType == ItemType.Armor);
+        if (armor == null)
+            Armor = 0;
+        else
+            Armor = ((ArmorItem)(armor)).armor * (100 + equip.AllStats["ArmorMultiplicative"]) / 100 + equip.AllStats["ArmorAdditive"];
     }
 
     /// <summary>
