@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.IO;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class MenuController : MonoBehaviour
 {
@@ -95,5 +98,58 @@ public class MenuController : MonoBehaviour
 
     public void Exit() {
         Application.Quit();
+    }
+
+    /// <summary>
+    /// Uloží obsah proměnné playerProgress do binárního souboru.
+    /// </summary>
+    public void SaveProgress()
+    {
+        FileStream fs = new FileStream("hra.dat", FileMode.Create);
+
+        try
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(fs, playerProgress);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message + e.ToString());
+        }
+        finally
+        {
+            fs.Close();
+        }
+    }
+
+    /// <summary>
+    /// Načte uloženou hru, tedy načte soubor do proměnné playerProgress.
+    /// </summary>
+    public void LoadProgress()
+    {
+        FileStream fs = new FileStream("hra.dat", FileMode.Open);
+
+        try
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            playerProgress = (PlayerProgress)bf.Deserialize(fs);
+        }
+        catch (Exception e)
+        {
+
+            Debug.Log(e.Message);
+        }
+        finally
+        {
+            fs.Close();
+        }
+    }
+
+    /// <summary>
+    /// Vymaže progres hráče, tedy vytvoří novou instanci proměnné playerProgress.
+    /// </summary>
+    public void ClearProgress()
+    {
+        playerProgress = new PlayerProgress();
     }
 }
