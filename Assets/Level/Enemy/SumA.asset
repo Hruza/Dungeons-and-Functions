@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6565ba7d729cdd45bcdbb275a36555e, type: 3}
-  m_Name: Level infinity
+  m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
+  m_Name: SumA
   m_EditorClassIdentifier: 
-  levelName: OVER 9000!
-  progressID: 0
-  difficulty: 9001
-  enemies:
-  - count: 1
-    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
-  roomCount: 1
+  name: Sum of a
+  baseHP: 30
+  perLevelHPIncrement: 5
+  baseDamage: 0
+  perLevelDamageIncrement: 0
+  EnemyGameObject: {fileID: 4719645516164970819, guid: 978eecb630f3e9245ba7452a6ec66ee3,
+    type: 3}

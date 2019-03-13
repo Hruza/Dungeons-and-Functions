@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6565ba7d729cdd45bcdbb275a36555e, type: 3}
-  m_Name: Level infinity
+  m_Name: Level6
   m_EditorClassIdentifier: 
-  levelName: OVER 9000!
-  progressID: 0
-  difficulty: 9001
+  levelName: Deeper Limit Theorems
+  progressID: 5
+  difficulty: 4
   enemies:
-  - count: 1
-    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
-  roomCount: 1
+  - count: 13
+    enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - count: 5
+    enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
+  roomCount: 7

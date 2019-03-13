@@ -12,7 +12,7 @@ public class LevelCard : MonoBehaviour
 
     public Level Info {
         set {
-            tName.text = value.name;
+            tName.text = value.levelName;
             tDifficulty.text=value.difficulty.ToString();
             playButton.interactable = value.Playable;
         }

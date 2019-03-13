@@ -17,6 +17,7 @@ public class PlayerProgress
 
     public PlayerProgress()
     {
+        ProgressLevel = 0;
         items = new List<Item>(Resources.LoadAll<Item>("StartingItems"));
         weapons = new List<WeaponItem>(Resources.LoadAll<WeaponItem>("StartingWeapons"));
     }

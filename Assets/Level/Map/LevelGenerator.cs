@@ -128,10 +128,29 @@ public class LevelGenerator : MonoBehaviour {
             roomList.Add(current);
         }
 
-        //ToDo: add something interesting
-
         Room exit = new Room(new Vector2Int(rMost+5,0),1,1);
-        rMost += 5;
+
+        //ToDo: add something interesting
+        switch (Random.Range(0,4))
+        {
+            case 0:
+                rMost += 5;
+                break;
+            case 1:
+                exit.position = new Vector2Int(lMost - 5, 0);
+                lMost -= 5;
+                break;
+            case 2:
+                exit.position = new Vector2Int(0, tMost+5);
+                tMost += 5;
+                break;
+            case 3:
+                exit.position = new Vector2Int(0,bMost-5);
+                bMost -= 5;
+                break;
+            default:
+                break;
+        }
 
         //initialize map
         Vector2Int center = new Vector2Int(-lMost+1,-bMost+1);

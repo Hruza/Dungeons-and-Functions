@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
-  m_Name: Enemy
+  m_Name: Sequence b
   m_EditorClassIdentifier: 
-  name: Sequence
+  name: Sequence b
   baseHP: 15
   perLevelHPIncrement: 5
   baseDamage: 10
