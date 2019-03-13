@@ -17,7 +17,7 @@ public class ItemInventory : MonoBehaviour
     private WeaponItem[] selectedWeapon;
     private Item selectedArmor;
 
-    private void OnEnable()
+    private void Start()
     {
         selectedWeapon = new WeaponItem[2];
         progress = MenuController.playerProgress;

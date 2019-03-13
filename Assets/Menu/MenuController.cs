@@ -57,17 +57,24 @@ public class MenuController : MonoBehaviour
         {
             playerProgress = new PlayerProgress();
 
+            InitializePlayer();
+
             WeaponPattern.AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
             ArmorPattern.AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
             StatPattern.AllStatPatterns = Resources.LoadAll<StatPattern>("Stats").ToList<StatPattern>();
             equipManager = new EquipManager();
             startedFirst = false;
         }
-        else {
+        else
+        {
             mainMenu.SetActive(false);
             levelExitMenu.SetActive(true);
             levelExitMenu.GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
         }
+    }
+
+    private void InitializePlayer()
+    {
         levels = Resources.LoadAll<Level>("Levels");
         levels = levels.OrderBy(s => s.progressID).ToArray<Level>();
         selected = 0;

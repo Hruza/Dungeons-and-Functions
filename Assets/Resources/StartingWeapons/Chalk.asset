@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chalk
   m_EditorClassIdentifier: 
   itemLevel: 1
-  name: Piece of Chalk
+  itemName: A Piece of Chalk
   quality: 0
   rarity: 0
   itemType: 1

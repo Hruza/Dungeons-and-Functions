@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class MeleeWeapon : Weapon
 {
     public float swingDuration=0.5f;
@@ -12,6 +13,7 @@ public class MeleeWeapon : Weapon
     public bool autoAttack = false;
     private bool ready = true;
     private int lastSwingDir=1;
+    public bool changeDirections = true;
 
     protected override void Update()
     {
@@ -36,15 +38,15 @@ public class MeleeWeapon : Weapon
 
     protected IEnumerator WeaponSwing() {
         swingingThing.SetActive(true);
-        swingingThing.transform.rotation = Quaternion.Euler(0,0,-lastSwingDir*(angleOfSwing/2));
+        swingingThing.transform.localRotation = Quaternion.Euler(0,0,-lastSwingDir*(angleOfSwing/2));
         float angle = 0;
         while (angle<angleOfSwing)
         {
-            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime);
-            angle += Time.deltaTime;
+            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime*angleOfSwing/swingDuration);
+            angle += Time.deltaTime*angleOfSwing/swingDuration;
             yield return new WaitForEndOfFrame();
         }
-        lastSwingDir *= -1;
+        if(changeDirections) lastSwingDir *= -1;
         swingingThing.SetActive(false);
         Invoke("Reset", delay);
         yield return null;
@@ -52,7 +54,7 @@ public class MeleeWeapon : Weapon
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy") {
+        if (collision.gameObject.tag == "Enemy") {
             collision.SendMessage("GetDamage", Random.Range(minDamage, maxDamage + 1), SendMessageOptions.DontRequireReceiver);
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce((collision.transform.position-transform.position).normalized * knockback,ForceMode2D.Impulse);
         }

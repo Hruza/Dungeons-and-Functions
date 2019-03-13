@@ -110,6 +110,8 @@ public abstract class NPC : MonoBehaviour
         //ToDo:ThrowMessage(damage.ToString(),Color.red);
         if (HP <= 0)
            Die();
+        Animator anim = GetComponent<Animator>();
+        if (anim != null) anim.SetTrigger("Damage");
     }
 
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HSNotes
   m_EditorClassIdentifier: 
   itemLevel: 1
-  name: High School Notes
+  itemName: High School Notes
   quality: 0
   rarity: 0
   itemType: 0
