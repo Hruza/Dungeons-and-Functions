@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
         Name = "Player";
-        MaxHP = 10000;
+        MaxHP = 50;
         HP = MaxHP; 
         Armor = 0;
         Regeneration = 0;

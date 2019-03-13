@@ -53,11 +53,12 @@ public class MenuController : MonoBehaviour
     {
         menuController = this;
         //ToDo:load progress
+
+
         if (startedFirst)
         {
+            //   LoadProgress();
             playerProgress = new PlayerProgress();
-
-            InitializePlayer();
 
             WeaponPattern.AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
             ArmorPattern.AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
@@ -71,9 +72,10 @@ public class MenuController : MonoBehaviour
             levelExitMenu.SetActive(true);
             levelExitMenu.GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
         }
+        InitializeLevels();
     }
 
-    private void InitializePlayer()
+    private void InitializeLevels()
     {
         levels = Resources.LoadAll<Level>("Levels");
         levels = levels.OrderBy(s => s.progressID).ToArray<Level>();
@@ -99,6 +101,7 @@ public class MenuController : MonoBehaviour
     }
 
     static public void LevelExit(bool completed) {
+        menuController.SaveProgress();
         lastLevelCompleted = completed;
         SceneManager.LoadScene(0);
     }
@@ -134,22 +137,26 @@ public class MenuController : MonoBehaviour
     /// </summary>
     public void LoadProgress()
     {
-        FileStream fs = new FileStream("hra.dat", FileMode.Open);
+        if (File.Exists("hra.dat"))
+        {
+            FileStream fs = new FileStream("hra.dat", FileMode.Open);
 
-        try
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            playerProgress = (PlayerProgress)bf.Deserialize(fs);
+            try
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                playerProgress = (PlayerProgress)bf.Deserialize(fs);
+                if(playerProgress==null) playerProgress = new PlayerProgress();
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.Message);
+            }
+            finally
+            {
+                fs.Close();
+            }
         }
-        catch (Exception e)
-        {
-
-            Debug.Log(e.Message);
-        }
-        finally
-        {
-            fs.Close();
-        }
+        else playerProgress = new PlayerProgress();
     }
 
     /// <summary>

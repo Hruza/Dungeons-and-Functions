@@ -10,14 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6565ba7d729cdd45bcdbb275a36555e, type: 3}
-  m_Name: Level2
+  m_Name: Level15
   m_EditorClassIdentifier: 
-  levelName: The Infimum
-  progressID: 1
-  difficulty: 1
+  levelName: The Exam
+  progressID: 14
+  difficulty: 20
   enemies:
-  - count: 2
+  - count: 20
     enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
-  - count: 4
+  - count: 20
     enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
-  roomCount: 4
+  - count: 5
+    enemyProperties: {fileID: 11400000, guid: cfe1f04ef746e144d96e445970fd9320, type: 2}
+  - count: 5
+    enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
+  - count: 5
+    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
+  roomCount: 1

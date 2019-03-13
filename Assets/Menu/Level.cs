@@ -41,6 +41,8 @@ public class Level : ScriptableObject
 {
     private bool playable;
     public bool Playable { get { return playable; } set { playable = value; } }
+
+    public string levelName;
     /// <summary>
     /// Jak daleko musí byt hrac, aby mohl hrat tento level
     /// </summary>

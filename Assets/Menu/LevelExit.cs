@@ -13,7 +13,7 @@ public class LevelExit : MonoBehaviour
         Level level= MenuController.selectedLevel;
         if (completed)
         {
-            message.text = level.name+" completed!";
+            message.text = level.levelName+" completed!";
 
             //tady bude generovani odmeny itemu
             List<Item> reward = new List<Item>();
@@ -29,7 +29,7 @@ public class LevelExit : MonoBehaviour
         }
         else
         {
-            message.text = level.name + " lost!";
+            message.text = level.levelName + " lost!";
         }
     }
 }

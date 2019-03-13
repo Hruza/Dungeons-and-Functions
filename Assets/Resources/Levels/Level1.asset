@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6565ba7d729cdd45bcdbb275a36555e, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
+  levelName: The Introductory Lecture
   progressID: 0
   difficulty: 1
   enemies:
   - count: 5
-    enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
-  - count: 10
     enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
-  roomCount: 5
+  roomCount: 3

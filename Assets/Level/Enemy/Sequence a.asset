@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
-  m_Name: Melee
+  m_Name: Sequence a
   m_EditorClassIdentifier: 
-  name: Melee Enemy
+  name: Sequence a
   baseHP: 10
   perLevelHPIncrement: 5
   baseDamage: 15

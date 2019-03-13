@@ -48,6 +48,7 @@ public class LevelController : MonoBehaviour {
     /// Zavola se pri uspesnem ukonceni levelu
     /// </summary>
     public static void LevelSuccesfulyExit() {
+        MenuController.playerProgress.LevelCompleted(MenuController.selectedLevel.progressID);
         MenuController.LevelExit(true);
     }
 
