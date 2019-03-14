@@ -71,11 +71,18 @@ public class Item : ScriptableObject
     /// </summary>
     public const double rarityUpgrade = 1.1;
 
+    public void Awake()
+    {
+        quality = Probability.RandomQuality();
+        rarity = Probability.RandomRarity();
+    }
+
     /// <summary>
     /// bezparametrický kontruktor (nic neudělá)
     /// </summary>
     public Item()
     {
+        itemName = "GenericItem";
     }
 
     /// <summary>
@@ -86,8 +93,8 @@ public class Item : ScriptableObject
     {
         this.itemLevel = itemLevel;
         itemName = "GenericItem";
-        quality = Probability.RandomQuality();
-        rarity = Probability.RandomRarity();
+        /*quality = Probability.RandomQuality();
+        rarity = Probability.RandomRarity();*/
     }
 
     /// <summary>
@@ -183,7 +190,7 @@ public static class Probability
         foreach (double weight in qualityProbabilities.Values)
             total += weight;
 
-        double random = (double)UnityEngine.Random.Range(0, 1);
+        double random = (double)UnityEngine.Random.Range(0f, 1f);
         double sum = 0;
         foreach (Quality quality in Enum.GetValues(typeof(Quality)))
         {

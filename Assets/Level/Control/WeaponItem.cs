@@ -27,6 +27,10 @@ public class WeaponItem : Item
     /// </summary>
     public GameObject weaponGameObject;
 
+    public WeaponItem() : base()
+    {
+    }
+
     public static WeaponItem Generate(Item item)
     {
         //vygenerování náhodného vzoru
@@ -55,6 +59,8 @@ public class WeaponItem : Item
         weapon.weaponGameObject = pattern.gameObject;
         weapon.minDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1);
         weapon.maxDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1);
+
+        weapon.GenerateStats();
 
         return weapon;
     }
