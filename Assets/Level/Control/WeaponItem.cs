@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon", menuName = "Weapon")]
 [System.Serializable]
 public class WeaponItem : Item
 {
@@ -42,25 +41,33 @@ public class WeaponItem : Item
             Debug.Log("Neexistuje zbraň s daným item levelem.");
             return null;
         }
+        else
+        {
+            return Generate(item, pattern);
+        }
+    }
 
+    public static WeaponItem Generate(Item item,WeaponPattern pattern,bool noStats=false) { 
         //přiřazení vlastností, které mají všechny předměty společné
-        WeaponItem weapon = ScriptableObject.CreateInstance<WeaponItem>();
-        weapon.itemLevel = item.itemLevel;
-        weapon.rarity = item.rarity;
-        weapon.quality = item.quality;
-        weapon.itemType = ItemType.Weapon;
-        weapon.itemStats = new Stat[0];
+        WeaponItem weapon = new WeaponItem
+        {
+            itemLevel = item.itemLevel,
+            rarity = item.rarity,
+            quality = item.quality,
+            itemType = ItemType.Weapon,
+            itemStats = new Stat[0],
 
-        //přiřazení vlastností, které vycházejí ze vzoru
-        weapon.attackSpeed = pattern.attackSpeed;
-        weapon.sprite = pattern.sprite;
-        weapon.itemName = pattern.name;
-        weapon.weaponType = pattern.weaponType;
-        weapon.weaponGameObject = pattern.gameObject;
-        weapon.minDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1);
-        weapon.maxDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1);
-
-        weapon.GenerateStats();
+            //přiřazení vlastností, které vycházejí ze vzoru
+            attackSpeed = pattern.attackSpeed,
+            sprite = pattern.sprite,
+            itemName = pattern.name,
+            weaponType = pattern.weaponType,
+            weaponGameObject = pattern.gameObject,
+            minDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1),
+            maxDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1)
+        };
+        
+        if(!noStats)weapon.GenerateStats();
 
         return weapon;
     }

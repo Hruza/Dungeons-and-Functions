@@ -56,6 +56,7 @@ public class InvTooltip : MonoBehaviour
             foreach (Stat stat in item.itemStats)
             {
                 sb.AppendFormat("  {0} +{1}", stat.name, stat.value);
+                lines++;
             }
             info.text = sb.ToString();
             GetComponent<RectTransform>().sizeDelta = new Vector2(300, 50 + (lines) * 18);

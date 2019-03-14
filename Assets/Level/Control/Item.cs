@@ -30,7 +30,7 @@ public enum Rarity
 /// Třída reprezentující předmět, který může hráč získat.
 /// </summary>
 [System.Serializable]
-public class Item : ScriptableObject
+public class Item
 {
     /// <summary>
     /// úroveň předmětu
@@ -111,8 +111,7 @@ public class Item : ScriptableObject
     /// <returns>vygenerovaný item</returns>
     public static Item Generate(int itemLevel)
     {
-        Item item = ScriptableObject.CreateInstance<Item>();
-        item.itemLevel = itemLevel;
+        Item item = new Item(itemLevel);
 
         //Seznam všech metod, které slouří pro generovnání náhodných předmětů.
         var listOfMethods = new List<GeneratingMethods>
@@ -138,7 +137,8 @@ public class Item : ScriptableObject
 
         if (possibleStatPatterns.Count == 0)
         {
-            Debug.Log("Neexistují vhodné staty pro předmět.", this);
+            Debug.Log("Neexistují vhodné staty pro předmět.");
+            Debug.Log(this);
             return;
         }
         possibleStatPatterns = possibleStatPatterns.Shuffle();

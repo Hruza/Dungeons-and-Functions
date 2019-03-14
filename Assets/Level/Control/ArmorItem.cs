@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Armor", menuName = "Armor")]
+[System.Serializable]
 public class ArmorItem : Item
 {
     /// <summary>
@@ -43,21 +43,23 @@ public class ArmorItem : Item
         return armor;
     }
 
-    public static ArmorItem Generate(Item item, ArmorPattern pattern)
+    public static ArmorItem Generate(Item item, ArmorPattern pattern,bool noStats=false)
     {
         //přiřazení vlastností, které mají všechny předměty společné
-        ArmorItem armor = ScriptableObject.CreateInstance<ArmorItem>();
-        armor.itemLevel = item.itemLevel;
-        armor.rarity = item.rarity;
-        armor.quality = item.quality;
-        armor.itemType = ItemType.Armor;
-        armor.itemStats = new Stat[0];
+        ArmorItem armor = new ArmorItem
+        {
+            itemLevel = item.itemLevel,
+            rarity = item.rarity,
+            quality = item.quality,
+            itemType = ItemType.Armor,
+            itemStats = new Stat[0],
 
-        //přiřazení vlastností, které vycházejí ze vzoru
-        armor.itemName = pattern.name;
-        armor.sprite = pattern.sprite;
-        armor.movementSpeedReduction = pattern.movementSpeedReduction;
-        armor.armor = item.itemLevel * pattern.armorIncrementPerLevel + Random.Range(pattern.lowerArmor, pattern.upperArmor + 1);
+            //přiřazení vlastností, které vycházejí ze vzoru
+            itemName = pattern.name,
+            sprite = pattern.sprite,
+            movementSpeedReduction = pattern.movementSpeedReduction,
+            armor = item.itemLevel * pattern.armorIncrementPerLevel + Random.Range(pattern.lowerArmor, pattern.upperArmor + 1)
+        };
 
         //vylepšení brnění v případě, že má vyšší kvalitu
         if (armor.quality == Quality.C)
@@ -72,7 +74,7 @@ public class ArmorItem : Item
         if (armor.rarity == Rarity.Unique)
             armor.armor = (int)(armor.armor * qualityUpgrade * qualityUpgrade);
 
-        armor.GenerateStats();
+        if(!noStats) armor.GenerateStats();
 
         return armor;
     }
