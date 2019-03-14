@@ -111,7 +111,7 @@ public abstract class NPC : MonoBehaviour
         if (HP <= 0)
            Die();
         Animator anim = GetComponent<Animator>();
-        if (anim != null) anim.SetTrigger("");
+        if (anim != null) anim.SetTrigger("Damage");
     }
 
 

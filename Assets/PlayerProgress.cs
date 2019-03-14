@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerProgress
 {
     public List<WeaponItem> weapons;
@@ -15,10 +16,17 @@ public class PlayerProgress
             ProgressLevel++;
     }
 
-    public PlayerProgress()
+    public PlayerProgress() {
+
+    }
+
+    public PlayerProgress(bool starting)
     {
-        ProgressLevel = 0;
-        items = new List<Item>(Resources.LoadAll<Item>("StartingItems"));
-        weapons = new List<WeaponItem>(Resources.LoadAll<WeaponItem>("StartingWeapons"));
+        if (starting)
+        {
+            ProgressLevel = 0;
+            items = new List<Item>(Resources.LoadAll<Item>("StartingItems"));
+            weapons = new List<WeaponItem>(Resources.LoadAll<WeaponItem>("StartingWeapons"));
+        }
     }
 }

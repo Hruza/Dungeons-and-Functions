@@ -57,8 +57,8 @@ public class MenuController : MonoBehaviour
 
         if (startedFirst)
         {
-            //   LoadProgress();
-            playerProgress = new PlayerProgress();
+            LoadProgress();
+            //playerProgress = new PlayerProgress();
 
             WeaponPattern.AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
             ArmorPattern.AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
@@ -101,7 +101,6 @@ public class MenuController : MonoBehaviour
     }
 
     static public void LevelExit(bool completed) {
-        menuController.SaveProgress();
         lastLevelCompleted = completed;
         SceneManager.LoadScene(0);
     }
@@ -113,7 +112,7 @@ public class MenuController : MonoBehaviour
     /// <summary>
     /// Uloží obsah proměnné playerProgress do binárního souboru.
     /// </summary>
-    public void SaveProgress()
+    static public void SaveProgress()
     {
         FileStream fs = new FileStream("hra.dat", FileMode.Create);
 
@@ -145,7 +144,6 @@ public class MenuController : MonoBehaviour
             {
                 BinaryFormatter bf = new BinaryFormatter();
                 playerProgress = (PlayerProgress)bf.Deserialize(fs);
-                if(playerProgress==null) playerProgress = new PlayerProgress();
             }
             catch (Exception e)
             {
@@ -154,9 +152,10 @@ public class MenuController : MonoBehaviour
             finally
             {
                 fs.Close();
+                if(playerProgress==null) playerProgress = new PlayerProgress(true);
             }
         }
-        else playerProgress = new PlayerProgress();
+        else playerProgress = new PlayerProgress(true);
     }
 
     /// <summary>

@@ -10,7 +10,6 @@ public class LevelGenerator : MonoBehaviour {
     /// </summary>
     public GameObject[] tile;
 
-
     public int minRoomSize=3;
 
 
@@ -21,7 +20,7 @@ public class LevelGenerator : MonoBehaviour {
 
     private int[,] map;
 
-    public int tileSize=5;
+    static public int tileSize=4;
 
     public int roomCount;
     public int roomSpread = 1;
@@ -75,12 +74,13 @@ public class LevelGenerator : MonoBehaviour {
             //CreateVectors
             dir = Random.insideUnitCircle;
             if (dir == Vector2.zero) dir = Vector2.up;
-            realPos = 5 * Random.insideUnitCircle;
+            realPos = tileSize * Random.insideUnitCircle;
             dir.Normalize();
 
             //Create room
-            int h = minRoomSize + Random.Range(enemyCount - 1, Mathf.FloorToInt(Mathf.Sqrt(enemyCount )) + minRoomSizeVariability);
-            int w = minRoomSize + Random.Range(enemyCount - 1, Mathf.FloorToInt(Mathf.Sqrt(enemyCount )) + minRoomSizeVariability);
+            int dim = Mathf.FloorToInt(Mathf.Sqrt(enemyCount));
+            int h = minRoomSize + Random.Range(dim - 1, dim + minRoomSizeVariability);
+            int w = minRoomSize + Random.Range(dim - 1, dim + minRoomSizeVariability);
             Room current = new Room(Vector2Int.FloorToInt(realPos), h, w);
 
             //move until it doesn't intersects
@@ -128,7 +128,7 @@ public class LevelGenerator : MonoBehaviour {
             roomList.Add(current);
         }
 
-        Room exit = new Room(new Vector2Int(rMost+5,0),1,1);
+        Room exit = new Room(new Vector2Int(rMost+3,0),1,1);
 
         //ToDo: add something interesting
         switch (Random.Range(0,4))
@@ -178,11 +178,11 @@ public class LevelGenerator : MonoBehaviour {
 
         exit.position += center;
         map[exit.position.x, exit.position.y] = 3;
-        CreatePath(exit, roomList[Random.Range(0, roomCount)]);
+        CreatePath(exit, roomList[Random.Range(1, roomCount)]);
 
         //generate map
         CreateMap(mapWidth,mapHeight);
-        Player.player.transform.position = new Vector3(start.position.x*5,start.position.y*5,0);
+        Player.player.transform.position = new Vector3(start.position.x*tileSize,start.position.y*tileSize,0);
     }
 
     private void CreatePath(Room room1,Room room2)
@@ -221,7 +221,8 @@ public class LevelGenerator : MonoBehaviour {
             {
                 try
                 {
-                    Instantiate(tile[map[i, j]], new Vector3(5 * i, 5 * j, tile[map[i, j]].transform.position.z), transform.rotation, transform);
+                    GameObject spawnedTile = (GameObject)Instantiate(tile[map[i, j]], new Vector3(tileSize * i, tileSize * j, tile[map[i, j]].transform.position.z), transform.rotation, transform);
+                    spawnedTile.transform.localScale = new Vector3(tileSize,tileSize,spawnedTile.transform.localScale.z);
                 }
                 catch (System.IndexOutOfRangeException) {
                     Debug.LogError(i.ToString() + " " + j.ToString());
@@ -265,9 +266,9 @@ public class LevelGenerator : MonoBehaviour {
 
         if (room.combat)
         {
-            Vector3 pos = new Vector3(5 * room.position.x, 5 * room.position.y, 0);
-            if (room.width % 2 == 0) pos.x -= 2.5f;
-            if (room.height % 2 == 0) pos.y -= 2.5f;
+            Vector3 pos = new Vector3(tileSize * room.position.x, tileSize * room.position.y, 0);
+            if (room.width % 2 == 0) pos.x -= tileSize/2f;
+            if (room.height % 2 == 0) pos.y -= tileSize/2f;
             GameObject roomObj = (GameObject)Instantiate(roomObject, pos, transform.rotation, transform);
             roomObj.GetComponent<RoomController>().Initialize(room.width, room.height);
             roomObj.GetComponent<RoomController>().EnemiesToSpawn= room.enemies;

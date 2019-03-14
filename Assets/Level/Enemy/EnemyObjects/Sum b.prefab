@@ -4870,7 +4870,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4719208959509671019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: -0.02, z: 0}
+  m_LocalPosition: {x: 0.048, y: -0.226, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4713046815453508487}
@@ -4894,7 +4894,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 669571d1e379e294fadf1f19d906b604, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4932,7 +4932,7 @@ TextMesh:
   m_FontSize: 100
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 669571d1e379e294fadf1f19d906b604, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4278190080
@@ -4962,7 +4962,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4719497608891336025}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4799991, y: -0.09999998, z: 0}
+  m_LocalPosition: {x: 0.372, y: 0.027, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4713236241553825359}
@@ -4985,7 +4985,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4a865c1065e2ee14ab2416924c22073b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5023,7 +5023,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 669571d1e379e294fadf1f19d906b604, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4278190080
@@ -5042,7 +5042,7 @@ GameObject:
   - component: {fileID: 3408771630147563755}
   - component: {fileID: 3639753926303391548}
   m_Layer: 14
-  m_Name: Sum
+  m_Name: Sum b
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

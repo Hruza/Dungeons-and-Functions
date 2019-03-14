@@ -29,6 +29,7 @@ public enum Rarity
 /// <summary>
 /// Třída reprezentující předmět, který může hráč získat.
 /// </summary>
+[System.Serializable]
 public class Item : ScriptableObject
 {
     /// <summary>

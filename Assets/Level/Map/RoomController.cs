@@ -4,7 +4,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class RoomController : MonoBehaviour {
-    const int tileSize = 5;
     int enemyCount;
     public GameObject[] triggerOnClear;
     public GameObject[] triggerOnEnter;
@@ -56,9 +55,9 @@ public class RoomController : MonoBehaviour {
         dimensions.x = x;
         dimensions.y = y;
 
-        if (!selfInitialize) roomCollider.size = new Vector2(tileSize * x - 0.5f, tileSize * y - 0.5f);
+        if (!selfInitialize) roomCollider.size = new Vector2(LevelGenerator.tileSize * x - 0.5f, LevelGenerator.tileSize * y - 0.5f);
         else {
-            dimensions = roomCollider.size/5;
+            dimensions = roomCollider.size/ LevelGenerator.tileSize;
             }
     }
 
@@ -69,7 +68,7 @@ public class RoomController : MonoBehaviour {
         foreach (EnemyProperties enemy in enemiesToSpawn)
         {
             enemyCount++;
-            Vector3 randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * tileSize);
+            Vector3 randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * LevelGenerator.tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * LevelGenerator.tileSize);
             GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, transform.position + randPos, transform.rotation);
             currentEnemy.GetComponent<NPC>().Initialize(enemy);
             livingEnemies.Add(currentEnemy);

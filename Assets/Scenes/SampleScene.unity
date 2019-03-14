@@ -12603,7 +12603,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+  m_BackGroundColor: {r: 0.3647059, g: 0.37254903, b: 0.37647063, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -13025,7 +13025,6 @@ MonoBehaviour:
   - {fileID: 5722960097995567609, guid: 4e30f7a4e70b4c84797e3db56a6f79b7, type: 3}
   minRoomSize: 3
   roomObject: {fileID: 1551965107466656, guid: 95b869e00660d864bae74b0ca188b1f1, type: 3}
-  tileSize: 5
   roomCount: 20
   roomSpread: 1
   enemies:
@@ -31470,7 +31469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4245173291020214, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.55
       objectReference: {fileID: 0}
     - target: {fileID: 4245173291020214, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -31492,7 +31491,37 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4065340380475750, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.2271
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065340380475750, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 23964924222904682, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4a865c1065e2ee14ab2416924c22073b, type: 2}
+    - target: {fileID: 102869430352395138, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
+        type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 669571d1e379e294fadf1f19d906b604,
+        type: 3}
+    - target: {fileID: 102869430352395138, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
+        type: 3}
+      propertyPath: m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 102869430352395138, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
+        type: 3}
+      propertyPath: m_Color.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 23670831575043308, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e2ad0f9f46ef3ab4ba48f30573e5813a, type: 3}
 --- !u!1 &1256111437
 GameObject:

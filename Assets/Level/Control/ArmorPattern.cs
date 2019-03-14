@@ -34,7 +34,8 @@ public class ArmorPattern : ItemPattern
         lowerItemLevel = 1,
         upperItemLevel = 1000,
         lowerArmor = 1,
-        upperArmor = 5,
+        upperArmor = 
+,
         movementSpeedReduction = 0
     }
 };*/

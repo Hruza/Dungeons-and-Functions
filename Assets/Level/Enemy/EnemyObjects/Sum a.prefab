@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348102638304300968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: -0.02, z: 0}
+  m_LocalPosition: {x: -0.03, y: -0.032, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 342644181674446916}
@@ -50,7 +50,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 669571d1e379e294fadf1f19d906b604, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,7 +88,7 @@ TextMesh:
   m_FontSize: 100
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 669571d1e379e294fadf1f19d906b604, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4278190080
@@ -118,7 +118,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348549690380068506}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4799991, y: -0.09999998, z: 0}
+  m_LocalPosition: {x: 0.334, y: -0.039, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 342710529065434508}
@@ -141,7 +141,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 669571d1e379e294fadf1f19d906b604, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -179,7 +179,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 669571d1e379e294fadf1f19d906b604, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4278190080
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 7703171551292871464}
   - component: {fileID: 8586757981151870207}
   m_Layer: 14
-  m_Name: SumB
+  m_Name: Sum a
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

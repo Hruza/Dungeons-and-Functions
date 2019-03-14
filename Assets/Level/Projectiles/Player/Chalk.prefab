@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  lifetime: 10
+  lifetime: 2
   damageEnemies: 1
   damagePlayer: 0
   damageDestroyables: 1

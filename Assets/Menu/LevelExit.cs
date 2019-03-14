@@ -31,5 +31,6 @@ public class LevelExit : MonoBehaviour
         {
             message.text = level.levelName + " lost!";
         }
+        MenuController.SaveProgress();
     }
 }
