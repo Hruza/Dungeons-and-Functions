@@ -17,7 +17,7 @@ public class ItemInventory : MonoBehaviour
     private WeaponItem[] selectedWeapon;
     private Item selectedArmor;
 
-    private void Start()
+    public void Start()
     {
         selectedWeapon = new WeaponItem[2];
         progress = MenuController.playerProgress;
@@ -29,7 +29,10 @@ public class ItemInventory : MonoBehaviour
                 weapon[i].CarriedItem = (Item)selectedWeapon[i];
             }
             else
+            {
                 selectedWeapon[i] = null;
+                weapon[i].CarriedItem = null;
+            }
         }
         if (MenuController.equipManager.EquippedItems.Count > 0)
         {

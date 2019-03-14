@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IntegralSword
   m_EditorClassIdentifier: 
   name: Integral Sword
-  lowerItemLevel: 5
+  lowerItemLevel: 4
   upperItemLevel: 10000
   sprite: {fileID: 21300000, guid: 1c117725dbde38649ba5c2a39a89e326, type: 3}
   weaponType: 0

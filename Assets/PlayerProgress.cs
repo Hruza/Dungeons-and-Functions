@@ -5,7 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerProgress
 {
+    [System.NonSerialized]
     public List<WeaponItem> weapons;
+    [System.NonSerialized]
     public List<Item> items;
 
     public int ProgressLevel { get; set; }
@@ -24,10 +26,16 @@ public class PlayerProgress
     {
         if (starting)
         {
+            ProgressLevel = 0;
+            SetStartingItems();
+        }
+    }
+
+    public void SetStartingItems()
+        { 
             items = new List<Item>();
             weapons = new List<WeaponItem>();
 
-            ProgressLevel = 0;
             Item itemMold = new Item
             {
                 itemLevel = 1,
@@ -48,6 +56,5 @@ public class PlayerProgress
             {
                 weapons.Add(WeaponItem.Generate(itemMold, pattern,true));
             }
-        }
     }
 }

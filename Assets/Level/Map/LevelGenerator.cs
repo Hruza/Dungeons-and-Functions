@@ -173,7 +173,14 @@ public class LevelGenerator : MonoBehaviour {
 
         //connect rooms
         foreach (Room room in roomList) {
-            CreatePath(room, roomList[Random.Range(0, roomCount)]);
+            Room random = roomList[Random.Range(0, roomCount)];
+            int i = 0;
+            while (random == room && i<100)
+            {
+                random = roomList[Random.Range(0, roomCount)];
+                i++;
+            }
+            CreatePath(room,random );
         }
 
         exit.position += center;

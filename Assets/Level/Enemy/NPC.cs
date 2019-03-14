@@ -17,7 +17,7 @@ public abstract class NPC : MonoBehaviour
     /// <summary>
     /// Jak blizko musi byt k cili, aby ukoncil navigaci
     /// </summary>
-    const float defaultTargetTolerance = 0.2f;
+    const float defaultTargetTolerance = 1f;
 
     /// <summary>
     /// maximali mozne zdravi nepritele
@@ -248,7 +248,9 @@ public abstract class NPC : MonoBehaviour
     }
 
     //================================================Other====================================================
+    
     //ToDo: jinak!
+    /*
     public GameObject messageText;   
 
     protected void ThrowMessage(string message) {
@@ -266,7 +268,7 @@ public abstract class NPC : MonoBehaviour
             Destroy(msg, 1);
         }
     }
-
+    */
     /// <summary>
     /// smrt nepritele
     /// </summary>

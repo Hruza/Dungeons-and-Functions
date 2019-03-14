@@ -8,7 +8,7 @@ public class MeleeEnemy : NPC
     /// Jak blizko musi byt k hraci, aby zautocil
     /// </summary>
     public float playerDistance = 2f;
-    private enum State { moving,attacking,waiting };
+    private enum State { moving,attacking,waiting,gettingCloser };
     private State state;
 
     /// <summary>
@@ -95,18 +95,34 @@ public class MeleeEnemy : NPC
         switch (state)
         {
             case State.attacking:
+                //je li hrac dostatecne blizko, cekej, jinak jdi k hraci
                 if (playerIsClose)
                 {
                     state = State.waiting;
                     Invoke("Decide", attackDelay);
                 }
                 else {
-                    state = State.moving;
+                    state = State.gettingCloser;
                     GoToTarget(player, playerDistance);
                 }
                 break;
 
             case State.moving:
+                //je li hrac dostatecne blizko, zautoc, jinak jdi k hraci
+                if (playerIsClose)
+                {
+                    state = State.attacking;
+                    Invoke("Attack", timeToStartAttacking);
+                }
+                else
+                {
+                    state = State.gettingCloser;
+                    GoToTarget(player, playerDistance);
+                }
+                break;
+
+            case State.gettingCloser:
+                //je li hrac dostatecne blizko, zautoc, jinak se pohybuj kolem
                 if (playerIsClose)
                 {
                     state = State.attacking;
@@ -120,13 +136,14 @@ public class MeleeEnemy : NPC
                 break;
 
             case State.waiting:
+                //je li hrac blizko, utoc, jinak jsi k hraci
                 if (playerIsClose)
                 {
                     state = State.attacking;
                     Attack();
                 }
                 else {
-                    state = State.moving;
+                    state = State.gettingCloser;
                     GoToTarget(player, playerDistance);
                 }
                 break;

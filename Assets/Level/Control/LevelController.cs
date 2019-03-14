@@ -8,14 +8,11 @@ public class LevelController : MonoBehaviour {
     public GameObject map;
     public GameObject menu;
     public GameObject playerDiedMenu;
-    private bool menuOpened=false;
-    private EquipManager equip;
     public static LevelController levelController;
 
     //Setup of level
 	void Start () {
         levelController = this;
-        equip = MenuController.equipManager;
         Level level = MenuController.selectedLevel;
         map.GetComponent<LevelGenerator>().Generate(level.roomCount,EnemyBundle.Merge(level.enemies),level.difficulty);
         //ToDo: Pridat veci

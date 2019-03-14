@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Basic Armor
   lowerItemLevel: 1
   upperItemLevel: 10000
-  sprite: {fileID: 21300000, guid: 57bfca0a202d4c143a530484b925c31a, type: 3}
+  sprite: {fileID: 21300000, guid: b92e541b30d44ab45a6eeb21bfd0ab5e, type: 3}
   lowerArmor: 0
   upperArmor: 2
   movementSpeedReduction: 0

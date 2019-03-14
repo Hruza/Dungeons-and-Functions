@@ -18,6 +18,7 @@ public class MenuController : MonoBehaviour
 
     static public EquipManager equipManager;
 
+    public ItemInventory itemInventory;
     public GameObject mainMenu;
     public GameObject levelExitMenu;
 
@@ -58,7 +59,6 @@ public class MenuController : MonoBehaviour
         if (startedFirst)
         {
             LoadProgress();
-            //playerProgress = new PlayerProgress();
 
             WeaponPattern.AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
             ArmorPattern.AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
@@ -152,7 +152,8 @@ public class MenuController : MonoBehaviour
             finally
             {
                 fs.Close();
-                if(playerProgress==null) playerProgress = new PlayerProgress(true);
+                if (playerProgress == null) playerProgress = new PlayerProgress(true);
+                else playerProgress.SetStartingItems();
             }
         }
         else playerProgress = new PlayerProgress(true);
@@ -163,6 +164,7 @@ public class MenuController : MonoBehaviour
     /// </summary>
     public void ClearProgress()
     {
-        playerProgress = new PlayerProgress();
+        playerProgress = new PlayerProgress(true);
+        itemInventory.Start();
     }
 }

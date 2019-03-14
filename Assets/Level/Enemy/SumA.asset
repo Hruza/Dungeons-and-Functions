@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Sum of a
   baseHP: 30
   perLevelHPIncrement: 5
-  baseDamage: 0
+  baseDamage: 1
   perLevelDamageIncrement: 0
   EnemyGameObject: {fileID: 4719645516164970819, guid: 978eecb630f3e9245ba7452a6ec66ee3,
     type: 3}

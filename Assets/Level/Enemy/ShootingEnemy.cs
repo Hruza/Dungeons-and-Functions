@@ -8,6 +8,10 @@ public class ShootingEnemy: NPC {
     public float playerDistance=15f;
     private enum State { gettingCloser , shooting ,moving};
     private State state;
+
+    /// <summary>
+    /// rychlost vystreleneho projektilu
+    /// </summary>
     public float projectileVelocity=10;
 
     /// <summary>
@@ -100,10 +104,13 @@ public class ShootingEnemy: NPC {
         switch (state)
         {   
             case State.gettingCloser:
+                //pokud jsi dost blizko, zkus vystrelit
                 TryToShoot();
                 break;
-            case State.shooting:
 
+            
+            case State.shooting:
+                //pokud jsi daleko, jdi k hraci, jinak se pohybuj kolem
                 if ((player.transform.position - transform.position).sqrMagnitude > playerDistance* playerDistance*2)
                 {
                     state = State.gettingCloser;
@@ -117,7 +124,7 @@ public class ShootingEnemy: NPC {
 
                 break;
             case State.moving:
-
+                //pokud jsi daleko, jsi hraci, jinak zkus vystrelit
                 if ((player.transform.position - transform.position).sqrMagnitude > playerDistance* playerDistance*2)
                 {
                     state = State.gettingCloser;

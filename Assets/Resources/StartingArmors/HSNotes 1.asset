@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8430b7fc38646fd48a60d30020c089c2, type: 3}
   m_Name: HSNotes 1
   m_EditorClassIdentifier: 
-  name: 
+  name: High School Notes
   lowerItemLevel: 0
-  upperItemLevel: 0
-  sprite: {fileID: 0}
+  upperItemLevel: 1
+  sprite: {fileID: 21300000, guid: 57bfca0a202d4c143a530484b925c31a, type: 3}
   lowerArmor: 0
-  upperArmor: 0
-  movementSpeedReduction: 0
-  armorIncrementPerLevel: 0
+  upperArmor: 1
+  movementSpeedReduction: 2
+  armorIncrementPerLevel: 1
