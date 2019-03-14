@@ -14,7 +14,7 @@ public class ArmorItem : Item
     /// </summary>
     public int movementSpeedReduction;
 
-    public ArmorItem()
+    public ArmorItem() : base()
     {
     }
 
@@ -71,6 +71,8 @@ public class ArmorItem : Item
             armor.armor = (int)(armor.armor * rarityUpgrade);
         if (armor.rarity == Rarity.Unique)
             armor.armor = (int)(armor.armor * qualityUpgrade * qualityUpgrade);
+
+        armor.GenerateStats();
 
         return armor;
     }
