@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MeleeWeapon : Weapon
 {
-    public float swingDuration=0.5f;
     public float angleOfSwing=120;
     public GameObject swingingThing;
     public float delay = 0f;
@@ -42,8 +41,8 @@ public class MeleeWeapon : Weapon
         float angle = 0;
         while (angle<angleOfSwing)
         {
-            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime*angleOfSwing/swingDuration);
-            angle += Time.deltaTime*angleOfSwing/swingDuration;
+            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime*angleOfSwing*attackSpeed);
+            angle += Time.deltaTime*angleOfSwing*attackSpeed;
             yield return new WaitForEndOfFrame();
         }
         if(changeDirections) lastSwingDir *= -1;

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b85600ffafbdf947a96d666b7120bf3, type: 3}
-  m_Name: Regeneration
+  m_Name: MaxHP
   m_EditorClassIdentifier: 
-  name: Regeneration
-  lowerRange: 1
-  upperRange: 3
-  incrementPerLvl: 1
+  name: MaxHP
+  lowerRange: 0
+  upperRange: 5
+  incrementPerLvl: 5
   possibleItems: 00000000

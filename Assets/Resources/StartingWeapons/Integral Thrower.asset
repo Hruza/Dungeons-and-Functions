@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
-  m_Name: IntegralSword
+  m_Name: Integral Thrower
   m_EditorClassIdentifier: 
-  name: Integral Sword
-  lowerItemLevel: 4
+  name: Integralrang
+  lowerItemLevel: 5
   upperItemLevel: 10000
-  sprite: {fileID: 21300000, guid: 1c117725dbde38649ba5c2a39a89e326, type: 3}
-  weaponType: 0
-  lowerMinDamage: 1
-  upperMinDamage: 10
-  lowerMaxDamage: 20
-  upperMaxDamage: 30
-  damageIncrementPerLevel: 3
-  attackSpeed: 2
-  gameObject: {fileID: 6766358523322256936, guid: 16dbbb6aa0e3ab941bebfdf8f626afe2,
-    type: 3}
+  sprite: {fileID: 21300000, guid: f7bbeb1617f755242a020cce8f7fd0f6, type: 3}
+  weaponType: 1
+  lowerMinDamage: 0
+  upperMinDamage: 1
+  lowerMaxDamage: 2
+  upperMaxDamage: 3
+  damageIncrementPerLevel: 1
+  attackSpeed: 5
+  gameObject: {fileID: 1023424732719212, guid: 3af8ae0ca01705d48ad5f504bab3c86e, type: 3}

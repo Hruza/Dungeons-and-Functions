@@ -5182,13 +5182,12 @@ MonoBehaviour:
   invincible: 0
   isWalking: 0
   velocity: 1
-  messageText: {fileID: 0}
   spawnedObjects:
   - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
   playerDistance: 15
   spawnedLevelDiference: -1
   catapultSpeed: 10
-  timeToStartSpawning: 1
+  timeToStartSpawning: 3
   timeToStartMoving: 5
   movingDistance: 10
   spawnCount: 2

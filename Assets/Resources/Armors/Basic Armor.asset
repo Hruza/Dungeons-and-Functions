@@ -19,4 +19,4 @@ MonoBehaviour:
   lowerArmor: 0
   upperArmor: 2
   movementSpeedReduction: 0
-  armorIncrementPerLevel: 2
+  armorIncrementPerLevel: 4

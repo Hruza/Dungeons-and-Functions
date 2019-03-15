@@ -107,7 +107,7 @@ public abstract class NPC : MonoBehaviour
     {
         if (invincible) return;
         HP -= damage;
-        //ToDo:ThrowMessage(damage.ToString(),Color.red);
+        Messager.ShowMessage(damage.ToString(),transform.position);
         if (HP <= 0)
            Die();
         Animator anim = GetComponent<Animator>();

@@ -153,11 +153,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDamage: 50
   maxDamage: 100
-  swingDuration: 0.5
+  attackSpeed: 0
   angleOfSwing: 120
   swingingThing: {fileID: 655780302609189670}
   delay: 0
-  knockback: 20
+  knockback: 10
   autoAttack: 1
   changeDirections: 1
 --- !u!50 &3267352998927893802

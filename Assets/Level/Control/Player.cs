@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public Slider hpBar;
+    public Text hpText;
     /// <summary>
     /// Aktualni hrac, typ GameObject
     /// </summary>
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour
         {
             hp = Mathf.Min(value, MaxHP);
             hpBar.value = hp;
+            hpText.text = hp.ToString();
         }
     }
     private int maxHP;
@@ -124,15 +126,15 @@ public class Player : MonoBehaviour
 	void Start () {
     //  player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
+        equip = MenuController.equipManager;
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
         Name = "Player";
         MaxHP = 50;
-        HP = MaxHP; 
+        HP = MaxHP+equip.AllStats["MaxHP"]; 
         Armor = 0;
         Regeneration = 0;
 
-        equip = MenuController.equipManager;
         SetArmor();
         SetRegeneration();
 
@@ -159,9 +161,11 @@ public class Player : MonoBehaviour
     /// <param name="damage">obdrzene poskozeni</param>
     public void GetDamage(int damage)
     {
-        Debug.Log("Hrac dostal "+damage.ToString()+" damage");
         //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
-        HP -= Mathf.Max(1, damage - Armor);
+        int realDamage= Mathf.Max(1, damage - Armor);
+        HP -= realDamage;
+        Debug.Log("Hrac dostal "+damage.ToString()+" damage");
+        Messager.ShowMessage(realDamage.ToString(), transform.position, Color.red);
         if (HP <= 0)
             Die();
     }

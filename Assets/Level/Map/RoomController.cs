@@ -4,6 +4,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class RoomController : MonoBehaviour {
+    static public int ClearedRoomsCount {
+        get; private set;
+    }
     int enemyCount;
     public GameObject[] triggerOnClear;
     public GameObject[] triggerOnEnter;
@@ -33,7 +36,6 @@ public class RoomController : MonoBehaviour {
 
 	
 	void Start () {
-        
 
         if(selfInitialize) Initialize(1, 1);
         
@@ -54,6 +56,8 @@ public class RoomController : MonoBehaviour {
 
         dimensions.x = x;
         dimensions.y = y;
+
+        ClearedRoomsCount = 0;
 
         if (!selfInitialize) roomCollider.size = new Vector2(LevelGenerator.tileSize * x - 0.5f, LevelGenerator.tileSize * y - 0.5f);
         else {
@@ -83,14 +87,13 @@ public class RoomController : MonoBehaviour {
 
     IEnumerator CheckCleared() {
 
-        while (livingEnemies.Exists(i => i!=null)
+        while (livingEnemies.Exists(i => i!=null))
             // alternativa: GameObject.FindGameObjectWithTag("enemy")==null
-            )
         {
             yield return new WaitForSeconds(0.5f);
-            
-            
         }
+
+        ClearedRoomsCount++;
 
         foreach (GameObject onClearObject in triggerOnClear)
         {

@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public int minDamage;
     public int maxDamage;
+    public int attackSpeed;
 
     protected virtual void Update()
     {

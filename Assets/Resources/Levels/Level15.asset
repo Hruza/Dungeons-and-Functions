@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: The Exam
   progressID: 14
-  difficulty: 20
+  difficulty: 8
   enemies:
   - count: 20
     enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}

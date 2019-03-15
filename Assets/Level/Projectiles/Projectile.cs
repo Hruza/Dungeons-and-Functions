@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour {
     public bool damageDestroyables = true;
     public bool destroyOnDamageDealt = true;
     public bool destroyOnCollision = false;
+    public GameObject onDestroyParticles;
+
     private void Start()
     {
         Destroy(this.gameObject, lifetime);
@@ -38,5 +40,14 @@ public class Projectile : MonoBehaviour {
             collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
         }
         if (destroyOnCollision) Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (onDestroyParticles != null)
+        {
+            GameObject particles=(GameObject)Instantiate(onDestroyParticles, transform.position, transform.rotation);
+            Destroy(particles, 3);
+        }
     }
 }

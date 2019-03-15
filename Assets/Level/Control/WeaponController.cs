@@ -57,8 +57,10 @@ public class WeaponController : MonoBehaviour
         {
             if(currentWeapon!=null) Destroy(currentWeapon);
             currentWeapon = (GameObject)Instantiate(weapons[currentWeaponIndex].weaponGameObject, transform);
-            currentWeapon.GetComponent<Weapon>().minDamage = equip.TotalMinDamage(currentWeaponIndex);
-            currentWeapon.GetComponent<Weapon>().maxDamage = currentWeapon.GetComponent<Weapon>().minDamage + weapons[currentWeaponIndex].Range();
+            Weapon wp = currentWeapon.GetComponent<Weapon>();
+            wp.minDamage = equip.TotalMinDamage(currentWeaponIndex);
+            wp.maxDamage = wp.minDamage + weapons[currentWeaponIndex].Range();
+            wp.attackSpeed = weapons[currentWeaponIndex].attackSpeed;
         }
         ChangeUI();
 

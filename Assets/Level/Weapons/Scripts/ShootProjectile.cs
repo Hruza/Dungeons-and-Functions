@@ -6,7 +6,6 @@ public class ShootProjectile : Weapon
 {
     public float velocity = 10f;
     public GameObject projectile;
-    public float delay=0.5f;
     public bool autoFire=false;
     private bool ready = true;
 
@@ -28,8 +27,8 @@ public class ShootProjectile : Weapon
     protected override void Primary()
     {
         ready = false;
-        Invoke("Reset", delay);
-        Vector3 forward = PlayerMovement.forward();
+        Invoke("Reset", 1f/attackSpeed);
+        Vector3 forward = PlayerMovement.Forward();
         GameObject ball  = (GameObject)Instantiate(projectile, transform.position +forward, transform.rotation);
         ball.GetComponent<Rigidbody2D>().velocity = forward * velocity;
         ball.GetComponent<Projectile>().damage = Random.Range(minDamage, maxDamage + 1);

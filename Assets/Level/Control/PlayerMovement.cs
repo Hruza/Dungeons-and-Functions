@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     public float speed = 0.1f;
 
-    public float acceleration = 5f;
-
     public float knockbackResistance = 0.2f;
 
     static private Vector2 lookDir;
@@ -28,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
         rbody = GetComponent<Rigidbody2D>();
     }
 
-    static public Vector3 forward() {
+    static public Vector3 Forward() {
         Vector3 vect=new Vector3(lookDir.x,lookDir.y,0);
         return vect;
     }

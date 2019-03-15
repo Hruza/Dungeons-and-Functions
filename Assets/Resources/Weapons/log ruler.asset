@@ -17,11 +17,11 @@ MonoBehaviour:
   upperItemLevel: 10000
   sprite: {fileID: 21300000, guid: c193d6b03629ff349b4e1695b56ee1e3, type: 3}
   weaponType: 0
-  lowerMinDamage: 1
+  lowerMinDamage: 3
   upperMinDamage: 4
-  lowerMaxDamage: 5
+  lowerMaxDamage: 7
   upperMaxDamage: 10
   damageIncrementPerLevel: 2
-  attackSpeed: 1
+  attackSpeed: 2
   gameObject: {fileID: 9195056921275180072, guid: 832865a4c80ce784c93824186515e366,
     type: 3}
