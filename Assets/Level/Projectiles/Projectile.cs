@@ -15,7 +15,7 @@ public class Projectile : MonoBehaviour {
 
     private void Start()
     {
-        Destroy(this.gameObject, lifetime);
+        Invoke("End", lifetime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -42,12 +42,13 @@ public class Projectile : MonoBehaviour {
         if (destroyOnCollision) Destroy(gameObject);
     }
 
-    private void OnDestroy()
+    private void End()
     {
         if (onDestroyParticles != null)
         {
             GameObject particles=(GameObject)Instantiate(onDestroyParticles, transform.position, transform.rotation);
             Destroy(particles, 3);
         }
+        Destroy(this.gameObject);
     }
 }

@@ -7383,6 +7383,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MessageObject
       objectReference: {fileID: 0}
+    - target: {fileID: 4785528705969791751, guid: 085d2ebb961fdc04d95e124fcdaea417,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6958901693644429409, guid: 085d2ebb961fdc04d95e124fcdaea417,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16328,6 +16333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   knockbackResistance: 10
+  playerMovementReduction: 0
 --- !u!50 &648295443
 Rigidbody2D:
   serializedVersion: 4
@@ -40819,8 +40825,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 91c9044491df813429c5caa7bba4ad0b, type: 3}
-    m_FontSize: 25
+    m_Font: {fileID: 12800000, guid: 58b27cdbadb54a5429b1c6c44fa36394, type: 3}
+    m_FontSize: 21
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2

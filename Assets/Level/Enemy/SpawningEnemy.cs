@@ -64,11 +64,13 @@ public class SpawningEnemy : NPC
         yield return new WaitForSeconds(timeToStartSpawning);
         for (int i = 0; i < spawnCount; i++)
         {
-            EnemyProperties selected = spawnedObjects[Random.Range(0, spawnedObjects.Length)];
-            selected.Level = Level + spawnedLevelDiference;
-            GameObject spawned = (GameObject)Instantiate(selected.EnemyGameObject,(Vector3)Random.insideUnitCircle.normalized+transform.position,transform.rotation);
-            spawned.GetComponent<Rigidbody2D>().velocity = catapultSpeed*(spawned.transform.position - transform.position);
-            spawned.GetComponent<NPC>().Initialize(selected);
+            foreach (EnemyProperties selected in spawnedObjects)
+            {
+                selected.Level = Level + spawnedLevelDiference;
+                GameObject spawned = (GameObject)Instantiate(selected.EnemyGameObject, (Vector3)Random.insideUnitCircle.normalized + transform.position, transform.rotation);
+                spawned.GetComponent<Rigidbody2D>().velocity = catapultSpeed * (spawned.transform.position - transform.position);
+                spawned.GetComponent<NPC>().Initialize(selected);
+            }
             yield return new WaitForSeconds(spawnDelay);
         }
         yield return new WaitForSeconds(timeToStartMoving);

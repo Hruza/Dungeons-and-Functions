@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8430b7fc38646fd48a60d30020c089c2, type: 3}
-  m_Name: HSNotes 1
+  m_Name: ML Armor
   m_EditorClassIdentifier: 
-  name: High School Notes
-  lowerItemLevel: 0
-  upperItemLevel: 1
-  sprite: {fileID: 21300000, guid: 57bfca0a202d4c143a530484b925c31a, type: 3}
-  lowerArmor: 0
-  upperArmor: 0
-  movementSpeedReduction: 1
-  armorIncrementPerLevel: 1
+  name: Math Lover Armor
+  lowerItemLevel: 4
+  upperItemLevel: 10000
+  sprite: {fileID: 21300000, guid: aeec81187a4582149b9c8b7c7b8e4b53, type: 3}
+  lowerArmor: -3
+  upperArmor: 3
+  movementSpeedReduction: 2
+  armorIncrementPerLevel: 5

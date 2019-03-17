@@ -123,10 +123,12 @@ public class Player : MonoBehaviour
         }
     }
 
-	void Start () {
-    //  player = this.gameObject;
+    void Start() {
+        //  player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
         equip = MenuController.equipManager;
+        ArmorItem armor=((ArmorItem)equip.EquippedItems.Find(i => i.itemType == ItemType.Armor));
+        if (armor != null) GetComponent<PlayerMovement>().playerMovementReduction = armor.movementSpeedReduction; 
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
         Name = "Player";
@@ -204,7 +206,7 @@ public class Player : MonoBehaviour
         if (Regeneration == 0)
             CancelInvoke("Regenerate");
         else
-            InvokeRepeating("Regenerate", 1, 1);
+            InvokeRepeating("Regenerate", 10, 10);
     }
 
     /// <summary>

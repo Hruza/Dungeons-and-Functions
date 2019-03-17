@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D rbody;
     private Vector2 moveDir;
 
+    public int playerMovementReduction;
+
     private bool knockbacked=false;
 
     void Start () {
@@ -67,7 +69,7 @@ public class PlayerMovement : MonoBehaviour {
         moveDir.y *= Mathf.Sqrt(1 - moveDir.x * moveDir.x * 0.5f);
         moveDir.x *= Mathf.Sqrt(1 - moveDir.y * moveDir.y * 0.5f);
 
-        moveDir *= speed;
+        moveDir *= speed*(1-(playerMovementReduction*0.1f));
         rbody.velocity = moveDir;
 
     }
