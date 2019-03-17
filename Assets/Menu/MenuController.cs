@@ -79,7 +79,14 @@ public class MenuController : MonoBehaviour
     {
         levels = Resources.LoadAll<Level>("Levels");
         levels = levels.OrderBy(s => s.progressID).ToArray<Level>();
-        selected = 0;
+        int index = -1;
+        foreach (Level level in levels)
+        {
+            if (level.progressID <= playerProgress.ProgressLevel) index++;
+            else break;
+        }
+        Debug.Log(index);
+        selected = index;
         ChangeLevel(0);
     }
 

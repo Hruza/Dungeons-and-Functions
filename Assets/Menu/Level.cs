@@ -16,7 +16,7 @@ public class EnemyBundle {
         return array;
     }
 
-    static public EnemyProperties[] Merge(EnemyBundle[] bundles) {
+    static public EnemyProperties[] Merge(EnemyBundle[] bundles,bool shuffle=true) {
         int totalCount = 0;
         foreach (EnemyBundle bundle in bundles)
         {
@@ -31,6 +31,16 @@ public class EnemyBundle {
                 array[pos + i] = bundle.enemyProperties;
             }
             pos += bundle.count;
+        }
+        if (shuffle) {
+            for (int i = 0; i < 500; i++)
+            {
+                int a = Random.Range(0,totalCount);
+                int b = Random.Range(0,totalCount);
+                EnemyProperties temp = array[a];
+                array[a] = array[b];
+                array[b] = temp;
+            }
         }
         return array;
     }

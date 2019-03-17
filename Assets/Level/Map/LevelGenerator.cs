@@ -137,15 +137,15 @@ public class LevelGenerator : MonoBehaviour {
                 rMost += 5;
                 break;
             case 1:
-                exit.position = new Vector2Int(lMost - 5, 0);
+                exit.position = new Vector2Int(lMost - 3, 0);
                 lMost -= 5;
                 break;
             case 2:
-                exit.position = new Vector2Int(0, tMost+5);
+                exit.position = new Vector2Int(0, tMost+3);
                 tMost += 5;
                 break;
             case 3:
-                exit.position = new Vector2Int(0,bMost-5);
+                exit.position = new Vector2Int(0,bMost-3);
                 bMost -= 5;
                 break;
             default:

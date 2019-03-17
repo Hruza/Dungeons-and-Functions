@@ -217,15 +217,13 @@ MonoBehaviour:
   invincible: 0
   isWalking: 0
   velocity: 20
-  messageText: {fileID: 1564295325502522, guid: 3b9c651deadefeb4cb9a48910ff4af20,
-    type: 3}
   projectile: {fileID: 1688038456248938, guid: 6e41344768ad41a40861f0b2be75e92e, type: 3}
   playerDistance: 10
   projectileVelocity: 10
   timeToStartShooting: 0.5
   timeToStartMoving: 0.5
   movingDistance: 2
-  barrageCount: 5
+  barrageCount: 3
   barrageDelay: 0.2
 --- !u!95 &95309969236463696
 Animator:
