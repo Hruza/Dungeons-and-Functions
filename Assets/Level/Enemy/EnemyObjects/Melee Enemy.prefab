@@ -181,7 +181,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
 --- !u!50 &1838034911416155424
 Rigidbody2D:
   serializedVersion: 4
@@ -237,8 +237,6 @@ MonoBehaviour:
   invincible: 0
   isWalking: 0
   velocity: 40
-  messageText: {fileID: 1564295325502522, guid: 3b9c651deadefeb4cb9a48910ff4af20,
-    type: 3}
   playerDistance: 2
   attackRadius: 2.5
   timeToStartAttacking: 0.2

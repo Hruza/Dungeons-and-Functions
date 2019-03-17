@@ -10,10 +10,21 @@ public class LevelController : MonoBehaviour {
     public GameObject playerDiedMenu;
     public static LevelController levelController;
 
+    private int roomCountToClear;
+    private int clearedRoomCount;
+
+    public void RoomCleared()
+    {
+        clearedRoomCount++;
+        if (clearedRoomCount >= roomCountToClear) Interactable.exit.SetInteractable();    
+    }
+
     //Setup of level
-	void Start () {
+    void Start () {
+        clearedRoomCount = 0;
         levelController = this;
         Level level = MenuController.selectedLevel;
+        roomCountToClear = Mathf.CeilToInt(level.roomCount / 2f);
         map.GetComponent<LevelGenerator>().Generate(level.roomCount,EnemyBundle.Merge(level.enemies),level.difficulty);
         //ToDo: Pridat veci
 

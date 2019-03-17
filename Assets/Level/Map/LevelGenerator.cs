@@ -128,7 +128,7 @@ public class LevelGenerator : MonoBehaviour {
             roomList.Add(current);
         }
 
-        Room exit = new Room(new Vector2Int(rMost+3,0),1,1);
+        Room exit = new Room(new Vector2Int(rMost+3,Random.Range(bMost+2,tMost-2)),1,1);
 
         //ToDo: add something interesting
         switch (Random.Range(0,4))
@@ -137,15 +137,15 @@ public class LevelGenerator : MonoBehaviour {
                 rMost += 5;
                 break;
             case 1:
-                exit.position = new Vector2Int(lMost - 3, 0);
+                exit.position = new Vector2Int(lMost - 3, Random.Range(bMost + 2, tMost - 2));
                 lMost -= 5;
                 break;
             case 2:
-                exit.position = new Vector2Int(0, tMost+3);
+                exit.position = new Vector2Int(Random.Range(lMost + 2, rMost - 2), tMost+3);
                 tMost += 5;
                 break;
             case 3:
-                exit.position = new Vector2Int(0,bMost-3);
+                exit.position = new Vector2Int(Random.Range(lMost + 2, rMost - 2), bMost-3);
                 bMost -= 5;
                 break;
             default:
