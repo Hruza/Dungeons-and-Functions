@@ -26,7 +26,7 @@ public class PlayerProgress
     {
         if (starting)
         {
-            ProgressLevel = 0;
+            ProgressLevel = 200;
             SetStartingItems();
         }
     }

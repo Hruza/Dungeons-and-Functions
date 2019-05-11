@@ -36,8 +36,22 @@ public class LevelGenerator : MonoBehaviour {
         
 	}
 
-    public void Generate(int roomCount,EnemyProperties[] enemies,int difficulty) {
+    public enum GeneratorPreset { normal, vast, boss };
+
+    public struct Boundaries{
+        public int r;
+        public int l;
+        public int t;
+        public int b;
+    }
+
+    private Boundaries most;
+
+    private Vector2Int center;
+
+    public void Generate(int roomCount,EnemyProperties[] enemies,int difficulty, GeneratorPreset preset = GeneratorPreset.normal) {
         if (roomCount <= 0) return;
+        this.roomCount = roomCount;
         //ToDo:Random.seed = seed;
 
         int totalEnemies = enemies.Length;
@@ -47,61 +61,34 @@ public class LevelGenerator : MonoBehaviour {
 
         //starting room
         Room start = new Room(Vector2Int.zero, 3, 3);
-        start.combat = false;
+        start.roomType = Room.RoomType.start;
 
         //declare some temporary variables
-        int offset = 0;
-        bool intersects;
-        Vector2 dir;
-        Vector2 realPos;
-        int lMost=-1;
-        int rMost=1;
-        int tMost=1;
-        int bMost=-1;
+        most.l=-1;
+        most.r=1;
+        most.t=1;
+        most.b=-1;
 
         //create rooms
-        List<Room> roomList = new List<Room>();
-        roomList.Add(start);
-        for (int i = 0; i < roomCount; i++)
+        List<Room> roomList = new List<Room> { start };
+        int createdRoomsCount=1;
+
+        for (; createdRoomsCount <= roomCount; createdRoomsCount++)
         {
-            int maxEnemyCount = totalEnemies - chosenEnemiesCount - (roomCount - i)+1;
-            if (i + 1 == roomCount) enemyCount = maxEnemyCount;
+            int maxEnemyCount = totalEnemies - chosenEnemiesCount - (roomCount - createdRoomsCount);
+            if (createdRoomsCount == roomCount) enemyCount = maxEnemyCount;
             else if (maxEnemyCount >= 1)
             {
                 enemyCount = Random.Range(1, maxEnemyCount);
             }
             else enemyCount = 0;
-            //CreateVectors
-            dir = Random.insideUnitCircle;
-            if (dir == Vector2.zero) dir = Vector2.up;
-            realPos = tileSize * Random.insideUnitCircle;
-            dir.Normalize();
+
 
             //Create room
             int dim = Mathf.FloorToInt(Mathf.Sqrt(enemyCount));
             int h = minRoomSize + Random.Range(dim - 1, dim + minRoomSizeVariability);
             int w = minRoomSize + Random.Range(dim - 1, dim + minRoomSizeVariability);
-            Room current = new Room(Vector2Int.FloorToInt(realPos), h, w);
-
-            //move until it doesn't intersects
-            offset = 0;
-            int minOffset = Random.Range(roomSpread, roomSpread + 2);
-            while (offset < minOffset)
-            {
-                realPos += dir;
-                current.position = Vector2Int.FloorToInt(realPos);
-                intersects = false;
-                for (int j = 0; j <= i; j++)
-                {
-                    if (current.Intersects(roomList[j]))
-                    {
-                        intersects = true;
-                        break;
-                    }
-                }
-                if (!intersects) offset++;
-                else offset = 0;
-            }
+            Room current = new Room( h, w, roomSpread, roomList);
 
             //addEnemies
             EnemyProperties[] chosenEnemies = new EnemyProperties[enemyCount];
@@ -115,47 +102,37 @@ public class LevelGenerator : MonoBehaviour {
             chosenEnemiesCount += enemyCount;
 
             //set boundaries
-            int horizontal = current.width / 2;
-            int vertical = current.height/2;
-            Vector2Int pos = current.position;
-            if (pos.x - horizontal < lMost) lMost = pos.x - horizontal;
-            if (pos.x + horizontal > rMost) rMost = pos.x + horizontal;
-            if (pos.y + vertical > tMost) tMost = pos.y + vertical;
-            if (pos.y - vertical < bMost) bMost = pos.y - vertical;
-
+            SetBoundaries(current);
 
             //add to list
             roomList.Add(current);
         }
 
-        Room exit = new Room(new Vector2Int(rMost+3,Random.Range(bMost+2,tMost-2)),1,1);
-
-        //ToDo: add something interesting
-        switch (Random.Range(0,4))
+        Room exit;
+        switch (preset)
         {
-            case 0:
-                rMost += 5;
+            case GeneratorPreset.vast:
+            case GeneratorPreset.normal:
+                exit = new ExitRoom(most);
                 break;
-            case 1:
-                exit.position = new Vector2Int(lMost - 3, Random.Range(bMost + 2, tMost - 2));
-                lMost -= 5;
-                break;
-            case 2:
-                exit.position = new Vector2Int(Random.Range(lMost + 2, rMost - 2), tMost+3);
-                tMost += 5;
-                break;
-            case 3:
-                exit.position = new Vector2Int(Random.Range(lMost + 2, rMost - 2), bMost-3);
-                bMost -= 5;
+            case GeneratorPreset.boss:
+                exit = new ExitRoom(roomList[1].position-roomList[0].position,roomList,roomSpread);
                 break;
             default:
+                exit = new ExitRoom(most);
                 break;
         }
 
+
+        SetBoundaries(exit);
+        roomList.Add(exit);
+        //ToDo: add something interesting
+
+
         //initialize map
-        Vector2Int center = new Vector2Int(-lMost+1,-bMost+1);
-        int mapWidth = rMost - lMost+3;
-        int mapHeight = tMost - bMost+3; ;
+        center = new Vector2Int(-most.l+1,-most.b+1);
+        int mapWidth = most.r - most.l+3;
+        int mapHeight = most.t - most.b+3; ;
         map = new int[mapWidth,mapHeight];
         for (int i = 0; i < mapWidth; i++)
         {
@@ -168,28 +145,58 @@ public class LevelGenerator : MonoBehaviour {
         //set rooms
         foreach (Room room in roomList)
         {
-            GenerateRoom(room, center);
+            room.GenerateRoomToMap(center,ref map);
+            if (room.roomType==Room.RoomType.combat) {
+                PlaceRoomControllerObject(room);
+            }
         }
 
         //connect rooms
-        foreach (Room room in roomList) {
-            Room random = roomList[Random.Range(0, roomCount)];
-            int i = 0;
-            while (random == room && i<100)
-            {
-                random = roomList[Random.Range(0, roomCount)];
-                i++;
-            }
-            CreatePath(room,random );
-        }
-
-        exit.position += center;
-        map[exit.position.x, exit.position.y] = 3;
-        CreatePath(exit, roomList[Random.Range(1, roomCount)]);
+        ConnectRooms(roomList);
 
         //generate map
         CreateMap(mapWidth,mapHeight);
         Player.player.transform.position = new Vector3(start.position.x*tileSize,start.position.y*tileSize,0);
+    }
+
+    private void ConnectRooms(List<Room> roomList) {
+        foreach (Room room in roomList)
+        {
+            int i = 0;
+            Room random;
+            do
+            {
+                switch (room.roomType)
+                {
+                    case Room.RoomType.combat:
+                        random = roomList[Random.Range(0, roomCount - 1)];
+                        break;
+                    case Room.RoomType.start:
+                    case Room.RoomType.exit:
+                        random = roomList[Random.Range(1, roomCount - 1)];
+                        break;
+                    case Room.RoomType.treasure:
+                        random = roomList[Random.Range(0, roomCount - 1)];
+                        break;
+                    default:
+                        random = roomList[Random.Range(0, roomCount - 1)];
+                        break;
+                }
+                i++;
+            }
+            while ((random == room || random.createPathsTo == false) && i < 100);
+            CreatePath(room, random);
+        }
+    }
+
+    private void SetBoundaries(Room room,int offset=1) {
+        int horizontal = room.width / 2;
+        int vertical = room.height / 2;
+        Vector2Int pos = room.position;
+        if (pos.x - horizontal < most.l) most.l = pos.x - horizontal-offset;
+        if (pos.x + horizontal > most.r) most.r = pos.x + horizontal+offset;
+        if (pos.y + vertical > most.t) most.t = pos.y + vertical+offset;
+        if (pos.y - vertical < most.b) most.b = pos.y - vertical-offset;
     }
 
     private void CreatePath(Room room1,Room room2)
@@ -240,6 +247,52 @@ public class LevelGenerator : MonoBehaviour {
         }
     }
 
+    private void PlaceRoomControllerObject(Room room) {
+        Vector3 pos = new Vector3(tileSize * room.position.x, tileSize * room.position.y, 0);
+        if (room.width % 2 == 0) pos.x -= tileSize / 2f;
+        if (room.height % 2 == 0) pos.y -= tileSize / 2f;
+        GameObject roomObj = (GameObject)Instantiate(roomObject, pos, transform.rotation, transform);
+        roomObj.GetComponent<RoomController>().Initialize(room.width, room.height);
+        roomObj.GetComponent<RoomController>().EnemiesToSpawn = enemies;
+    }
+
+}
+
+class Room {
+    public enum RoomType { combat,exit,treasure,start};
+    public RoomType roomType;
+    public bool createPathsTo = true;
+    public int width;
+    public int height;
+    public Vector2Int position;
+    public EnemyProperties[] enemies;
+
+    protected Room() { }
+
+    public Room(Vector2Int position,int height,int width,RoomType roomType=RoomType.combat) {
+        this.position = position;
+        this.height = height;
+        this.width = width;
+        this.roomType = roomType;
+    }
+
+    /// <summary>
+    /// Vytvori mistnost a posune ji tak, aby nekolidovala s ostatními
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="height"></param>
+    /// <param name="width"></param>
+    /// <param name="others"></param>
+    public Room(int height, int width, int roomSpread, List<Room> others, RoomType roomType = RoomType.combat) {
+        this.height = height;
+        this.width = width;
+        this.roomType = roomType;
+
+        this.position = Vector2Int.FloorToInt(5* Random.insideUnitCircle.normalized); 
+
+        Deintersect(roomSpread, others);
+    }
+
     /// <summary>
     /// Vygeneruje jednu mistnost
     /// </summary>
@@ -247,17 +300,17 @@ public class LevelGenerator : MonoBehaviour {
     /// <param name="width">Sirka mistnosti</param>
     /// <param name="height">Vyska mistnosti</param>
     /// <param name="enemies">Enemies v mistnosti</param>
-    void GenerateRoom(Room room,Vector2Int center)
+    public virtual void GenerateRoomToMap( Vector2Int center, ref int[,] map)
     {
-        room.position += center;
+        position += center;
         int x;
         int y;
-        for (int i = 0; i < room.width; i++)
+        for (int i = 0; i < width; i++)
         {
-            x = room.position.x - (room.width / 2) + i;
-            for (int j = 0; j < room.height; j++)
+            x = position.x - (width / 2) + i;
+            for (int j = 0; j < height; j++)
             {
-                y = room.position.y - (room.height / 2) + j;
+                y = position.y - (height / 2) + j;
 
                 try
                 {
@@ -265,40 +318,123 @@ public class LevelGenerator : MonoBehaviour {
                 }
                 catch (System.IndexOutOfRangeException)
                 {
-                    Debug.LogError(x.ToString()+" "+y.ToString());
+                    Debug.LogError(x.ToString() + " " + y.ToString());
                     throw;
                 }
             }
         }
-
-        if (room.combat)
-        {
-            Vector3 pos = new Vector3(tileSize * room.position.x, tileSize * room.position.y, 0);
-            if (room.width % 2 == 0) pos.x -= tileSize/2f;
-            if (room.height % 2 == 0) pos.y -= tileSize/2f;
-            GameObject roomObj = (GameObject)Instantiate(roomObject, pos, transform.rotation, transform);
-            roomObj.GetComponent<RoomController>().Initialize(room.width, room.height);
-            roomObj.GetComponent<RoomController>().EnemiesToSpawn= room.enemies;
-        }
-    }
-}
-
-class Room {
-    public bool combat = true;
-    public int width;
-    public int height;
-    public Vector2Int position;
-    public EnemyProperties[] enemies;
-
-    public Room(Vector2Int position,int height,int width) {
-        this.position = position;
-        this.height = height;
-        this.width = width;
     }
 
     public bool Intersects(Room other) {
         Vector2Int dif = position - other.position;
         if ((((other.width + width) / 2)+1 >= Mathf.Abs(dif.x)) && (((other.height + height) / 2)+1>= Mathf.Abs(dif.y))) return true;
         else return false;
+    }
+
+    public void Deintersect(int roomSpread, List<Room> others)
+    {
+        Vector2 dir = Random.insideUnitCircle;
+        if (dir == Vector2.zero) dir = Vector2.up;
+        Vector2 realPos = position;
+        dir.Normalize();
+        bool intersects;
+        int offset = 0;
+        int minOffset = Random.Range(roomSpread, roomSpread + 2);
+        while (offset < minOffset)
+        {
+            realPos += dir;
+            position = Vector2Int.FloorToInt(realPos);
+            intersects = false;
+            foreach(Room other in others)
+            {
+                if (Intersects(other))
+                {
+                    intersects = true;
+                    break;
+                }
+            }
+            if (!intersects) offset++;
+            else offset = 0;
+        }
+    }
+
+    public void Deintersect(int roomSpread, List<Room> others, Vector2 dir)
+    {
+        if (dir == Vector2.zero) dir = Vector2.up;
+        Vector2 realPos = position;
+        dir.Normalize();
+        bool intersects;
+        int offset = 0;
+        int minOffset = Random.Range(roomSpread, roomSpread + 2);
+        while (offset < minOffset)
+        {
+            realPos += dir;
+            position = Vector2Int.FloorToInt(realPos);
+            intersects = false;
+            foreach (Room other in others)
+            {
+                if (Intersects(other))
+                {
+                    intersects = true;
+                    break;
+                }
+            }
+            if (!intersects) offset++;
+            else offset = 0;
+        }
+    }
+}
+
+class ExitRoom : Room {
+    /// <summary>
+    /// Exit on the border
+    /// </summary>
+    /// <param name="most"></param>
+    public ExitRoom(LevelGenerator.Boundaries most)
+    {
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                this.position = new Vector2Int(most.r + 3, Random.Range(most.b + 2, most.t - 2));
+                most.r += 5;
+                break;
+            case 1:
+                this.position = new Vector2Int(most.l - 3, Random.Range(most.b + 2, most.t - 2));
+                most.l -= 5;
+                break;
+            case 2:
+                this.position = new Vector2Int(Random.Range(most.l + 2, most.r - 2), most.t + 3);
+                most.t += 5;
+                break;
+            case 3:
+                this.position = new Vector2Int(Random.Range(most.l + 2, most.r - 2), most.b - 3);
+                most.b -= 5;
+                break;
+            default:
+                break;
+        }
+        this.roomType = RoomType.exit;
+        this.createPathsTo = false;
+        this.height = 1;
+        this.width = 1;
+    }
+
+    /// <summary>
+    /// exit set by direction
+    /// </summary>
+    /// <param name="dir"></param>
+    /// <param name="others"></param>
+    /// <param name="roomSpread"></param>
+    public ExitRoom(Vector2 dir, List<Room> others,int roomSpread):base(Vector2Int.zero,1,1,RoomType.exit)
+    {
+        this.createPathsTo = false;
+        Deintersect(roomSpread, others, dir.normalized);
+    }
+
+
+    public override void GenerateRoomToMap(Vector2Int center, ref int[,] map)
+    {
+        position += center;
+        map[position.x,position.y] = 3;
     }
 }

@@ -33,13 +33,13 @@ public class Projectile : MonoBehaviour {
         if ((tag == "Enemy" && damageEnemies) || (tag == "Player" && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
         {
             collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
-            if (destroyOnDamageDealt) Destroy(gameObject);
+            if (destroyOnDamageDealt) End();
         }
         else if (tag == "Destroyable" && damageDestroyables)
         {
             collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
         }
-        if (destroyOnCollision) Destroy(gameObject);
+        if (destroyOnCollision) End();
     }
 
     private void End()
