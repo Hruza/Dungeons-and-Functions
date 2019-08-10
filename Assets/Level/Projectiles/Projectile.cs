@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour {
     public bool destroyOnCollision = false;
     public GameObject onDestroyParticles;
 
-    private void Start()
+    virtual protected void Start()
     {
         Invoke("End", lifetime);
     }
@@ -42,7 +42,7 @@ public class Projectile : MonoBehaviour {
         if (destroyOnCollision) End();
     }
 
-    private void End()
+    protected void End()
     {
         if (onDestroyParticles != null)
         {

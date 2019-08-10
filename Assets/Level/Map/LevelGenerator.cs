@@ -253,7 +253,7 @@ public class LevelGenerator : MonoBehaviour {
         if (room.height % 2 == 0) pos.y -= tileSize / 2f;
         GameObject roomObj = (GameObject)Instantiate(roomObject, pos, transform.rotation, transform);
         roomObj.GetComponent<RoomController>().Initialize(room.width, room.height);
-        roomObj.GetComponent<RoomController>().EnemiesToSpawn = enemies;
+        roomObj.GetComponent<RoomController>().EnemiesToSpawn = room.enemies;
     }
 
 }
