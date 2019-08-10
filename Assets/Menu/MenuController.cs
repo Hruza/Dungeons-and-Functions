@@ -58,11 +58,10 @@ public class MenuController : MonoBehaviour
 
         if (startedFirst)
         {
-            LoadProgress();
-
             WeaponPattern.AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
             ArmorPattern.AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
             StatPattern.AllStatPatterns = Resources.LoadAll<StatPattern>("Stats").ToList<StatPattern>();
+            LoadProgress();
             equipManager = new EquipManager();
             startedFirst = false;
         }
@@ -85,7 +84,6 @@ public class MenuController : MonoBehaviour
             if (level.progressID <= playerProgress.ProgressLevel) index++;
             else break;
         }
-        Debug.Log(index);
         selected = index;
         ChangeLevel(0);
     }
@@ -119,23 +117,9 @@ public class MenuController : MonoBehaviour
     /// <summary>
     /// Uloží obsah proměnné playerProgress do binárního souboru.
     /// </summary>
-    static public void SaveProgress()
+    static public void SaveProgress(string saveName)
     {
-        FileStream fs = new FileStream("hra.dat", FileMode.Create);
-
-        try
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(fs, playerProgress);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message + e.ToString());
-        }
-        finally
-        {
-            fs.Close();
-        }
+        playerProgress.SaveProgress(saveName);
     }
 
     /// <summary>
@@ -143,27 +127,7 @@ public class MenuController : MonoBehaviour
     /// </summary>
     public void LoadProgress()
     {
-        if (File.Exists("hra.dat"))
-        {
-            FileStream fs = new FileStream("hra.dat", FileMode.Open);
-
-            try
-            {
-                BinaryFormatter bf = new BinaryFormatter();
-                playerProgress = (PlayerProgress)bf.Deserialize(fs);
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-            }
-            finally
-            {
-                fs.Close();
-                if (playerProgress == null) playerProgress = new PlayerProgress(true);
-                else playerProgress.SetStartingItems();
-            }
-        }
-        else playerProgress = new PlayerProgress(true);
+        playerProgress=PlayerProgress.LoadProgress(playerProgress);
     }
 
     /// <summary>

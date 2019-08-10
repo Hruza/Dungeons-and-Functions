@@ -72,6 +72,31 @@ public class WeaponItem : Item
         return weapon;
     }
 
+    public static WeaponItem Generate(SaveWeapon save)
+    {
+        WeaponPattern pattern = WeaponPattern.AllWeaponPatterns.Find(x => x.name == save.ItemName);
+        //přiřazení vlastností, které jsou uložené
+        WeaponItem weapon = new WeaponItem
+        {
+            itemType = ItemType.Weapon,
+            itemLevel = save.ItemLevel,
+            rarity = save.ItemRarity,
+            quality = save.ItemQuality,
+            minDamage = save.MinDamage,
+            maxDamage = save.MaxDamage,
+            itemStats = save.ItemStats,
+
+            //přiřazení vlastností, které vycházejí ze vzoru
+            attackSpeed = pattern.attackSpeed,
+            sprite = pattern.sprite,
+            itemName = pattern.name,
+            weaponType = pattern.weaponType,
+            weaponGameObject = pattern.gameObject
+        };
+
+        return weapon;
+    }
+
     /// <summary>
     /// Metoda vracející rozsah poškození zbraně (max damage - min damage).
     /// </summary>

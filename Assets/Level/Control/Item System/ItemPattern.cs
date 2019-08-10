@@ -21,4 +21,13 @@ public class ItemPattern : ScriptableObject
     /// sprite předmětu
     /// </summary>
     public Sprite sprite;
+    /// <summary>
+    /// komentar u itemu
+    /// </summary>
+    public string itemComment;
+    /// <summary>
+    /// Dostane tento item hrac na zacatku hry?
+    /// </summary>
+    public bool isStarting = false;
+
 }

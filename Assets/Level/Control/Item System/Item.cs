@@ -32,6 +32,29 @@ public enum Rarity
 [System.Serializable]
 public class Item
 {
+    private ItemPattern Pattern {
+        get {
+            if (pattern == null) {
+                switch (itemType)
+                {
+                    case ItemType.Armor:
+                        pattern = ArmorPattern.AllArmorPatterns.Find(x => x.name == itemName);
+                        break;
+                    case ItemType.Weapon:
+                        pattern = WeaponPattern.AllWeaponPatterns.Find(x => x.name == itemName);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return pattern;
+        }
+        set {
+            pattern = value;
+        }
+
+    }
+    private ItemPattern pattern;
     /// <summary>
     /// úroveň předmětu
     /// </summary>
@@ -52,14 +75,23 @@ public class Item
     /// typ itemu
     /// </summary>
     public ItemType itemType;
-    /// <summary>
-    /// seznam všech bpnusových statů, které má předmět
-    /// </summary>
+
     /// <summary>
     /// sprite itemu
     /// </summary>
     public Sprite sprite;
 
+    /// <summary>
+    /// komentar k itemu, ukaze se v tooltipu
+    /// </summary>
+    public string ItemComment {
+        get {
+            return Pattern.itemComment;
+        }
+    }
+    /// <summary>
+    /// seznam všech bpnusových statů, které má předmět
+    /// </summary>
     public Stat[] itemStats;
 
     /// <summary>

@@ -16,6 +16,8 @@ MonoBehaviour:
   lowerItemLevel: 1
   upperItemLevel: 10000
   sprite: {fileID: 21300000, guid: b92e541b30d44ab45a6eeb21bfd0ab5e, type: 3}
+  itemComment: Looks nice, feels nice, won't help with math.
+  isStarting: 0
   lowerArmor: 0
   upperArmor: 2
   movementSpeedReduction: 0

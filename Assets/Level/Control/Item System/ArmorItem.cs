@@ -79,6 +79,28 @@ public class ArmorItem : Item
         return armor;
     }
 
+    public static ArmorItem Generate(SaveArmor save)
+    {
+        ArmorPattern pattern = ArmorPattern.AllArmorPatterns.Find(x => x.name == save.ItemName);
+        //přiřazení vlastností, které jsou uložené
+        ArmorItem armor = new ArmorItem
+        {
+            itemType = ItemType.Armor,
+            itemLevel = save.ItemLevel,
+            rarity = save.ItemRarity,
+            quality = save.ItemQuality,
+            armor = save.Armor,
+            itemStats = save.ItemStats,
+
+            //přiřazení vlastností, které vycházejí ze vzoru
+            sprite = pattern.sprite,
+            itemName = pattern.name,
+            movementSpeedReduction = pattern.movementSpeedReduction,
+        };
+
+        return armor;
+    }
+
     /// <summary>
     /// Metoda sloužící pro vylepšování brnění (zvyšuje kvalitu).
     /// </summary>
