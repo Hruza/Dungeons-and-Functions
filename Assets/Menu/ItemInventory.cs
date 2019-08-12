@@ -43,7 +43,7 @@ public class ItemInventory : MonoBehaviour
             selectedArmor = null;
         MenuController.equipManager = new EquipManager();
         weaponPanel.Items = progress.weapons.ConvertAll(x => (Item)x); 
-        armorPanel.Items = progress.items.FindAll(x => x.itemType == ItemType.Armor);
+        armorPanel.Items = progress.armors.ConvertAll(x => (Item)x);
     }
 
     /// <summary>

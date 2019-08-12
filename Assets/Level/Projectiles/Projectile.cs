@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour {
     public bool destroyOnCollision = false;
     public GameObject onDestroyParticles;
 
-    private void Start()
+    virtual protected void Start()
     {
         Invoke("End", lifetime);
     }
@@ -33,16 +33,16 @@ public class Projectile : MonoBehaviour {
         if ((tag == "Enemy" && damageEnemies) || (tag == "Player" && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
         {
             collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
-            if (destroyOnDamageDealt) Destroy(gameObject);
+            if (destroyOnDamageDealt) End();
         }
         else if (tag == "Destroyable" && damageDestroyables)
         {
             collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
         }
-        if (destroyOnCollision) Destroy(gameObject);
+        if (destroyOnCollision) End();
     }
 
-    private void End()
+    protected void End()
     {
         if (onDestroyParticles != null)
         {

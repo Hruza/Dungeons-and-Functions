@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Stat : MonoBehaviour
+[System.Serializable]
+public class Stat
 {
     /// <summary>
     /// jméno bonusového statu

@@ -16,6 +16,8 @@ MonoBehaviour:
   lowerItemLevel: 4
   upperItemLevel: 10000
   sprite: {fileID: 21300000, guid: aeec81187a4582149b9c8b7c7b8e4b53, type: 3}
+  itemComment: "The dream of every Matfyz\xE1k"
+  isStarting: 0
   lowerArmor: -3
   upperArmor: 3
   movementSpeedReduction: 2

@@ -24,13 +24,13 @@ public class LevelExit : MonoBehaviour
 
             panel.Items = reward;
             Debug.Log(reward.Count);
-            MenuController.playerProgress.items.AddRange(reward.FindAll(x => (x.itemType != ItemType.Weapon)));
+            MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
             MenuController.playerProgress.weapons.AddRange(reward.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
         }
         else
         {
             message.text = level.levelName + " lost!";
         }
-        MenuController.SaveProgress();
+        MenuController.SaveProgress("hra");
     }
 }

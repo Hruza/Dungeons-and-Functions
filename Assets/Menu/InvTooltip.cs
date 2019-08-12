@@ -52,16 +52,23 @@ public class InvTooltip : MonoBehaviour
                 default:
                     break;
             }
-            if (item.itemStats != null)
+            if (item.itemStats.Length>0)
             {
                 sb.Append("\n");
                 lines++;
                 foreach (Stat stat in item.itemStats)
                 {
-                    sb.AppendFormat(" {0} +{1}", stat.name, stat.value);
+                    sb.AppendFormat(" {0} +{1}\n", stat.name, stat.value);
                     lines++;
                 }
             }
+            if (item.ItemComment != "")
+            {
+                sb.Append("\n");
+                sb.Append(item.ItemComment);
+                lines += 2;
+            }
+
             info.text = sb.ToString();
             GetComponent<RectTransform>().sizeDelta = new Vector2(300, 50 + (lines) * 18);
         }
