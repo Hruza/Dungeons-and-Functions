@@ -136,6 +136,7 @@ public class MenuController : MonoBehaviour
     public void ClearProgress()
     {
         playerProgress = new PlayerProgress(true);
+        ChangeLevel(0);
         itemInventory.Start();
     }
 }

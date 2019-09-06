@@ -16,7 +16,7 @@ MonoBehaviour:
   lowerItemLevel: 1
   upperItemLevel: 10000
   sprite: {fileID: 21300000, guid: c193d6b03629ff349b4e1695b56ee1e3, type: 3}
-  itemComment: 
+  itemComment: Not as powerful as matlab, but works.
   isStarting: 0
   weaponType: 0
   lowerMinDamage: 3
