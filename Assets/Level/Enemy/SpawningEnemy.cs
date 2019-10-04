@@ -11,6 +11,10 @@ public class SpawningEnemy : NPC
     public int spawnedLevelDiference = -1;
 
     public float catapultSpeed=10;
+
+
+    public bool shootOnPlayer = false;
+
     /// <summary>
     /// Jak dlouho po zastaveni zacne enemy strilet na hrace
     /// </summary>
@@ -68,7 +72,8 @@ public class SpawningEnemy : NPC
             {
                 selected.Level = Level + spawnedLevelDiference;
                 GameObject spawned = (GameObject)Instantiate(selected.EnemyGameObject, (Vector3)Random.insideUnitCircle.normalized + transform.position, transform.rotation);
-                spawned.GetComponent<Rigidbody2D>().velocity = catapultSpeed * (spawned.transform.position - transform.position);
+                if (shootOnPlayer) spawned.GetComponent<Rigidbody2D>().velocity = catapultSpeed * (player.transform.position-spawned.transform.position).normalized;
+                else spawned.GetComponent<Rigidbody2D>().velocity = catapultSpeed * (spawned.transform.position - transform.position);
                 spawned.GetComponent<NPC>().Initialize(selected);
             }
             yield return new WaitForSeconds(spawnDelay);

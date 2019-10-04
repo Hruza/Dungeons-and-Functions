@@ -17,7 +17,7 @@ public abstract class NPC : MonoBehaviour
     /// <summary>
     /// Jak blizko musi byt k cili, aby ukoncil navigaci
     /// </summary>
-    const float defaultTargetTolerance = 1f;
+    public float defaultTargetTolerance = 1f;
 
     /// <summary>
     /// maximali mozne zdravi nepritele
@@ -46,7 +46,7 @@ public abstract class NPC : MonoBehaviour
     /// <summary>
     /// aktulni zdravi nepritele
     /// </summary>
-    private int HP=100;
+    private int HP=10;
 
     /// <summary>
     /// damage nepritele
@@ -99,6 +99,7 @@ public abstract class NPC : MonoBehaviour
         HP = maxHP;
     }
 
+    public GameObject onDeathParticles;
     /// <summary>
     /// Nepritel obdrzi damage a pripadne umre.
     /// </summary>
@@ -118,6 +119,7 @@ public abstract class NPC : MonoBehaviour
     //==========================================Movement======================================================
     private Rigidbody2D rb;
 
+    [HideInInspector]
     public bool isWalking=false;
 
     public float velocity = 1;
@@ -201,7 +203,7 @@ public abstract class NPC : MonoBehaviour
         while (Vector2.SqrMagnitude(transform.position - target) > tolerance * tolerance)
         {
             Vector2 walkDir = target - transform.position;
-            if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map"))) break;
+            if (Physics2D.Raycast(transform.position, walkDir,defaultTargetTolerance, LayerMask.GetMask("Map"))) break;
             rb.AddForce(walkDir.normalized * velocity);
             yield return new WaitForFixedUpdate();
         }
@@ -274,6 +276,11 @@ public abstract class NPC : MonoBehaviour
     /// </summary>
     protected void Die()
     {
+        if (onDeathParticles != null)
+        {
+            GameObject particles = (GameObject)Instantiate(onDeathParticles, transform.position, transform.rotation);
+            Destroy(particles, 3);
+        }
         Destroy(this.gameObject);
     }
 }

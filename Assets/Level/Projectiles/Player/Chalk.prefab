@@ -148,3 +148,12 @@ MonoBehaviour:
   destroyOnCollision: 1
   onDestroyParticles: {fileID: 2531967397379901787, guid: a64155d21577757489055ef09f51f8e9,
     type: 3}
+  explosion: 1
+  explosionDamage: 0
+  explosionRadius: 0
+  explosionDamageDistribution:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

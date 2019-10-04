@@ -214,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a581a54fcb0eaa4294e0b3f6b112f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultTargetTolerance: 1
   invincible: 0
   isWalking: 0
   velocity: 20
@@ -221,7 +222,7 @@ MonoBehaviour:
   playerDistance: 10
   projectileVelocity: 10
   timeToStartShooting: 0.5
-  timeToStartMoving: 0.5
+  timeToStartMoving: 2
   movingDistance: 2
   barrageCount: 3
   barrageDelay: 0.2

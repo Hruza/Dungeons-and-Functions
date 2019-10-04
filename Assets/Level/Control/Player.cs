@@ -179,8 +179,7 @@ public class Player : MonoBehaviour
     private void Die()
     {
         LevelController.levelController.PlayerDied();
-        gameObject.GetComponent<Rigidbody2D>().Sleep();
-        gameObject.GetComponent<PlayerMovement>().enabled = false;
+        this.gameObject.SetActive(false);    
     }
 
     /// <summary>
