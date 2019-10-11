@@ -4887,11 +4887,12 @@ MonoBehaviour:
   damagePlayer: 0
   damageDestroyables: 1
   destroyOnDamageDealt: 1
-  destroyOnCollision: 0
+  destroyOnAnyCollision: 0
+  destroyOnWorldCollision: 0
   onDestroyParticles: {fileID: 168759154570113319, guid: eed001540e39581458aee66b827a5530,
     type: 3}
   explosion: 0
-  explosionDamage: 0
+  explosionDamageMultiplicator: 1
   explosionRadius: 0
   explosionDamageDistribution:
     serializedVersion: 2
@@ -4899,3 +4900,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  explosionDamageEnemies: 1
+  explosionDamagePlayer: 0
+  explosionDamageDestroyables: 1

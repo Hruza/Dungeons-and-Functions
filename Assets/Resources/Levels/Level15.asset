@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: The Exam
   progressID: 14
+  lootAfterFinish: 1
   difficulty: 8
   enemies:
   - count: 20
@@ -27,3 +28,6 @@ MonoBehaviour:
   - count: 5
     enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
   roomCount: 1
+  generatorPreset: 2
+  roomConnections: 1
+  loot: []

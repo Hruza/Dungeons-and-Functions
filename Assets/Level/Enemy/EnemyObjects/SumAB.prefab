@@ -4979,8 +4979,8 @@ GameObject:
   - component: {fileID: 8492317698453848658}
   - component: {fileID: 8447323935650614488}
   - component: {fileID: 8420682799936167662}
-  - component: {fileID: 1997902246919118092}
   - component: {fileID: 465166913155887835}
+  - component: {fileID: 2198875794649396944}
   m_Layer: 14
   m_Name: SumAB
   m_TagString: Enemy
@@ -5081,32 +5081,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &1997902246919118092
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8469044018469754020}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.14738274, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 1
-  serializedVersion: 2
-  m_Size: {x: 3.4110947, y: 2.2}
-  m_EdgeRadius: 0
 --- !u!114 &465166913155887835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5119,21 +5093,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df35a8ad4829834db2f93fabacbaab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultTargetTolerance: 2.5
   invincible: 0
+  onDeathParticles: {fileID: 0}
   isWalking: 0
   velocity: 20
-  messageText: {fileID: 0}
   spawnedObjects:
   - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
   - {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
   playerDistance: 5
   spawnedLevelDiference: -1
   catapultSpeed: 10
+  shootOnPlayer: 0
   timeToStartSpawning: 1
   timeToStartMoving: 5
   movingDistance: 10
   spawnCount: 2
   spawnDelay: 1
+--- !u!70 &2198875794649396944
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8469044018469754020}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.3, y: -0.1}
+  m_Size: {x: 3.1, y: 2}
+  m_Direction: 1
 --- !u!1 &8469190814957332670
 GameObject:
   m_ObjectHideFlags: 0

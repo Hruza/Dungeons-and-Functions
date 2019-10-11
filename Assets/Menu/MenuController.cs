@@ -21,6 +21,7 @@ public class MenuController : MonoBehaviour
     public ItemInventory itemInventory;
     public GameObject mainMenu;
     public GameObject levelExitMenu;
+    public GameObject savesMenu;
 
     /// <summary>
     /// Reference na kartu levelu
@@ -49,6 +50,10 @@ public class MenuController : MonoBehaviour
 
     static private bool lastLevelCompleted=false;
 
+    private PlayerProgress[] players;
+
+    public SavePanel savePanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,11 +72,29 @@ public class MenuController : MonoBehaviour
         }
         else
         {
-            mainMenu.SetActive(false);
+            savesMenu.SetActive(false);
             levelExitMenu.SetActive(true);
             levelExitMenu.GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
+            InitializeLevels();
+            itemInventory.ReloadInventory();
         }
+    }
+
+    private void PlayerSelected() {
+        savesMenu.SetActive(false);
+        mainMenu.SetActive(true);
         InitializeLevels();
+        itemInventory.ReloadInventory();
+    }
+
+    public void ChoosePlayer(PlayerProgress progress) {
+        playerProgress = progress;
+        PlayerSelected();
+    }
+
+    public void NewPlayer(string playerName) {
+        playerProgress = new PlayerProgress(true, playerName);
+        PlayerSelected();
     }
 
     private void InitializeLevels()
@@ -117,9 +140,9 @@ public class MenuController : MonoBehaviour
     /// <summary>
     /// Uloží obsah proměnné playerProgress do binárního souboru.
     /// </summary>
-    static public void SaveProgress(string saveName)
+    static public void SaveProgress()
     {
-        playerProgress.SaveProgress(saveName);
+        playerProgress.SaveProgress();
     }
 
     /// <summary>
@@ -127,7 +150,8 @@ public class MenuController : MonoBehaviour
     /// </summary>
     public void LoadProgress()
     {
-        playerProgress=PlayerProgress.LoadProgress(playerProgress);
+        players=PlayerProgress.LoadAllProgress();
+        savePanel.Show(players);
     }
 
     /// <summary>
@@ -137,6 +161,6 @@ public class MenuController : MonoBehaviour
     {
         playerProgress = new PlayerProgress(true);
         ChangeLevel(0);
-        itemInventory.Start();
+        itemInventory.ReloadInventory();
     }
 }

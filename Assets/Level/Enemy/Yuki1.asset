@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Yuki1
   baseHP: 12
-  perLevelHPIncrement: 1
-  baseDamage: 1
-  perLevelDamageIncrement: 1
+  perLevelHPIncrement: 2
+  baseDamage: 8
+  perLevelDamageIncrement: 5
   EnemyGameObject: {fileID: 1081113949700632, guid: 38d0c6f7ac814744ea3da5e0943c935a,
     type: 3}

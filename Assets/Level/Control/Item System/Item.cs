@@ -7,7 +7,7 @@ using System.Linq;
 /// <summary>
 /// všechny možné typy předmětů
 /// </summary>
-public enum ItemType { Armor, Weapon };
+public enum ItemType { Armor, Weapon, none };
 /// <summary>
 /// všechny možné typy zbraní
 /// </summary>
@@ -23,7 +23,8 @@ public enum Rarity
 {
     Common = 0,
     Rare = 1,
-    Unique = 2
+    Unique = 2,
+    Legendary = 3
 };
 
 /// <summary>
@@ -76,6 +77,9 @@ public class Item
     /// </summary>
     public ItemType itemType;
 
+    const int weaponPropability= 70;
+    const int armorPropability= 30;
+
     /// <summary>
     /// sprite itemu
     /// </summary>
@@ -118,13 +122,19 @@ public class Item
     }
 
     /// <summary>
-    /// kontruktor vytvářející generický item (obsahuje pouze úroveň, kvalitu a raritu předmětu)
+    /// kontruktor vytvářející generický item s náhodnou raritou
     /// </summary>
     /// <param name="itemLevel"></param>
     public Item(int itemLevel)
     {
         this.itemLevel = itemLevel;
         itemName = "GenericItem";
+
+        float random = 100 * UnityEngine.Random.value;
+        if (random > 80) rarity = Rarity.Unique;
+        else if (random > 50) rarity = Rarity.Rare;
+        else rarity = Rarity.Common;
+
         /*quality = Probability.RandomQuality();
         rarity = Probability.RandomRarity();*/
     }
@@ -146,16 +156,39 @@ public class Item
         Item item = new Item(itemLevel);
 
         //Seznam všech metod, které slouří pro generovnání náhodných předmětů.
-        var listOfMethods = new List<GeneratingMethods>
+        /*var listOfMethods = new List<GeneratingMethods>
         {
             WeaponItem.Generate,
             ArmorItem.Generate
-        };
+        };*/
+
+        int rand = UnityEngine.Random.Range(1, 101);
+
+        if (rand > 100 - weaponPropability) item = WeaponItem.Generate(item);
+        else if (rand > 100 - weaponPropability - armorPropability) item = ArmorItem.Generate(item);
 
         //Zavolání náhodné metody, která vrátí náhodný předmět.
-        item = listOfMethods[UnityEngine.Random.Range(0, listOfMethods.Count)](item);
+        //item = listOfMethods[UnityEngine.Random.Range(0, listOfMethods.Count)](item);
 
         return item;
+    }
+
+    public static Item Generate(ItemPattern pattern, int itemLevel,bool noStats=false) {
+        Item item = new Item(itemLevel);
+        if (pattern.fixedRarity) item.rarity = pattern.fixedRarityValue;
+        switch (pattern.Type())
+        {
+            case ItemType.Armor:
+                item=ArmorItem.Generate(item, (ArmorPattern)pattern,noStats);
+                break;
+            case ItemType.Weapon:
+                item=WeaponItem.Generate(item, (WeaponPattern)pattern, noStats);
+                break;
+            default:
+                break;
+        }
+        return item;
+      
     }
 
     /// <summary>
@@ -163,10 +196,11 @@ public class Item
     /// </summary>
     public void GenerateStats()
     {
-        int numberOfStats = UnityEngine.Random.Range(0, 2) +  (int)rarity;
+        int numberOfStats = (int)rarity;
+
         List<StatPattern> possibleStatPatterns = StatPattern.AllStatPatterns.Where<StatPattern>
                                                 (s => (s.possibleItems.Contains(itemType) == true)).ToList();
-
+        
         if (possibleStatPatterns.Count == 0)
         {
             Debug.Log("Neexistují vhodné staty pro předmět.");
@@ -182,7 +216,7 @@ public class Item
             Stat stat = new Stat();
             stat.name = possibleStatPatterns[i].name;
             stat.value = UnityEngine.Random.Range(possibleStatPatterns[i].lowerRange, possibleStatPatterns[i].upperRange + 1);
-            stat.value += possibleStatPatterns[i].incrementPerLvl * (itemLevel - 1);
+            stat.value += Mathf.RoundToInt(possibleStatPatterns[i].incrementPerLvl * (itemLevel - 1));
             itemStats[i] = stat;
         }
     }

@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class ItemInventory : MonoBehaviour
 {
+    [Header("Panels")]
     public InventoryPanel weaponPanel;
     public InventoryPanel armorPanel;
     public InventoryPanel otherPanel;
 
+    [Header("Slots")]
     public InventoryButton[] weapon;
     public InventoryButton armor;
 
@@ -17,8 +19,9 @@ public class ItemInventory : MonoBehaviour
     private WeaponItem[] selectedWeapon;
     private Item selectedArmor;
 
-    public void Start()
-    {
+
+
+    public void ReloadInventory(){
         selectedWeapon = new WeaponItem[2];
         progress = MenuController.playerProgress;
         for (int i = 0; i <2; i++)

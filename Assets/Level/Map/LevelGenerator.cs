@@ -29,7 +29,6 @@ public class LevelGenerator : MonoBehaviour {
     public int minRoomSizeVariability = 2;
     public bool debug = false;
     void Start () {
-        if(debug) Generate(roomCount,enemies,1);
     }
 	
 	void Update () {
@@ -37,6 +36,8 @@ public class LevelGenerator : MonoBehaviour {
 	}
 
     public enum GeneratorPreset { normal, vast, boss };
+
+    public enum RoomConnectionPreset { random, jarnik, addShortUnillAll}
 
     public struct Boundaries{
         public int r;
@@ -49,7 +50,14 @@ public class LevelGenerator : MonoBehaviour {
 
     private Vector2Int center;
 
-    public void Generate(int roomCount,EnemyProperties[] enemies,int difficulty, GeneratorPreset preset = GeneratorPreset.normal) {
+    public void Generate(Level level)
+    {
+        int roomCount=level.roomCount;
+        EnemyProperties[] enemies = EnemyBundle.Merge(level.enemies);
+        int difficulty = level.difficulty;
+        GeneratorPreset preset = level.generatorPreset;
+        RoomConnectionPreset connections = level.roomConnections;
+
         if (roomCount <= 0) return;
         this.roomCount = roomCount;
         //ToDo:Random.seed = seed;
@@ -88,6 +96,10 @@ public class LevelGenerator : MonoBehaviour {
             int dim = Mathf.FloorToInt(Mathf.Sqrt(enemyCount));
             int h = minRoomSize + Random.Range(dim - 1, dim + minRoomSizeVariability);
             int w = minRoomSize + Random.Range(dim - 1, dim + minRoomSizeVariability);
+            if (preset == GeneratorPreset.boss) {
+                h += 3;
+                w += 3;
+            }
             Room current = new Room( h, w, roomSpread, roomList);
 
             //addEnemies
@@ -112,8 +124,10 @@ public class LevelGenerator : MonoBehaviour {
         switch (preset)
         {
             case GeneratorPreset.vast:
-            case GeneratorPreset.normal:
                 exit = new ExitRoom(most);
+                break;
+            case GeneratorPreset.normal:
+                exit = new ExitRoom(Random.insideUnitCircle,roomList,2);
                 break;
             case GeneratorPreset.boss:
                 exit = new ExitRoom(roomList[1].position-roomList[0].position,roomList,roomSpread);
@@ -128,7 +142,11 @@ public class LevelGenerator : MonoBehaviour {
         roomList.Add(exit);
         //ToDo: add something interesting
 
-
+     /*   foreach (SecretRoom secret in level.secretRooms)
+        {
+            
+        }
+        */
         //initialize map
         center = new Vector2Int(-most.l+1,-most.b+1);
         int mapWidth = most.r - most.l+3;
@@ -146,46 +164,100 @@ public class LevelGenerator : MonoBehaviour {
         foreach (Room room in roomList)
         {
             room.GenerateRoomToMap(center,ref map);
-            if (room.roomType==Room.RoomType.combat) {
-                PlaceRoomControllerObject(room);
+            switch (room.roomType)
+            {
+                case Room.RoomType.combat:
+                    PlaceRoomControllerObject(room);
+                    break;
+                case Room.RoomType.exit:
+                    break;
+                case Room.RoomType.treasure:
+                    SetTreasure(room);
+                    break;
+                case Room.RoomType.start:
+                    break;
+                default:
+                    break;
+
             }
+            
         }
 
         //connect rooms
-        ConnectRooms(roomList);
+        ConnectRooms(roomList,connections);
 
         //generate map
         CreateMap(mapWidth,mapHeight);
         Player.player.transform.position = new Vector3(start.position.x*tileSize,start.position.y*tileSize,0);
     }
 
-    private void ConnectRooms(List<Room> roomList) {
-        foreach (Room room in roomList)
+    private void ConnectRooms(List<Room> roomList,RoomConnectionPreset connections) {
+        switch (connections)
         {
-            int i = 0;
-            Room random;
-            do
-            {
-                switch (room.roomType)
+            case RoomConnectionPreset.random:
+                foreach (Room room in roomList)
                 {
-                    case Room.RoomType.combat:
-                        random = roomList[Random.Range(0, roomCount - 1)];
-                        break;
-                    case Room.RoomType.start:
-                    case Room.RoomType.exit:
-                        random = roomList[Random.Range(1, roomCount - 1)];
-                        break;
-                    case Room.RoomType.treasure:
-                        random = roomList[Random.Range(0, roomCount - 1)];
-                        break;
-                    default:
-                        random = roomList[Random.Range(0, roomCount - 1)];
-                        break;
+                    int i = 0;
+                    Room random;
+                    do
+                    {
+                        switch (room.roomType)
+                        {
+                            case Room.RoomType.combat:
+                                random = roomList[Random.Range(0, roomCount - 1)];
+                                break;
+                            case Room.RoomType.start:
+                            case Room.RoomType.exit:
+                                random = roomList[Random.Range(1, roomCount - 1)];
+                                break;
+                            case Room.RoomType.treasure:
+                                random = roomList[Random.Range(0, roomCount - 1)];
+                                break;
+                            default:
+                                random = roomList[Random.Range(0, roomCount - 1)];
+                                break;
+                        }
+                        i++;
+                    }
+                    while ((random == room || random.moreThanOneConnections == false) && i < 100);
+                    CreatePath(room, random);
                 }
-                i++;
-            }
-            while ((random == room || random.createPathsTo == false) && i < 100);
-            CreatePath(room, random);
+                break;
+            case RoomConnectionPreset.jarnik:
+            case RoomConnectionPreset.addShortUnillAll:
+                bool[,] connectionMatrix = new bool[roomList.Count, roomList.Count];
+                List<int> connected = new List<int>{0};
+                while (connected.Count<roomList.Count)
+                {
+                    int from= 0;
+                    int to=0;
+                    int min = 100000;
+                    int dist;
+                    for (int i = 0; i < connected.Count; i++)
+                    {
+                        for (int j = 0; j < roomList.Count; j++)
+                        {
+                            if (i!=j && !connectionMatrix[i, j] && ( ( connections==RoomConnectionPreset.jarnik && !connected.Contains(j) ) || connections==RoomConnectionPreset.addShortUnillAll) ) {
+                                if ((!connected.Contains(j) || roomList[j].moreThanOneConnections) && (!connected.Contains(j) || roomList[i].moreThanOneConnections)) {
+                                    dist = Room.manhattanMetric(roomList[i], roomList[j]);
+                                    if (dist < min) {
+                                        min = dist;
+                                        from = i;
+                                        to = j;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(!connected.Contains(to)) connected.Add(to);
+                    connectionMatrix[from, to] = true;
+                    connectionMatrix[to, from] = true;
+                    CreatePath(roomList[from], roomList[to]);
+                }
+                
+                    break;
+            default:
+                break;
         }
     }
 
@@ -256,18 +328,26 @@ public class LevelGenerator : MonoBehaviour {
         roomObj.GetComponent<RoomController>().EnemiesToSpawn = room.enemies;
     }
 
+    private void SetTreasure(Room room) {
+        Vector3 pos = new Vector3(tileSize * room.position.x, tileSize * room.position.y, 0);
+        
+    }
 }
 
 class Room {
     public enum RoomType { combat,exit,treasure,start};
     public RoomType roomType;
-    public bool createPathsTo = true;
+    public bool moreThanOneConnections = true;
     public int width;
     public int height;
     public Vector2Int position;
     public EnemyProperties[] enemies;
 
     protected Room() { }
+
+    static public int manhattanMetric(Room r1, Room r2) {
+        return Mathf.Abs(r1.position.x - r2.position.x) + Mathf.Abs(r1.position.y - r2.position.y);
+    }
 
     public Room(Vector2Int position,int height,int width,RoomType roomType=RoomType.combat) {
         this.position = position;
@@ -414,7 +494,7 @@ class ExitRoom : Room {
                 break;
         }
         this.roomType = RoomType.exit;
-        this.createPathsTo = false;
+        this.moreThanOneConnections = false;
         this.height = 1;
         this.width = 1;
     }
@@ -427,7 +507,7 @@ class ExitRoom : Room {
     /// <param name="roomSpread"></param>
     public ExitRoom(Vector2 dir, List<Room> others,int roomSpread):base(Vector2Int.zero,1,1,RoomType.exit)
     {
-        this.createPathsTo = false;
+        this.moreThanOneConnections = false;
         Deintersect(roomSpread, others, dir.normalized);
     }
 
@@ -436,5 +516,19 @@ class ExitRoom : Room {
     {
         position += center;
         map[position.x,position.y] = 3;
+    }
+}
+
+class TreasureRoom:Room {
+    public TreasureRoom(Vector2 dir, List<Room> others, int roomSpread) : base(Vector2Int.zero, 1, 1, RoomType.treasure)
+    {
+        this.moreThanOneConnections = false;
+        Deintersect(roomSpread, others, dir.normalized);
+    }
+
+    public override void GenerateRoomToMap(Vector2Int center, ref int[,] map)
+    {
+        position += center;
+        map[position.x, position.y] = 4;
     }
 }

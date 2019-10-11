@@ -199,11 +199,16 @@ public abstract class NPC : MonoBehaviour
     private IEnumerator GoThere(Vector3 target,float tolerance) {
         isWalking = true;
         WalkStarted();
+        Vector2 detectionSize = new Vector2(1, 1);
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         while (Vector2.SqrMagnitude(transform.position - target) > tolerance * tolerance)
         {
             Vector2 walkDir = target - transform.position;
-            if (Physics2D.Raycast(transform.position, walkDir,defaultTargetTolerance, LayerMask.GetMask("Map"))) break;
+            if (Physics2D.BoxCast(transform.position, detectionSize, 0, walkDir, defaultTargetTolerance, LayerMask.GetMask("Map")))
+            {/*Raycast(transform.position, walkDir,defaultTargetTolerance, LayerMask.GetMask("Map")))*/
+                yield return new WaitForFixedUpdate();
+                break;
+            }
             rb.AddForce(walkDir.normalized * velocity);
             yield return new WaitForFixedUpdate();
         }
@@ -219,7 +224,9 @@ public abstract class NPC : MonoBehaviour
     /// <summary>
     /// Metoda, ktera se spusti po ukonceni pochodu
     /// </summary>
-    protected virtual void WalkEnded() { }
+    protected virtual void WalkEnded() {
+        StopCoroutine(currentWalk);
+    }
 
     /// <summary>
     /// Zastavi enemy

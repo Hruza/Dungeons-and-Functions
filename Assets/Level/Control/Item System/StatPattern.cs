@@ -21,7 +21,7 @@ public class StatPattern : ScriptableObject
     /// <summary>
     /// o kolik se zvýší hodnota statu za každou úroveň předmětu nad 1
     /// </summary>
-    public int incrementPerLvl;
+    public float incrementPerLvl;
     /// <summary>
     /// možné typy itemů, na kterých se stat může vygenerovat
     /// </summary>

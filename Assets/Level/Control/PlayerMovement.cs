@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour {
     /// <summary>
     /// Rychlost pohybu
     /// </summary>
-    public float speed = 0.1f;
+    public float speed = 6f;
 
     public float knockbackResistance = 0.2f;
 

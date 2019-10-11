@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
-  m_Name: integral_throwetOP
+  m_Name: OPintegral_throwetOP
   m_EditorClassIdentifier: 
   name: IntegralrangOP
   lowerItemLevel: 9999
@@ -24,5 +24,5 @@ MonoBehaviour:
   lowerMaxDamage: 60
   upperMaxDamage: 60
   damageIncrementPerLevel: 1
-  attackSpeed: 5
+  attackSpeed: 50
   gameObject: {fileID: 1023424732719212, guid: 3af8ae0ca01705d48ad5f504bab3c86e, type: 3}

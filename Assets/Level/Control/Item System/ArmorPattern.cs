@@ -26,7 +26,14 @@ public class ArmorPattern : ItemPattern
     /// databáze všech možných brnění
     /// </summary>
     public static List<ArmorPattern> AllArmorPatterns;
+
+    public override ItemType Type()
+    {
+        return ItemType.Armor;
+    }
     /*new List<ArmorPattern>
+   
+
 {
     new ArmorPattern
     {

@@ -41,8 +41,8 @@ public class MeleeWeapon : Weapon
         float angle = 0;
         while (angle<angleOfSwing)
         {
-            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime*angleOfSwing*attackSpeed);
-            angle += Time.deltaTime*angleOfSwing*attackSpeed;
+            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime*angleOfSwing*attackSpeed/10);
+            angle += Time.deltaTime*angleOfSwing*attackSpeed/10;
             yield return new WaitForEndOfFrame();
         }
         if(changeDirections) lastSwingDir *= -1;

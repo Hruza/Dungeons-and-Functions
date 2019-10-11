@@ -105,5 +105,25 @@ public class WeaponItem : Item
     {
         return maxDamage - minDamage;
     }
+
+    public int GetStat(string name)
+    {
+        int value = 0;
+        foreach (Stat stat in itemStats)
+        {
+            if (stat.name == name) value += stat.value;
+        }
+        return value;
+    }
+
+    public int TotalMinDamage( EquipManager equip)
+    {
+        return minDamage * (100 + (equip.AllStats["DamageMultiplicative"]) +  GetStat("DamageMultiplicative")) / 100 + equip.AllStats["DamageAdditive"]+GetStat("DamageAdditive");
+    }
+
+    public int TotalAttackSpeed(EquipManager equip)
+    {
+        return attackSpeed + equip.AllStats["AttackSpeed"] + GetStat("AttackSpeed");
+    }
 }
 

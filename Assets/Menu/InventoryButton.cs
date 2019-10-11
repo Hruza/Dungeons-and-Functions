@@ -8,6 +8,12 @@ public class InventoryButton : MonoBehaviour
     public ItemInventory itemInventory;
     private Item item;
 
+    [Header("Colors")]
+    static public Color commonColor = Color.white;
+    static public Color rareColor = Color.blue;
+    static public Color uniqueColor = Color.magenta;
+    static public Color legendaryColor = Color.yellow;
+
     public GameObject tooltipPrefab;
 
     public Image image;
@@ -20,10 +26,28 @@ public class InventoryButton : MonoBehaviour
             {
                 item = value;
                 image.sprite = item.sprite;
+                    switch (item.rarity)
+                    {
+                        case Rarity.Common:
+                            GetComponent<Image>().color = commonColor;
+                            break;
+                        case Rarity.Rare:
+                            GetComponent<Image>().color = rareColor;
+                            break;
+                        case Rarity.Unique:
+                            GetComponent<Image>().color = uniqueColor;
+                            break;
+                    case Rarity.Legendary:
+                            GetComponent<Image>().color = legendaryColor;
+                        break;
+                        default:
+                            break;
+                    }
             }
             else {
                 item = null;
                 image.sprite = null;
+                GetComponent<Image>().color = Color.white;
             }
             //todo:set sprite etc.
         }

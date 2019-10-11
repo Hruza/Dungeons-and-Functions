@@ -11,7 +11,9 @@ public class Projectile : MonoBehaviour {
     public bool damagePlayer = false;
     public bool damageDestroyables = true;
     public bool destroyOnDamageDealt = true;
-    public bool destroyOnCollision = false;
+    public bool destroyOnAnyCollision = false;
+    public bool destroyOnWorldCollision = true;
+    public GameObject onDamageParticles;
 
     [Header("On Destroy")]
     public GameObject onDestroyParticles;
@@ -51,13 +53,19 @@ public class Projectile : MonoBehaviour {
         if ((tag == "Enemy" && damageEnemies) || (tag == "Player" && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
         {
             collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
+            if (onDamageParticles != null) {
+                GameObject particles = (GameObject)Instantiate(onDamageParticles, transform.position, transform.rotation);
+                Destroy(particles, 3);
+            }
             if (destroyOnDamageDealt) End();
         }
         else if (tag == "Destroyable" && damageDestroyables)
         {
             collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
         }
-        if (destroyOnCollision) End();
+        if (destroyOnAnyCollision) End();
+        Debug.Log(LayerMask.GetMask("Map"));
+        if (destroyOnWorldCollision && collision.gameObject.layer == LayerMask.NameToLayer("Map")) End() ;
     }
 
     protected void End()

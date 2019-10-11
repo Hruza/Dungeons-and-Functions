@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: The Introductory Lecture
   progressID: 0
+  lootAfterFinish: 1
   difficulty: 1
   enemies:
   - count: 5
     enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
   roomCount: 3
+  generatorPreset: 0
+  roomConnections: 1
+  loot: []

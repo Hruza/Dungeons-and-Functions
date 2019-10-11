@@ -17,10 +17,13 @@ public class LevelExit : MonoBehaviour
 
             //tady bude generovani odmeny itemu
             List<Item> reward = new List<Item>();
-            reward.Add(Item.Generate(level.difficulty));
-            //funguje to?
 
-            //tady uz ne
+            if(level.lootAfterFinish) reward.Add(Item.Generate(level.difficulty));
+
+            foreach (ItemPattern pattern in level.loot)
+            {
+                reward.Add(Item.Generate(pattern,level.difficulty));
+            }
 
             panel.Items = reward;
             Debug.Log(reward.Count);
@@ -31,6 +34,6 @@ public class LevelExit : MonoBehaviour
         {
             message.text = level.levelName + " lost!";
         }
-        MenuController.SaveProgress("hra");
+        MenuController.SaveProgress();
     }
 }

@@ -30,4 +30,10 @@ public class ItemPattern : ScriptableObject
     /// </summary>
     public bool isStarting = false;
 
+    public bool fixedRarity = false;
+    public Rarity fixedRarityValue = Rarity.Common;
+
+    public virtual ItemType Type() {
+        return ItemType.none;
+    }
 }

@@ -8,21 +8,26 @@ using System.Runtime.Serialization.Formatters.Binary;
 [System.Serializable]
 public class PlayerProgress
 {
+    public string playerName;
+
     [System.NonSerialized]
     public List<WeaponItem> weapons;
 
     [System.NonSerialized]
     public List<ArmorItem> armors;
 
+    public string PlayerName{ get; private set; }
     /// <summary>
     /// zbrane na ukladani
     /// </summary>
-    public SaveWeapon[] saveWeapons;   
+    public SaveWeapon[] saveWeapons;  
 
     /// <summary>
     /// armor na ukladani
     /// </summary>
     public SaveArmor[] saveArmors;
+
+    public List<string> unlockedLevels;
 
     public int ProgressLevel { get; set; }
 
@@ -36,8 +41,9 @@ public class PlayerProgress
 
     }
 
-    public PlayerProgress(bool starting)
+    public PlayerProgress(bool starting,string playerName="hra")
     {
+        this.PlayerName = playerName;
         if (starting)
         {
             saveWeapons = new SaveWeapon[0];
@@ -118,9 +124,10 @@ public class PlayerProgress
     /// Ulozi progress do souboru
     /// </summary>
     /// <param name="saveName"></param>
-    public void SaveProgress(string saveName)
+    public void SaveProgress()
     {
-        FileStream fs = new FileStream(saveName + ".dat", FileMode.Create);
+        if (!Directory.Exists("saves")) Directory.CreateDirectory("saves");
+        FileStream fs = new FileStream("saves/"+playerName + ".dat", FileMode.Create);
 
         try
         {
@@ -143,15 +150,16 @@ public class PlayerProgress
     /// Nacte progress ze souboru
     /// </summary>
     /// <param name="playerProgress"></param>
-    static public PlayerProgress LoadProgress(PlayerProgress playerProgress) {
-        if (File.Exists("hra.dat"))
+    static public PlayerProgress LoadProgress(PlayerProgress playerProgress,string filePath="saves/hra.dat") {
+        if (File.Exists(filePath))
         {
-            FileStream fs = new FileStream("hra.dat", FileMode.Open);
+            FileStream fs = new FileStream(filePath, FileMode.Open);
 
             try
             {
                 BinaryFormatter bf = new BinaryFormatter();
                 playerProgress = (PlayerProgress)bf.Deserialize(fs);
+                if (playerProgress.playerName == null || playerProgress.playerName == "") playerProgress.playerName = "hra";
                 playerProgress.UpdateItems();
             }
             catch (Exception e)
@@ -166,6 +174,16 @@ public class PlayerProgress
         }
         else playerProgress = new PlayerProgress(true);
         return playerProgress;
+    }
+
+    static public PlayerProgress[] LoadAllProgress() {
+        List<PlayerProgress> players = new List<PlayerProgress>();
+        foreach (string filePath in Directory.GetFiles("saves","*.dat"))
+        {
+            PlayerProgress progress = new PlayerProgress();
+            players.Add(LoadProgress(progress,filePath));
+        }
+        return players.ToArray();
     }
 }
 

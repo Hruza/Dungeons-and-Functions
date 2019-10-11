@@ -196,7 +196,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 30
   m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
   onDeathParticles: {fileID: 2858556565013529302, guid: 2a3ce24335b8b6d4b8ca543a3d5649e3,
     type: 3}
   isWalking: 0
-  velocity: 20
+  velocity: 1000
   spawnedObjects:
   - {fileID: 11400000, guid: 401d76aec69d7ad448440a3b88a6e624, type: 2}
   - {fileID: 11400000, guid: df6ef6fef9ca387408ddd3ce5367da54, type: 2}
@@ -280,7 +280,7 @@ MonoBehaviour:
   catapultSpeed: 100
   shootOnPlayer: 1
   timeToStartSpawning: 1
-  timeToStartMoving: 5
-  movingDistance: 20
-  spawnCount: 3
-  spawnDelay: 0.5
+  timeToStartMoving: 1
+  movingDistance: 30
+  spawnCount: 2
+  spawnDelay: 0.1

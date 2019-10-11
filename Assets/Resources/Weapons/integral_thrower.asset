@@ -24,5 +24,5 @@ MonoBehaviour:
   lowerMaxDamage: 2
   upperMaxDamage: 3
   damageIncrementPerLevel: 1
-  attackSpeed: 5
+  attackSpeed: 50
   gameObject: {fileID: 1023424732719212, guid: 3af8ae0ca01705d48ad5f504bab3c86e, type: 3}

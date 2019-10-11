@@ -58,6 +58,9 @@ public class Level : ScriptableObject
     /// </summary>
     public int progressID;
 
+    public bool lootAfterFinish = true;
+
+
     /// <summary>
     /// Uroven enemies v levelu
     /// </summary>
@@ -71,9 +74,24 @@ public class Level : ScriptableObject
     /// Pocet mistnosi
     /// </summary>
     public int roomCount=1;
+
+    public LevelGenerator.GeneratorPreset generatorPreset = LevelGenerator.GeneratorPreset.normal;
+
+    public LevelGenerator.RoomConnectionPreset roomConnections =LevelGenerator.RoomConnectionPreset.addShortUnillAll;
+
+    public ItemPattern[] loot;
+
+    public SecretRoom[] secretRooms;
+
     Level(int difficulty, EnemyBundle[] enemies)
     {
         this.difficulty = difficulty;
         this.enemies = enemies;
     }
+}
+
+public class SecretRoom {
+    public enum Type {unlockLevel, extraItem, extraRandomItem }
+    public string[] unlockedLevels;
+    public ItemPattern[] loot;
 }

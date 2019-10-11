@@ -59,6 +59,7 @@ public class SpawningEnemy : NPC
 
     protected override void WalkEnded()
     {
+        base.WalkEnded();
         GetComponent<Animator>().SetBool("isWalking", isWalking);
         Decide();
     }
@@ -101,10 +102,14 @@ public class SpawningEnemy : NPC
             case State.gettingCloser:
                 if ((player.transform.position - transform.position).sqrMagnitude > playerDistance * playerDistance * 2)
                 {
+                    state = State.moving;
                     MoveAroundPlayer();
                 }
                 else
+                {
+                    state = State.shooting;
                     StartCoroutine(Spawn());
+                }
                 break;
             case State.shooting:
 
@@ -128,8 +133,10 @@ public class SpawningEnemy : NPC
                     GoToTarget(player, playerDistance);
                 }
                 else
+                {
+                    state = State.shooting;
                     StartCoroutine(Spawn());
-
+                }
                 break;
             default:
                 break;

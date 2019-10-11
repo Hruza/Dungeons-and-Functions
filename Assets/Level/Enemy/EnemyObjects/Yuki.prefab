@@ -125,10 +125,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultTargetTolerance: 1
   invincible: 0
+  onDeathParticles: {fileID: 0}
   isWalking: 0
   velocity: 20
   projectile: {fileID: 1688038456248938, guid: 6e41344768ad41a40861f0b2be75e92e, type: 3}
-  playerDistance: 4
+  playerDistance: 8
   projectileVelocity: 10
   timeToStartShooting: 1
   timeToStartMoving: 1

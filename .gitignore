@@ -44,3 +44,6 @@ sysinfo.txt
 Assets/StreamingAssets/crashlytics-build.properties
 
 hra\.dat
+
+# Post processing package
+Assets/PostProcessing

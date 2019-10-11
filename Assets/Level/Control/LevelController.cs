@@ -25,7 +25,7 @@ public class LevelController : MonoBehaviour {
         levelController = this;
         Level level = MenuController.selectedLevel;
         roomCountToClear = Mathf.CeilToInt(level.roomCount / 2f);
-        map.GetComponent<LevelGenerator>().Generate(level.roomCount,EnemyBundle.Merge(level.enemies),level.difficulty);
+        map.GetComponent<LevelGenerator>().Generate(level);
         //ToDo: Pridat veci
 
     }

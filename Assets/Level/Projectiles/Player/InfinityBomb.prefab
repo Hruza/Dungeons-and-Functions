@@ -304,7 +304,8 @@ MonoBehaviour:
   damagePlayer: 0
   damageDestroyables: 0
   destroyOnDamageDealt: 0
-  destroyOnCollision: 0
+  destroyOnAnyCollision: 0
+  destroyOnWorldCollision: 0
   onDestroyParticles: {fileID: 4123542020646625247, guid: 6207ce24b60a2314682906f3db74b33c,
     type: 3}
   explosion: 1
