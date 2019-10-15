@@ -15,6 +15,7 @@ MonoBehaviour:
   levelName: Limits
   progressID: 2
   lootAfterFinish: 1
+  isSecret: 0
   difficulty: 2
   enemies:
   - count: 5
@@ -25,3 +26,7 @@ MonoBehaviour:
   generatorPreset: 0
   roomConnections: 2
   loot: []
+  secretRooms:
+  - type: 0
+    unlockedLevel: 
+    loot: []

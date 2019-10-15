@@ -60,6 +60,7 @@ public class Level : ScriptableObject
 
     public bool lootAfterFinish = true;
 
+    public bool isSecret = false;
 
     /// <summary>
     /// Uroven enemies v levelu
@@ -90,8 +91,11 @@ public class Level : ScriptableObject
     }
 }
 
+public enum SecretRoomType{ extraRandomItem , unlockLevel, extraItem };
+
+[System.Serializable]
 public class SecretRoom {
-    public enum Type {unlockLevel, extraItem, extraRandomItem }
-    public string[] unlockedLevels;
+    public SecretRoomType type = SecretRoomType.extraRandomItem;
+    public string unlockedLevel;
     public ItemPattern[] loot;
 }

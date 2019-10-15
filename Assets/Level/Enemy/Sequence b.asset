@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Sequence b
   m_EditorClassIdentifier: 
   name: Sequence b
-  baseHP: 10
-  perLevelHPIncrement: 4
-  baseDamage: 2
+  baseHP: 20
+  perLevelHPIncrement: 6
+  baseDamage: 4
   perLevelDamageIncrement: 5
   EnemyGameObject: {fileID: 1912209089370650, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
     type: 3}

@@ -309,6 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df35a8ad4829834db2f93fabacbaab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   defaultTargetTolerance: 1.5
   invincible: 0
   onDeathParticles: {fileID: 0}
@@ -316,15 +317,15 @@ MonoBehaviour:
   velocity: 20
   spawnedObjects:
   - {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
-  playerDistance: 5
+  playerDistance: 6
   spawnedLevelDiference: -1
   catapultSpeed: 10
-  shootOnPlayer: 0
-  timeToStartSpawning: 2
-  timeToStartMoving: 5
+  shootOnPlayer: 1
+  timeToStartSpawning: 0.5
+  timeToStartMoving: 2
   movingDistance: 10
   spawnCount: 2
-  spawnDelay: 1
+  spawnDelay: 3
 --- !u!58 &6914734369284456360
 CircleCollider2D:
   m_ObjectHideFlags: 0

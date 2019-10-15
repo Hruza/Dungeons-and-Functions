@@ -16,7 +16,6 @@ public class PlayerProgress
     [System.NonSerialized]
     public List<ArmorItem> armors;
 
-    public string PlayerName{ get; private set; }
     /// <summary>
     /// zbrane na ukladani
     /// </summary>
@@ -43,11 +42,12 @@ public class PlayerProgress
 
     public PlayerProgress(bool starting,string playerName="hra")
     {
-        this.PlayerName = playerName;
+        this.playerName = playerName;
         if (starting)
         {
             saveWeapons = new SaveWeapon[0];
             saveArmors = new SaveArmor[0];
+            unlockedLevels = new List<string>();
             ProgressLevel = 0;
             SetStartingItems();
         }
@@ -178,10 +178,13 @@ public class PlayerProgress
 
     static public PlayerProgress[] LoadAllProgress() {
         List<PlayerProgress> players = new List<PlayerProgress>();
-        foreach (string filePath in Directory.GetFiles("saves","*.dat"))
+        if (Directory.Exists("saves"))
         {
-            PlayerProgress progress = new PlayerProgress();
-            players.Add(LoadProgress(progress,filePath));
+            foreach (string filePath in Directory.GetFiles("saves", "*.dat"))
+            {
+                PlayerProgress progress = new PlayerProgress();
+                players.Add(LoadProgress(progress, filePath));
+            }
         }
         return players.ToArray();
     }

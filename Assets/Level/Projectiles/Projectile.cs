@@ -50,7 +50,7 @@ public class Projectile : MonoBehaviour {
 
     private void Collided(Collider2D collision) {
         string tag = collision.gameObject.tag;
-        if ((tag == "Enemy" && damageEnemies) || (tag == "Player" && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
+        if ((tag == "Enemy" && damageEnemies) || ((tag=="Shield" || tag == "Player") && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
         {
             collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
             if (onDamageParticles != null) {
@@ -65,7 +65,7 @@ public class Projectile : MonoBehaviour {
         }
         if (destroyOnAnyCollision) End();
         Debug.Log(LayerMask.GetMask("Map"));
-        if (destroyOnWorldCollision && collision.gameObject.layer == LayerMask.NameToLayer("Map")) End() ;
+        if (destroyOnWorldCollision && (collision.gameObject.layer == LayerMask.NameToLayer("Map") || tag == "Map" || tag=="Destroyable")) End() ;
     }
 
     protected void End()

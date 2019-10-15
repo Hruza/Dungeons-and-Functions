@@ -15,13 +15,18 @@ MonoBehaviour:
   levelName: More Convergence Criteria
   progressID: 8
   lootAfterFinish: 1
+  isSecret: 0
   difficulty: 5
   enemies:
   - count: 3
     enemyProperties: {fileID: 11400000, guid: cfe1f04ef746e144d96e445970fd9320, type: 2}
-  - count: 5
+  - count: 3
     enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
   roomCount: 4
   generatorPreset: 0
   roomConnections: 2
   loot: []
+  secretRooms:
+  - type: 0
+    unlockedLevel: 
+    loot: []

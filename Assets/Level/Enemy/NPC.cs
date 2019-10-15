@@ -7,12 +7,16 @@ interface ISequence {
     void Limit();
 }
 
+public enum EnemyType {sequence,sum,other};
+    
 public abstract class NPC : MonoBehaviour
 {
     /// <summary>
     /// jak casto bude enemy zjistovat hracovu polohu
     /// </summary>
     const float followDelay = 0.5f;
+
+    public EnemyType enemyType;
 
     /// <summary>
     /// Jak blizko musi byt k cili, aby ukoncil navigaci
@@ -124,6 +128,8 @@ public abstract class NPC : MonoBehaviour
 
     public float velocity = 1;
 
+    static float giveUpTime = 5;
+
     private IEnumerator currentWalk;
 
   /*  /// <summary>
@@ -162,7 +168,7 @@ public abstract class NPC : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
             Vector2 walkDir = target.transform.position - transform.position;
-            if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map"))) break;
+            if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map","WalkBarrier"))) break;
             rb.AddForce(walkDir.normalized * velocity);
         }
         isWalking = false;
@@ -200,8 +206,9 @@ public abstract class NPC : MonoBehaviour
         isWalking = true;
         WalkStarted();
         Vector2 detectionSize = new Vector2(1, 1);
+        float startTime=Time.realtimeSinceStartup;
         if (rb == null) rb = GetComponent<Rigidbody2D>();
-        while (Vector2.SqrMagnitude(transform.position - target) > tolerance * tolerance)
+        while (Vector2.SqrMagnitude(transform.position - target) > tolerance * tolerance && Time.realtimeSinceStartup-startTime<giveUpTime )
         {
             Vector2 walkDir = target - transform.position;
             if (Physics2D.BoxCast(transform.position, detectionSize, 0, walkDir, defaultTargetTolerance, LayerMask.GetMask("Map")))

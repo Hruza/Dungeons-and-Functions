@@ -18,12 +18,14 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: c193d6b03629ff349b4e1695b56ee1e3, type: 3}
   itemComment: Not as powerful as matlab, but works.
   isStarting: 0
+  fixedRarity: 0
+  fixedRarityValue: 0
   weaponType: 0
   lowerMinDamage: 3
   upperMinDamage: 4
   lowerMaxDamage: 7
   upperMaxDamage: 10
   damageIncrementPerLevel: 2
-  attackSpeed: 20
+  attackSpeed: 15
   gameObject: {fileID: 9195056921275180072, guid: 832865a4c80ce784c93824186515e366,
     type: 3}

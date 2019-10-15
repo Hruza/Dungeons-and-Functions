@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e9454119f61784f9f5459030944841, type: 3}
+  m_Name: DefaultRepo
+  m_EditorClassIdentifier: Assembly-CSharp::RoomPatternRepository
+  texts:
+  - {fileID: 4900000, guid: 9e179f6c73def584089d04a9dbb0905d, type: 3}
+  - {fileID: 4900000, guid: e09a8478f18a6d64082cbbc85f2d9300, type: 3}

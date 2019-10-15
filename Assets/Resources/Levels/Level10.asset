@@ -15,6 +15,7 @@ MonoBehaviour:
   levelName: The Abel-Dirichlet Theorem
   progressID: 9
   lootAfterFinish: 1
+  isSecret: 0
   difficulty: 6
   enemies:
   - count: 5
@@ -25,3 +26,10 @@ MonoBehaviour:
   generatorPreset: 0
   roomConnections: 2
   loot: []
+  secretRooms:
+  - type: 0
+    unlockedLevel: 
+    loot: []
+  - type: 0
+    unlockedLevel: 
+    loot: []

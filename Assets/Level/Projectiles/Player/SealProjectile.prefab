@@ -103,9 +103,9 @@ MonoBehaviour:
   destroyOnDamageDealt: 0
   destroyOnAnyCollision: 0
   destroyOnWorldCollision: 1
-  onDamageParticles: {fileID: 2531967397379901787, guid: a64155d21577757489055ef09f51f8e9,
+  onDamageParticles: {fileID: 4883967720516062909, guid: 45afa566470776c4a901664d1999c936,
     type: 3}
-  onDestroyParticles: {fileID: 2531967397379901787, guid: a64155d21577757489055ef09f51f8e9,
+  onDestroyParticles: {fileID: 4883967720516062909, guid: 45afa566470776c4a901664d1999c936,
     type: 3}
   explosion: 0
   explosionDamageMultiplicator: 1

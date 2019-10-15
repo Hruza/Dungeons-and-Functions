@@ -7,6 +7,17 @@ public class Interactable : MonoBehaviour
     public enum InteractableType {exit,treasure };
     public InteractableType type;
 
+    public SecretRoom Secret {
+        get {
+            return secret;
+        }
+        set {
+            type = InteractableType.treasure;
+            secret = value;
+        }
+    }
+    private SecretRoom secret;
+
     static public Interactable exit;
 
     public void SetInteractable(bool interactable=true) {
@@ -36,6 +47,22 @@ public class Interactable : MonoBehaviour
                 LevelController.LevelSuccesfulyExit();
                 break;
             case InteractableType.treasure:
+                LevelController.secrets.Add(Secret);
+                switch (Secret.type)
+                {
+                    case SecretRoomType.extraRandomItem:
+                        Messager.ShowMessage("+ bonus loot", transform.position, Color.yellow);
+                        break;
+                    case SecretRoomType.unlockLevel:
+                        Messager.ShowMessage("Secret level unlocked", transform.position, Color.yellow);
+                        break;
+                    case SecretRoomType.extraItem:
+                        Messager.ShowMessage("+ special loot", transform.position, Color.yellow);
+                        break;
+                    default:
+                        break;
+                }
+                Destroy(this.gameObject);
                 break;
             default:
                 break;

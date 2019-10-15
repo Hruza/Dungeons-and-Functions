@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SumAB
   m_EditorClassIdentifier: 
   name: Sum of ab
-  baseHP: 30
+  baseHP: 70
   perLevelHPIncrement: 5
   baseDamage: 1
   perLevelDamageIncrement: 0

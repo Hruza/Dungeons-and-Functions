@@ -150,6 +150,8 @@ public class Player : MonoBehaviour
     //shield ==============================================================
     public GameObject shieldBar;
 
+    public Shield shield;
+
     private float shieldCharge=1f;
 
     public float defaultShieldDechargeRate=1f;
@@ -157,8 +159,6 @@ public class Player : MonoBehaviour
     public float shieldRechargeDelay=1f;
     private float shieldDechargeRate;
     private float lastShield;
-
-    private bool shield;
 
     public void Update()
     {
@@ -168,13 +168,13 @@ public class Player : MonoBehaviour
         }
         if (Input.GetButton("Fire2") && shieldCharge > 0)
         {
-            shield = true;
+            shield.Activate();
             shieldCharge = Mathf.Clamp(shieldCharge - (shieldDechargeRate * Time.deltaTime), 0, 1);
             shieldBar.SetActive(true);
             shieldBar.GetComponent<Slider>().value = shieldCharge;
             lastShield = Time.realtimeSinceStartup;
         }
-        else shield = false;
+        else shield.Deactivate();
 
         if (Time.realtimeSinceStartup - lastShield > shieldRechargeDelay && shieldCharge<1) {
             shieldCharge = Mathf.Clamp(shieldCharge + (shieldRechargeRate * Time.deltaTime), 0, 1);
@@ -202,7 +202,6 @@ public class Player : MonoBehaviour
     public void GetDamage(int damage)
     {
         //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
-        if (shield) return;
         int realDamage= Mathf.Max(1, damage - Armor);
         HP -= realDamage;
         Debug.Log("Hrac dostal "+damage.ToString()+" damage");

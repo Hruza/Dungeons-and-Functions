@@ -10,8 +10,10 @@ public class LevelController : MonoBehaviour {
     public GameObject playerDiedMenu;
     public static LevelController levelController;
 
+    public static List<SecretRoom> secrets;
     private int roomCountToClear;
     private int clearedRoomCount;
+    private Level level;
 
     public void RoomCleared()
     {
@@ -23,9 +25,10 @@ public class LevelController : MonoBehaviour {
     void Start () {
         clearedRoomCount = 0;
         levelController = this;
-        Level level = MenuController.selectedLevel;
+        level = MenuController.selectedLevel;
         roomCountToClear = Mathf.CeilToInt(level.roomCount / 2f);
         map.GetComponent<LevelGenerator>().Generate(level);
+        secrets = new List<SecretRoom>();
         //ToDo: Pridat veci
 
     }
@@ -57,14 +60,30 @@ public class LevelController : MonoBehaviour {
     /// </summary>
     public static void LevelSuccesfulyExit() {
         MenuController.playerProgress.LevelCompleted(MenuController.selectedLevel.progressID);
-        MenuController.LevelExit(true);
+        LevelResults result = new LevelResults(true, levelController.clearedRoomCount, levelController.level.roomCount,LevelController.secrets);
+        MenuController.LevelExit(result);
     }
 
     /// <summary>
     /// navrat do hlavniho menu
     /// </summary>
     public void Exit() {
-        MenuController.LevelExit(false);
+        LevelResults result = new LevelResults(false, levelController.clearedRoomCount, levelController.level.roomCount,LevelController.secrets);
+        MenuController.LevelExit(result);
     }
 
+}
+
+public class LevelResults{
+    public bool completd;
+    public int clearedCount;
+    public int totalRooms;
+    public List<SecretRoom> secrets;
+
+    public LevelResults(bool completed, int clearedCount, int totalRooms,List<SecretRoom> secrets) {
+        this.completd = completed;
+        this.clearedCount = clearedCount;
+        this.totalRooms = totalRooms;
+        this.secrets = secrets;
+    }
 }

@@ -17,11 +17,14 @@ MonoBehaviour:
   lootAfterFinish: 1
   difficulty: 4
   enemies:
-  - count: 3
+  - count: 1
     enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
   - count: 3
     enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - count: 1
+    enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
   roomCount: 2
   generatorPreset: 0
-  roomConnections: 0
+  roomConnections: 2
   loot: []
+  secretRooms: []

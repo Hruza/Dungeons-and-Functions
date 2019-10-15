@@ -19,9 +19,10 @@ MonoBehaviour:
   enemies:
   - count: 2
     enemyProperties: {fileID: 11400000, guid: cfe1f04ef746e144d96e445970fd9320, type: 2}
-  - count: 5
+  - count: 2
     enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
   roomCount: 3
   generatorPreset: 0
   roomConnections: 2
   loot: []
+  secretRooms: []

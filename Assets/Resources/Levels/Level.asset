@@ -15,6 +15,7 @@ MonoBehaviour:
   levelName: Test
   progressID: 0
   lootAfterFinish: 1
+  isSecret: 1
   difficulty: 500
   enemies:
   - count: 1
@@ -23,3 +24,13 @@ MonoBehaviour:
   generatorPreset: 0
   roomConnections: 1
   loot: []
+  secretRooms:
+  - type: 0
+    unlockedLevel: 
+    loot: []
+  - type: 0
+    unlockedLevel: 
+    loot: []
+  - type: 0
+    unlockedLevel: 
+    loot: []

@@ -214,16 +214,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a581a54fcb0eaa4294e0b3f6b112f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   defaultTargetTolerance: 1
   invincible: 0
+  onDeathParticles: {fileID: 0}
   isWalking: 0
   velocity: 20
   projectile: {fileID: 1688038456248938, guid: 6e41344768ad41a40861f0b2be75e92e, type: 3}
-  playerDistance: 10
+  playerDistance: 7
   projectileVelocity: 10
-  timeToStartShooting: 0.5
+  timeToStartShooting: 1
   timeToStartMoving: 2
-  movingDistance: 2
+  movingDistance: 4
   barrageCount: 3
   barrageDelay: 0.2
 --- !u!95 &95309969236463696

@@ -15,6 +15,7 @@ MonoBehaviour:
   levelName: Deeper Limit Theorems
   progressID: 5
   lootAfterFinish: 1
+  isSecret: 0
   difficulty: 4
   enemies:
   - count: 13
@@ -25,3 +26,10 @@ MonoBehaviour:
   generatorPreset: 0
   roomConnections: 2
   loot: []
+  secretRooms:
+  - type: 0
+    unlockedLevel: 
+    loot: []
+  - type: 0
+    unlockedLevel: 
+    loot: []

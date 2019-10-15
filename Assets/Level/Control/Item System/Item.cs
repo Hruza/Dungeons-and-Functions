@@ -77,8 +77,8 @@ public class Item
     /// </summary>
     public ItemType itemType;
 
-    const int weaponPropability= 70;
-    const int armorPropability= 30;
+    const int weaponPropability= 60;
+    const int armorPropability= 40;
 
     /// <summary>
     /// sprite itemu

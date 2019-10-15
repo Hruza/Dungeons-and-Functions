@@ -10,7 +10,7 @@ public class PlayerButton : MonoBehaviour
     public SavePanel savePanel;
     public PlayerProgress Progress {
         set {
-            playerName.text = value.PlayerName;
+            playerName.text = value.playerName;
             level.text = value.ProgressLevel.ToString();
             progress = value;
         }

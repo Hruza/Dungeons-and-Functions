@@ -48,7 +48,7 @@ public class MenuController : MonoBehaviour
     /// </summary>
     static public Level selectedLevel;
 
-    static private bool lastLevelCompleted=false;
+    static private LevelResults lastLevelCompleted;
 
     private PlayerProgress[] players;
 
@@ -116,6 +116,10 @@ public class MenuController : MonoBehaviour
         if (levels.Length != 0)
         {
             selected = (selected + dif+ levels.Length) % levels.Length;
+            if (levels[selected].isSecret && !playerProgress.unlockedLevels.Contains(levels[selected].levelName)) {
+                ChangeLevel(dif);
+                return;
+            }
             levels[selected].Playable = (playerProgress.ProgressLevel>=levels[selected].progressID);
             card.Info = levels[selected];
             selectedLevel = levels[selected];
@@ -128,8 +132,8 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    static public void LevelExit(bool completed) {
-        lastLevelCompleted = completed;
+    static public void LevelExit(LevelResults result) {
+        lastLevelCompleted = result;
         SceneManager.LoadScene(0);
     }
 

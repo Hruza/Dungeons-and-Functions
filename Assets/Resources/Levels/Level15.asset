@@ -15,19 +15,24 @@ MonoBehaviour:
   levelName: The Exam
   progressID: 14
   lootAfterFinish: 1
+  isSecret: 0
   difficulty: 8
   enemies:
-  - count: 20
+  - count: 10
     enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
-  - count: 20
+  - count: 10
     enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
-  - count: 5
+  - count: 2
     enemyProperties: {fileID: 11400000, guid: cfe1f04ef746e144d96e445970fd9320, type: 2}
-  - count: 5
+  - count: 2
     enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
-  - count: 5
+  - count: 2
     enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
   roomCount: 1
   generatorPreset: 2
   roomConnections: 1
   loot: []
+  secretRooms:
+  - type: 1
+    unlockedLevel: ???
+    loot: []
