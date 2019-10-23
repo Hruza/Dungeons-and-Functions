@@ -3,7 +3,7 @@ name: Nápady na vylepšení
 about: Napiš nápad a já zvážím jeho přidání do hry.
 title: ''
 labels: enhancement
-assignees: ''
+assignees: Hruza
 
 ---
 

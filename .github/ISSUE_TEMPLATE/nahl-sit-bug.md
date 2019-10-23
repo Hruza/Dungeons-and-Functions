@@ -3,7 +3,7 @@ name: Nahlásit bug
 about: Nahlaš bug a já se ho pokusím opravit.
 title: "[BUG] (...)"
 labels: bug
-assignees: ''
+assignees: Hruza
 
 ---
 
