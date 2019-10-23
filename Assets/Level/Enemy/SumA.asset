@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SumA
   m_EditorClassIdentifier: 
   name: Sum of a
-  baseHP: 30
+  baseHP: 70
   perLevelHPIncrement: 5
   baseDamage: 1
-  perLevelDamageIncrement: 0
-  EnemyGameObject: {fileID: 4719645516164970819, guid: 978eecb630f3e9245ba7452a6ec66ee3,
+  perLevelDamageIncrement: 1
+  EnemyGameObject: {fileID: 348684401349761664, guid: e89f05bab42e39c46843824ba4f123c0,
     type: 3}

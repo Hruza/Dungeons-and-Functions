@@ -14,10 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Derivatives
   progressID: 11
+  lootAfterFinish: 1
+  isSecret: 0
   difficulty: 6
   enemies:
-  - count: 5
+  - count: 3
     enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
-  - count: 5
+  - count: 4
     enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
   roomCount: 5
+  generatorPreset: 0
+  roomConnections: 1
+  loot: []
+  secretRooms:
+  - type: 0
+    unlockedLevel: 
+    loot: []

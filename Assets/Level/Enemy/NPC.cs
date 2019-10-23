@@ -7,6 +7,8 @@ interface ISequence {
     void Limit();
 }
 
+public enum EnemyType {sequence,sum,other};
+    
 public abstract class NPC : MonoBehaviour
 {
     /// <summary>
@@ -14,10 +16,12 @@ public abstract class NPC : MonoBehaviour
     /// </summary>
     const float followDelay = 0.5f;
 
+    public EnemyType enemyType;
+
     /// <summary>
     /// Jak blizko musi byt k cili, aby ukoncil navigaci
     /// </summary>
-    const float defaultTargetTolerance = 1f;
+    public float defaultTargetTolerance = 1f;
 
     /// <summary>
     /// maximali mozne zdravi nepritele
@@ -46,7 +50,7 @@ public abstract class NPC : MonoBehaviour
     /// <summary>
     /// aktulni zdravi nepritele
     /// </summary>
-    private int HP=100;
+    private int HP=10;
 
     /// <summary>
     /// damage nepritele
@@ -99,6 +103,7 @@ public abstract class NPC : MonoBehaviour
         HP = maxHP;
     }
 
+    public GameObject onDeathParticles;
     /// <summary>
     /// Nepritel obdrzi damage a pripadne umre.
     /// </summary>
@@ -118,9 +123,12 @@ public abstract class NPC : MonoBehaviour
     //==========================================Movement======================================================
     private Rigidbody2D rb;
 
+    [HideInInspector]
     public bool isWalking=false;
 
     public float velocity = 1;
+
+    static float giveUpTime = 5;
 
     private IEnumerator currentWalk;
 
@@ -160,7 +168,7 @@ public abstract class NPC : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
             Vector2 walkDir = target.transform.position - transform.position;
-            if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map"))) break;
+            if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map","WalkBarrier"))) break;
             rb.AddForce(walkDir.normalized * velocity);
         }
         isWalking = false;
@@ -197,11 +205,17 @@ public abstract class NPC : MonoBehaviour
     private IEnumerator GoThere(Vector3 target,float tolerance) {
         isWalking = true;
         WalkStarted();
+        Vector2 detectionSize = new Vector2(1, 1);
+        float startTime=Time.realtimeSinceStartup;
         if (rb == null) rb = GetComponent<Rigidbody2D>();
-        while (Vector2.SqrMagnitude(transform.position - target) > tolerance * tolerance)
+        while (Vector2.SqrMagnitude(transform.position - target) > tolerance * tolerance && Time.realtimeSinceStartup-startTime<giveUpTime )
         {
             Vector2 walkDir = target - transform.position;
-            if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map"))) break;
+            if (Physics2D.BoxCast(transform.position, detectionSize, 0, walkDir, defaultTargetTolerance, LayerMask.GetMask("Map")))
+            {/*Raycast(transform.position, walkDir,defaultTargetTolerance, LayerMask.GetMask("Map")))*/
+                yield return new WaitForFixedUpdate();
+                break;
+            }
             rb.AddForce(walkDir.normalized * velocity);
             yield return new WaitForFixedUpdate();
         }
@@ -217,7 +231,9 @@ public abstract class NPC : MonoBehaviour
     /// <summary>
     /// Metoda, ktera se spusti po ukonceni pochodu
     /// </summary>
-    protected virtual void WalkEnded() { }
+    protected virtual void WalkEnded() {
+        StopCoroutine(currentWalk);
+    }
 
     /// <summary>
     /// Zastavi enemy
@@ -274,6 +290,11 @@ public abstract class NPC : MonoBehaviour
     /// </summary>
     protected void Die()
     {
+        if (onDeathParticles != null)
+        {
+            GameObject particles = (GameObject)Instantiate(onDeathParticles, transform.position, transform.rotation);
+            Destroy(particles, 3);
+        }
         Destroy(this.gameObject);
     }
 }

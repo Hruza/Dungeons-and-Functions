@@ -18,12 +18,14 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 1c117725dbde38649ba5c2a39a89e326, type: 3}
   itemComment: You have always wanted it, didn't you?
   isStarting: 0
+  fixedRarity: 0
+  fixedRarityValue: 0
   weaponType: 0
-  lowerMinDamage: 1
-  upperMinDamage: 10
-  lowerMaxDamage: 20
-  upperMaxDamage: 30
+  lowerMinDamage: 2
+  upperMinDamage: 3
+  lowerMaxDamage: 13
+  upperMaxDamage: 16
   damageIncrementPerLevel: 3
-  attackSpeed: 2
+  attackSpeed: 25
   gameObject: {fileID: 6766358523322256936, guid: 16dbbb6aa0e3ab941bebfdf8f626afe2,
     type: 3}

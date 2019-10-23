@@ -234,9 +234,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe16e4882309a845b3d9d583cc97ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
+  defaultTargetTolerance: 1
   invincible: 0
+  onDeathParticles: {fileID: 0}
   isWalking: 0
-  velocity: 40
+  velocity: 50
   playerDistance: 2
   attackRadius: 2.5
   timeToStartAttacking: 0.2

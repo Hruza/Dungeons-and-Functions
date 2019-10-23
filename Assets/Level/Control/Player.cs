@@ -40,7 +40,6 @@ public class Player : MonoBehaviour
     }
     */
 
-
     static public Rigidbody2D rbody;
 
     private EquipManager equip;
@@ -132,18 +131,57 @@ public class Player : MonoBehaviour
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
         Name = "Player";
-        MaxHP = 50;
-        HP = MaxHP+equip.AllStats["MaxHP"]; 
+        MaxHP = 50+equip.AllStats["MaxHP"];
+        HP = MaxHP; 
         Armor = 0;
         Regeneration = 0;
-
+        shieldDechargeRate = (10 * defaultShieldDechargeRate) / (10 + equip.AllStats["ShieldBoost"]);
         SetArmor();
         SetRegeneration();
 
         if (Regeneration > 0)
             InvokeRepeating("Regenerate", 1, 1);
 
+        if (MenuController.playerProgress.playerName == "Filip") filip.SetActive(true);
 	}
+
+    public GameObject filip;
+
+    //shield ==============================================================
+    public GameObject shieldBar;
+
+    public Shield shield;
+
+    private float shieldCharge=1f;
+
+    public float defaultShieldDechargeRate=1f;
+    public float shieldRechargeRate = 1f;
+    public float shieldRechargeDelay=1f;
+    private float shieldDechargeRate;
+    private float lastShield;
+
+    public void Update()
+    {
+        if (Input.GetButtonDown("Fire2") && shieldCharge > 0)
+        {
+            shieldBar.SetActive(true);
+        }
+        if (Input.GetButton("Fire2") && shieldCharge > 0)
+        {
+            shield.Activate();
+            shieldCharge = Mathf.Clamp(shieldCharge - (shieldDechargeRate * Time.deltaTime), 0, 1);
+            shieldBar.SetActive(true);
+            shieldBar.GetComponent<Slider>().value = shieldCharge;
+            lastShield = Time.realtimeSinceStartup;
+        }
+        else shield.Deactivate();
+
+        if (Time.realtimeSinceStartup - lastShield > shieldRechargeDelay && shieldCharge<1) {
+            shieldCharge = Mathf.Clamp(shieldCharge + (shieldRechargeRate * Time.deltaTime), 0, 1);
+            shieldBar.GetComponent<Slider>().value = shieldCharge;
+            if (shieldCharge == 1) shieldBar.SetActive(false);
+        }
+    }
 
     /// <summary>
     /// Vyleci hraci nejake body zraneni.
@@ -179,8 +217,7 @@ public class Player : MonoBehaviour
     private void Die()
     {
         LevelController.levelController.PlayerDied();
-        gameObject.GetComponent<Rigidbody2D>().Sleep();
-        gameObject.GetComponent<PlayerMovement>().enabled = false;
+        this.gameObject.SetActive(false);    
     }
 
     /// <summary>

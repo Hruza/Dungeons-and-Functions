@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ExponentialProjectile : Projectile
 {
+    [Header("Exponencial duplication")]
     public int degree = 2;
     public int depth = 3;
 

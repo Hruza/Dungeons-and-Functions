@@ -14,14 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: The Pre-Exam Depression
   progressID: 13
+  lootAfterFinish: 1
+  isSecret: 0
   difficulty: 7
   enemies:
   - count: 5
-    enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
   - count: 10
     enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
   - count: 2
-    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
-  - count: 1
-    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
+    enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
+  - count: 8
+    enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
   roomCount: 8
+  generatorPreset: 0
+  roomConnections: 2
+  loot: []
+  secretRooms:
+  - type: 0
+    unlockedLevel: 
+    loot: []
+  - type: 0
+    unlockedLevel: 
+    loot: []
+  - type: 0
+    unlockedLevel: 
+    loot: []

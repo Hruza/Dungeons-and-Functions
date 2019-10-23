@@ -16,4 +16,4 @@ MonoBehaviour:
   lowerRange: 1
   upperRange: 3
   incrementPerLvl: 1
-  possibleItems: 00000000
+  possibleItems: 

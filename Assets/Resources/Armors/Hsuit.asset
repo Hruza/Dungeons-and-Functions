@@ -18,7 +18,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: c533a58b44e846146884b503fd805d5d, type: 3}
   itemComment: You have to run!...or do some other sport
   isStarting: 0
+  fixedRarity: 0
+  fixedRarityValue: 0
   lowerArmor: 0
   upperArmor: 0
-  movementSpeedReduction: -10
-  armorIncrementPerLevel: 0
+  movementSpeedReduction: -5
+  armorIncrementPerLevel: 2

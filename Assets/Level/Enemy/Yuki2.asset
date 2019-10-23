@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
+  m_Name: Yuki2
+  m_EditorClassIdentifier: 
+  name: Yuki2
+  baseHP: 15
+  perLevelHPIncrement: 1
+  baseDamage: 10
+  perLevelDamageIncrement: 6
+  EnemyGameObject: {fileID: 4522790131674068969, guid: 272167dd98e042e409316d69a74d8ae8,
+    type: 3}

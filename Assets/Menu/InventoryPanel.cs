@@ -44,15 +44,16 @@ public class InventoryPanel : MonoBehaviour
         {
             GameObject button = (GameObject)Instantiate(buttonPrefab, this.transform);
             button.GetComponent<RectTransform>().anchoredPosition = new Vector2(
-                (buttonSize/2)+(i % maxColumns)*(buttonSize+delta)+delta,
-                -(buttonSize/2)-(i/maxColumns)*(buttonSize+delta)-delta);
+                (buttonSize / 2) + (i % maxColumns) * (buttonSize + delta) + delta,
+                -(buttonSize / 2) - (i / maxColumns) * (buttonSize + delta) - delta);
 
             InventoryButton buttonComp = button.GetComponent<InventoryButton>();
+            if (itemInventory != null) buttonComp.itemInventory = itemInventory;
             buttonComp.CarriedItem = item;
-            if(itemInventory!=null)buttonComp.itemInventory = itemInventory;
 
             buttons.Add(button);
             i++;
         }
+        if (GetComponent<RectTransform>().rect.height <- (-(buttonSize / 2) - (i / maxColumns) * (buttonSize + delta) - delta)) GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (buttonSize / 2) + (i / maxColumns) * (buttonSize + delta) + delta+70); ;
     }
 }

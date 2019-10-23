@@ -7,6 +7,7 @@ TagManager:
   - New tag
   - Enemy
   - Destroyable
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -24,10 +25,10 @@ TagManager:
   - EnemyProjectile
   - Enemy
   - PlayerInteractable
-  - 
-  - 
-  - 
-  - 
+  - Yuki
+  - Shield
+  - Destroyable
+  - Effector
   - 
   - 
   - 

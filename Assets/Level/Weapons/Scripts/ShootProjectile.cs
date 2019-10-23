@@ -8,6 +8,8 @@ public class ShootProjectile : Weapon
     public GameObject projectile;
     public bool autoFire=false;
     private bool ready = true;
+    public float spread = 0f;
+    public int projectilesPerShot = 1;
 
     protected override void Update()
     {
@@ -27,10 +29,17 @@ public class ShootProjectile : Weapon
     protected override void Primary()
     {
         ready = false;
-        Invoke("Reset", 1f/attackSpeed);
+        Invoke("Reset", 10f / attackSpeed);
         Vector3 forward = PlayerMovement.Forward();
-        GameObject ball  = (GameObject)Instantiate(projectile, transform.position +forward, transform.rotation);
-        ball.GetComponent<Rigidbody2D>().velocity = forward * velocity;
-        ball.GetComponent<Projectile>().damage = Random.Range(minDamage, maxDamage + 1);
+        Quaternion spreadRotation = Quaternion.identity;
+        for (int i = 0; i < projectilesPerShot; i++)
+        {
+            GameObject ball = (GameObject)Instantiate(projectile, transform.position + forward, transform.rotation);
+            if (spread > 0) {
+                spreadRotation = Quaternion.Euler(0,0,Random.Range(-spread,spread));
+            }
+            ball.GetComponent<Rigidbody2D>().velocity = spreadRotation*forward * velocity;
+            ball.GetComponent<Projectile>().damage = Random.Range(minDamage, maxDamage + 1);
+        }
     }
 }

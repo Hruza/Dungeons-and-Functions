@@ -43,6 +43,11 @@ public class WeaponPattern : ItemPattern
     /// databáze všech možných zbraní
     /// </summary>
     public static List<WeaponPattern> AllWeaponPatterns;
+
+    public override ItemType Type()
+    {
+        return ItemType.Weapon;
+    }
     /*new List<WeaponPattern>1
     {
         new WeaponPattern

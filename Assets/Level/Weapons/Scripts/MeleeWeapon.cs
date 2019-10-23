@@ -14,6 +14,8 @@ public class MeleeWeapon : Weapon
     private int lastSwingDir=1;
     public bool changeDirections = true;
 
+    List<GameObject> attacked;
+
     protected override void Update()
     {
         if (ready)
@@ -32,6 +34,7 @@ public class MeleeWeapon : Weapon
     protected override void Primary()
     {
         ready = false;
+        attacked = new List<GameObject>();
         StartCoroutine(WeaponSwing());
     }
 
@@ -41,8 +44,8 @@ public class MeleeWeapon : Weapon
         float angle = 0;
         while (angle<angleOfSwing)
         {
-            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime*angleOfSwing*attackSpeed);
-            angle += Time.deltaTime*angleOfSwing*attackSpeed;
+            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime*angleOfSwing*attackSpeed/10);
+            angle += Time.deltaTime*angleOfSwing*attackSpeed/10;
             yield return new WaitForEndOfFrame();
         }
         if(changeDirections) lastSwingDir *= -1;
@@ -53,9 +56,11 @@ public class MeleeWeapon : Weapon
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy") {
+        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Destroyable") && !attacked.Contains(collision.gameObject)) {
             collision.SendMessage("GetDamage", Random.Range(minDamage, maxDamage + 1), SendMessageOptions.DontRequireReceiver);
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce((collision.transform.position-transform.position).normalized * knockback,ForceMode2D.Impulse);
+            attacked.Add(collision.gameObject);
+            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+            if(rb!=null) rb.AddForce((collision.transform.position-transform.position).normalized * knockback,ForceMode2D.Impulse);
         }
     }
 }

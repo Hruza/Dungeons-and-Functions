@@ -8,6 +8,9 @@ public class RoomController : MonoBehaviour {
     int enemyCount;
     public GameObject[] triggerOnClear;
     public GameObject[] triggerOnEnter;
+
+    public GameObject summoner;
+
     List<GameObject> livingEnemies;
     Vector2 dimensions;
     
@@ -55,23 +58,31 @@ public class RoomController : MonoBehaviour {
         dimensions.x = x;
         dimensions.y = y;
 
-        if (!selfInitialize) roomCollider.size = new Vector2(LevelGenerator.tileSize * x - 0.5f, LevelGenerator.tileSize * y - 0.5f);
+        if (!selfInitialize) roomCollider.size = new Vector2(LevelGenerator.tileSize * x - 1.5f, LevelGenerator.tileSize * y - 1.5f);
         else {
             dimensions = roomCollider.size/ LevelGenerator.tileSize;
             }
     }
 
+    int cap;
+
     /// <summary>
     /// Spawne vsechny enemies v listu enemiesToSpawn, pozice je nahodna v ramci mistnosti.
     /// </summary>
     void SpawnEnemies() {
+        if (enemiesToSpawn.Length - enemyCount > 9) cap = enemyCount + 5;
+        else cap = 10;
         foreach (EnemyProperties enemy in enemiesToSpawn)
         {
             enemyCount++;
             Vector3 randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * LevelGenerator.tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * LevelGenerator.tileSize);
             GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, transform.position + randPos, transform.rotation);
+            currentEnemy.SetActive(false);
             currentEnemy.GetComponent<NPC>().Initialize(enemy);
+            GameObject particles = (GameObject)Instantiate(summoner, transform.position + randPos, transform.rotation);
+            particles.GetComponent<Summoner>().enemy = currentEnemy;
             livingEnemies.Add(currentEnemy);
+            if (enemyCount >= cap) break;
         }
     }
 
@@ -82,13 +93,18 @@ public class RoomController : MonoBehaviour {
     }
 
     IEnumerator CheckCleared() {
-
-        while (livingEnemies.Exists(i => i!=null))
+        bool cleared = false;
+        while (!cleared) {
+            while (livingEnemies.Exists(i => i != null))
             // alternativa: GameObject.FindGameObjectWithTag("enemy")==null
-        {
-            yield return new WaitForSeconds(0.5f);
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+            if (enemyCount == enemiesToSpawn.Length) cleared = true;
+            else {
+                SpawnEnemies();
+            }
         }
-
         LevelController.levelController.RoomCleared();
 
         foreach (GameObject onClearObject in triggerOnClear)

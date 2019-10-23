@@ -9,18 +9,51 @@ public class LevelExit : MonoBehaviour
 
     public InventoryPanel panel;
 
-    public void LevelEnded(bool completed) {
+    const int minRoomCountForBonusLoot=5;
+
+    public void LevelEnded(LevelResults result) {
         Level level= MenuController.selectedLevel;
-        if (completed)
+        if (result.completd)
         {
             message.text = level.levelName+" completed!";
 
             //tady bude generovani odmeny itemu
             List<Item> reward = new List<Item>();
-            reward.Add(Item.Generate(level.difficulty));
-            //funguje to?
 
-            //tady uz ne
+            int rewardCount = 0;
+            if (level.lootAfterFinish) rewardCount++ ;
+            if(level.roomCount>=4 && result.clearedCount==result.totalRooms ) rewardCount++;
+
+            foreach (SecretRoom secret in result.secrets)
+            {
+                switch (secret.type)
+                {
+                    case SecretRoomType.extraRandomItem:
+                        rewardCount++;
+                        break;
+                    case SecretRoomType.unlockLevel:
+                        MenuController.playerProgress.unlockedLevels.Add(secret.unlockedLevel);
+                        break;
+                    case SecretRoomType.extraItem:
+                        foreach (ItemPattern pattern in secret.loot)
+                        {
+                            reward.Add(Item.Generate(pattern, level.difficulty));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (ItemPattern pattern in level.loot)
+            {
+                reward.Add(Item.Generate(pattern,level.difficulty));
+            }
+
+            for (int i = 0; i < rewardCount; i++)
+            {
+                reward.Add(Item.Generate(level.difficulty));
+            }
 
             panel.Items = reward;
             Debug.Log(reward.Count);
@@ -31,6 +64,6 @@ public class LevelExit : MonoBehaviour
         {
             message.text = level.levelName + " lost!";
         }
-        MenuController.SaveProgress("hra");
+        MenuController.SaveProgress();
     }
 }

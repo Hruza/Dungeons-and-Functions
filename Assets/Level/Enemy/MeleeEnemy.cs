@@ -62,8 +62,9 @@ public class MeleeEnemy : NPC
         yield return new WaitForSeconds(attackDuration);
         foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position, attackRadius))
         {
-            if (col.tag == "Player")
+            if (col.tag == "Player" && Physics2D.Raycast(transform.position, col.transform.position - transform.position, (col.transform.position - transform.position).magnitude, LayerMask.GetMask("Player", "Shield")).collider.tag != "Shield")
             {
+                
                 col.GetComponent<PlayerMovement>().Knockback((col.transform.position - transform.position).normalized*knockback);
                 col.SendMessage("GetDamage", Damage,SendMessageOptions.DontRequireReceiver);
             }

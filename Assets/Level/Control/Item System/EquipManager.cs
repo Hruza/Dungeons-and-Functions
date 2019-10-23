@@ -43,8 +43,8 @@ public class EquipManager
         foreach (Item item in EquippedItems)
             AddStats(item.itemStats);
 
-        foreach (WeaponItem weapon in EquippedWeapons)
-            AddStats(weapon.itemStats);
+        /*foreach (WeaponItem weapon in EquippedWeapons)
+            AddStats(weapon.itemStats);*/
     }
 
     /// <summary>
@@ -102,12 +102,12 @@ public class EquipManager
         //odebrání staré zbraně
         if (oldWeapon != null)
         {
-            DeductStats(oldWeapon.itemStats);
+            //DeductStats(oldWeapon.itemStats);
             EquippedWeapons.Remove(oldWeapon);
         }
 
         //přidání nové zbraně
-        AddStats(newWeapon.itemStats);
+        //AddStats(newWeapon.itemStats);
         EquippedWeapons.Add(newWeapon);
     }
 
@@ -118,17 +118,8 @@ public class EquipManager
     public void EquipWeapon(WeaponItem newWeapon)
     {
         //přidání nové zbraně
-        AddStats(newWeapon.itemStats);
+     //   AddStats(newWeapon.itemStats);
         EquippedWeapons.Add(newWeapon);
     }
 
-    /// <summary>
-    /// Vypočítá nejmenší možné poškození, které hráč může udělit v závislosti na zbrani.
-    /// </summary>
-    /// <param name="weapon">Index zbraně, ze které má být vypočítáno nejmenší možnéé poškození.</param>
-    /// <returns>nejmenší možné poškození</returns>
-    public int TotalMinDamage(int weaponIndex)
-    {
-        return EquippedWeapons[weaponIndex].minDamage * (100 + AllStats["DamageMultiplicative"]) / 100 + AllStats["DamageAdditive"];
-    }
 }

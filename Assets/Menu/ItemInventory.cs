@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class ItemInventory : MonoBehaviour
 {
+    [Header("Panels")]
     public InventoryPanel weaponPanel;
     public InventoryPanel armorPanel;
     public InventoryPanel otherPanel;
 
+    [Header("Slots")]
     public InventoryButton[] weapon;
     public InventoryButton armor;
 
@@ -17,8 +19,9 @@ public class ItemInventory : MonoBehaviour
     private WeaponItem[] selectedWeapon;
     private Item selectedArmor;
 
-    public void Start()
-    {
+
+
+    public void ReloadInventory(){
         selectedWeapon = new WeaponItem[2];
         progress = MenuController.playerProgress;
         for (int i = 0; i <2; i++)
@@ -58,12 +61,12 @@ public class ItemInventory : MonoBehaviour
                 armor.CarriedItem = item;
                 break;
             case ItemType.Weapon:
-                if (selectedWeapon[0] == null && (selectedWeapon[1]==null || item.itemName!=selectedWeapon[1].itemName))
+                if ((selectedWeapon[0] == null || item.itemName == selectedWeapon[0].itemName) && (selectedWeapon[1]==null || item.itemName!=selectedWeapon[1].itemName) )
                 {
                     selectedWeapon[0] = (WeaponItem)item;
                     weapon[0].CarriedItem = item;
                 }
-                else if (selectedWeapon[1] == null && (selectedWeapon[0]==null || item.itemName != selectedWeapon[0].itemName))
+                else if ((selectedWeapon[1] == null || item.itemName == selectedWeapon[1].itemName ) && (selectedWeapon[0]==null || item.itemName != selectedWeapon[0].itemName))
                 {
                     selectedWeapon[1] = (WeaponItem)item;
                     weapon[1].CarriedItem = item;

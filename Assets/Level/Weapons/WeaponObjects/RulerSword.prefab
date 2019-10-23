@@ -158,7 +158,7 @@ MonoBehaviour:
   swingingThing: {fileID: 655780302609189670}
   delay: 0
   knockback: 10
-  autoAttack: 1
+  autoAttack: 0
   changeDirections: 1
 --- !u!50 &3267352998927893802
 Rigidbody2D:

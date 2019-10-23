@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Regeneration
   lowerRange: 1
-  upperRange: 3
-  incrementPerLvl: 1
+  upperRange: 2
+  incrementPerLvl: 0.25
   possibleItems: 00000000

@@ -11,6 +11,10 @@ public class SpawningEnemy : NPC
     public int spawnedLevelDiference = -1;
 
     public float catapultSpeed=10;
+
+
+    public bool shootOnPlayer = false;
+
     /// <summary>
     /// Jak dlouho po zastaveni zacne enemy strilet na hrace
     /// </summary>
@@ -55,6 +59,7 @@ public class SpawningEnemy : NPC
 
     protected override void WalkEnded()
     {
+        base.WalkEnded();
         GetComponent<Animator>().SetBool("isWalking", isWalking);
         Decide();
     }
@@ -68,7 +73,8 @@ public class SpawningEnemy : NPC
             {
                 selected.Level = Level + spawnedLevelDiference;
                 GameObject spawned = (GameObject)Instantiate(selected.EnemyGameObject, (Vector3)Random.insideUnitCircle.normalized + transform.position, transform.rotation);
-                spawned.GetComponent<Rigidbody2D>().velocity = catapultSpeed * (spawned.transform.position - transform.position);
+                if (shootOnPlayer) spawned.GetComponent<Rigidbody2D>().velocity = catapultSpeed * (player.transform.position-spawned.transform.position).normalized;
+                else spawned.GetComponent<Rigidbody2D>().velocity = catapultSpeed * (spawned.transform.position - transform.position);
                 spawned.GetComponent<NPC>().Initialize(selected);
             }
             yield return new WaitForSeconds(spawnDelay);
@@ -96,10 +102,14 @@ public class SpawningEnemy : NPC
             case State.gettingCloser:
                 if ((player.transform.position - transform.position).sqrMagnitude > playerDistance * playerDistance * 2)
                 {
+                    state = State.moving;
                     MoveAroundPlayer();
                 }
                 else
+                {
+                    state = State.shooting;
                     StartCoroutine(Spawn());
+                }
                 break;
             case State.shooting:
 
@@ -123,8 +133,10 @@ public class SpawningEnemy : NPC
                     GoToTarget(player, playerDistance);
                 }
                 else
+                {
+                    state = State.shooting;
                     StartCoroutine(Spawn());
-
+                }
                 break;
             default:
                 break;

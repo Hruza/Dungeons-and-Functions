@@ -21,6 +21,7 @@ public class MenuController : MonoBehaviour
     public ItemInventory itemInventory;
     public GameObject mainMenu;
     public GameObject levelExitMenu;
+    public GameObject savesMenu;
 
     /// <summary>
     /// Reference na kartu levelu
@@ -47,7 +48,11 @@ public class MenuController : MonoBehaviour
     /// </summary>
     static public Level selectedLevel;
 
-    static private bool lastLevelCompleted=false;
+    static private LevelResults lastLevelCompleted;
+
+    private PlayerProgress[] players;
+
+    public SavePanel savePanel;
 
     // Start is called before the first frame update
     void Start()
@@ -67,11 +72,29 @@ public class MenuController : MonoBehaviour
         }
         else
         {
-            mainMenu.SetActive(false);
+            savesMenu.SetActive(false);
             levelExitMenu.SetActive(true);
             levelExitMenu.GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
+            InitializeLevels();
+            itemInventory.ReloadInventory();
         }
+    }
+
+    private void PlayerSelected() {
+        savesMenu.SetActive(false);
+        mainMenu.SetActive(true);
         InitializeLevels();
+        itemInventory.ReloadInventory();
+    }
+
+    public void ChoosePlayer(PlayerProgress progress) {
+        playerProgress = progress;
+        PlayerSelected();
+    }
+
+    public void NewPlayer(string playerName) {
+        playerProgress = new PlayerProgress(true, playerName);
+        PlayerSelected();
     }
 
     private void InitializeLevels()
@@ -93,6 +116,12 @@ public class MenuController : MonoBehaviour
         if (levels.Length != 0)
         {
             selected = (selected + dif+ levels.Length) % levels.Length;
+            if (levels[selected].isSecret && !playerProgress.unlockedLevels.Contains(levels[selected].levelName)) {
+                if (dif != 0)
+                    ChangeLevel(dif);
+                else ChangeLevel(-1);
+                return;
+            }
             levels[selected].Playable = (playerProgress.ProgressLevel>=levels[selected].progressID);
             card.Info = levels[selected];
             selectedLevel = levels[selected];
@@ -105,8 +134,8 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    static public void LevelExit(bool completed) {
-        lastLevelCompleted = completed;
+    static public void LevelExit(LevelResults result) {
+        lastLevelCompleted = result;
         SceneManager.LoadScene(0);
     }
 
@@ -117,9 +146,9 @@ public class MenuController : MonoBehaviour
     /// <summary>
     /// Uloží obsah proměnné playerProgress do binárního souboru.
     /// </summary>
-    static public void SaveProgress(string saveName)
+    static public void SaveProgress()
     {
-        playerProgress.SaveProgress(saveName);
+        playerProgress.SaveProgress();
     }
 
     /// <summary>
@@ -127,7 +156,8 @@ public class MenuController : MonoBehaviour
     /// </summary>
     public void LoadProgress()
     {
-        playerProgress=PlayerProgress.LoadProgress(playerProgress);
+        players=PlayerProgress.LoadAllProgress();
+        savePanel.Show(players);
     }
 
     /// <summary>
@@ -136,6 +166,7 @@ public class MenuController : MonoBehaviour
     public void ClearProgress()
     {
         playerProgress = new PlayerProgress(true);
-        itemInventory.Start();
+        ChangeLevel(0);
+        itemInventory.ReloadInventory();
     }
 }

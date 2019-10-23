@@ -9,17 +9,20 @@ public class Follow : MonoBehaviour {
     /// <summary>
     /// cíl, který bude následován
     /// </summary>
-    private GameObject target;
+    public GameObject target;
 
 	// Use this for initialization
 	void Start () {
-        target = Player.player;
+
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        
-        transform.position = Vector3.Lerp(transform.position, target.transform.position, followSpeed);
+
+    private void Update()
+    {
+        if(followSpeed==1) transform.position = target.transform.position;
+    }
+    // Update is called once per frame
+    void FixedUpdate () {
+        if (followSpeed != 1) transform.position = Vector3.Lerp(transform.position, target.transform.position, followSpeed);
 	}
 
 }
