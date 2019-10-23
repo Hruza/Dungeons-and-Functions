@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5497044411414256029}
-  m_Layer: 18
+  m_Layer: 11
   m_Name: DownWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7755393033636185569}
   - component: {fileID: 7771394423753470365}
   - component: {fileID: 7781446925576863477}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

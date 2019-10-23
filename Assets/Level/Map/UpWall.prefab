@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2966762932997255129}
   m_Layer: 11
   m_Name: Wall
-  m_TagString: Destroyable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2587199000304675264}
-  m_Layer: 18
+  m_Layer: 11
   m_Name: UpWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,6 +147,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214553982030641533, guid: f98ccd89bc824924f81835c1cc99d98a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4211131908832912573, guid: f98ccd89bc824924f81835c1cc99d98a,
         type: 3}

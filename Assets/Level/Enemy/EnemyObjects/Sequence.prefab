@@ -220,7 +220,8 @@ MonoBehaviour:
   onDeathParticles: {fileID: 0}
   isWalking: 0
   velocity: 20
-  projectile: {fileID: 1688038456248938, guid: 6e41344768ad41a40861f0b2be75e92e, type: 3}
+  projectile: {fileID: 7279045933345513403, guid: 576fba57f4949e342917baef05a8006c,
+    type: 3}
   playerDistance: 7
   projectileVelocity: 10
   timeToStartShooting: 1

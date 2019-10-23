@@ -117,7 +117,9 @@ public class MenuController : MonoBehaviour
         {
             selected = (selected + dif+ levels.Length) % levels.Length;
             if (levels[selected].isSecret && !playerProgress.unlockedLevels.Contains(levels[selected].levelName)) {
-                ChangeLevel(dif);
+                if (dif != 0)
+                    ChangeLevel(dif);
+                else ChangeLevel(-1);
                 return;
             }
             levels[selected].Playable = (playerProgress.ProgressLevel>=levels[selected].progressID);

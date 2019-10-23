@@ -679,7 +679,7 @@ class StartingRoom : Room
             {
                 plan[i, j] = 1;
             }
-
         }
+        plan[1, 1] = 15;
     }
 }

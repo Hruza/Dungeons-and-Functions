@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4940291460675768006}
-  m_Layer: 18
+  m_Layer: 11
   m_Name: Rightwall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7162602421081969338}
   - component: {fileID: 7142592606367377094}
   - component: {fileID: 7150411002550249902}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

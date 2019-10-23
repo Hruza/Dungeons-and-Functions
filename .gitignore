@@ -47,3 +47,8 @@ hra\.dat
 
 # Post processing package
 Assets/PostProcessing
+Assets/TextMesh Pro/
+
+Assets/TextMesh Pro.meta
+
+saves/
