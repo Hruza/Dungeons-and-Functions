@@ -15,11 +15,11 @@ MonoBehaviour:
   levelName: Test
   progressID: 0
   lootAfterFinish: 1
-  isSecret: 1
-  difficulty: 500
+  isSecret: 0
+  difficulty: 8
   enemies:
-  - count: 1
-    enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
+  - count: 3
+    enemyProperties: {fileID: 11400000, guid: f1e26f0594b35ae41ad6e825a316a272, type: 2}
   roomCount: 1
   generatorPreset: 0
   roomConnections: 1
@@ -34,3 +34,4 @@ MonoBehaviour:
   - type: 0
     unlockedLevel: 
     loot: []
+  spawnEnemiesInCenter: 0

@@ -10,6 +10,7 @@ public class ShootProjectile : Weapon
     private bool ready = true;
     public float spread = 0f;
     public int projectilesPerShot = 1;
+    public bool uniformSpread = false;
 
     protected override void Update()
     {
@@ -36,7 +37,11 @@ public class ShootProjectile : Weapon
         {
             GameObject ball = (GameObject)Instantiate(projectile, transform.position + forward, transform.rotation);
             if (spread > 0) {
-                spreadRotation = Quaternion.Euler(0,0,Random.Range(-spread,spread));
+                if (projectilesPerShot > 1 && uniformSpread) {
+                    spreadRotation = Quaternion.Euler(0, 0, -spread+(((2f*i)/(projectilesPerShot-1))*spread));
+                }
+                else
+                    spreadRotation = Quaternion.Euler(0,0,Random.Range(-spread,spread));
             }
             ball.GetComponent<Rigidbody2D>().velocity = spreadRotation*forward * velocity;
             ball.GetComponent<Projectile>().damage = Random.Range(minDamage, maxDamage + 1);

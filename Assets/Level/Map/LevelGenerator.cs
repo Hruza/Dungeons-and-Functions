@@ -194,7 +194,7 @@ public class LevelGenerator : MonoBehaviour {
             {
                 case Room.RoomType.combat:
                     PlaceDoors(room);
-                    PlaceRoomControllerObject(room);
+                    PlaceRoomControllerObject(room,level.spawnEnemiesInCenter);
                     break;
                 case Room.RoomType.exit:
                     break;
@@ -363,7 +363,7 @@ public class LevelGenerator : MonoBehaviour {
 
 
 
-    private void PlaceRoomControllerObject(Room room) {
+    private void PlaceRoomControllerObject(Room room,bool spawnAllInCenter=false) {
         Vector3 pos = new Vector3(tileSize * room.position.x, tileSize * room.position.y, 0);
         if (room.width % 2 == 0) pos.x -= tileSize / 2f;
         if (room.height % 2 == 0) pos.y -= tileSize / 2f;
@@ -374,6 +374,7 @@ public class LevelGenerator : MonoBehaviour {
         roomController.EnemiesToSpawn = room.enemies;
         roomController.triggerOnEnter = room.onEnter.ToArray();
         roomController.triggerOnClear = room.onClear.ToArray();
+        roomController.spawnAllInCenter= spawnAllInCenter;
     }
 
     private void PlaceDoors(Room room) {

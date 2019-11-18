@@ -129,15 +129,17 @@ MonoBehaviour:
   onDeathParticles: {fileID: 0}
   isWalking: 0
   velocity: 20
-  projectile: {fileID: 7279045933345513403, guid: 576fba57f4949e342917baef05a8006c,
+  projectile: {fileID: 4459666903700662233, guid: a1b76dcca3c019b4ea30f82d0b3f3db0,
     type: 3}
   playerDistance: 8
   projectileVelocity: 10
   timeToStartShooting: 1
   timeToStartMoving: 1
   movingDistance: 3
+  walksCount: 1
   barrageCount: 1
   barrageDelay: 0.2
+  projectileSpeedByPlyerDistance: 0
 --- !u!95 &95137760166805336
 Animator:
   serializedVersion: 3

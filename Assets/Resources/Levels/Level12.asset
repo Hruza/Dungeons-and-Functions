@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6565ba7d729cdd45bcdbb275a36555e, type: 3}
   m_Name: Level12
   m_EditorClassIdentifier: 
-  levelName: Derivatives
+  levelName: The Stress limits
   progressID: 11
   lootAfterFinish: 1
   isSecret: 0
   difficulty: 6
   enemies:
-  - count: 3
+  - count: 2
     enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
-  - count: 4
-    enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
-  roomCount: 5
+  - count: 3
+    enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
+  roomCount: 3
   generatorPreset: 0
-  roomConnections: 1
+  roomConnections: 0
   loot: []
-  secretRooms:
-  - type: 0
-    unlockedLevel: 
-    loot: []
+  secretRooms: []
+  spawnEnemiesInCenter: 0

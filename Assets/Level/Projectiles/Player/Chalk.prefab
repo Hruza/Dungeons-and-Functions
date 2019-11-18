@@ -139,17 +139,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab4259860b3cc74a97573541bb8cfe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 5
   lifetime: 1
+  projectileType: 0
   damageEnemies: 1
   damagePlayer: 0
   damageDestroyables: 1
   destroyOnDamageDealt: 1
-  destroyOnCollision: 1
+  destroyOnAnyCollision: 0
+  destroyOnWorldCollision: 1
+  onDamageParticles: {fileID: 0}
+  knockback: 0
   onDestroyParticles: {fileID: 2531967397379901787, guid: a64155d21577757489055ef09f51f8e9,
     type: 3}
-  explosion: 1
-  explosionDamage: 0
+  destroyFirst: {fileID: 0}
+  destroyTime: 0
+  explosion: 0
+  explosionDamageMultiplicator: 1
   explosionRadius: 0
   explosionDamageDistribution:
     serializedVersion: 2
@@ -157,3 +163,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  explosionDamageEnemies: 1
+  explosionDamagePlayer: 0
+  explosionDamageDestroyables: 1
+  detectionDistance: 5
+  detectionAngle: 60
+  turningSpeed: 50

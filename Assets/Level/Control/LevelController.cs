@@ -33,10 +33,20 @@ public class LevelController : MonoBehaviour {
 
     }
 
+    private bool inMenu=false;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            menu.SetActive(!menu.activeInHierarchy);
+            if (inMenu)
+            {
+                Continue();
+            }
+            else
+            {
+                Time.timeScale = 0;
+                menu.SetActive(true);
+            }
         }
     }
 
@@ -45,6 +55,8 @@ public class LevelController : MonoBehaviour {
     /// </summary>
     public void Continue()
     {
+        inMenu = false;
+        Time.timeScale = 1;
         menu.SetActive(false);
     }
 
@@ -68,6 +80,7 @@ public class LevelController : MonoBehaviour {
     /// navrat do hlavniho menu
     /// </summary>
     public void Exit() {
+        Time.timeScale = 1;
         LevelResults result = new LevelResults(false, levelController.clearedRoomCount, levelController.level.roomCount,LevelController.secrets);
         MenuController.LevelExit(result);
     }

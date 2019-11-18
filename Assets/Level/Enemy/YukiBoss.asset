@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: YukiBoss
   m_EditorClassIdentifier: 
   name: YukiBoss
-  baseHP: 500
+  baseHP: 700
   perLevelHPIncrement: 10
   baseDamage: 10
-  perLevelDamageIncrement: 2
-  EnemyGameObject: {fileID: 1542212541991514, guid: bd9fe3770e7873f478f429de5aa60cd6,
+  perLevelDamageIncrement: 6
+  EnemyGameObject: {fileID: 1542212541991514, guid: 2a11a0df418eaf0418ca3458c969c67c,
     type: 3}

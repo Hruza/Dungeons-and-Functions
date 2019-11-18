@@ -165,14 +165,14 @@ public class PlayerProgress
             catch (Exception e)
             {
                 Debug.LogError(e.Message);
+                playerProgress = null;
             }
             finally
             {
                 fs.Close();
-                if (playerProgress == null) playerProgress = new PlayerProgress(true);
             }
         }
-        else playerProgress = new PlayerProgress(true);
+        else playerProgress = null;
         return playerProgress;
     }
 
@@ -183,7 +183,8 @@ public class PlayerProgress
             foreach (string filePath in Directory.GetFiles("saves", "*.dat"))
             {
                 PlayerProgress progress = new PlayerProgress();
-                players.Add(LoadProgress(progress, filePath));
+                progress = LoadProgress(progress, filePath);
+                if(progress!=null) players.Add(progress);
             }
         }
         return players.ToArray();

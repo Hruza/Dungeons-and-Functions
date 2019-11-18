@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
+  m_Name: Homing
+  m_EditorClassIdentifier: 
+  name: Homing
+  lowerItemLevel: 5
+  upperItemLevel: 10000
+  sprite: {fileID: 21300000, guid: f7bbeb1617f755242a020cce8f7fd0f6, type: 3}
+  itemComment: It's like a boomerang, but more integral.
+  isStarting: 1
+  fixedRarity: 0
+  fixedRarityValue: 0
+  weaponType: 1
+  lowerMinDamage: 1
+  upperMinDamage: 2
+  lowerMaxDamage: 3
+  upperMaxDamage: 4
+  damageIncrementPerLevel: 1
+  attackSpeed: 20
+  gameObject: {fileID: 1023424732719212, guid: a691a113e11cd2b4b9d284585cc412ba, type: 3}
