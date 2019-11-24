@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Sequence b
   baseHP: 20
   perLevelHPIncrement: 6
-  baseDamage: 4
+  baseDamage: 8
   perLevelDamageIncrement: 5
   EnemyGameObject: {fileID: 1912209089370650, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
     type: 3}

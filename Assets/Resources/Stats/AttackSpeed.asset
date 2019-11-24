@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: AttackSpeed
   lowerRange: 1
-  upperRange: 2
-  incrementPerLvl: 2
+  upperRange: 3
+  incrementPerLvl: 1
   possibleItems: 01000000

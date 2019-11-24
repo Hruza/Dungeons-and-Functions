@@ -19,11 +19,15 @@ MonoBehaviour:
   difficulty: 7
   enemies:
   - count: 2
-    enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
-  - count: 5
+    enemyProperties: {fileID: 11400000, guid: 1a6fa466ff344aa42b543a9603b511a8, type: 2}
+  - count: 3
     enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
   - count: 2
     enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: 9adc81e5454154e4587a3ec3294f8684, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: 1a6fa466ff344aa42b543a9603b511a8, type: 2}
   roomCount: 5
   generatorPreset: 0
   roomConnections: 2
@@ -32,3 +36,4 @@ MonoBehaviour:
   - type: 0
     unlockedLevel: 
     loot: []
+  spawnEnemiesInCenter: 0

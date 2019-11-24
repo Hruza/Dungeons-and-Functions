@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
-  m_Name: Shotgun
+  m_Name: ChalkBox
   m_EditorClassIdentifier: 
-  name: Shotgun
-  lowerItemLevel: 5
+  name: A box of chalk
+  lowerItemLevel: 3
   upperItemLevel: 10000
-  sprite: {fileID: 21300000, guid: 273bd84ff7c09e64db632e237539068a, type: 3}
-  itemComment: It's a cannon compared to...well, anything.
-  isStarting: 1
+  sprite: {fileID: 21300000, guid: 372ebfac87c7d1b48831f97b69bbf837, type: 3}
+  itemComment: Because one piece is not enough for most proofs.
+  isStarting: 0
   fixedRarity: 0
   fixedRarityValue: 0
   weaponType: 1
-  lowerMinDamage: 2
-  upperMinDamage: 3
-  lowerMaxDamage: 5
-  upperMaxDamage: 8
-  damageIncrementPerLevel: 2
+  lowerMinDamage: 0
+  upperMinDamage: 1
+  lowerMaxDamage: 2
+  upperMaxDamage: 3
+  damageIncrementPerLevel: 1
   attackSpeed: 15
   gameObject: {fileID: 1305185763060277112, guid: be48bd212be61ed439dba716f431a0dc,
     type: 3}

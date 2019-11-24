@@ -47,6 +47,8 @@ public abstract class NPC : MonoBehaviour
     /// </summary>
     public bool invincible = false;
 
+    public bool showBossHealth = false;
+
     /// <summary>
     /// aktulni zdravi nepritele
     /// </summary>
@@ -96,6 +98,7 @@ public abstract class NPC : MonoBehaviour
         MaxHP = properties.baseHP+(Level*properties.perLevelHPIncrement);
         HP = MaxHP;
         Damage = properties.baseDamage+(Level*properties.perLevelDamageIncrement);
+        if (showBossHealth) LevelController.levelController.InitializeBossBar(properties.name,MaxHP);
     }
 
     public virtual void Initialize(int maxHP) {
@@ -112,6 +115,7 @@ public abstract class NPC : MonoBehaviour
     {
         if (invincible) return;
         HP -= damage;
+        if (showBossHealth) LevelController.levelController.SetBossHP(HP);
         Messager.ShowMessage(damage.ToString(),transform.position);
         if (HP <= 0)
            Die();

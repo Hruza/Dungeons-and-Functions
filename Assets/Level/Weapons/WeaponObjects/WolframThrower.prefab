@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4877179145901266}
   - component: {fileID: 114693784368529470}
   m_Layer: 0
-  m_Name: HomingThrower
+  m_Name: WolframThrower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,9 +46,11 @@ MonoBehaviour:
   minDamage: 0
   maxDamage: 0
   attackSpeed: 0
-  velocity: 10
+  velocity: 6
   projectile: {fileID: 1964618269413152, guid: 00ddb7a43bd962249bdff033f6dfbe49, type: 3}
+  onShootParticles: {fileID: 0}
   autoFire: 1
-  spread: 60
-  projectilesPerShot: 10
+  spread: 40
+  projectilesPerShot: 5
   uniformSpread: 1
+  offset: 1

@@ -269,6 +269,7 @@ MonoBehaviour:
   enemyType: 2
   defaultTargetTolerance: 1
   invincible: 0
+  showBossHealth: 1
   onDeathParticles: {fileID: 2858556565013529302, guid: 2a3ce24335b8b6d4b8ca543a3d5649e3,
     type: 3}
   isWalking: 0

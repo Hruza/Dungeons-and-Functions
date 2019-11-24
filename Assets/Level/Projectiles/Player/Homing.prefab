@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1964618269413152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.5}
   m_Children:
   - {fileID: 5236412022082760118}
   - {fileID: 871873412003479431}
@@ -45,7 +45,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 20d51b69892d1364cb22aecb5086a907, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  lifetime: 5
+  lifetime: 2
   projectileType: 3
   damageEnemies: 1
   damagePlayer: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   onDamageParticles: {fileID: 0}
   knockback: 0
   perpKnockback: 0
-  onDestroyParticles: {fileID: 168759154570113319, guid: eed001540e39581458aee66b827a5530,
+  onDestroyParticles: {fileID: 168759154570113319, guid: 99e15580eaa444944bff3aed0b4c7a88,
     type: 3}
   destroyFirst: {fileID: 6925711874247339861}
   destroyTime: 1
@@ -223,8 +223,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.3529412, g: 0.58431375, b: 0.34117648, a: 0.5019608}
-      key1: {r: 0.3137255, g: 0.50980395, b: 0.3019608, a: 0.08235294}
+      key0: {r: 0.9176471, g: 0.19607845, b: 0.20000002, a: 0.5019608}
+      key1: {r: 0.53333336, g: 0.14117648, b: 0.12941177, a: 0.08235294}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -283,13 +283,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6925711874247339861}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 4245551361395338}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &131846664684381119
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -327,7 +327,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e06d790da85303d42b7052662b741610, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d80a990b42fb33e4c973bf21391cfd5e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

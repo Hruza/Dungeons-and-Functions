@@ -145,6 +145,7 @@ public class Enemy : NPC
     void NextPhase() {
         currentPhaseIndex++;
         if (currentPhaseIndex >= phases.Length) currentPhaseIndex = 0;
+        if (CurrentPhase.PhaseType == Phase.Type.walkingAround) walksLeft = CurrentPhase.walksCount;
     }
 
     protected override void WalkStarted()
@@ -242,7 +243,7 @@ public class Enemy : NPC
     }
 
     private bool wasGettingCloser=false;
-
+    private int walksLeft = 0;
     protected void Decide()
     {
         if (CurrentPhase.goToPlayer && (player.transform.position - transform.position).sqrMagnitude > CurrentPhase.playerDistance * CurrentPhase.playerDistance * 2) {
@@ -262,7 +263,8 @@ public class Enemy : NPC
             {
                 case Phase.Type.walkingAround:
                     MoveAroundPlayer(CurrentPhase.walkingDistance);
-                    NextPhase();
+                    walksLeft--;
+                    if(walksLeft<=0)NextPhase();
                     break;
                 case Phase.Type.shooting:
                     TryToShoot(CurrentPhase);

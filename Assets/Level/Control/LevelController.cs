@@ -8,6 +8,8 @@ public class LevelController : MonoBehaviour {
     public GameObject map;
     public GameObject menu;
     public GameObject playerDiedMenu;
+    public GameObject bossBar;
+    public Text tBossName;
     public static LevelController levelController;
 
     public static List<SecretRoom> secrets;
@@ -19,6 +21,21 @@ public class LevelController : MonoBehaviour {
     {
         clearedRoomCount++;
         if (clearedRoomCount >= roomCountToClear) Interactable.exit.SetInteractable();    
+    }
+
+    public void SetBossHP(int value) {
+        if (value <= 0) {
+            bossBar.GetComponent<Slider>().value = 0;
+        }
+        else
+            bossBar.GetComponent<Slider>().value= value;
+    }
+
+    public void InitializeBossBar(string bossName, int maxHP) {
+        tBossName.text = bossName;
+        bossBar.SetActive(true);
+        bossBar.GetComponent<Slider>().maxValue = maxHP;
+        bossBar.GetComponent<Slider>().value = maxHP;
     }
 
     //Setup of level

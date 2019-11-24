@@ -22,10 +22,14 @@ MonoBehaviour:
     enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
   - count: 10
     enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
-  - count: 2
+  - count: 4
     enemyProperties: {fileID: 11400000, guid: cfe1f04ef746e144d96e445970fd9320, type: 2}
+  - count: 4
+    enemyProperties: {fileID: 11400000, guid: 9adc81e5454154e4587a3ec3294f8684, type: 2}
   - count: 2
-    enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
+    enemyProperties: {fileID: 11400000, guid: 1a6fa466ff344aa42b543a9603b511a8, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
   - count: 2
     enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
   roomCount: 1
@@ -36,3 +40,4 @@ MonoBehaviour:
   - type: 1
     unlockedLevel: ???
     loot: []
+  spawnEnemiesInCenter: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Log Ruler
   lowerItemLevel: 1
-  upperItemLevel: 10000
+  upperItemLevel: 4
   sprite: {fileID: 21300000, guid: c193d6b03629ff349b4e1695b56ee1e3, type: 3}
   itemComment: Not as powerful as matlab, but works.
   isStarting: 0

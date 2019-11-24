@@ -19,9 +19,11 @@ MonoBehaviour:
   difficulty: 6
   enemies:
   - count: 2
-    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
+    enemyProperties: {fileID: 11400000, guid: 1a6fa466ff344aa42b543a9603b511a8, type: 2}
   - count: 3
     enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: 9adc81e5454154e4587a3ec3294f8684, type: 2}
   - count: 2
     enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
   roomCount: 3
