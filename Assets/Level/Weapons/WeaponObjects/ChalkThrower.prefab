@@ -49,4 +49,10 @@ MonoBehaviour:
   velocity: 10
   projectile: {fileID: 5833570703180412478, guid: 3626d329c53e27f4f83bae3d21bda24d,
     type: 3}
+  onShootParticles: {fileID: 2531967397379901787, guid: a64155d21577757489055ef09f51f8e9,
+    type: 3}
   autoFire: 0
+  spread: 0
+  projectilesPerShot: 1
+  uniformSpread: 0
+  offset: 1

@@ -5039,8 +5039,8 @@ GameObject:
   - component: {fileID: 4696515322450325429}
   - component: {fileID: 4741576153415967039}
   - component: {fileID: 4624031725769569033}
-  - component: {fileID: 3639753926303391548}
   - component: {fileID: 1063902957788971541}
+  - component: {fileID: 485934027537066744}
   m_Layer: 14
   m_Name: Sum b
   m_TagString: Enemy
@@ -5113,7 +5113,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 25
   m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -5141,35 +5141,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3639753926303391548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4719645516164970819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df35a8ad4829834db2f93fabacbaab5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  defaultTargetTolerance: 2.5
-  invincible: 0
-  onDeathParticles: {fileID: 0}
-  isWalking: 0
-  velocity: 1
-  spawnedObjects:
-  - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
-  playerDistance: 9
-  spawnedLevelDiference: -1
-  catapultSpeed: 30
-  shootOnPlayer: 0
-  timeToStartSpawning: 1
-  timeToStartMoving: 3
-  movingDistance: 10
-  spawnCount: 2
-  spawnDelay: 3
 --- !u!58 &1063902957788971541
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5186,6 +5157,74 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.2
+--- !u!114 &485934027537066744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4719645516164970819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8e0e5b77970d7c4fa6599d840ac9dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 1
+  defaultTargetTolerance: 1
+  invincible: 0
+  onDeathParticles: {fileID: 0}
+  isWalking: 0
+  velocity: 700
+  phases:
+  - PhaseType: 3
+    goToPlayer: 1
+    playerDistance: 8
+    timeToStart: 2
+    timeToStartNext: 0
+    walkingDistance: 2
+    DamageMultiplier: 1
+    walksCount: 0
+    projectile: {fileID: 0}
+    projectileVelocity: 0
+    barrageCount: 0
+    barrageDelay: 0
+    shootingPointOffset: 0
+    projectileSpeedByPlyerDistance: 0
+    attackRadius: 0
+    attackDelay: 0
+    attackDuration: 0
+    knockback: 0
+    spawnedObjects:
+    - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+    spawnedLevelDiference: -1
+    catapultSpeed: 10
+    shootOnPlayer: 1
+    spawnCount: 2
+    spawnDelay: 3
+  - PhaseType: 0
+    goToPlayer: 0
+    playerDistance: 6
+    timeToStart: 0
+    timeToStartNext: 3
+    walkingDistance: 10
+    DamageMultiplier: 0
+    walksCount: 3
+    projectile: {fileID: 0}
+    projectileVelocity: 0
+    barrageCount: 0
+    barrageDelay: 0
+    shootingPointOffset: 0
+    projectileSpeedByPlyerDistance: 0
+    attackRadius: 0
+    attackDelay: 0
+    attackDuration: 0
+    knockback: 0
+    spawnedObjects: []
+    spawnedLevelDiference: 0
+    catapultSpeed: 0
+    shootOnPlayer: 0
+    spawnCount: 0
+    spawnDelay: 0
 --- !u!1 &4719661233318526315
 GameObject:
   m_ObjectHideFlags: 0

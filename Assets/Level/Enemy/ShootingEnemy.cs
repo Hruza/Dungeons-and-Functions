@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// OUTDATED
 public class ShootingEnemy: NPC {
 
     public GameObject projectile;
@@ -29,6 +30,8 @@ public class ShootingEnemy: NPC {
     /// </summary>
     public float movingDistance = 2;
 
+    public int walksCount = 1;
+
     /// <summary>
     /// Kolikrat vystreli enemy na hrace v jednom strileni
     /// </summary>
@@ -39,12 +42,15 @@ public class ShootingEnemy: NPC {
     /// </summary>
     public float barrageDelay = 0.5f;
 
+    public bool projectileSpeedByPlyerDistance=false;
 
     private GameObject player;
 
+    private int walked = 0;
     private void Start()
     {
         player = Player.player;
+        walked = walksCount;
         GoToTarget(player,playerDistance);
     //    GoToTarget(player.transform.position);
         state = State.gettingCloser;
@@ -66,7 +72,7 @@ public class ShootingEnemy: NPC {
         yield return new WaitForSeconds(timeToStartShooting);
         for (int i = 0; i < barrageCount; i++)
         {
-            ShootProjectileTowardsPlayer(projectile, projectileVelocity, Damage);
+            ShootProjectileTowardsPlayer(projectile,projectileVelocity, Damage,projectileSpeedByPlyerDistance);
             yield return new WaitForSeconds(barrageDelay);
         }
         yield return new WaitForSeconds(timeToStartMoving);
@@ -111,24 +117,33 @@ public class ShootingEnemy: NPC {
             
             case State.shooting:
                 //pokud jsi daleko, jdi k hraci, jinak se pohybuj kolem
+                walked = 0;
                 if ((player.transform.position - transform.position).sqrMagnitude > playerDistance* playerDistance*2)
                 {
                     state = State.gettingCloser;
+                    walked++;
                     GoToTarget(player, playerDistance);
                 }
                 else
                 {
                     state = State.moving;
+                    walked++;
                     MoveAroundPlayer();
                 }
 
                 break;
             case State.moving:
                 //pokud jsi daleko, jsi hraci, jinak zkus vystrelit
-                if ((player.transform.position - transform.position).sqrMagnitude > playerDistance* playerDistance*2)
+                if ((player.transform.position - transform.position).sqrMagnitude > playerDistance * playerDistance * 2)
                 {
                     state = State.gettingCloser;
+                    walked++;
                     GoToTarget(player, playerDistance);
+                }
+                else if (walked < walksCount) {
+                    state = State.moving;
+                    walked++;
+                    MoveAroundPlayer();
                 }
                 else
                     TryToShoot();

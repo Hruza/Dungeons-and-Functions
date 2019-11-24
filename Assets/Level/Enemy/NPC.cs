@@ -47,6 +47,8 @@ public abstract class NPC : MonoBehaviour
     /// </summary>
     public bool invincible = false;
 
+    public bool showBossHealth = false;
+
     /// <summary>
     /// aktulni zdravi nepritele
     /// </summary>
@@ -96,6 +98,7 @@ public abstract class NPC : MonoBehaviour
         MaxHP = properties.baseHP+(Level*properties.perLevelHPIncrement);
         HP = MaxHP;
         Damage = properties.baseDamage+(Level*properties.perLevelDamageIncrement);
+        if (showBossHealth) LevelController.levelController.InitializeBossBar(properties.name,MaxHP);
     }
 
     public virtual void Initialize(int maxHP) {
@@ -112,6 +115,7 @@ public abstract class NPC : MonoBehaviour
     {
         if (invincible) return;
         HP -= damage;
+        if (showBossHealth) LevelController.levelController.SetBossHP(HP);
         Messager.ShowMessage(damage.ToString(),transform.position);
         if (HP <= 0)
            Die();
@@ -121,7 +125,20 @@ public abstract class NPC : MonoBehaviour
 
 
     //==========================================Movement======================================================
+    private Rigidbody2D RB {
+        get {
+            if (rb == null) rb = GetComponent<Rigidbody2D>();
+            return rb;
+        }
+        set {
+            rb = value;
+        }
+    }
     private Rigidbody2D rb;
+
+    public void Knockback(Vector2 dir) {
+        RB.AddForce(dir,ForceMode2D.Impulse);
+    }
 
     [HideInInspector]
     public bool isWalking=false;
@@ -163,13 +180,12 @@ public abstract class NPC : MonoBehaviour
     {
         isWalking = true;
         WalkStarted();
-        if (rb == null) rb = GetComponent<Rigidbody2D>();
         while (Vector3.SqrMagnitude(transform.position - target.transform.position) > tolerance * tolerance)
         {
             yield return new WaitForFixedUpdate();
             Vector2 walkDir = target.transform.position - transform.position;
             if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map","WalkBarrier"))) break;
-            rb.AddForce(walkDir.normalized * velocity);
+            RB.AddForce(walkDir.normalized * velocity);
         }
         isWalking = false;
         WalkEnded();
@@ -207,7 +223,7 @@ public abstract class NPC : MonoBehaviour
         WalkStarted();
         Vector2 detectionSize = new Vector2(1, 1);
         float startTime=Time.realtimeSinceStartup;
-        if (rb == null) rb = GetComponent<Rigidbody2D>();
+        if (RB == null) RB = GetComponent<Rigidbody2D>();
         while (Vector2.SqrMagnitude(transform.position - target) > tolerance * tolerance && Time.realtimeSinceStartup-startTime<giveUpTime )
         {
             Vector2 walkDir = target - transform.position;
@@ -216,7 +232,7 @@ public abstract class NPC : MonoBehaviour
                 yield return new WaitForFixedUpdate();
                 break;
             }
-            rb.AddForce(walkDir.normalized * velocity);
+            RB.AddForce(walkDir.normalized * velocity);
             yield return new WaitForFixedUpdate();
         }
         isWalking = false;
@@ -247,20 +263,28 @@ public abstract class NPC : MonoBehaviour
 
 
     //===============================================Combat===================================================
-    protected void ShootProjectile(GameObject projectile,Vector3 target,float velocity,int damage) {
+    protected void ShootProjectile(GameObject projectile,Vector3 target,float velocity,int damage, float shootingPointOffset = 0.5f) {
         Vector3 forward = (target-transform.position).normalized;
-        GameObject ball = (GameObject)Instantiate(projectile, transform.position + forward*0.5f, transform.rotation);
+        GameObject ball = (GameObject)Instantiate(projectile, transform.position + forward*shootingPointOffset, Quaternion.Euler(0, 0, -Vector2.SignedAngle(forward, Vector3.right)));
         ball.GetComponent<Rigidbody2D>().velocity = forward.normalized * velocity;
         if (ball.GetComponent<Projectile>() != null)
             ball.GetComponent<Projectile>().damage = damage;
     }
 
-    protected void ShootProjectileTowardsPlayer(GameObject projectile, float velocity, int damage ) {
-        Vector3 forward = (Player.player.transform.position-transform.position).normalized;
-        GameObject ball = (GameObject)Instantiate(projectile, transform.position+forward*0.5f , transform.rotation);
-        ball.GetComponent<Rigidbody2D>().velocity = forward * velocity;
-        if (ball.GetComponent<Projectile>() != null)
+    protected void ShootProjectileTowardsPlayer(GameObject projectile, float velocity, int damage , bool proportionalToPlayerDistance=false, float shootingPointOffset=0.5f) {
+        Vector3 forward = (Player.player.transform.position - transform.position).normalized;
+        GameObject ball = (GameObject)Instantiate(projectile, transform.position + forward * shootingPointOffset, Quaternion.Euler(0, 0, -Vector2.SignedAngle(forward, Vector3.right)) );
+        if (proportionalToPlayerDistance) velocity *= (Player.player.transform.position - transform.position).magnitude;
+        if (ball.GetComponent<ProjectileCreator>() != null)
+        {
+            ball.GetComponent<ProjectileCreator>().damage = damage;
+            ball.GetComponent<ProjectileCreator>().velocity = forward*velocity;
+        }
+        else if (ball.GetComponent<Projectile>() != null)
+        {
+            ball.GetComponent<Rigidbody2D>().velocity = forward * velocity;
             ball.GetComponent<Projectile>().damage = damage;
+        }
     }
 
     //================================================Other====================================================

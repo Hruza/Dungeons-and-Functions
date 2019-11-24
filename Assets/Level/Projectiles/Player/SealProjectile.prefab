@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4459666903700662233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.6737, y: 8.0016, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6596670767565541724}
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   lifetime: 1
+  projectileType: 0
   damageEnemies: 1
   damagePlayer: 0
   damageDestroyables: 1
@@ -107,6 +108,8 @@ MonoBehaviour:
     type: 3}
   onDestroyParticles: {fileID: 4883967720516062909, guid: 45afa566470776c4a901664d1999c936,
     type: 3}
+  destroyFirst: {fileID: 6901989831944089962}
+  destroyTime: 0.3
   explosion: 0
   explosionDamageMultiplicator: 1
   explosionRadius: 0

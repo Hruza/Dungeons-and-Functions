@@ -139,9 +139,6 @@ public class Player : MonoBehaviour
         SetArmor();
         SetRegeneration();
 
-        if (Regeneration > 0)
-            InvokeRepeating("Regenerate", 1, 1);
-
         if (MenuController.playerProgress.playerName == "Filip") filip.SetActive(true);
 	}
 
@@ -243,7 +240,7 @@ public class Player : MonoBehaviour
         if (Regeneration == 0)
             CancelInvoke("Regenerate");
         else
-            InvokeRepeating("Regenerate", 10, 10);
+            InvokeRepeating("Regenerate", 3, 3);
     }
 
     /// <summary>

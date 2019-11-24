@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Binary tree
   lowerItemLevel: 2
-  upperItemLevel: 10000
+  upperItemLevel: 5
   sprite: {fileID: 21300000, guid: e06d790da85303d42b7052662b741610, type: 3}
   itemComment: Programmers use it a lot, can be useful.
   isStarting: 0
+  fixedRarity: 0
+  fixedRarityValue: 0
   weaponType: 1
   lowerMinDamage: 5
   upperMinDamage: 6

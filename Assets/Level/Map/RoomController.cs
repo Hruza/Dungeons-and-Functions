@@ -9,6 +9,8 @@ public class RoomController : MonoBehaviour {
     public GameObject[] triggerOnClear;
     public GameObject[] triggerOnEnter;
 
+    public bool spawnAllInCenter = false;
+
     public GameObject summoner;
 
     List<GameObject> livingEnemies;
@@ -75,7 +77,9 @@ public class RoomController : MonoBehaviour {
         foreach (EnemyProperties enemy in enemiesToSpawn)
         {
             enemyCount++;
-            Vector3 randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * LevelGenerator.tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * LevelGenerator.tileSize);
+            Vector3 randPos;
+            if (spawnAllInCenter) randPos= Vector3.zero;
+            else randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * LevelGenerator.tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * LevelGenerator.tileSize);
             GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, transform.position + randPos, transform.rotation);
             currentEnemy.SetActive(false);
             currentEnemy.GetComponent<NPC>().Initialize(enemy);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// OUTDATED
 public class SpawningEnemy : NPC
 {
     public EnemyProperties[] spawnedObjects;

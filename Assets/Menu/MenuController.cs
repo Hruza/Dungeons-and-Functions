@@ -84,6 +84,7 @@ public class MenuController : MonoBehaviour
         savesMenu.SetActive(false);
         mainMenu.SetActive(true);
         InitializeLevels();
+        equipManager = new EquipManager();
         itemInventory.ReloadInventory();
     }
 
@@ -117,8 +118,7 @@ public class MenuController : MonoBehaviour
         {
             selected = (selected + dif+ levels.Length) % levels.Length;
             if (levels[selected].isSecret && !playerProgress.unlockedLevels.Contains(levels[selected].levelName)) {
-                if (dif != 0)
-                    ChangeLevel(dif);
+                if (dif != 0) ChangeLevel(dif);
                 else ChangeLevel(-1);
                 return;
             }

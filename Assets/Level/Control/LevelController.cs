@@ -8,6 +8,8 @@ public class LevelController : MonoBehaviour {
     public GameObject map;
     public GameObject menu;
     public GameObject playerDiedMenu;
+    public GameObject bossBar;
+    public Text tBossName;
     public static LevelController levelController;
 
     public static List<SecretRoom> secrets;
@@ -19,6 +21,21 @@ public class LevelController : MonoBehaviour {
     {
         clearedRoomCount++;
         if (clearedRoomCount >= roomCountToClear) Interactable.exit.SetInteractable();    
+    }
+
+    public void SetBossHP(int value) {
+        if (value <= 0) {
+            bossBar.GetComponent<Slider>().value = 0;
+        }
+        else
+            bossBar.GetComponent<Slider>().value= value;
+    }
+
+    public void InitializeBossBar(string bossName, int maxHP) {
+        tBossName.text = bossName;
+        bossBar.SetActive(true);
+        bossBar.GetComponent<Slider>().maxValue = maxHP;
+        bossBar.GetComponent<Slider>().value = maxHP;
     }
 
     //Setup of level
@@ -33,10 +50,20 @@ public class LevelController : MonoBehaviour {
 
     }
 
+    private bool inMenu=false;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            menu.SetActive(!menu.activeInHierarchy);
+            if (inMenu)
+            {
+                Continue();
+            }
+            else
+            {
+                Time.timeScale = 0;
+                menu.SetActive(true);
+            }
         }
     }
 
@@ -45,6 +72,8 @@ public class LevelController : MonoBehaviour {
     /// </summary>
     public void Continue()
     {
+        inMenu = false;
+        Time.timeScale = 1;
         menu.SetActive(false);
     }
 
@@ -68,6 +97,7 @@ public class LevelController : MonoBehaviour {
     /// navrat do hlavniho menu
     /// </summary>
     public void Exit() {
+        Time.timeScale = 1;
         LevelResults result = new LevelResults(false, levelController.clearedRoomCount, levelController.level.roomCount,LevelController.secrets);
         MenuController.LevelExit(result);
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: integral_sword
   m_EditorClassIdentifier: 
   name: Integral Sword
-  lowerItemLevel: 4
+  lowerItemLevel: 5
   upperItemLevel: 10000
   sprite: {fileID: 21300000, guid: 1c117725dbde38649ba5c2a39a89e326, type: 3}
   itemComment: You have always wanted it, didn't you?
@@ -23,8 +23,8 @@ MonoBehaviour:
   weaponType: 0
   lowerMinDamage: 2
   upperMinDamage: 3
-  lowerMaxDamage: 13
-  upperMaxDamage: 16
+  lowerMaxDamage: 10
+  upperMaxDamage: 13
   damageIncrementPerLevel: 3
   attackSpeed: 25
   gameObject: {fileID: 6766358523322256936, guid: 16dbbb6aa0e3ab941bebfdf8f626afe2,

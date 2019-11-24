@@ -35,9 +35,9 @@ public class InventoryPanel : MonoBehaviour
 
         int width = Mathf.FloorToInt(GetComponent<RectTransform>().rect.width);
         int buttonSize = Mathf.FloorToInt(buttonPrefab.GetComponent<RectTransform>().rect.width);
-        maxColumns = width / buttonSize;
+        maxColumns = (width-10) / buttonSize;
 
-        if (maxColumns > 1) delta = (width % buttonSize) / maxColumns - 1;
+        if (maxColumns > 1) delta = ((width-10) % buttonSize) / maxColumns - 1;
         else delta = 0;
         int i = 0;
         foreach (Item item in items)
@@ -54,6 +54,7 @@ public class InventoryPanel : MonoBehaviour
             buttons.Add(button);
             i++;
         }
-        if (GetComponent<RectTransform>().rect.height <- (-(buttonSize / 2) - (i / maxColumns) * (buttonSize + delta) - delta)) GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (buttonSize / 2) + (i / maxColumns) * (buttonSize + delta) + delta+70); ;
+        //if (GetComponent<RectTransform>().rect.height !=- (-(buttonSize / 2) - (i / maxColumns) * (buttonSize + delta) - delta))
+         GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (buttonSize / 2) + (i / maxColumns) * (buttonSize + delta) + delta+70); ;
     }
 }

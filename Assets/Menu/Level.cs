@@ -84,6 +84,8 @@ public class Level : ScriptableObject
 
     public SecretRoom[] secretRooms;
 
+    public bool spawnEnemiesInCenter = false;
+
     Level(int difficulty, EnemyBundle[] enemies)
     {
         this.difficulty = difficulty;

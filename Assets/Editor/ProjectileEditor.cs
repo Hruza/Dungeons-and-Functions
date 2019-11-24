@@ -2,50 +2,81 @@
 using UnityEngine;
 
 [CustomEditor(typeof(Projectile))]
+[CanEditMultipleObjects]
 public class ProjectileEditor : Editor
 {
     const int labelWidth = 150;
+
+
+    SerializedProperty detectionDistance;
+    SerializedProperty detectionAngle;
+    SerializedProperty turningSpeed;
+
+    SerializedProperty explosionDamageMultiplicator;
+    SerializedProperty explosionRadius;
+    SerializedProperty explosionDamageDistribution;
+    SerializedProperty explosionDamageEnemies;
+    SerializedProperty explosionDamagePlayer;
+    SerializedProperty explosionDamageDestroyables;
+
+    void OnEnable()
+    {
+        detectionDistance = serializedObject.FindProperty("detectionDistance") ;
+        detectionAngle = serializedObject.FindProperty("detectionAngle");
+        turningSpeed = serializedObject.FindProperty("turningSpeed");
+
+        explosionDamageMultiplicator=serializedObject.FindProperty("explosionDamageMultiplicator");
+        explosionRadius=serializedObject.FindProperty("explosionRadius");
+        explosionDamageDistribution=serializedObject.FindProperty("explosionDamageDistribution");
+        explosionDamageEnemies=serializedObject.FindProperty("explosionDamageEnemies");
+        explosionDamagePlayer=serializedObject.FindProperty("explosionDamagePlayer");
+        explosionDamageDestroyables=serializedObject.FindProperty("explosionDamageDestroyables");
+
+    }
+
+    bool showHoming = false;
     public override void OnInspectorGUI()
     {
         base.DrawDefaultInspector();
-
+        serializedObject.Update();
         Projectile tgt = (Projectile)target;
-
+        
         if (tgt.explosion)
         {
             EditorGUI.indentLevel++;
 
-            GUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("ExplosionDamageMultiplicator");
-            tgt.explosionDamageMultiplicator = EditorGUILayout.FloatField(tgt.explosionDamageMultiplicator);
-            GUILayout.EndHorizontal();
+            EditorGUILayout.PropertyField(explosionDamageMultiplicator, new GUIContent("Explosion damage multiplicator"));
 
-            GUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("Explosion radius");
-            tgt.explosionRadius = EditorGUILayout.FloatField(tgt.explosionRadius);
-            GUILayout.EndHorizontal();
+            EditorGUILayout.PropertyField(explosionRadius, new GUIContent("Explosion radius"));
 
-            GUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("Explosion damage distribution");
-            tgt.explosionDamageDistribution = EditorGUILayout.CurveField(tgt.explosionDamageDistribution);
-            GUILayout.EndHorizontal();
+            EditorGUILayout.PropertyField(explosionDamageDistribution, new GUIContent("Explosion damage distribution"));
 
-            GUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("ExplosionDamageEnemies");
-            tgt.explosionDamageEnemies = EditorGUILayout.Toggle(tgt.explosionDamageEnemies);
-            GUILayout.EndHorizontal();
+            EditorGUILayout.PropertyField(explosionDamageEnemies, new GUIContent("ExplosionDamageEnemies"));
 
-            GUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("ExplosionDamagePlayer");
-            tgt.explosionDamagePlayer = EditorGUILayout.Toggle(tgt.explosionDamagePlayer);
-            GUILayout.EndHorizontal();
+            EditorGUILayout.PropertyField(explosionDamagePlayer, new GUIContent("ExplosionDamagePlayer"));
 
-            GUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("ExplosionDamageEnemies");
-            tgt.explosionDamageDestroyables = EditorGUILayout.Toggle(tgt.explosionDamageDestroyables);
-            GUILayout.EndHorizontal();
+            EditorGUILayout.PropertyField(explosionDamageDestroyables, new GUIContent("ExplosionDamageDestroyables"));
 
-            EditorGUI.indentLevel++;
+            EditorGUI.indentLevel--;
         }
+
+        if(tgt.projectileType==Projectile.ProjectileType.homing)
+        {
+
+            showHoming=EditorGUILayout.Foldout(showHoming, new GUIContent("Homing"), EditorStyles.boldFont);
+
+            if (showHoming)
+            {
+                EditorGUI.indentLevel++;
+
+                EditorGUILayout.PropertyField(detectionDistance, new GUIContent("Detection distance"));
+                EditorGUILayout.PropertyField(detectionAngle, new GUIContent("Detection angle"));
+                EditorGUILayout.PropertyField(turningSpeed, new GUIContent("Turning speed"));
+                
+                EditorGUI.indentLevel--;
+
+            }
+        }
+        serializedObject.ApplyModifiedProperties();
     }
 }
