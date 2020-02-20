@@ -36,6 +36,7 @@ public class ShootProjectile : Weapon
 
     protected override void Primary()
     {
+        base.Primary();
         ready = false;
         Invoke("Reset", 10f / attackSpeed);
         Vector3 forward = PlayerMovement.Forward();

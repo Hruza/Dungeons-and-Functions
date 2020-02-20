@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
         }
         set { }
     }
+    public GameObject cam;
 
     /*nápady na to jak by to mohlo být
     static public float damageMultiplier=1;
@@ -126,18 +127,20 @@ public class Player : MonoBehaviour
         //  player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
         equip = MenuController.equipManager;
+        if (equip == null) equip = new EquipManager();
         ArmorItem armor=((ArmorItem)equip.EquippedItems.Find(i => i.itemType == ItemType.Armor));
         if (armor != null) GetComponent<PlayerMovement>().playerMovementReduction = armor.movementSpeedReduction; 
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
         Name = "Player";
-        MaxHP = 50+equip.AllStats["MaxHP"];
+        MaxHP = 50;
+        if(equip!=null) MaxHP+=equip.AllStats["MaxHP"];
         HP = MaxHP; 
         Armor = 0;
         Regeneration = 0;
-        shieldDechargeRate = (10 * defaultShieldDechargeRate) / (10 + equip.AllStats["ShieldBoost"]);
+        if (equip != null){ shieldDechargeRate = (10 * defaultShieldDechargeRate) / (10 + equip.AllStats["ShieldBoost"]);
         SetArmor();
-        SetRegeneration();
+        SetRegeneration();}
 
         if (MenuController.playerProgress.playerName == "Filip") filip.SetActive(true);
 	}

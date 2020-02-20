@@ -33,6 +33,7 @@ public class MeleeWeapon : Weapon
 
     protected override void Primary()
     {
+        base.Primary();
         ready = false;
         attacked = new List<GameObject>();
         StartCoroutine(WeaponSwing());

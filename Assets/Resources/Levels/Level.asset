@@ -20,8 +20,6 @@ MonoBehaviour:
   enemies:
   - count: 3
     enemyProperties: {fileID: 11400000, guid: f1e26f0594b35ae41ad6e825a316a272, type: 2}
-  - count: 1
-    enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
   roomCount: 1
   generatorPreset: 0
   roomConnections: 1

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Linq;
 using System.IO;
 using System;
@@ -169,4 +170,85 @@ public class MenuController : MonoBehaviour
         ChangeLevel(0);
         itemInventory.ReloadInventory();
     }
+
+    public GameObject commandLine;
+    private bool CLactive = false;
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P)) {
+            CLactive = !CLactive;
+            commandLine.SetActive(CLactive);
+        }
+    }
+
+    public void getcommand() {
+        Command(commandLine.GetComponent<InputField>().text);
+    }
+
+    public void Command(string com) {
+        try
+        {
+            string result = "";
+            string[] sep = new String[1] { " " };
+            string[] part = com.Split(sep,StringSplitOptions.RemoveEmptyEntries);
+            switch (part[0])
+            {
+                case "give":
+                    if (part.Length < 2 || part.Length > 3) result = "wrong arguments";
+                    else {
+                        int level = int.Parse(part[1]);
+                        int count = 1;
+                        if (part.Length == 3) count = int.Parse(part[2]);
+                        List<Item> reward = new List<Item>();
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            reward.Add(Item.Generate(level));
+                        }
+
+                        MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
+                        MenuController.playerProgress.weapons.AddRange(reward.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
+                        result = count.ToString()+" item(s) given";
+                        itemInventory.ReloadInventory();
+                    }
+                    break;
+                case "givew":
+                    if (part.Length < 2 || part.Length > 3) result = "wrong arguments";
+                    else
+                    {
+                        int level = int.Parse(part[1]);
+                        int count = 1;
+                        if (part.Length == 3) count = int.Parse(part[2]);
+                        List<Item> reward = new List<Item>();
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            reward.Add(WeaponItem.Generate(level));
+                        }
+
+                        MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
+                        MenuController.playerProgress.weapons.AddRange(reward.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
+                        result = count.ToString() + " item(s) given";
+                        itemInventory.ReloadInventory();
+                    }
+                    break;
+                case "setlevel":
+                    if (part.Length > 2) result = "wrong arguments";
+                    else {
+                        playerProgress.ProgressLevel = int.Parse(part[1]);
+                        result = "progress level was set to " + int.Parse(part[1]).ToString();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            commandLine.GetComponent<InputField>().text = result;
+        }
+        catch (Exception)
+        {
+            commandLine.GetComponent<InputField>().text="UKNOWN COMMAND";
+        }
+    }
+
 }

@@ -73,7 +73,7 @@ public class RoomController : MonoBehaviour {
     /// </summary>
     void SpawnEnemies() {
         if (enemiesToSpawn.Length - enemyCount > 9) cap = enemyCount + 5;
-        else cap = 10;
+        else cap = enemyCount + 10;
         foreach (EnemyProperties enemy in enemiesToSpawn)
         {
             enemyCount++;
