@@ -9,6 +9,8 @@ public class Weapon : MonoBehaviour
     public int attackSpeed;
     public WeaponController controller;
 
+    public Damager.DamageType damageType;
+
     protected virtual void Update()
     {
         if (Input.GetButtonDown("Fire1")) Primary();

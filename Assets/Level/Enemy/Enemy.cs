@@ -115,7 +115,7 @@ public class Phase
 public class Enemy : NPC
 {
 
-    
+    public Damager.DamageType damageType;
     private enum State { gettingCloser, shooting, moving };
     private State state;
 
@@ -229,7 +229,9 @@ public class Enemy : NPC
             {
 
                 col.GetComponent<PlayerMovement>().Knockback((col.transform.position - transform.position).normalized * CurrentPhase.knockback);
-                col.SendMessage("GetDamage",Mathf.RoundToInt(CurrentPhase.DamageMultiplier* Damage), SendMessageOptions.DontRequireReceiver);
+
+                Damager.InflictDamage(col.gameObject, CurrentPhase.DamageMultiplier * Damage, damageType);
+                
             }
         }
         NextPhase();

@@ -199,10 +199,10 @@ public class Player : MonoBehaviour
     /// Hrac obdrzi poskozeni, ktere muze byt snizeno o jeho brneni.
     /// </summary>
     /// <param name="damage">obdrzene poskozeni</param>
-    public void GetDamage(int damage)
+    public void GetDamage(Damager damage)
     {
         //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
-        int realDamage= Mathf.Max(1, damage - Armor);
+        int realDamage= Mathf.Max(1, damage.value - Armor);
         HP -= realDamage;
         Debug.Log("Hrac dostal "+damage.ToString()+" damage");
         Messager.ShowMessage(realDamage.ToString(), transform.position, Color.red);

@@ -16,11 +16,11 @@ public class Health : MonoBehaviour {
         anim=GetComponent<Animator>();
     }
 
-    public void GetDamage(int damage) {
+    public void GetDamage(Damager damage) {
         if (ready)
         {
             ready = false;
-            if ((health -= damage) <= 0) Destroy(gameObject);
+            if ((health -= damage.value) <= 0) Destroy(gameObject);
             Invoke("ResetDamage", noDamageTime);
             if (anim != null) anim.SetTrigger("getDamage");
         }

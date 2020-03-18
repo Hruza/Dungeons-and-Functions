@@ -111,12 +111,12 @@ public abstract class NPC : MonoBehaviour
     /// Nepritel obdrzi damage a pripadne umre.
     /// </summary>
     /// <param name="damage">obdrzene damage</param>
-    public virtual void GetDamage(int damage)
+    public virtual void GetDamage(Damager damage)
     {
         if (invincible) return;
-        HP -= damage;
+        HP -= damage.value;
         if (showBossHealth) LevelController.levelController.SetBossHP(HP);
-        Messager.ShowMessage(damage.ToString(),transform.position);
+        Messager.ShowMessage(damage.value.ToString(),transform.position);
         if (HP <= 0)
            Die();
         Animator anim = GetComponent<Animator>();

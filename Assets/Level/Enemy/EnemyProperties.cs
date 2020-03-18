@@ -16,6 +16,8 @@ public class EnemyProperties : ScriptableObject {
     public int baseHP;
     public int perLevelHPIncrement;
 
+    public Weaknesses weaknesses;
+
     public int baseDamage;
     public int perLevelDamageIncrement;
 

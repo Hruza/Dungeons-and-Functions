@@ -58,7 +58,8 @@ public class MeleeWeapon : Weapon
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Destroyable") && !attacked.Contains(collision.gameObject)) {
-            collision.SendMessage("GetDamage", Random.Range(minDamage, maxDamage + 1), SendMessageOptions.DontRequireReceiver);
+            int damage = Random.Range(minDamage, maxDamage + 1);
+            Damager.InflictDamage(collision.gameObject, damage, damageType);
             attacked.Add(collision.gameObject);
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             if(rb!=null) rb.AddForce((collision.transform.position-transform.position).normalized * knockback,ForceMode2D.Impulse);

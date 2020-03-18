@@ -9,6 +9,9 @@ public class Projectile : MonoBehaviour {
     public enum ProjectileType { classic,sin,cos,homing }
     public ProjectileType projectileType;
 
+    [HideInInspector]
+    public Damager.DamageType damageType;
+
     [Header("Collisions")]
     public bool damageEnemies = true;
     public bool damagePlayer = false;
@@ -131,7 +134,7 @@ public class Projectile : MonoBehaviour {
         string tag = collision.gameObject.tag;
         if ((tag == "Enemy" && damageEnemies) || ((tag=="Shield" || tag == "Player") && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
         {
-            collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
+            Damager.InflictDamage(collision.gameObject, damage, damageType);
             if (knockback + perpKnockback != 0)
             {
                 Vector2 dif=(Vector2)(collision.gameObject.transform.position - transform.position);
@@ -148,7 +151,7 @@ public class Projectile : MonoBehaviour {
         }
         else if (tag == "Destroyable" && damageDestroyables)
         {
-            collision.gameObject.SendMessage("GetDamage", damage, SendMessageOptions.DontRequireReceiver);
+            Damager.InflictDamage(collision.gameObject, damage, damageType);
         }
         if (destroyOnAnyCollision) End();
         if (destroyOnWorldCollision && (collision.gameObject.layer == LayerMask.NameToLayer("Map") || tag == "Map" || tag=="Destroyable")) End() ;
@@ -181,11 +184,12 @@ public class Projectile : MonoBehaviour {
             if ((tag == "Enemy" && explosionDamageEnemies) || (tag == "Player" && explosionDamagePlayer) || (tag == "Destroyable" && explosionDamageDestroyables))
             {
                 Vector3 dir = coll.gameObject.transform.position - transform.position;
-                if (!Physics2D.Raycast(transform.position,dir,dir.magnitude,LayerMask.GetMask("Map","Shield")))
-                coll.gameObject.SendMessage("GetDamage", explosionDamageMultiplicator*damage*explosionDamageDistribution.Evaluate(Mathf.Clamp((coll.gameObject.transform.position-transform.position).magnitude/explosionRadius,0,1)), SendMessageOptions.DontRequireReceiver);
-
+                if (!Physics2D.Raycast(transform.position, dir, dir.magnitude, LayerMask.GetMask("Map", "Shield"))) {
+                    Damager.InflictDamage(coll.gameObject, explosionDamageMultiplicator * damage * explosionDamageDistribution.Evaluate(Mathf.Clamp((coll.gameObject.transform.position - transform.position).magnitude / explosionRadius, 0, 1)), damageType);
+                }
             }
         }
         
     }
 }
+
