@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: Sin
   m_EditorClassIdentifier: 
   name: Sin
+  sprite: {fileID: 21300000, guid: 0feeb5f93c45fab49942b287afb2f8be, type: 3}
   baseHP: 20
   perLevelHPIncrement: 6
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 1
+    NumMult: 1.2
+    AlgMult: 0.8
+  damageType: 0
+  aiType: 0
   baseDamage: 5
   perLevelDamageIncrement: 5
   EnemyGameObject: {fileID: 5101788237483465924, guid: b53e52c61c466394c84820235b44b37f,

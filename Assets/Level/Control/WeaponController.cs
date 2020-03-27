@@ -62,6 +62,7 @@ public class WeaponController : MonoBehaviour
             wp.maxDamage = wp.minDamage + weapons[currentWeaponIndex].Range();
             wp.attackSpeed = weapons[currentWeaponIndex].TotalAttackSpeed(equip);
             wp.controller = this;
+            wp.damageType = weapons[currentWeaponIndex].damageType;
             ChangeUI();
         }
 

@@ -130,6 +130,7 @@ public class Enemy : NPC
 
     private void Start()
     {
+        if (weaknesses == null) weaknesses = new Weaknesses();
         anim = GetComponent<Animator>();
         player = Player.player;
         currentPhaseIndex = 0;

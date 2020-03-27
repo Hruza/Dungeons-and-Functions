@@ -10,6 +10,10 @@ public class WeaponItem : Item
     /// </summary>
     public WeaponType weaponType;
     /// <summary>
+    /// typ poškození zbraně
+    /// </summary>
+    public Damager.DamageType damageType;
+    /// <summary>
     /// minimální poškození zbraně
     /// </summary>
     public int minDamage;
@@ -47,7 +51,7 @@ public class WeaponItem : Item
         }
     }
 
-    public static WeaponItem Generate(Item item,WeaponPattern pattern,bool noStats=false) { 
+    public static WeaponItem Generate(Item item,WeaponPattern pattern,bool noStats=false) {
         //přiřazení vlastností, které mají všechny předměty společné
         WeaponItem weapon = new WeaponItem
         {
@@ -62,6 +66,7 @@ public class WeaponItem : Item
             sprite = pattern.sprite,
             itemName = pattern.name,
             weaponType = pattern.weaponType,
+            damageType = pattern.damageType,
             weaponGameObject = pattern.gameObject,
             minDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1),
             maxDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1)
@@ -88,6 +93,7 @@ public class WeaponItem : Item
 
             //přiřazení vlastností, které vycházejí ze vzoru
             attackSpeed = pattern.attackSpeed,
+            damageType = pattern.damageType,
             sprite = pattern.sprite,
             itemName = pattern.name,
             weaponType = pattern.weaponType,

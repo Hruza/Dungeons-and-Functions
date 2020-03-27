@@ -15,6 +15,11 @@ MonoBehaviour:
   name: Dummy
   baseHP: 500
   perLevelHPIncrement: 0
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 0
+    NumMult: 11
+    AlgMult: 0
   baseDamage: 0
   perLevelDamageIncrement: 0
   EnemyGameObject: {fileID: 1912209089370650, guid: ad4da7bf36ec2db4a858df5b986fc42a,

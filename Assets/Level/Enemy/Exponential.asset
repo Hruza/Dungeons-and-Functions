@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: Exponential
   m_EditorClassIdentifier: 
   name: Exponential
+  sprite: {fileID: 21300000, guid: 65a6d0f678e2e49449893968641d2c23, type: 3}
   baseHP: 20
   perLevelHPIncrement: 6
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 1.2
+    NumMult: 1
+    AlgMult: 0.8
+  damageType: 0
+  aiType: 0
   baseDamage: 20
   perLevelDamageIncrement: 5
   EnemyGameObject: {fileID: 5101788237483465924, guid: b4d7de73a4741f64781fccf72564e270,

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryButton : MonoBehaviour
+public class InventoryButton : TooltipButton
 {
     public ItemInventory itemInventory;
     private Item item;
@@ -14,7 +14,6 @@ public class InventoryButton : MonoBehaviour
     static public Color uniqueColor = Color.magenta;
     static public Color legendaryColor = Color.yellow;
 
-    public GameObject tooltipPrefab;
 
     public Image image;
     public Item CarriedItem{
@@ -53,35 +52,18 @@ public class InventoryButton : MonoBehaviour
         }
     }
 
-    public void Click() {
-        itemInventory.ButtonClick(item);
+    public void MouseEnter()
+    {
+        ShowTooltip(CarriedItem,itemInventory);
     }
 
-    private GameObject tooltip;
 
-    public void ShowTooltip() {
-        if (item != null && tooltip == null)
-        {
-            if(itemInventory!=null) tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, itemInventory.transform);
-            else tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, transform.parent.parent);
-            tooltip.GetComponent<InvTooltip>().Item = item;
-            StartCoroutine(MoveTooltip());
-        }
+    public void Click()
+    {
+    itemInventory.ButtonClick(item);
     }
 
-    public IEnumerator MoveTooltip() {
-        while (tooltip != null)
-        {
-            tooltip.transform.position = Input.mousePosition;
-            yield return new WaitForEndOfFrame();
-        }
-        
-    }
 
-    public void DeleteTooltip() {
-        if(tooltip!=null)
-            Destroy(tooltip);
-    }
 
     //todo: Tooltip
 }

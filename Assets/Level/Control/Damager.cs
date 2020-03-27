@@ -9,6 +9,22 @@ public class Damager
     public int value;
     public DamageType type;
 
+    static public Color GetColor(DamageType type) {
+        switch (type)
+        {
+            case DamageType.neutral:
+                return Color.white;
+            case DamageType.numeric:
+                return Color.green;
+            case DamageType.analytic:
+                return Color.cyan;
+            case DamageType.algebraic:
+                return new Color(1,0.5f,0);
+            default:
+                return Color.black;
+        }
+    }
+
     public Damager(int damageValue, DamageType type = DamageType.neutral)
     {
         this.value = damageValue;
@@ -31,67 +47,51 @@ public class Damager
         Damager dmg = new Damager(damageValue, type);
         damaged.SendMessage("GetDamage", dmg, SendMessageOptions.DontRequireReceiver);
     }
+
+    public int EvaluateDamage(Weaknesses weaknesses)
+    {
+        return Mathf.RoundToInt(value * weaknesses.GetMultiplier(type));
+    }
 }
 
 [System.Serializable]
 public class Weaknesses {
-    private Dictionary<Damager.DamageType,float> multiplier;
+    public float neutralMult;
 
-    public float AnlMult {
-        get {
-            return multiplier[Damager.DamageType.analytic];
-        }
-        set {
-            multiplier[Damager.DamageType.analytic] = value;
-        }
-    }
+    public float AnlMult;
 
-    public float NumMult
-    {
-        get
-        {
-            return multiplier[Damager.DamageType.numeric];
-        }
-        set
-        {
-            multiplier[Damager.DamageType.numeric] = value;
-        }
-    }
+    public float NumMult;
 
-    public float AlgMult
-    {
-        get
-        {
-            return multiplier[Damager.DamageType.algebraic];
-        }
-        set
-        {
-            multiplier[Damager.DamageType.algebraic] = value;
-        }
-    }
+    public float AlgMult;
 
     public float GetMultiplier(Damager.DamageType type){
-        return multiplier[type];
-    }
-
-    public void SetMultiplier(Damager.DamageType type,float value)
-    {
-        multiplier[type] = value;
+        switch (type)
+        {
+            case Damager.DamageType.neutral:
+                return neutralMult; 
+            case Damager.DamageType.numeric:
+                return NumMult;
+            case Damager.DamageType.analytic:
+                return AnlMult;
+            case Damager.DamageType.algebraic:
+                return AlgMult;
+            default:
+                return neutralMult;
+        }
     }
 
     public Weaknesses() {
-        multiplier = new Dictionary<Damager.DamageType, float>();
-        multiplier[Damager.DamageType.neutral] = 1;
-        multiplier[Damager.DamageType.analytic] = 1;
-        multiplier[Damager.DamageType.numeric] = 1;
-        multiplier[Damager.DamageType.algebraic] = 1;
+        neutralMult = 1;
+        AlgMult = 1;
+        AnlMult = 1;
+        NumMult = 1;
     }
 
     public Weaknesses(float anlMult, float numMult,float algMult)
     {
-        multiplier[Damager.DamageType.neutral] = 1;
-        multiplier[Damager.DamageType.analytic] = anlMult;
-        multiplier[Damager.DamageType.numeric] = numMult;
-        multiplier[Damager.DamageType.algebraic] = algMult;
+        neutralMult = 1;
+        AlgMult = algMult;
+        AnlMult = anlMult;
+        NumMult = numMult;
     }
 }

@@ -7,16 +7,22 @@ using UnityEngine;
 /// </summary>
 [CreateAssetMenu(fileName = "Enemy", menuName = "Enemy")]
 public class EnemyProperties : ScriptableObject {
-   
+
+    public enum AIType {melee, ranged, spawning };
     /// <summary>
     /// Jmeno enemaka
     /// </summary>
     public new string name;
+    public int orderID=1;
+    public Sprite sprite;
 
     public int baseHP;
     public int perLevelHPIncrement;
 
     public Weaknesses weaknesses;
+
+    public Damager.DamageType damageType;
+    public AIType aiType;
 
     public int baseDamage;
     public int perLevelDamageIncrement;

@@ -15,6 +15,11 @@ MonoBehaviour:
   name: Sequence b
   baseHP: 20
   perLevelHPIncrement: 6
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 0
+    NumMult: 10
+    AlgMult: 0
   baseDamage: 4
   perLevelDamageIncrement: 5
   EnemyGameObject: {fileID: 1912209089370650, guid: ba1295ff1a236b84e8ea24ab8abd0037,

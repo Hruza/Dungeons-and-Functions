@@ -53,6 +53,7 @@ public class ShootProjectile : Weapon
             }
             ball.GetComponent<Rigidbody2D>().velocity = spreadRotation*forward * velocity;
             ball.GetComponent<Projectile>().damage = Random.Range(minDamage, maxDamage + 1);
+            ball.GetComponent<Projectile>().damageType = damageType;
         }
         if (onShootParticles != null)
         {

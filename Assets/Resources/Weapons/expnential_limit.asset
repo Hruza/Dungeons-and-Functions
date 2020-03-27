@@ -21,6 +21,7 @@ MonoBehaviour:
   fixedRarity: 0
   fixedRarityValue: 0
   weaponType: 1
+  damageType: 3
   lowerMinDamage: 6
   upperMinDamage: 9
   lowerMaxDamage: 11

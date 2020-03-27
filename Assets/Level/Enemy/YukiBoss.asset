@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
   m_Name: YukiBoss
   m_EditorClassIdentifier: 
-  name: Yuki
+  name: YUKI, the seal queen
+  sprite: {fileID: 21300000, guid: 94ace3d6301828f41bbe06c7cc7baddd, type: 3}
   baseHP: 1000
   perLevelHPIncrement: 0
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 1
+    NumMult: 1
+    AlgMult: 1
+  damageType: 0
+  aiType: 0
   baseDamage: 10
   perLevelDamageIncrement: 6
   EnemyGameObject: {fileID: 1542212541991514, guid: 2a11a0df418eaf0418ca3458c969c67c,

@@ -10,6 +10,8 @@ public class WeaponPattern : ItemPattern
     /// typ zbraně
     /// </summary>
     public WeaponType weaponType;
+
+    public Damager.DamageType damageType;
     /// <summary>
     /// dolní hranice minimálnoho poškození zbraně
     /// </summary>

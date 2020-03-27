@@ -16,6 +16,8 @@ public abstract class NPC : MonoBehaviour
     /// </summary>
     const float followDelay = 0.5f;
 
+    public Weaknesses weaknesses;
+
     public EnemyType enemyType;
 
     /// <summary>
@@ -98,6 +100,7 @@ public abstract class NPC : MonoBehaviour
         MaxHP = properties.baseHP+(Level*properties.perLevelHPIncrement);
         HP = MaxHP;
         Damage = properties.baseDamage+(Level*properties.perLevelDamageIncrement);
+        weaknesses = properties.weaknesses;
         if (showBossHealth) LevelController.levelController.InitializeBossBar(properties.name,MaxHP);
     }
 
@@ -114,9 +117,9 @@ public abstract class NPC : MonoBehaviour
     public virtual void GetDamage(Damager damage)
     {
         if (invincible) return;
-        HP -= damage.value;
+        HP -= damage.EvaluateDamage(weaknesses);
         if (showBossHealth) LevelController.levelController.SetBossHP(HP);
-        Messager.ShowMessage(damage.value.ToString(),transform.position);
+        Messager.ShowMessage(damage.EvaluateDamage(weaknesses).ToString(),transform.position,Color.white,damage.type);
         if (HP <= 0)
            Die();
         Animator anim = GetComponent<Animator>();

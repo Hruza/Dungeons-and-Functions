@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [System.Serializable]
 public class EnemyBundle {
@@ -71,6 +72,21 @@ public class Level : ScriptableObject
     /// Enemies v levelu
     /// </summary>
     public EnemyBundle[] enemies;
+
+    public List<EnemyProperties> EnemyTypes {
+        get {
+            List<EnemyProperties> output = new List<EnemyProperties>();
+            foreach (EnemyBundle bundle in enemies)
+            {
+                if (!output.Contains(bundle.enemyProperties)) {
+                    output.Add(bundle.enemyProperties);
+                }
+            }
+            output.Sort((x, y) => x.orderID.CompareTo(y.orderID));
+            return output;
+        }
+
+    }
     /// <summary>
     /// Pocet mistnosi
     /// </summary>
