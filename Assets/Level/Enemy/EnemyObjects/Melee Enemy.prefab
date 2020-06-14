@@ -47,6 +47,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -58,6 +59,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -143,6 +145,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -154,6 +157,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -234,12 +238,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe16e4882309a845b3d9d583cc97ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 1
+    NumMult: 1
+    AlgMult: 1
   enemyType: 0
   defaultTargetTolerance: 1
   invincible: 0
+  showBossHealth: 0
   onDeathParticles: {fileID: 0}
   isWalking: 0
-  velocity: 50
+  acceleration: 20
+  maxSpeed: 6
   playerDistance: 2
   attackRadius: 2.5
   timeToStartAttacking: 0.2
@@ -292,6 +303,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -303,6 +315,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -344,11 +357,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1817525865667088624}
     m_Modifications:
-    - target: {fileID: 8847408700539712980, guid: 6157199a7e3044042a0f15bb485a2c62,
-        type: 3}
-      propertyPath: m_Name
-      value: Particle System
-      objectReference: {fileID: 0}
     - target: {fileID: 504697652382428275, guid: 6157199a7e3044042a0f15bb485a2c62,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -428,6 +436,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847408700539712980, guid: 6157199a7e3044042a0f15bb485a2c62,
+        type: 3}
+      propertyPath: m_Name
+      value: Particle System
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6157199a7e3044042a0f15bb485a2c62, type: 3}

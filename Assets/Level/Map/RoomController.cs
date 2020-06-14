@@ -74,8 +74,9 @@ public class RoomController : MonoBehaviour {
     void SpawnEnemies() {
         if (enemiesToSpawn.Length - enemyCount > 9) cap = enemyCount + 5;
         else cap = enemyCount + 10;
-        foreach (EnemyProperties enemy in enemiesToSpawn)
+        for (int i = enemyCount; i < enemiesToSpawn.Length; i++)
         {
+            EnemyProperties enemy = enemiesToSpawn[i]; 
             enemyCount++;
             Vector3 randPos;
             if (spawnAllInCenter) randPos= Vector3.zero;

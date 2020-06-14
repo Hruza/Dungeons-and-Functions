@@ -85,8 +85,8 @@ public class InvTooltip : MonoBehaviour
                 case ItemType.Armor:
                     ArmorItem am = (ArmorItem)item;
                     sb.AppendLine();
-                    sb.AppendFormat("<b>Armor:<\b> {0}\n",am.armor);
-                    sb.AppendFormat("<b>Speed reduction:<\b> {0}\n", am.movementSpeedReduction);
+                    sb.AppendFormat("<b>Armor:</b> {0}\n",am.armor);
+                    sb.AppendFormat("<b>Speed reduction:</b> {0}\n", am.movementSpeedReduction);
                     lines += 3;
                     break;
                 case ItemType.Weapon:
@@ -118,7 +118,6 @@ public class InvTooltip : MonoBehaviour
             }
             sb.Append("\n ");
             info.SetText(sb);
-            Debug.Log("created tooltip");
             GetComponent<RectTransform>().sizeDelta = new Vector2(210, 40 + info.preferredHeight);
             CheckConstrains();
         }

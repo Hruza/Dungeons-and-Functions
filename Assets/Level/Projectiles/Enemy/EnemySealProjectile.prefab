@@ -98,14 +98,17 @@ MonoBehaviour:
   damage: 1
   lifetime: 2
   projectileType: 0
+  damageType: 0
   damageEnemies: 0
   damagePlayer: 1
   damageDestroyables: 0
   destroyOnDamageDealt: 1
   destroyOnAnyCollision: 0
-  destroyOnWorldCollision: 1
+  destroyOnWorldCollision: 0
   onDamageParticles: {fileID: 4883967720516062909, guid: 45afa566470776c4a901664d1999c936,
     type: 3}
+  knockback: 0
+  perpKnockback: 0
   onDestroyParticles: {fileID: 4883967720516062909, guid: 45afa566470776c4a901664d1999c936,
     type: 3}
   destroyFirst: {fileID: 6901989831944089962}
@@ -122,6 +125,9 @@ MonoBehaviour:
   explosionDamageEnemies: 1
   explosionDamagePlayer: 0
   explosionDamageDestroyables: 1
+  detectionDistance: 6
+  detectionAngle: 60
+  turningSpeed: 1
 --- !u!114 &7659875950619643798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +189,7 @@ TrailRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -194,6 +201,7 @@ TrailRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -326,6 +334,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -337,6 +346,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

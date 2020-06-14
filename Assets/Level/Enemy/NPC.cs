@@ -8,7 +8,7 @@ interface ISequence {
 }
 
 public enum EnemyType {sequence,sum,other};
-    
+
 public abstract class NPC : MonoBehaviour
 {
     /// <summary>
@@ -17,6 +17,20 @@ public abstract class NPC : MonoBehaviour
     const float followDelay = 0.5f;
 
     public Weaknesses weaknesses;
+
+    private Weaknesses overrideWeakness;
+
+    protected Weaknesses Weakness{
+        get{
+            if (overrideWeakness == null)
+                return weaknesses;
+            else
+                return overrideWeakness;
+        }
+        set{
+            overrideWeakness = value;
+        }
+    }
 
     public EnemyType enemyType;
 
@@ -117,9 +131,9 @@ public abstract class NPC : MonoBehaviour
     public virtual void GetDamage(Damager damage)
     {
         if (invincible) return;
-        HP -= damage.EvaluateDamage(weaknesses);
+        HP -= damage.EvaluateDamage(Weakness);
         if (showBossHealth) LevelController.levelController.SetBossHP(HP);
-        Messager.ShowMessage(damage.EvaluateDamage(weaknesses).ToString(),transform.position,Color.white,damage.type);
+        Messager.ShowMessage(damage.EvaluateDamage(Weakness).ToString(),transform.position,Color.white,damage.type);
         if (HP <= 0)
            Die();
         Animator anim = GetComponent<Animator>();
@@ -146,7 +160,9 @@ public abstract class NPC : MonoBehaviour
     [HideInInspector]
     public bool isWalking=false;
 
-    public float velocity = 1;
+    public float acceleration= 1;
+    public float maxSpeed = 5;
+    public float obstacleDetectionDistance = 1;
 
     static float giveUpTime = 5;
 
@@ -187,8 +203,12 @@ public abstract class NPC : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
             Vector2 walkDir = target.transform.position - transform.position;
-            if (Physics2D.Raycast(transform.position, walkDir, 1, LayerMask.GetMask("Map","WalkBarrier"))) break;
-            RB.AddForce(walkDir.normalized * velocity);
+            if (Physics2D.Raycast(transform.position, walkDir, obstacleDetectionDistance, LayerMask.GetMask("Map","WalkBarrier"))) break;
+
+                RB.AddRelativeForce(walkDir.normalized * acceleration *100* Time.fixedDeltaTime);
+
+                if (RB.velocity.sqrMagnitude > maxSpeed * maxSpeed)
+                    RB.velocity = RB.velocity.normalized * maxSpeed;
         }
         isWalking = false;
         WalkEnded();
@@ -235,7 +255,12 @@ public abstract class NPC : MonoBehaviour
                 yield return new WaitForFixedUpdate();
                 break;
             }
-            RB.AddForce(walkDir.normalized * velocity);
+
+                RB.AddRelativeForce(walkDir.normalized * acceleration *100* Time.fixedDeltaTime);
+
+                if (RB.velocity.sqrMagnitude > maxSpeed * maxSpeed)
+                    RB.velocity = RB.velocity.normalized * maxSpeed;
+
             yield return new WaitForFixedUpdate();
         }
         isWalking = false;

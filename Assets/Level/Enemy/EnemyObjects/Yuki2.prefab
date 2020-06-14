@@ -76,6 +76,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -87,6 +88,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -161,6 +163,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -172,6 +175,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -213,7 +217,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 10
+  m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -266,10 +270,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe16e4882309a845b3d9d583cc97ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 1
+    NumMult: 1
+    AlgMult: 1
+  enemyType: 0
   defaultTargetTolerance: 1
   invincible: 0
+  showBossHealth: 0
+  onDeathParticles: {fileID: 0}
   isWalking: 0
-  velocity: 100
+  acceleration: 20
+  maxSpeed: 10
   playerDistance: 1.5
   attackRadius: 2
   timeToStartAttacking: 0

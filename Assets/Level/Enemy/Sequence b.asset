@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Sequence b
   m_EditorClassIdentifier: 
   name: Sequence b
+  orderID: 2
   sprite: {fileID: 21300000, guid: a62de4a463e89e64fb7b94315db2d09f, type: 3}
   baseHP: 20
   perLevelHPIncrement: 6

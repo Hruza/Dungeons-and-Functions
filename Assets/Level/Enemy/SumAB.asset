@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SumAB
   m_EditorClassIdentifier: 
   name: Sum of ab
+  orderID: 5
   sprite: {fileID: 21300000, guid: 1769a9d9139d996489e64f68131f4490, type: 3}
   baseHP: 70
   perLevelHPIncrement: 5

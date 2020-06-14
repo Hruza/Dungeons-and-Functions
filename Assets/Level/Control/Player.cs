@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
         //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
         int realDamage= Mathf.Max(1, damage.value - Armor);
         HP -= realDamage;
-        Debug.Log("Hrac dostal "+damage.ToString()+" damage");
+       // Debug.Log("Hrac dostal "+damage.ToString()+" damage");
         Messager.ShowMessage(realDamage.ToString(), transform.position, Color.red);
         if (HP <= 0)
             Die();

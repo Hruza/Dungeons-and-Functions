@@ -56,6 +56,7 @@ public class Damager
 
 [System.Serializable]
 public class Weaknesses {
+
     public float neutralMult;
 
     public float AnlMult;
@@ -94,4 +95,12 @@ public class Weaknesses {
         AnlMult = anlMult;
         NumMult = numMult;
     }
+
+    public readonly static Weaknesses nullWeaknesses = new Weaknesses()
+    {
+        neutralMult = 100,
+        AlgMult = -1,
+        AnlMult = -1,
+        NumMult = -1,
+    };
 }

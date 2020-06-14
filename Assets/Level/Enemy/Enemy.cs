@@ -29,7 +29,7 @@ public class Phase
         spawnDelay = 1f;
     }
 
-    public enum Type { walkingAround, shooting, meleeAttack, spawning }
+    public enum Type { walkingAroundPlayer, shooting, meleeAttack, spawning,walkingAround }
     public Type PhaseType;
     public bool goToPlayer=true;
 
@@ -110,23 +110,29 @@ public class Phase
     /// Doba mezi jednotlivymi vystrely
     /// </summary>
     public float spawnDelay = 1f;
+
+    [Header("Override Weakness")]
+    public bool overrideWeaknesses;
+    public Weaknesses weakness;
 }
 
 public class Enemy : NPC
 {
 
     public Damager.DamageType damageType;
-    private enum State { gettingCloser, shooting, moving };
-    private State state;
+
 
     public Phase[] phases;
     private int currentPhaseIndex;
 
     private GameObject player;
 
-    private int walked = 0;
 
     private Animator anim;
+
+    [Header("Triggers")]
+    public GameObject[] onStartTrigger;
+    public GameObject[] onEndTrigger;
 
     private void Start()
     {
@@ -134,19 +140,37 @@ public class Enemy : NPC
         anim = GetComponent<Animator>();
         player = Player.player;
         currentPhaseIndex = 0;
-
-        if(phases.Length>0) Decide();
+        foreach (GameObject trig in onStartTrigger)
+        {
+            trig.SendMessage("OnPhaseStart", currentPhaseIndex, SendMessageOptions.DontRequireReceiver);
+        }
+        Weakness = CurrentPhase.overrideWeaknesses ? CurrentPhase.weakness : null;
+        phaseStage = Stages.started;
+        if (phases.Length > 0) Decide2();
     }
-    private Phase CurrentPhase{
-        get{
+    private Phase CurrentPhase
+    {
+        get
+        {
             return phases[currentPhaseIndex];
         }
     }
 
-    void NextPhase() {
+    void NextPhase()
+    {
+        foreach (GameObject trig in onEndTrigger)
+        {
+            trig.SendMessage("OnPhaseEnd", currentPhaseIndex, SendMessageOptions.DontRequireReceiver);
+        }
         currentPhaseIndex++;
         if (currentPhaseIndex >= phases.Length) currentPhaseIndex = 0;
-        if (CurrentPhase.PhaseType == Phase.Type.walkingAround) walksLeft = CurrentPhase.walksCount;
+        Debug.Log(currentPhaseIndex);
+        Weakness = CurrentPhase.overrideWeaknesses ? CurrentPhase.weakness : null;
+        foreach (GameObject trig in onStartTrigger)
+        {
+            trig.SendMessage("OnPhaseStart", currentPhaseIndex, SendMessageOptions.DontRequireReceiver);
+        }
+        if (CurrentPhase.PhaseType == Phase.Type.walkingAroundPlayer || CurrentPhase.PhaseType == Phase.Type.walkingAround) walksLeft = CurrentPhase.walksCount;
     }
 
     protected override void WalkStarted()
@@ -157,7 +181,7 @@ public class Enemy : NPC
     protected override void WalkEnded()
     {
         anim.SetBool("isWalking", isWalking);
-        Decide();
+        Decide2();
     }
 
     private IEnumerator Shoot(Phase shootingPhase)
@@ -165,15 +189,14 @@ public class Enemy : NPC
         yield return new WaitForSeconds(shootingPhase.timeToStart);
         for (int i = 0; i < shootingPhase.barrageCount; i++)
         {
-            ShootProjectileTowardsPlayer(shootingPhase.projectile, shootingPhase.projectileVelocity, Mathf.RoundToInt(CurrentPhase.DamageMultiplier * Damage), shootingPhase.projectileSpeedByPlyerDistance,shootingPhase.shootingPointOffset);
+            ShootProjectileTowardsPlayer(shootingPhase.projectile, shootingPhase.projectileVelocity, Mathf.RoundToInt(CurrentPhase.DamageMultiplier * Damage), shootingPhase.projectileSpeedByPlyerDistance, shootingPhase.shootingPointOffset);
             yield return new WaitForSeconds(shootingPhase.barrageDelay);
         }
         yield return new WaitForSeconds(shootingPhase.timeToStartNext);
-        NextPhase();
-        Decide();
+        Decide2();
     }
 
-    private void MoveAroundPlayer(float movingDistance)
+    private void MoveAroundPlayer()
     {
         Vector3 dir = player.transform.position - transform.position;
         dir.z = 0;
@@ -181,7 +204,15 @@ public class Enemy : NPC
         dir.x = -dir.y;
         dir.y = temp;
         if (Random.Range(0, 2) == 1) dir *= -1;
-        dir = dir.normalized * movingDistance;
+        dir = dir.normalized * CurrentPhase.walkingDistance;
+        GoToTarget(transform.position + dir);
+    }
+
+    private void MoveAround()
+    {
+        Vector3 dir = Random.insideUnitCircle;
+        if (dir == Vector3.zero) dir = Vector3.up;
+        dir = dir.normalized * CurrentPhase.walkingDistance;
         GoToTarget(transform.position + dir);
     }
 
@@ -191,12 +222,12 @@ public class Enemy : NPC
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, current.playerDistance * 2, LayerMask.GetMask("Player", "Map"));
         if (hit == true && hit.collider.tag == "Player")
         {
-            state = State.shooting;
+            phaseStage = Stages.ending;
             StartCoroutine(Shoot(current));
         }
         else
         {
-            MoveAroundPlayer(current.walkingDistance);
+            MoveAroundPlayer();
         }
     }
 
@@ -216,7 +247,7 @@ public class Enemy : NPC
             yield return new WaitForSeconds(current.spawnDelay);
         }
         yield return new WaitForSeconds(current.timeToStartNext);
-        Decide();
+        Decide2();
     }
 
 
@@ -232,11 +263,10 @@ public class Enemy : NPC
                 col.GetComponent<PlayerMovement>().Knockback((col.transform.position - transform.position).normalized * CurrentPhase.knockback);
 
                 Damager.InflictDamage(col.gameObject, CurrentPhase.DamageMultiplier * Damage, damageType);
-                
+
             }
         }
-        NextPhase();
-        Decide();
+        Decide2();
         yield return null;
     }
 
@@ -245,92 +275,126 @@ public class Enemy : NPC
         StartCoroutine(attackSeq());
     }
 
-    private bool wasGettingCloser=false;
+    private bool wasGettingCloser = false;
     private int walksLeft = 0;
     protected void Decide()
     {
-        if (CurrentPhase.goToPlayer && (player.transform.position - transform.position).sqrMagnitude > CurrentPhase.playerDistance * CurrentPhase.playerDistance * 2) {
+        if (CurrentPhase.goToPlayer && (player.transform.position - transform.position).sqrMagnitude > CurrentPhase.playerDistance * CurrentPhase.playerDistance * 2)
+        {
             if (wasGettingCloser)
             {
                 wasGettingCloser = false;
-                MoveAroundPlayer(CurrentPhase.walkingDistance);
+                MoveAroundPlayer();
             }
-            else{
+            else
+            {
                 wasGettingCloser = true;
                 GoToTarget(player, CurrentPhase.playerDistance);
             }
         }
-        else {
+        else
+        {
             wasGettingCloser = false;
             switch (CurrentPhase.PhaseType)
             {
-                case Phase.Type.walkingAround:
-                    MoveAroundPlayer(CurrentPhase.walkingDistance);
+                case Phase.Type.walkingAroundPlayer:
+                    MoveAroundPlayer();
                     walksLeft--;
-                    if(walksLeft<=0)NextPhase();
+                    if (walksLeft <= 0) NextPhase();
                     break;
                 case Phase.Type.shooting:
                     TryToShoot(CurrentPhase);
                     break;
                 case Phase.Type.meleeAttack:
-                    Invoke("Attack",CurrentPhase.timeToStart);
+                    Invoke("Attack", CurrentPhase.timeToStart);
                     break;
                 case Phase.Type.spawning:
                     StartCoroutine(Spawn(CurrentPhase));
-                    NextPhase();
                     break;
                 default:
                     break;
             }
         }
-        /*
-        switch ()
+    }
+
+    private enum Stages { started, action, ending };
+    private Stages phaseStage;
+
+    protected void Decide2()
+    {
+        Debug.Log(phaseStage);
+        switch (phaseStage)
         {
-            case State.gettingCloser:
-                //pokud jsi dost blizko, zkus vystrelit
-                TryToShoot();
-                break;
-
-
-            case State.shooting:
-                //pokud jsi daleko, jdi k hraci, jinak se pohybuj kolem
-                walked = 0;
-                if ((player.transform.position - transform.position).sqrMagnitude > playerDistance * playerDistance * 2)
+            case Stages.started:
+                if (CurrentPhase.goToPlayer)
                 {
-                    state = State.gettingCloser;
-                    walked++;
-                    GoToTarget(player, playerDistance);
+                    if ((player.transform.position - transform.position).sqrMagnitude > CurrentPhase.playerDistance * CurrentPhase.playerDistance * 2)
+                    {
+                        if (wasGettingCloser)
+                        {
+                            wasGettingCloser = false;
+                            MoveAroundPlayer();
+                        }
+                        else
+                        {
+                            wasGettingCloser = true;
+                            GoToTarget(player, CurrentPhase.playerDistance);
+                        }
+                    }
+                    else
+                    {
+                        phaseStage = Stages.action;
+                        Decide2();
+                    }
+                }
+                else if (CurrentPhase.PhaseType== Phase.Type.walkingAround || CurrentPhase.PhaseType == Phase.Type.walkingAroundPlayer) {
+                    phaseStage = Stages.action;
+                    Invoke("Decide2",CurrentPhase.timeToStart);
                 }
                 else
                 {
-                    state = State.moving;
-                    walked++;
-                    MoveAroundPlayer();
+                    phaseStage = Stages.action;
+                    Decide2();
                 }
-
                 break;
-            case State.moving:
-                //pokud jsi daleko, jsi hraci, jinak zkus vystrelit
-                if ((player.transform.position - transform.position).sqrMagnitude > playerDistance * playerDistance * 2)
+            case Stages.action:
+                switch (CurrentPhase.PhaseType)
                 {
-                    state = State.gettingCloser;
-                    walked++;
-                    GoToTarget(player, playerDistance);
+                    case Phase.Type.walkingAroundPlayer:
+                        MoveAroundPlayer();
+                        walksLeft--;
+                        if (walksLeft <= 0) phaseStage=Stages.ending;
+                        break;
+                    case Phase.Type.shooting:
+                        TryToShoot(CurrentPhase);
+                        break;
+                    case Phase.Type.meleeAttack:
+                        Invoke("Attack", CurrentPhase.timeToStart);
+                        phaseStage = Stages.ending;
+                        break;
+                    case Phase.Type.spawning:
+                        StartCoroutine(Spawn(CurrentPhase));
+                        phaseStage = Stages.ending;
+                        break;
+                    case Phase.Type.walkingAround:
+                        MoveAround();
+                        walksLeft--;
+                        if (walksLeft <= 0) phaseStage = Stages.ending;
+                        break;
+                    default:
+                        phaseStage = Stages.ending;
+                        Decide2();
+                        break;
                 }
-                else if (walked < walksCount)
-                {
-                    state = State.moving;
-                    walked++;
-                    MoveAroundPlayer();
-                }
-                else
-                    TryToShoot();
-
+                break;
+            case Stages.ending:
+                NextPhase();
+                phaseStage = Stages.started;
+                Decide2();
                 break;
             default:
                 break;
         }
-        */
     }
 }
 

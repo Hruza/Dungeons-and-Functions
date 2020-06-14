@@ -87,7 +87,6 @@ public class Projectile : MonoBehaviour {
             }
 
         }
-        Debug.Log(candidate);
         if (candidate != null) target=candidate;
     }
 

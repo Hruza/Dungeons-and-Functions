@@ -105,7 +105,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 10
+  m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -130,13 +130,14 @@ MonoBehaviour:
     AnlMult: 1
     NumMult: 1
     AlgMult: 1.5
-  enemyType: 0
+  enemyType: 2
   defaultTargetTolerance: 1
   invincible: 0
   showBossHealth: 0
   onDeathParticles: {fileID: 0}
   isWalking: 0
-  velocity: 20
+  acceleration: 30
+  maxSpeed: 7
   projectile: {fileID: 4459666903700662233, guid: a1b76dcca3c019b4ea30f82d0b3f3db0,
     type: 3}
   playerDistance: 8
