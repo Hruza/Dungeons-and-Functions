@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 2e481721409712948af803538aaea686
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - target: {instanceID: 0}
+  - rEye: {instanceID: 0}
+  - lEye: {instanceID: 0}
+  - angry: {fileID: 21300000, guid: c30b70ebdb975744cafdbb89bd91f3a4, type: 3}
+  - angryM: {fileID: 21300000, guid: 7ed96d07ccc80c2469be00155013923b, type: 3}
+  - closed: {fileID: 21300000, guid: 87359d9b74673cc41ad66218b820f6f9, type: 3}
+  - closedM: {fileID: 21300000, guid: c548c3805b1325b4a8b177c9cc7efcdf, type: 3}
+  - sad: {fileID: 21300000, guid: 58d123042073ae74886ddd24626f23f3, type: 3}
+  - sadM: {fileID: 21300000, guid: 0481b9f3a18bffa4cb8db54e45f26017, type: 3}
+  - sadClosed: {fileID: 21300000, guid: 1631c9d6fbc0def45abe1fc8fdc8420b, type: 3}
+  - sadClosedM: {fileID: 21300000, guid: 4c992e9971280a847807a74dd32689ae, type: 3}
+  - dead: {fileID: 21300000, guid: 86567a9bf9e3ada49850261b6cb7205a, type: 3}
+  - deadM: {fileID: 21300000, guid: 460794e2521708941a2bca783e6ce32c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

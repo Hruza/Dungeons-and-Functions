@@ -398,5 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283b86584aab7de4c9d32d92725afb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flipOnX: 0
+  flipOnY: 1
   itemName: {fileID: 2092679741008154286}
   info: {fileID: 7118050761082962919}

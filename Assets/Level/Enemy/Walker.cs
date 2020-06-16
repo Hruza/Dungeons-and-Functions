@@ -5,8 +5,8 @@ using UnityEngine;
 public class Walker : Navigator
 {
     protected IEnumerator currentWalk;
-    public float maxSpeed = 50;
-    public float walkForce = 50;
+    public float maxSpeed = 30;
+    public float walkForce = 30;
     public float giveUpTime = 5;
     private Vector2 detectionSize;
     public float followPeriod = 0.25f;
@@ -26,7 +26,7 @@ public class Walker : Navigator
     }
 
 
-    override public void GoToTarget(GameObject target, float tolerance)
+    override public void GoToTarget(GameObject target, float tolerance, float speedModifier = 1, float timeLimit = 0)
     {
         if (currentWalk != null)
         {
@@ -36,34 +36,51 @@ public class Walker : Navigator
         StartCoroutine(currentWalk);
     }
 
-    override public void GoToTarget(Vector3 target, float tolerance)
+    override public void GoToTarget(Vector3 target, float tolerance, bool callback = true, float speedModifier = 1, float timeLimit = 0)
     {
         if (currentWalk != null) {
             StopCoroutine(currentWalk);
         }
-        currentWalk = Walk(target, tolerance);
+        currentWalk = Walk(target, tolerance,callback,timeLimit);
         StartCoroutine(currentWalk);
+    }
+
+    override public void Dash(Vector2 direction, float speed)
+    {
+        rb.AddRelativeForce(10*speed * direction.normalized,ForceMode2D.Impulse);
+    }
+
+    public override void Stop()
+    {
+        if (currentWalk != null)
+        {
+            StopCoroutine(currentWalk);
+        }
     }
 
     private Vector2 Planify(Vector3 vect) {
         return new Vector2(vect.x,vect.y);
     }
 
-    private IEnumerator Follow(GameObject target, float tolerance) {
+    private IEnumerator Follow(GameObject target, float tolerance,float timeLimit=0) {
         float timeSicneLastSeen = 0;
+        float startTime = Time.realtimeSinceStartup;
         IEnumerator currentPartialWalk = null;
         Vector3 lastPos= target.transform.position;
-        while ((Planify(target.transform.position - transform.position)).sqrMagnitude > tolerance * tolerance && (followType == FollowType.persistent || timeSicneLastSeen <= giveUpTime))
+        while ((Planify(target.transform.position - transform.position)).sqrMagnitude > tolerance * tolerance 
+                && (followType == FollowType.persistent || timeSicneLastSeen <= giveUpTime)
+                &&  (timeLimit==0 || Time.realtimeSinceStartup-startTime<timeLimit) )
         {
             if (followType == FollowType.allknowing) {
                 if(currentPartialWalk!=null)
                     StopCoroutine(currentPartialWalk);
-                currentPartialWalk = Walk(target.transform.position, tolerance);
+                currentPartialWalk = Walk(target.transform.position, tolerance,false);
                 StartCoroutine(currentPartialWalk);
             }
             else if (currentPartialWalk != null)
             {
-                if (IsInLineOfSight(target) || (followType == FollowType.persistent && timeSicneLastSeen > giveUpTime) || (transform.position-lastPos).sqrMagnitude<=tolerance*tolerance)
+                if (IsInLineOfSight(target) || (followType == FollowType.persistent && timeSicneLastSeen > giveUpTime) 
+                    || (transform.position - lastPos).sqrMagnitude <= tolerance * tolerance)
                 {
                     timeSicneLastSeen = 0;
                     lastPos = target.transform.position;
@@ -72,7 +89,7 @@ public class Walker : Navigator
                     timeSicneLastSeen += followPeriod;
 
                 StopCoroutine(currentPartialWalk);
-                currentPartialWalk = Walk(lastPos, tolerance);
+                currentPartialWalk = Walk(lastPos, tolerance,false);
                 StartCoroutine(currentPartialWalk);
             }
             else if (followType == FollowType.persistent)
@@ -80,7 +97,7 @@ public class Walker : Navigator
                 Debug.Log("He was there, searching for him");
                 if (!IsInLineOfSight(target))
                     timeSicneLastSeen += 0.5f;
-                currentPartialWalk = Walk(target.transform.position, tolerance);
+                currentPartialWalk = Walk(target.transform.position, tolerance,false);
                 StartCoroutine(currentPartialWalk);
             }
                 yield return new WaitForSeconds(followPeriod);
@@ -94,15 +111,25 @@ public class Walker : Navigator
             Debug.Log("Target lost");
             SendOutput(WalkingOutput.gaveUp);
         }
+        else if (Time.realtimeSinceStartup - startTime >= timeLimit)
+        {
+            Debug.Log("time up");
+            SendOutput(WalkingOutput.timeUp);
+        }
         else
+        {
             Debug.Log("Target Found!!");
             SendOutput(WalkingOutput.success);
+        }
         yield return null;
     }
 
-    private IEnumerator Walk(Vector3 target, float tolerance, bool sendResult=true)
+    private IEnumerator Walk(Vector3 target, float tolerance, bool sendResult=true, float timeLimit = 0)
     {
+        if (anim != null) anim.SetBool("isWalking", true);
         float startTime = Time.realtimeSinceStartup;
+        if (timeLimit > 0 && timeLimit < giveUpTime)
+            giveUpTime = timeLimit;
         Vector2 dir;
         Vector2 acceleration;
         float norm;
@@ -136,6 +163,7 @@ public class Walker : Navigator
             }
             yield return new WaitForFixedUpdate();
         }
+        if (anim != null) anim.SetBool("isWalking", false);
         if (Time.realtimeSinceStartup - startTime >= giveUpTime)
         {
             if(sendResult) SendOutput(WalkingOutput.success);
@@ -152,7 +180,8 @@ public class Walker : Navigator
         RaycastHit2D hit= Physics2D.Raycast(transform.position, dir, detectionSize.x+ defaultTargetTolerance *2, LayerMask.GetMask("Map"));
         Debug.DrawRay(transform.position, dir,Color.blue);
         Debug.DrawRay(hit.point,hit.normal,Color.cyan);
-        if (hit!=null) {
+        if (hit != null)
+        {
             newDir = (dir - (Vector2.Dot(dir, hit.normal) * hit.normal)).normalized;
             Debug.DrawRay(transform.position, newDir,Color.green);
             return newDir;

@@ -3,31 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour {
-    public int health=100;
+    public int MaxHP=100;
+    public int HP = 100;
+    public GameObject onDeathParticles;
+    public Behaviour[] disableOnDeath;
+    public float deathTime=0;
 
-    public float noDamageTime = 0f;
-    private bool ready = true;
+    public Weaknesses weaknesses;
     private Animator anim;
 
-    Color c;
-    // Use this for initialization
+    public bool showBossHealth = false;
+
     private void Start()
     {
         anim=GetComponent<Animator>();
     }
+    public void Initialize(int hp,Weaknesses weaknesses,bool showBossHealth=false,string enemyName="") {
+        MaxHP = hp;
+        HP = hp;
+        this.weaknesses = weaknesses;
+        if (showBossHealth) LevelController.levelController.InitializeBossBar(enemyName, MaxHP);
+    }
 
     public void GetDamage(Damager damage) {
-        if (ready)
+        HP -=  damage.EvaluateDamage(weaknesses);
+        if (HP <= 0) Die();
+        if (anim != null) anim.SetTrigger("getDamage");
+    }
+
+    private void Die()
+    {
+        if (onDeathParticles != null)
         {
-            ready = false;
-            if ((health -= damage.value) <= 0) Destroy(gameObject);
-            Invoke("ResetDamage", noDamageTime);
-            if (anim != null) anim.SetTrigger("getDamage");
+            GameObject particles = (GameObject)Instantiate(onDeathParticles, transform.position, transform.rotation);
+            Destroy(particles, 3);
+        }
+        Destroy(this.gameObject,deathTime);
+        if (deathTime > 0) {
+            foreach (Behaviour behaviour in disableOnDeath)
+            {
+                behaviour.enabled = false;
+            }
+            anim.SetTrigger("die");
         }
     }
-
-    private void ResetDamage() {
-        ready = true;
-    }
-
 }

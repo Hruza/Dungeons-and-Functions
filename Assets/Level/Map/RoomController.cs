@@ -83,7 +83,11 @@ public class RoomController : MonoBehaviour {
             else randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * LevelGenerator.tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * LevelGenerator.tileSize);
             GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, transform.position + randPos, transform.rotation);
             currentEnemy.SetActive(false);
-            currentEnemy.GetComponent<NPC>().Initialize(enemy);
+            NPC npc = currentEnemy.GetComponent<NPC>();
+            if(npc!=null)
+                npc.Initialize(enemy);
+            else
+                currentEnemy.GetComponent<EnemyAI>().Initialize(enemy);
             GameObject particles = (GameObject)Instantiate(summoner, transform.position + randPos, transform.rotation);
             particles.GetComponent<Summoner>().enemy = currentEnemy;
             livingEnemies.Add(currentEnemy);

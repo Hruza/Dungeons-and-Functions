@@ -4,23 +4,21 @@ using UnityEngine;
 
 public abstract class Navigator : MonoBehaviour
 {
-
-    protected float defaultTargetTolerance=1f;
+    protected Animator anim;
+    public float defaultTargetTolerance=1f;
     protected Rigidbody2D rb;
-    public EnemyAI AI;
+    private EnemyAI AI;
     public enum Avoidance {none, avoidNearest};
     public Avoidance obstacleAvoidance=Avoidance.avoidNearest;
 
-    public enum WalkingOutput {success, obstacleDetected, gaveUp };
+    public enum WalkingOutput {success, obstacleDetected, gaveUp, timeUp };
 
     public virtual void Start()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         Collider2D coll = GetComponent<Collider2D>();
-        if (coll != null)
-            defaultTargetTolerance = Mathf.Max(coll.bounds.extents.x,coll.bounds.extents.y) * 2.5f;
-        else
-            defaultTargetTolerance = 2f;
+        AI = GetComponent<EnemyAI>();
     }
 
 
@@ -43,7 +41,7 @@ public abstract class Navigator : MonoBehaviour
         GoToTarget(target, defaultTargetTolerance);
     }
 
-    virtual public void GoToTarget(GameObject target, float tolerance)
+    virtual public void GoToTarget(GameObject target, float tolerance,float speedModifier=1, float timeLimit=0)
     {
         Debug.LogWarning("Metoda GoToTarget není definována");
     }
@@ -53,9 +51,17 @@ public abstract class Navigator : MonoBehaviour
         GoToTarget(target, defaultTargetTolerance);
     }
 
-    virtual public void GoToTarget(Vector3 target, float tolerance)
+    virtual public void GoToTarget(Vector3 target, float tolerance, bool callback=true,float speedModifier = 1, float timeLimit = 0)
     {
         Debug.LogWarning("Metoda GoToTarget není definována");
+    }
+
+    virtual public void Dash(Vector2 direction, float speed) {
+        Debug.LogWarning("Metoda GoToTarget není definována");
+    }
+
+    virtual public void Stop() {
+        Debug.LogWarning("Metoda Stop není definována");
     }
 
     protected void SendOutput(WalkingOutput output) {

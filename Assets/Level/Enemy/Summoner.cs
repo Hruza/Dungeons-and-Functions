@@ -35,7 +35,11 @@ public class Summoner : MonoBehaviour
     IEnumerator Spawn() {
         float t = 0;
         GameObject spawnedParticles;
-        spawnedParticles = GetParticlesOfType(enemy.GetComponent<NPC>().enemyType);
+        NPC npc = enemy.GetComponent<NPC>();
+        if(npc!=null)
+            spawnedParticles = GetParticlesOfType(enemy.GetComponent<NPC>().enemyType);
+        else
+            spawnedParticles = GetParticlesOfType(enemy.GetComponent<EnemyAI>().enemyType);
         while (t<waitTime)
         {
             spawnedParticles.transform.localScale = ((1 / 2) + (t / (2 * waitTime))) * (2*enemy.transform.localScale);

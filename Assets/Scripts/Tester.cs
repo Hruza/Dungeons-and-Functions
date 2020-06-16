@@ -6,7 +6,7 @@ public class Tester : MonoBehaviour
 {
     public Navigator nav;
     public GameObject dummy;
-    public enum TestType { navigation, follow }
+    public enum TestType { navigation, follow, dash }
     public TestType test;
     private void Start()
     {
@@ -42,6 +42,17 @@ public class Tester : MonoBehaviour
                 }
                 if (Input.GetMouseButtonDown(1))
                     nav.GoToTarget(dummy,2);
+                break;
+            case TestType.dash:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        nav.Dash(hit.point-nav.gameObject.transform.position,(hit.point - nav.gameObject.transform.position).magnitude);
+                    }
+                }
                 break;
             default:
                 break;
