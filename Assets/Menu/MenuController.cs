@@ -20,9 +20,11 @@ public class MenuController : MonoBehaviour
     static public EquipManager equipManager;
 
     public ItemInventory itemInventory;
-    public GameObject mainMenu;
-    public GameObject levelExitMenu;
-    public GameObject savesMenu;
+    public GameObject[] pages;
+    public int startingPage=1;
+    public int afterLevelPage=2;
+
+    public enum MenuPage { main,saves,exit,inventory,levels}
 
     /// <summary>
     /// Reference na kartu levelu
@@ -60,30 +62,33 @@ public class MenuController : MonoBehaviour
     {
         menuController = this;
         //ToDo:load progress
-
+        foreach (GameObject pageObj in pages)
+        {
+            pageObj.SetActive(false);
+        }
 
         if (startedFirst)
         {
             WeaponPattern.AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
             ArmorPattern.AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
             StatPattern.AllStatPatterns = Resources.LoadAll<StatPattern>("Stats").ToList<StatPattern>();
+            newPage = startingPage;
             LoadProgress();
             equipManager = new EquipManager();
             startedFirst = false;
         }
         else
         {
-            savesMenu.SetActive(false);
-            levelExitMenu.SetActive(true);
-            levelExitMenu.GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
+            newPage = afterLevelPage;
+            pages[afterLevelPage].GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
             InitializeLevels();
             itemInventory.ReloadInventory();
         }
+        SwitchPage();
     }
 
     private void PlayerSelected() {
-        savesMenu.SetActive(false);
-        mainMenu.SetActive(true);
+        SetPage(0);
         InitializeLevels();
         equipManager = new EquipManager();
         itemInventory.ReloadInventory();
@@ -251,4 +256,20 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    private int currentPage=0;
+    public void SetPage(int page) {
+        if ((currentPage != page) && page < pages.Length)
+        {
+            newPage = page;
+            LeanTween.alphaCanvas(pages[currentPage].GetComponent<CanvasGroup>(), 0, 0.25f).setOnComplete(SwitchPage);
+        }
+    }
+    private int newPage;
+    private void SwitchPage() {
+        pages[currentPage].SetActive(false);
+        pages[newPage].GetComponent<CanvasGroup>().alpha = 0;
+        pages[newPage].SetActive(true);
+        LeanTween.alphaCanvas(pages[newPage].GetComponent<CanvasGroup>(), 1, 0.25f);
+        currentPage = newPage;
+    }
 }
