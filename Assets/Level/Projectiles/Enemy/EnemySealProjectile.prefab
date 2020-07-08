@@ -190,6 +190,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -253,8 +254,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0.06844187, a: 1}
-      key1: {r: 1, g: 0.95084643, b: 0, a: 1}
+      key0: {r: 1, g: 0, b: 0.06844187, a: 0.7921569}
+      key1: {r: 1, g: 0.95084643, b: 0, a: 0.5686275}
       key2: {r: 1, g: 0.22568513, b: 0, a: 0}
       key3: {r: 1, g: 0.22568513, b: 0, a: 0}
       key4: {r: 1, g: 0.22568513, b: 0, a: 0}
@@ -335,10 +336,11 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3a0f89e7981431a47822061bd7d8751d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -359,7 +361,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 94ace3d6301828f41bbe06c7cc7baddd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8c087cfb06aabed4981f6b74ab54cfa1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

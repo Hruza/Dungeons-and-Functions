@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class LevelController : MonoBehaviour {
     public GameObject map;
@@ -11,6 +13,9 @@ public class LevelController : MonoBehaviour {
     public GameObject bossBar;
     public Text tBossName;
     public static LevelController levelController;
+
+    public Camera camera;
+    public Volume volume;
 
     public static List<SecretRoom> secrets;
     private int roomCountToClear;
@@ -38,16 +43,36 @@ public class LevelController : MonoBehaviour {
         bossBar.GetComponent<Slider>().value = maxHP;
     }
 
+    void PlayerReady() {
+        Player.player.GetComponent<PlayerMovement>().enabled = true;
+    }
+
     //Setup of level
-    void Start () {
+    void Start() {
+        Player.player.GetComponent<PlayerMovement>().enabled = false;
+        Vignette vignette;
+        if (volume.profile.TryGet<Vignette>(out vignette))
+        {
+             LeanTween.value(volume.gameObject, 0.3f, 0, 2f).setOnUpdate((float flt) =>
+             {
+                 vignette.intensity.value = flt;
+             }).setOnComplete(PlayerReady);
+        }
+        else {
+            Debug.LogWarning("No vignette");
+            Player.player.GetComponent<PlayerMovement>().enabled = true;
+        }
+
         clearedRoomCount = 0;
         levelController = this;
         level = MenuController.selectedLevel;
-        roomCountToClear = Mathf.CeilToInt(level.roomCount / 2f);
-        map.GetComponent<LevelGenerator>().Generate(level);
-        secrets = new List<SecretRoom>();
-        //ToDo: Pridat veci
-
+        if (level != null)
+        {
+            roomCountToClear = Mathf.CeilToInt(level.roomCount / 2f);
+            map.GetComponent<LevelGenerator>().Generate(level);
+            secrets = new List<SecretRoom>();
+            //ToDo: Pridat veci
+        }
     }
 
     private bool inMenu=false;

@@ -22,6 +22,7 @@ public class ItemInventory : MonoBehaviour
 
 
     public void ReloadInventory(){
+        defaultSize = armor.GetComponent<RectTransform>().sizeDelta;
         selectedWeapon = new WeaponItem[2];
         progress = MenuController.playerProgress;
         for (int i = 0; i <2; i++)
@@ -62,27 +63,38 @@ public class ItemInventory : MonoBehaviour
             case ItemType.Armor:
                 selectedArmor = item;
                 armor.CarriedItem = item;
+                Animate(armor);
                 break;
             case ItemType.Weapon:
                 if ((selectedWeapon[0] == null || item.itemName == selectedWeapon[0].itemName) && (selectedWeapon[1]==null || item.itemName!=selectedWeapon[1].itemName) )
                 {
                     selectedWeapon[0] = (WeaponItem)item;
                     weapon[0].CarriedItem = item;
+                    Animate(weapon[0]);
                 }
                 else if ((selectedWeapon[1] == null || item.itemName == selectedWeapon[1].itemName ) && (selectedWeapon[0]==null || item.itemName != selectedWeapon[0].itemName))
                 {
                     selectedWeapon[1] = (WeaponItem)item;
                     weapon[1].CarriedItem = item;
+                    Animate(weapon[1]);
                 }
                 else if(selectedWeapon[0] != null && item.itemName != selectedWeapon[0].itemName && selectedWeapon[1]!=null && item.itemName != selectedWeapon[1].itemName)
                 {
                     selectedWeapon[0] = (WeaponItem)item;
                     weapon[0].CarriedItem = item;
+                    Animate(weapon[0]);
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private Vector2 defaultSize;
+
+    public void Animate(InventoryButton button) {
+        RectTransform tr = button.GetComponent<RectTransform>();
+        LeanTween.size(tr, defaultSize * 1.1f, 0.125f).setFrom(defaultSize).setRepeat(2).setLoopPingPong();
     }
 
     public void DeequipClick(int index) {

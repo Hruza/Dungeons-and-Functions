@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryButton : TooltipButton
@@ -52,7 +53,7 @@ public class InventoryButton : TooltipButton
         }
     }
 
-    public void MouseEnter()
+    public override void OnPointerEnter(PointerEventData data)
     {
         ShowTooltip(CarriedItem,itemInventory);
     }
@@ -63,7 +64,9 @@ public class InventoryButton : TooltipButton
     itemInventory.ButtonClick(item);
     }
 
-
+    public void OnScroll(UnityEngine.EventSystems.PointerEventData data) {
+        itemInventory.GetComponent<ScrollRect>().OnScroll(data);
+    }
 
     //todo: Tooltip
 }

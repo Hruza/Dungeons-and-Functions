@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public abstract class TooltipButton : MonoBehaviour
+public abstract class TooltipButton : MonoBehaviour, IPointerEnterHandler,IPointerExitHandler
 {
     private GameObject tooltip;
     public GameObject tooltipPrefab;
@@ -37,9 +38,10 @@ public abstract class TooltipButton : MonoBehaviour
         }
     }
 
-    public void MouseExit()
+    public void OnPointerExit(PointerEventData data)
     {
         if (tooltip != null)
             Destroy(tooltip);
     }
+    public abstract void OnPointerEnter(PointerEventData data);
 }

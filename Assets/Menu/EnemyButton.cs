@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class EnemyButton : TooltipButton
@@ -20,7 +21,7 @@ public class EnemyButton : TooltipButton
         }
     }
 
-    public void MouseEnter()
+    public override void OnPointerEnter(PointerEventData data)
     {
         ShowTooltip(enemy);
     }

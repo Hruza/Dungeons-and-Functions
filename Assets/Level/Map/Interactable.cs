@@ -6,7 +6,7 @@ public class Interactable : MonoBehaviour
 {
     public enum InteractableType {exit,treasure };
     public InteractableType type;
-
+    public GameObject onDestroyParticles;
     public SecretRoom Secret {
         get {
             return secret;
@@ -62,6 +62,8 @@ public class Interactable : MonoBehaviour
                     default:
                         break;
                 }
+                if(onDestroyParticles!=null)
+                    Destroy(Instantiate(onDestroyParticles, transform.position,transform.rotation),5f);
                 Destroy(this.gameObject);
                 break;
             default:

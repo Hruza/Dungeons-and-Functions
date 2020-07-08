@@ -206,6 +206,7 @@ public class Player : MonoBehaviour
         HP -= realDamage;
        // Debug.Log("Hrac dostal "+damage.ToString()+" damage");
         Messager.ShowMessage(realDamage.ToString(), transform.position, Color.red);
+       // cam.transform.GetChild(0)
         if (HP <= 0)
             Die();
     }
