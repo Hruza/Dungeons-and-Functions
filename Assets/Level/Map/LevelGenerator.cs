@@ -371,7 +371,7 @@ public class LevelGenerator : MonoBehaviour {
         RoomController roomController = roomObj.GetComponent<RoomController>();
         roomController.Initialize(room.width, room.height);
         roomController.Initialize(room.width, room.height);
-        roomController.EnemiesToSpawn = room.enemies;
+        roomController.EnemiesToSpawn = new List<EnemyProperties>(room.enemies);
         roomController.triggerOnEnter = room.onEnter.ToArray();
         roomController.triggerOnClear = room.onClear.ToArray();
         roomController.spawnAllInCenter= spawnAllInCenter;

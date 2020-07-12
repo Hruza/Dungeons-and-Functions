@@ -18,7 +18,7 @@ public class RoomEditor : Editor {
 
         if (GUILayout.Button("Generate map"))
         {
-            roomPrefab.map = new RoomMap(roomPrefab);
+            roomPrefab.Map = new RoomMap(roomPrefab);
         }
 
         if (GUILayout.Button("Test intersection"))

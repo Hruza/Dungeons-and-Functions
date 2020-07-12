@@ -6,6 +6,11 @@ using UnityEngine;
 public class RoomController : MonoBehaviour {
 
     int enemyCount;
+
+    public int wave=5;
+    public int maxWave=10;
+
+
     public GameObject[] triggerOnClear;
     public GameObject[] triggerOnEnter;
 
@@ -17,9 +22,9 @@ public class RoomController : MonoBehaviour {
     Vector2 dimensions;
     
     //todo: Public jen pro testovani
-    public EnemyProperties[] enemiesToSpawn;
-    public EnemyProperties[] EnemiesToSpawn {
-        private get {
+    private List<EnemyProperties> enemiesToSpawn;
+    public List<EnemyProperties> EnemiesToSpawn {
+        get {
             return enemiesToSpawn;
         }
         set {
@@ -41,7 +46,7 @@ public class RoomController : MonoBehaviour {
 	void Start () {
 
         if(selfInitialize) Initialize(1, 1);
-        
+        enemyCount = 0;
 	}
 
     /// <summary>
@@ -72,9 +77,9 @@ public class RoomController : MonoBehaviour {
     /// Spawne vsechny enemies v listu enemiesToSpawn, pozice je nahodna v ramci mistnosti.
     /// </summary>
     void SpawnEnemies() {
-        if (enemiesToSpawn.Length - enemyCount > 9) cap = enemyCount + 5;
-        else cap = enemyCount + 10;
-        for (int i = enemyCount; i < enemiesToSpawn.Length; i++)
+        if (enemiesToSpawn.Count - enemyCount > maxWave) cap = enemyCount + wave;
+        else cap = enemyCount + wave+1;
+        for (int i = enemyCount; i < enemiesToSpawn.Count; i++)
         {
             EnemyProperties enemy = enemiesToSpawn[i]; 
             enemyCount++;
@@ -109,7 +114,7 @@ public class RoomController : MonoBehaviour {
             {
                 yield return new WaitForSeconds(0.5f);
             }
-            if (enemyCount == enemiesToSpawn.Length) cleared = true;
+            if (enemyCount == enemiesToSpawn.Count) cleared = true;
             else {
                 SpawnEnemies();
             }
@@ -128,7 +133,6 @@ public class RoomController : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!entered) {
-            if (!initiated && !selfInitialize) Debug.LogError("Room " + this.ToString() + " is not initialized");
 
             foreach (GameObject onEnterObject in triggerOnEnter)
             {
@@ -137,9 +141,18 @@ public class RoomController : MonoBehaviour {
 
             //Debug.Log(enemiesToSpawn);
             entered = true;
-            SpawnEnemies();
+            if (enemiesToSpawn.Count > 0)
+            {
+                SpawnEnemies();
 
-            StartCoroutine(CheckCleared());
+                StartCoroutine(CheckCleared());
+            }
+            else {
+                foreach (GameObject onClearObject in triggerOnClear)
+                {
+                    onClearObject.SendMessage("OnClear");
+                }
+            }
         }
 
     }

@@ -7,25 +7,34 @@ public class RoomDoor : MonoBehaviour
     public GameObject door;
     public Transform closedPoint;
     public Transform openPoint;
-    public Collider2D collider;
+    public Collider2D doorCollider;
 
     public float closingTime=0.5f;
 
-    public enum OpenType {fromGround,fallDown,sliding }
-    public enum CloseType { toGround, riseUp, sliding,disappear }
+    public enum OpenType {fromGround,fallDown,sliding ,none }
+    public enum CloseType { toGround, riseUp, sliding,disappear ,none}
     public OpenType opening;
     public CloseType closing;
 
+    public GameObject doorPart;
+    public GameObject replacement;
 
+    [ExecuteInEditMode]
+    public bool IsDoor {
+        set {
+            doorPart.SetActive(value);
+            replacement.SetActive(!value);
+        }
+    }
 
     public ParticleSystem closedParticles;
     public ParticleSystem openParticles;
 
     public void OnEnter()
     {
-        door.SetActive(true);
-        if(collider!=null)
-            collider.enabled = true;
+        if(door!=null) door.SetActive(true);
+        if(doorCollider!=null)
+            doorCollider.enabled = true;
         switch (opening)
         {
             case OpenType.fromGround:
@@ -54,8 +63,8 @@ public class RoomDoor : MonoBehaviour
 
     public void OnClear()
     {
-        if (collider != null)
-            collider.enabled = false;
+        if (doorCollider != null)
+            doorCollider.enabled = false;
         switch (closing)
         {
             case CloseType.toGround:

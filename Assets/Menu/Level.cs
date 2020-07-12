@@ -92,6 +92,8 @@ public class Level : ScriptableObject
     /// </summary>
     public int roomCount=1;
 
+    public int advantageFactor = 0;
+
     public LevelGenerator.GeneratorPreset generatorPreset = LevelGenerator.GeneratorPreset.normal;
 
     public LevelGenerator.RoomConnectionPreset roomConnections =LevelGenerator.RoomConnectionPreset.addShortUnillAll;

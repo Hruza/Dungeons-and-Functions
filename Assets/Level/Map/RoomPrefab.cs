@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.Tilemaps;
 
 public class RoomPrefab : MonoBehaviour
 {
@@ -10,7 +12,7 @@ public class RoomPrefab : MonoBehaviour
     public RoomType roomType;
     public GameObject walls;
     public GameObject floors;
-    public GameObject[] connectionPoints;
+    public GameObject doors;
 
     public int minEnemies=3;
     public int maxEnemies=4;
@@ -20,28 +22,56 @@ public class RoomPrefab : MonoBehaviour
     public int cellSize = 4;
     public int Width {
         get {
-            return map.width;
+            return Map.width;
         }
     }
     public int Height
     {
         get
         {
-            return map.height;
+            return Map.height;
         }
     }
 
-    public EnemyProperties[] enemies;
+    public List<EnemyProperties> enemiesToSpawn {
+        set {
+            controller.EnemiesToSpawn = value; 
+        }
+        get {
+            return controller.EnemiesToSpawn;
+        }
+    }
 
-    public RoomMap map;
+    public RoomController controller;
+
+    [SerializeField]
+    private RoomMap map;
+
+    public RoomMap Map {
+        get {
+            if (map == null) {
+                map = new RoomMap(this);
+            }
+            return map;
+        }
+        set {
+            map = value;
+        }
+    }
+
     public List<GameObject> onEnter;
     public List<GameObject> onClear;
 
     public RoomPrefab other;
     public bool Intersects(RoomPrefab other)
     {
-        return map.Intersects(transform.position, other.map, other.transform.position);
+        return Map.Intersects(transform.position, other.Map, other.transform.position);
     }
+
+    public void AlignWithGrid(Vector3 referencePoint, int gridSize) {
+        Map.AlignWithGrid(referencePoint, gridSize,transform.position);
+    }
+
 }
 
 public class RoomMap {
@@ -49,7 +79,10 @@ public class RoomMap {
     // 0 Free
     // 1 Wall
     // 2 Floor
-    public int[,] map;
+    // 3 Door
+    public int[,] tileMap;
+
+    public GameObject[,] tiles;
 
     private int cellSize;
 
@@ -62,29 +95,38 @@ public class RoomMap {
         cellSize = room.cellSize;
         SetBounds(room.walls.transform, room.cellSize,room.transform.position);
 
-        map = new int[width,height];
+        tileMap = new int[width,height];
+        tiles = new GameObject[width, height];
 
-        FillMap(room.walls.transform, room.floors.transform,room.transform.position);
+        FillMap(room.walls.transform, room.floors.transform,room.doors.transform,room.transform.position);
     }
 
-    void FillMap(Transform walls,Transform floors,Vector2 roomPosition) {
+    void FillMap(Transform walls,Transform floors,Transform doors,Vector2 roomPosition) {
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                map[i, j] = 0;
+                tileMap[i, j] = 0;
             }
         }
         Vector2Int pos;
         foreach (Transform tr in walls)
         {
             pos = Real2Map(tr.position,roomPosition);
-            map[pos.x, pos.y]=1;
+            tileMap[pos.x, pos.y] = 1;
+            tiles[pos.x, pos.y] = tr.gameObject; 
         }
         foreach (Transform tr in floors)
         {
             pos = Real2Map(tr.position,roomPosition);
-            map[pos.x, pos.y] = 2;
+            tileMap[pos.x, pos.y] = 2;
+            tiles[pos.x, pos.y] = tr.gameObject;
+        }
+        foreach (Transform tr in doors)
+        {
+            pos = Real2Map(tr.position, roomPosition);
+            tileMap[pos.x, pos.y] = 3;
+            tiles[pos.x, pos.y] = tr.gameObject;
         }
         Debug.Log(StringifyMap());
     }
@@ -97,7 +139,7 @@ public class RoomMap {
         {
             for (int j = 0; j < width; j++)
             {
-                    sb.Append(map[j,i].ToString() + " ");
+                    sb.Append(tileMap[j,i].ToString() + " ");
             }
             sb.Append("\n");
         }
@@ -158,12 +200,12 @@ public class RoomMap {
             otherPos.x = i;
             for (int j = 0; j < other.height; j++)
             {
-                if (other.map[i, j] > 0)
+                if (other.tileMap[i, j] > 0)
                 {
                     otherPos.y = j;
                     localpos = Real2Map(other.Map2Real(otherPos, otherRoomPos), roomPos);
                     if (IsInRange(localpos)) {
-                        if (map[localpos.x,localpos.y]>0) {
+                        if (tileMap[localpos.x,localpos.y]>0) {
                             return true;
                         }
                     }
@@ -180,6 +222,25 @@ public class RoomMap {
         }
         else
             return true;
+    }
+
+    public void AlignWithGrid(Vector3 referencePoint, int gridSize,Vector2 roomPos)
+    {
+        Vector2 realAnchor = Map2Real(Vector2Int.zero, roomPos);
+        Vector3 relativeAnchor = (Vector3)realAnchor - referencePoint;
+        realAnchor.x = referencePoint.x + gridSize * Mathf.RoundToInt(relativeAnchor.x/gridSize);
+        realAnchor.y = referencePoint.y + gridSize * Mathf.RoundToInt(relativeAnchor.y / gridSize);
+        anchor = realAnchor - roomPos;
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (tileMap[i, j] > 0) {
+                    tiles[i, j].transform.position = Map2Real(new Vector2Int(i,j),roomPos);
+                }
+            }
+        }
     }
 
 }
