@@ -5,30 +5,74 @@ using UnityEngine;
 public class RoomDoor : MonoBehaviour
 {
     public GameObject door;
+    public Transform closedPoint;
+    public Transform openPoint;
+    public Collider2D collider;
+
+    public float closingTime=0.5f;
+
+    public enum OpenType {fromGround,fallDown,sliding }
+    public enum CloseType { toGround, riseUp, sliding,disappear }
+    public OpenType opening;
+    public CloseType closing;
+
+
+
+    public ParticleSystem closedParticles;
+    public ParticleSystem openParticles;
+
     public void OnEnter()
     {
-        t = 0;
         door.SetActive(true);
-        StartCoroutine(MoveDoor(2f,-1.5f,0.5f));
+        if(collider!=null)
+            collider.enabled = true;
+        switch (opening)
+        {
+            case OpenType.fromGround:
+                LeanTween.moveLocalZ(door, closedPoint.position.z, closingTime).setEaseSpring().setOnComplete(OnClosed);
+                break;
+            case OpenType.fallDown:
+                LeanTween.moveLocalZ(door, closedPoint.position.z, closingTime).setEaseOutQuad().setOnComplete(OnClosed);
+                break;
+            case OpenType.sliding:
+                LeanTween.move(door, closedPoint.position, closingTime).setEaseOutCubic().setOnComplete(OnClosed);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void OnClosed() {
+        if(closedParticles!=null)
+            closedParticles.Play();
+    }
+
+    public void OnOpen() {
+        if (openParticles != null)
+            openParticles.Play();
     }
 
     public void OnClear()
     {
-        t = 0;
-        StartCoroutine(MoveDoor(-1.5f, 2f, 0.5f, false));
-    }
-    private float t = 0;
-
-    IEnumerator MoveDoor(float from, float to, float time,bool active=true) {
-        
-        while (t<time)
+        if (collider != null)
+            collider.enabled = false;
+        switch (closing)
         {
-            door.transform.localPosition= new Vector3(0, 0, from + ((t/time)*(to-from)));
-            yield return new WaitForEndOfFrame();
-            t += Time.deltaTime;
+            case CloseType.toGround:
+                LeanTween.moveLocalZ(door, openPoint.position.z, closingTime).setEaseOutCubic().setOnComplete(OnOpen);
+                break;
+            case CloseType.riseUp:
+                LeanTween.moveLocalZ(door, openPoint.position.z, closingTime).setEaseOutCubic().setOnComplete(OnOpen);
+                break;
+            case CloseType.sliding:
+                LeanTween.move(door, openPoint.position, closingTime).setEaseOutCubic().setOnComplete(OnOpen);
+                break;
+            case CloseType.disappear:
+                door.SetActive(false);
+                OnOpen();
+                break;
+            default:
+                break;
         }
-        door.transform.position.Set(0, 0, to);
-        door.SetActive(active);
-        yield return null;
     }
 }
