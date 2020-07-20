@@ -1,6 +1,15 @@
 ﻿using System.Collections;
+using System.Text;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.XR.WSA;
+using System.Security.Principal;
+using System.Linq;
+using UnityEngine.UIElements;
+//using System;
 
 public class GeneratorV2 : MonoBehaviour
 {
@@ -12,7 +21,9 @@ public class GeneratorV2 : MonoBehaviour
     private void Start()
     {
         if (debugMode) {
+            float time = Time.realtimeSinceStartup;
             Generate(debugLevel);
+            Debug.Log(Time.realtimeSinceStartup - time);
         }
     }
 
@@ -38,6 +49,7 @@ public class GeneratorV2 : MonoBehaviour
             return allRooms;
         }
     }
+
     public void Generate(Level level) {
         //load rooms
         EnemyProperties[] enemies = EnemyBundle.Merge(level.enemies);
@@ -46,23 +58,407 @@ public class GeneratorV2 : MonoBehaviour
         //instantiate and disperse rooms
         List<RoomInfo> createdRooms = new List<RoomInfo>();
 
+        //create starting rooms
         GameObject startingRoom = (GameObject)Instantiate(GetRoomOfType(RoomPrefab.RoomType.start).gameObject, transform.position, transform.rotation);
         createdRooms.Add(new RoomInfo { gameObject=startingRoom,info=startingRoom.GetComponent<RoomPrefab>()});
 
+        //create combat rooms
+        GameObject newRoomObject;
+        RoomInfo newRoom;
         foreach (RoomInfo rm in selectedRooms)
         {
-            GameObject newRoomObject = Instantiate(rm.gameObject,transform.position,transform.rotation);
-            RoomInfo newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
+            newRoomObject = Instantiate(rm.gameObject,transform.position,transform.rotation);
+            newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
             Deintersect(newRoom,Random.insideUnitCircle.normalized*gridSize,createdRooms);
             createdRooms.Add(newRoom);
         }
 
+        //create exit
+        newRoomObject = (GameObject)Instantiate(GetRoomOfType(RoomPrefab.RoomType.exit).gameObject, transform.position, transform.rotation);
+        newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
+        Deintersect(newRoom, Random.insideUnitCircle.normalized * gridSize, createdRooms);
+        createdRooms.Add(newRoom);
+
         //distribute enemies
-        
+        DistributeEnemies(enemies, createdRooms);
+
+        //create map
+        CreateMap(createdRooms);
+        Debug.Log(StringifyMap());
 
         //create paths
+        StartCoroutine(ConnectRooms(createdRooms));
+
 
         //create secrets
+    }
+
+    private int ManhattanMetric(Vector2Int a, Vector2Int b)
+    {
+        return Mathf.Abs(a.x-b.x)+ Mathf.Abs(a.y-b.y);
+    }
+
+    private bool DoorNotObstructed(Vector2Int a) {
+        Vector2Int[] dirs = new Vector2Int[] { Vector2Int.up, Vector2Int.down,Vector2Int.left,Vector2Int.right }  ;
+        Vector2Int point;
+        foreach (Vector2Int vect in dirs)
+        {
+            point = a + vect;
+            if (point.x==Mathf.Clamp(point.x,0,mapWidth-1) && point.y == Mathf.Clamp(point.y, 0, mapHeight - 1) && (map[point.x,point.y].type!=TileType.room) )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private struct Endpoints {
+        public Vector2Int from;
+        public Vector2Int to;
+        public bool equals(Endpoints other)
+        {
+            return   other.from == from && other.to == to
+                    || other.from == to && other.to == from;
+        }
+    }
+
+    private IEnumerator ConnectRooms(List<RoomInfo> roomList) {
+        bool[,] connectionMatrix = new bool[roomList.Count, roomList.Count];
+        Debug.Log("connecting started");
+        List<int> connected = new List<int> { 0 };
+        List<Endpoints> notWorking = new List<Endpoints>();
+        while (connected.Count < roomList.Count)
+        {
+            #region oldPaths
+            /* 
+            Vector2Int from = Vector2Int.zero;
+            int fromRoom = 0;
+            Vector2Int to = Vector2Int.zero ;
+            int toRoom = 0;
+            int min = 100000;
+            int dist;
+            Endpoints endpoints;
+            foreach (int i in connected.FindAll(x => roomList[x].doors.Count > 0))
+             {                                               //search each connected room with free doors
+                 for (int j = 0; j < roomList.Count; j++)
+                 {                                               //find all other unconnected rooms
+                     if (!connected.Contains(j))
+                     {
+                         foreach (Vector2Int door1 in roomList[i].doors.FindAll(x => DoorNotObstructed(x)))
+                         {
+                             foreach (Vector2Int door2 in roomList[j].doors.FindAll(x => DoorNotObstructed(x)))
+                             {
+                                 endpoints = new Endpoints { from = door1, to = door2 };
+                                 if (!notWorking.Exists(x => x.equals(endpoints))) //find possible connections of these rooms
+                                 {
+                                     dist = ManhattanMetric(door1, door2);
+                                     if (dist < min)
+                                     {
+                                         min = dist;
+                                         from = door1;
+                                         fromRoom = i;
+                                         toRoom = j;
+                                         to = door2;
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 }
+             }
+             if (!connected.Contains(toRoom)) connected.Add(toRoom);
+             if (CreatePath(from, to))
+             {
+                 connectionMatrix[fromRoom, toRoom] = true;
+                 connectionMatrix[toRoom, fromRoom] = true;
+                 roomList[fromRoom].doors.Remove(from);
+                 roomList[toRoom].doors.Remove(to);
+             }
+             else {
+                 notWorking.Add(new Endpoints { from=from,to=to});
+             }
+             if (fromRoom == 0 && toRoom == 0) {
+                 Debug.LogError("Can not connect all rooms");
+                 break;
+             }*/
+            #endregion
+
+            List<Path> paths=new List<Path>();
+            foreach (int i in connected.FindAll(x => roomList[x].doors.Count > 0))
+            {                                               //search each connected room with free doors
+                foreach (Vector2Int door1 in roomList[i].doors.FindAll(x => DoorNotObstructed(x)))
+                {
+                    paths.AddRange(Path.FindAllPaths(door1, map, mapWidth, mapHeight, connected));
+                }
+            }
+            if (paths.Count == 0) {
+                Debug.LogError("Cannot connect rooms");
+                break;
+            }
+            
+            int min = paths[0].Length;
+            Path minPath = paths[0];
+            foreach (Path path in paths)
+            {
+                if (path.Length < min) {
+                    minPath = path;
+                    min = path.Length;
+                }
+                path.DrawPath(this, Color.red,0.1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            minPath.DrawPath(this,Color.green,100000);
+            yield return new WaitForSeconds(1f);
+            int fromRoom = map[minPath.from.x, minPath.from.y].roomIndex;
+            int toRoom = map[minPath.to.x, minPath.to.y].roomIndex;
+            connected.Add(toRoom);
+
+            roomList[fromRoom].doors.Remove(minPath.from);
+            roomList[toRoom].doors.Remove(minPath.to);
+        }
+    }
+
+    private class Path {
+        const int maxSearch = 20;
+        private List<Vector2Int> pathTiles;
+        public Vector2Int from;
+        public Vector2Int to;
+        public Path(Vector2Int from, Vector2Int to) { 
+
+        }
+
+        private Path(List<Vector2Int> pathTiles) {
+            this.from = pathTiles[0];
+            this.to = pathTiles[pathTiles.Count-1];
+            this.pathTiles = pathTiles;
+        }
+
+        public void DrawPath(GeneratorV2 gen,Color col,float duration=1) {
+            for(int i =0; i<pathTiles.Count-1;i++)
+            {
+                Debug.DrawLine(gen.Map2Real(pathTiles[i]),gen.Map2Real(pathTiles[i+1]),col,duration);
+            }
+        }
+
+        static private int GetValue(int[,] map,Vector2Int pos) {
+            try
+            {
+
+                return map[pos.x, pos.y];
+            }
+            catch (System.IndexOutOfRangeException)
+            {
+
+                return -3;
+            }
+        }
+
+        static private Path TraceBack(Vector2Int from, Vector2Int to, int[,] pathMap) {
+            List<Vector2Int> tiles = new List<Vector2Int>();
+            tiles.Add(from);
+            Vector2Int[] dirs = new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            Vector2Int point;
+            Vector2Int currentTile = from;
+            for (int i = GetValue(pathMap,from); i > 0; i--)
+            {
+                foreach (Vector2Int vect in dirs)
+                {
+                    point = currentTile + vect;
+                    if ( GetValue(pathMap,point) == i-1) {
+                        tiles.Add(point);
+                        currentTile = point;
+                        break;
+                    }
+                }
+            }
+            tiles.Reverse();
+            return new Path(tiles);
+        }
+
+        static public List<Path> FindAllPaths(Vector2Int from, MapTile[,] map,int width,int height, List<int> ignoreIndices) {
+            int[,] pathMap = new int[width,height];
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    switch (map[i,j].type)
+                    {
+                        case TileType.room:
+                            pathMap[i, j]=-3;
+                            break;
+                        case TileType.door:
+                            if (ignoreIndices.Contains(map[i, j].roomIndex))
+                            {
+                                pathMap[i, j] = -3;
+                            }
+                            else {
+                                pathMap[i, j] = -2;
+                            }
+                            break;
+                        default:
+                            pathMap[i, j] = -1;
+                            break;
+                    }
+                }
+            }
+            pathMap[from.x, from.y] = 0;
+
+            List<Path> paths = new List<Path>();
+            Vector2Int[] dirs = new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            for (int radius = 1; radius < 30; radius++)
+            {
+                for (int x = Mathf.Max(0,from.x-radius); x < Mathf.Min(width,from.x + radius); x++)
+                {
+                    for (int y = Mathf.Max(0,from.y - radius); y < Mathf.Min(height,from.y + radius); y++)
+                    {
+                        if (pathMap[x,y]==radius-1) {
+                            foreach (Vector2Int vect in dirs)
+                            {
+                                if (x + vect.x == Mathf.Clamp(x + vect.x,0,width-1) && y + vect.y == Mathf.Clamp(y + vect.y, 0, height-1)) {
+                                    if (pathMap[x + vect.x, y + vect.y] == -1)
+                                    {
+                                        pathMap[x + vect.x, y + vect.y] = radius;
+                                    }
+                                    if (pathMap[x + vect.x, y + vect.y] == -2)
+                                    {
+                                        pathMap[x + vect.x, y + vect.y] = radius;
+                                        paths.Add(TraceBack(new Vector2Int(x + vect.x, y + vect.y), from, pathMap));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return paths;
+        }
+
+        public int Length {
+            get {
+                return pathTiles.Count;
+            }
+        }
+    }
+
+    public enum TileType { none , room , path ,wall , door }
+    public struct MapTile {
+        public TileType type;
+        public int roomIndex;
+        public RoomDoor door;
+    }
+
+    private MapTile[,] map;
+    private Vector2 anchor;
+    private int mapWidth;
+    private int mapHeight;
+
+    private void CreateMap(List<RoomInfo> rooms) {
+
+        Vector4 boundaries = GetBoundaries(rooms);
+        mapWidth = Mathf.RoundToInt((boundaries.z - boundaries.x) / gridSize);
+        mapHeight = Mathf.RoundToInt((boundaries.w - boundaries.y) / gridSize);
+        map = new MapTile[mapWidth,mapHeight];
+        anchor = Gridify(new Vector2( boundaries.x , boundaries.y ))-(Vector2)transform.position;
+
+        for (int i = 0; i < mapWidth; i++)
+        {
+            for (int j = 0; j < mapHeight; j++)
+            {
+                map[i, j] = new MapTile { type = TileType.none, roomIndex = -1, door = null };
+            }
+        }
+
+        for(int i = 0; i < rooms.Count;i++)
+        {
+            RoomToMap(rooms[i], i);
+        }
+    }
+
+    void RoomToMap(RoomInfo room,int roomIndex) {
+        Vector2Int roomLB = Real2Map(room.info.Map.Map2Real(Vector2Int.zero,room.gameObject.transform.position));
+        room.doors = new List<Vector2Int>();
+        for (int i = 0; i < room.info.Map.width; i++)
+        {
+            for (int j = 0; j < room.info.Map.height; j++)
+            {
+                try
+                {
+                    int tile = room.info.Map.tileMap[i, j];
+                    if (tile == 3)
+                    {
+                        map[roomLB.x + i, roomLB.y + j].door = room.info.GetDoorAtPosition(i, j);
+                        map[roomLB.x + i, roomLB.y + j].roomIndex = roomIndex;
+                        map[roomLB.x + i, roomLB.y + j].type = TileType.door;
+                        room.doors.Add(new Vector2Int(roomLB.x + i, roomLB.y + j));
+                    }
+                    else if (tile > 0)
+                    {
+                        map[roomLB.x + i, roomLB.y + j].roomIndex = roomIndex;
+                        map[roomLB.x + i, roomLB.y + j].type = TileType.room;
+                    }
+                }
+                catch (System.IndexOutOfRangeException)
+                {
+                    Debug.LogErrorFormat("LB: {0}, {1}; RT: {2}, {3}", Map2Real(Vector2Int.zero).x, Map2Real(Vector2Int.zero).y, Map2Real(new Vector2Int(mapWidth-1,mapHeight-1)).x, Map2Real(new Vector2Int(mapWidth - 1, mapHeight - 1)).y);
+                    Debug.LogErrorFormat("i: {0}, j: {1} \n room.x: {2}, room.y:{3} \n mapWidth: {4}, mapHeight: {5}",i,j, roomLB.x, roomLB.y, mapWidth,mapHeight);
+                    throw;
+                }
+
+            }
+        }
+    }
+
+    public Vector2Int Real2Map(Vector2 pos)
+    {
+        return new Vector2Int(Mathf.RoundToInt((pos.x - anchor.x - transform.position.x) / gridSize), Mathf.RoundToInt((pos.y - anchor.y - transform.position.y) / gridSize));
+    }
+
+    private string StringifyMap()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (int j = mapHeight - 1; j >= 0;j--)
+        {
+            for (int i = 0; i < mapWidth; i++)
+            {
+                sb.Append(map[i, j].roomIndex.ToString() + " ");
+            }
+            sb.Append("\n");
+        }
+
+        return sb.ToString();
+    }
+
+    public Vector2 Map2Real(Vector2Int pos)
+    {
+        return (Vector2)transform.position + anchor + (gridSize * pos);
+    }
+
+    private Vector4 GetBoundaries(List<RoomInfo> rooms) {
+        float left=rooms[1].gameObject.transform.position.x- (gridSize*rooms[1].info.Width);
+        float bottom = rooms[1].gameObject.transform.position.y + (gridSize * rooms[1].info.Height); ;
+        float right = rooms[1].gameObject.transform.position.x - (gridSize * rooms[1].info.Width); ;
+        float top = rooms[1].gameObject.transform.position.y + (gridSize * rooms[1].info.Height); ;
+
+        int i = 0;
+        foreach (RoomInfo rm in rooms)
+        {
+            i++;
+            left = Mathf.Min(left, rm.gameObject.transform.position.x - (gridSize * rm.info.Width));
+            bottom = Mathf.Min(bottom, rm.gameObject.transform.position.y - (gridSize * rm.info.Width));
+            right = Mathf.Max(right, rm.gameObject.transform.position.x + (gridSize * rm.info.Width));
+            top = Mathf.Max(top, rm.gameObject.transform.position.y + (gridSize * rm.info.Width));
+        }
+        return new Vector4(left,bottom,right,top);
+    }
+
+    public Vector2 Gridify(Vector2 pos) {
+        Vector2 relativePos = (pos - (Vector2)transform.position)/gridSize;
+        relativePos.x = Mathf.Round(relativePos.x);
+        relativePos.y = Mathf.Round(relativePos.y);
+        return (Vector2)transform.position + (relativePos * gridSize);
     }
 
     private void DistributeEnemies(EnemyProperties[] enemies,List<RoomInfo> rooms) {
@@ -83,9 +479,34 @@ public class GeneratorV2 : MonoBehaviour
         }
 
         //fill to maximal capacity
+        bool added = true;
+        while (i < enemies.Length && added) {
+            added = false;
+            foreach (RoomInfo room in rooms)
+            {
+                if (room.info.roomType == RoomPrefab.RoomType.combat && room.info.enemiesToSpawn.Count < room.info.maxEnemies && i < enemies.Length)
+                {
+                    added = true;
+                    room.info.enemiesToSpawn.Add(enemies[i]);
+                    i++;
+                }
+            }
+        }
 
         //fill over maximal capacity
-
+        while (i < enemies.Length && added)
+        {
+            added = false;
+            foreach (RoomInfo room in rooms)
+            {
+                if (room.info.roomType == RoomPrefab.RoomType.combat && i < enemies.Length)
+                {
+                    added = true;
+                    room.info.enemiesToSpawn.Add(enemies[i]);
+                    i++;
+                }
+            }
+        }
     }
 
     private RoomInfo GetRoomOfType(RoomPrefab.RoomType type) {
@@ -108,11 +529,11 @@ public class GeneratorV2 : MonoBehaviour
     }
 
 
-    struct RoomInfo
+    class RoomInfo
     {
         public GameObject gameObject;
         public RoomPrefab info;
-        public List<EnemyProperties> enemies;
+        public List<Vector2Int> doors;
     }
 
     private List<RoomInfo> PickRooms(int roomCount, int enemyCount, int advantageFactor, RoomPrefab.RoomType roomType= RoomPrefab.RoomType.combat) {

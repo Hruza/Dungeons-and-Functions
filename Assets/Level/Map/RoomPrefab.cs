@@ -69,9 +69,17 @@ public class RoomPrefab : MonoBehaviour
     }
 
     public void AlignWithGrid(Vector3 referencePoint, int gridSize) {
-        Map.AlignWithGrid(referencePoint, gridSize,transform.position);
+        Map.AlignWithGrid(referencePoint, gridSize,transform);
     }
 
+    public RoomDoor GetDoorAtPosition(int x, int y)
+    {
+        return map.GetDoorAtPosition(x, y, transform.position);
+    }
+    public RoomDoor GetDoorAtWordPos(Vector2 pos)
+    {
+        return map.GetDoorAtWorldPos(pos, transform.position);
+    }
 }
 
 public class RoomMap {
@@ -82,7 +90,7 @@ public class RoomMap {
     // 3 Door
     public int[,] tileMap;
 
-    public GameObject[,] tiles;
+    private List<RoomDoor> roomDoors;
 
     private int cellSize;
 
@@ -96,7 +104,6 @@ public class RoomMap {
         SetBounds(room.walls.transform, room.cellSize,room.transform.position);
 
         tileMap = new int[width,height];
-        tiles = new GameObject[width, height];
 
         FillMap(room.walls.transform, room.floors.transform,room.doors.transform,room.transform.position);
     }
@@ -114,19 +121,18 @@ public class RoomMap {
         {
             pos = Real2Map(tr.position,roomPosition);
             tileMap[pos.x, pos.y] = 1;
-            tiles[pos.x, pos.y] = tr.gameObject; 
         }
         foreach (Transform tr in floors)
         {
             pos = Real2Map(tr.position,roomPosition);
             tileMap[pos.x, pos.y] = 2;
-            tiles[pos.x, pos.y] = tr.gameObject;
         }
+        roomDoors = new List<RoomDoor>();
         foreach (Transform tr in doors)
         {
             pos = Real2Map(tr.position, roomPosition);
             tileMap[pos.x, pos.y] = 3;
-            tiles[pos.x, pos.y] = tr.gameObject;
+            roomDoors.Add(tr.GetComponent<RoomDoor>());
         }
         Debug.Log(StringifyMap());
     }
@@ -147,11 +153,11 @@ public class RoomMap {
         return sb.ToString();
     }
 
-    private Vector2Int Real2Map(Vector2 pos,Vector2 roomPosition) {
+    public Vector2Int Real2Map(Vector2 pos,Vector2 roomPosition) {
         return new Vector2Int(Mathf.RoundToInt((pos.x-anchor.x-roomPosition.x)/cellSize), Mathf.RoundToInt((pos.y - anchor.y-roomPosition.y) / cellSize));
     }
 
-    private Vector2 Map2Real(Vector2Int pos,Vector2 roomPosition)
+    public Vector2 Map2Real(Vector2Int pos,Vector2 roomPosition)
     {
         return roomPosition+anchor+(cellSize*pos);
     }
@@ -162,9 +168,9 @@ public class RoomMap {
         float left;
         float right;
 
-        if (walls.GetChild(0) == null)
+        if (walls.childCount==0)
         {
-            Debug.LogError("MapError: there are no outer walls");
+            Debug.LogWarning("MapError: there are no outer walls");
             return;
         }
         else
@@ -224,23 +230,31 @@ public class RoomMap {
             return true;
     }
 
-    public void AlignWithGrid(Vector3 referencePoint, int gridSize,Vector2 roomPos)
+    public void AlignWithGrid(Vector3 referencePoint, int gridSize,Transform roomTransform)
     {
-        Vector2 realAnchor = Map2Real(Vector2Int.zero, roomPos);
+        Vector2 realAnchor = Map2Real(Vector2Int.zero, roomTransform.position);
         Vector3 relativeAnchor = (Vector3)realAnchor - referencePoint;
         realAnchor.x = referencePoint.x + gridSize * Mathf.RoundToInt(relativeAnchor.x/gridSize);
         realAnchor.y = referencePoint.y + gridSize * Mathf.RoundToInt(relativeAnchor.y / gridSize);
-        anchor = realAnchor - roomPos;
-
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                if (tileMap[i, j] > 0) {
-                    tiles[i, j].transform.position = Map2Real(new Vector2Int(i,j),roomPos);
-                }
-            }
-        }
+        roomTransform.position = realAnchor - anchor;
     }
 
+    public RoomDoor GetDoorAtPosition(int x, int y,Vector2 roomPos) {
+        if (tileMap[x, y] == 3)
+        {
+            return roomDoors.Find(rm => Real2Map(rm.transform.position,roomPos)==new Vector2Int(x,y));
+        }
+        else 
+            return null;
+    }
+    public RoomDoor GetDoorAtWorldPos(Vector2 position, Vector2 roomPos)
+    {
+        Vector2Int mapPos = Real2Map(position,roomPos);
+        if (IsInRange(mapPos) && tileMap[mapPos.x, mapPos.y] == 3)
+        {
+            return roomDoors.Find(x => Real2Map(x.transform.position, roomPos) == mapPos);
+        }
+        else
+            return null;
+    }
 }
