@@ -9,14 +9,22 @@ using UnityEngine.XR.WSA;
 using System.Security.Principal;
 using System.Linq;
 using UnityEngine.UIElements;
+using UnityEditor.Experimental.GraphView;
+using System.Net.Http.Headers;
 //using System;
 
 public class GeneratorV2 : MonoBehaviour
 {
-    const int gridSize = 4;
+    public const int gridSize = 4;
 
     public Level debugLevel;
     public bool debugMode=false;
+
+    public GameObject pathTile;
+    public GameObject wallTile;
+    public GameObject blackTile;
+
+    public float additionalPathsCoefficient = 1.2f;
 
     private void Start()
     {
@@ -50,6 +58,10 @@ public class GeneratorV2 : MonoBehaviour
         }
     }
 
+    private List<RoomInfo> roomList;
+
+    public enum GeneratorPreset { normal,boss };
+
     public void Generate(Level level) {
         //load rooms
         EnemyProperties[] enemies = EnemyBundle.Merge(level.enemies);
@@ -59,7 +71,7 @@ public class GeneratorV2 : MonoBehaviour
         List<RoomInfo> createdRooms = new List<RoomInfo>();
 
         //create starting rooms
-        GameObject startingRoom = (GameObject)Instantiate(GetRoomOfType(RoomPrefab.RoomType.start).gameObject, transform.position, transform.rotation);
+        GameObject startingRoom = (GameObject)Instantiate(GetRoomOfType(RoomPrefab.RoomType.start).gameObject, transform.position, transform.rotation,transform);
         createdRooms.Add(new RoomInfo { gameObject=startingRoom,info=startingRoom.GetComponent<RoomPrefab>()});
 
         //create combat rooms
@@ -67,17 +79,33 @@ public class GeneratorV2 : MonoBehaviour
         RoomInfo newRoom;
         foreach (RoomInfo rm in selectedRooms)
         {
-            newRoomObject = Instantiate(rm.gameObject,transform.position,transform.rotation);
+            newRoomObject = Instantiate(rm.gameObject,transform.position,transform.rotation * Quaternion.Euler(0, 0, 90f * Random.Range(0, 4)), transform);
             newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
             Deintersect(newRoom,Random.insideUnitCircle.normalized*gridSize,createdRooms);
             createdRooms.Add(newRoom);
         }
 
-        //create exit
-        newRoomObject = (GameObject)Instantiate(GetRoomOfType(RoomPrefab.RoomType.exit).gameObject, transform.position, transform.rotation);
-        newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
-        Deintersect(newRoom, Random.insideUnitCircle.normalized * gridSize, createdRooms);
-        createdRooms.Add(newRoom);
+        if (level.bossRoom) {
+            RoomInfo rm = GetRoomOfType(RoomPrefab.RoomType.boss);
+            newRoomObject = Instantiate(rm.gameObject, transform.position, transform.rotation * Quaternion.Euler(0, 0, 90f * Random.Range(0, 4)), transform);
+            newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
+            Vector2 dir = Quaternion.Euler(0, 0, 90f * Random.Range(0, 4)) * Vector2.up * gridSize;
+            Deintersect(newRoom,dir, createdRooms);
+            createdRooms.Add(newRoom);
+            
+            //create exit
+            newRoomObject = (GameObject)Instantiate(GetRoomOfType(RoomPrefab.RoomType.exit).gameObject, newRoom.gameObject.transform.position, transform.rotation, transform);
+            newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
+            Deintersect(newRoom, dir, createdRooms);
+            createdRooms.Add(newRoom);
+        }
+        else {
+            //create exit
+            newRoomObject = (GameObject)Instantiate(GetRoomOfType(RoomPrefab.RoomType.exit).gameObject, transform.position, transform.rotation, transform);
+            newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
+            Deintersect(newRoom, Random.insideUnitCircle.normalized * gridSize, createdRooms);
+            createdRooms.Add(newRoom);
+        }
 
         //distribute enemies
         DistributeEnemies(enemies, createdRooms);
@@ -87,10 +115,51 @@ public class GeneratorV2 : MonoBehaviour
         Debug.Log(StringifyMap());
 
         //create paths
-        StartCoroutine(ConnectRooms(createdRooms));
-
+        ConnectRooms(createdRooms,level.bossRoom);
 
         //create secrets
+        foreach (SecretRoom secret in level.secretRooms)
+        {
+            CreateSecret(secret);
+        }
+
+        CreateBlackOutline();
+
+        roomList = createdRooms;
+
+        Minimap.minimap.Initialize(this);
+    }
+
+    private bool IsAdjacent(int x, int y, TileType type = TileType.none) {
+        if (IsInRange(x, y) &&  map[x , y ].type==TileType.none) { 
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if ((i != 0 || j != 0) && IsInRange(x + i, y + j) && ((type == TileType.none) ? map[x + i, y + j].type != TileType.none : map[x + i, y + j].type == type))
+                    {
+                        return true;
+                    }
+                }
+            } 
+        }
+        return false;
+    }
+
+    private void CreateBlackOutline() {
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                if (IsAdjacent(x,y)) {
+                    PlaceTile(blackTile, new Vector2Int(x, y),TileType.none);
+                }
+            }
+        }
+    }
+
+    private void CreateSecret(SecretRoom secret) { 
+        
     }
 
     private int ManhattanMetric(Vector2Int a, Vector2Int b)
@@ -112,77 +181,12 @@ public class GeneratorV2 : MonoBehaviour
         return false;
     }
 
-    private struct Endpoints {
-        public Vector2Int from;
-        public Vector2Int to;
-        public bool equals(Endpoints other)
-        {
-            return   other.from == from && other.to == to
-                    || other.from == to && other.to == from;
-        }
-    }
-
-    private IEnumerator ConnectRooms(List<RoomInfo> roomList) {
+    private void ConnectRooms(List<RoomInfo> roomList,bool bossRoomIncluded) {
         bool[,] connectionMatrix = new bool[roomList.Count, roomList.Count];
         Debug.Log("connecting started");
         List<int> connected = new List<int> { 0 };
-        List<Endpoints> notWorking = new List<Endpoints>();
         while (connected.Count < roomList.Count)
         {
-            #region oldPaths
-            /* 
-            Vector2Int from = Vector2Int.zero;
-            int fromRoom = 0;
-            Vector2Int to = Vector2Int.zero ;
-            int toRoom = 0;
-            int min = 100000;
-            int dist;
-            Endpoints endpoints;
-            foreach (int i in connected.FindAll(x => roomList[x].doors.Count > 0))
-             {                                               //search each connected room with free doors
-                 for (int j = 0; j < roomList.Count; j++)
-                 {                                               //find all other unconnected rooms
-                     if (!connected.Contains(j))
-                     {
-                         foreach (Vector2Int door1 in roomList[i].doors.FindAll(x => DoorNotObstructed(x)))
-                         {
-                             foreach (Vector2Int door2 in roomList[j].doors.FindAll(x => DoorNotObstructed(x)))
-                             {
-                                 endpoints = new Endpoints { from = door1, to = door2 };
-                                 if (!notWorking.Exists(x => x.equals(endpoints))) //find possible connections of these rooms
-                                 {
-                                     dist = ManhattanMetric(door1, door2);
-                                     if (dist < min)
-                                     {
-                                         min = dist;
-                                         from = door1;
-                                         fromRoom = i;
-                                         toRoom = j;
-                                         to = door2;
-                                     }
-                                 }
-                             }
-                         }
-                     }
-                 }
-             }
-             if (!connected.Contains(toRoom)) connected.Add(toRoom);
-             if (CreatePath(from, to))
-             {
-                 connectionMatrix[fromRoom, toRoom] = true;
-                 connectionMatrix[toRoom, fromRoom] = true;
-                 roomList[fromRoom].doors.Remove(from);
-                 roomList[toRoom].doors.Remove(to);
-             }
-             else {
-                 notWorking.Add(new Endpoints { from=from,to=to});
-             }
-             if (fromRoom == 0 && toRoom == 0) {
-                 Debug.LogError("Can not connect all rooms");
-                 break;
-             }*/
-            #endregion
-
             List<Path> paths=new List<Path>();
             foreach (int i in connected.FindAll(x => roomList[x].doors.Count > 0))
             {                                               //search each connected room with free doors
@@ -195,27 +199,129 @@ public class GeneratorV2 : MonoBehaviour
                 Debug.LogError("Cannot connect rooms");
                 break;
             }
-            
-            int min = paths[0].Length;
-            Path minPath = paths[0];
-            foreach (Path path in paths)
-            {
-                if (path.Length < min) {
-                    minPath = path;
-                    min = path.Length;
+
+            CreateShortestPath(paths, ref roomList, ref connectionMatrix, ref connected,bossRoomIncluded);
+        }
+        for (int j = 0; j < Mathf.RoundToInt((additionalPathsCoefficient * roomList.Count)-roomList.Count ); j++)
+        {
+            List<Path> paths = new List<Path>();
+            for (int i = 0; i < roomList.Count; i++)
+            {                                               
+                connected = new List<int> { i };
+                for (int x = 0; x < roomList.Count; x++)
+                {
+                    if (connectionMatrix[i, x])
+                    {
+                        connected.Add(x);
+                    }
                 }
-                path.DrawPath(this, Color.red,0.1f);
-                yield return new WaitForEndOfFrame();
+                foreach (Vector2Int door1 in roomList[i].doors.FindAll(x => DoorNotObstructed(x)))
+                {
+                    paths.AddRange(Path.FindAllPaths(door1, map, mapWidth, mapHeight,connected));
+                }
             }
+            if (paths.Count > 0)
+            {
+                CreateShortestPath(paths, ref roomList, ref connectionMatrix,ref connected,bossRoomIncluded);
+            }
+        }
+        DeleteAllDoorsLeft();
 
-            minPath.DrawPath(this,Color.green,100000);
-            yield return new WaitForSeconds(1f);
-            int fromRoom = map[minPath.from.x, minPath.from.y].roomIndex;
-            int toRoom = map[minPath.to.x, minPath.to.y].roomIndex;
-            connected.Add(toRoom);
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                if (IsAdjacent(x, y,TileType.path))
+                {
+                    PlaceTile(wallTile, new Vector2Int(x, y), TileType.wall);
+                }
+            }
+        }
+    }
 
-            roomList[fromRoom].doors.Remove(minPath.from);
-            roomList[toRoom].doors.Remove(minPath.to);
+    private bool IsOK(Path path,int count) {
+        return (map[path.to.x, path.to.y].roomIndex < count - 2 && map[path.from.x, path.from.y].roomIndex < count - 2)
+            || (map[path.to.x, path.to.y].roomIndex + map[path.from.x, path.from.y].roomIndex) == (2 * count) - 3;
+    }
+
+    private void CreateShortestPath(List<Path> paths,ref List<RoomInfo> roomList, ref bool[,] connectionMatrix, ref List<int> connected,bool bossRoomIncluded) {
+        int min = paths[0].Length;
+        Path minPath = paths[0];
+        foreach (Path path in paths)
+        {
+            if (path.Length < min && (!bossRoomIncluded || IsOK(path,roomList.Count) ))
+            {
+                minPath = path;
+                min = path.Length;
+            }
+        }
+
+        minPath.CreatePath(this, pathTile, wallTile);
+
+        int toRoom = map[minPath.to.x, minPath.to.y].roomIndex;
+        int fromRoom = map[minPath.from.x, minPath.from.y].roomIndex;
+        if(connected!=null)connected.Add(toRoom);
+        connectionMatrix[fromRoom, toRoom] = true;
+        connectionMatrix[toRoom, fromRoom] = true;
+
+        MarkDoorUsed(minPath.to, roomList);
+        MarkDoorUsed(minPath.from, roomList);
+
+        if (roomList[toRoom].info.roomType == RoomPrefab.RoomType.exit)
+        {
+            List<Vector2Int> exitDoors = new List<Vector2Int>(roomList[toRoom].doors);
+            foreach (Vector2Int pos in exitDoors)
+            {
+                map[pos.x, pos.y].door.IsDoor = false;
+                MarkDoorUsed(pos, roomList);
+            }
+        }
+    }
+
+    private void MarkDoorUsed(Vector2Int pos, List<RoomInfo> roomList) {
+        int roomIndex = map[pos.x, pos.y].roomIndex;
+        map[pos.x, pos.y].type = TileType.room;
+        roomList[roomIndex].doors.Remove(pos);
+    }
+
+
+    private void DeleteAllDoorsLeft()
+    {
+        for (int i = 0; i < mapWidth; i++)
+        {
+            for (int j = 0; j < mapHeight; j++)
+            {
+                if (map[i, j].type == TileType.door) {
+                    map[i, j].door.IsDoor = false;
+                    map[i, j].type = TileType.room;
+                }
+            }
+        }
+    }
+
+    private bool IsInRange(int x, int y ) {
+        return x == Mathf.Clamp(x, 0, mapWidth - 1) && y == Mathf.Clamp(y, 0, mapHeight - 1);
+    }
+
+    private bool IsInRange(Vector2Int pos)
+    {
+        return pos.x == Mathf.Clamp(pos.x, 0, mapWidth - 1) && pos.y == Mathf.Clamp(pos.y, 0, mapHeight - 1);
+    }
+
+    public void PlaceTile(GameObject gameObject, Vector2Int pos, TileType type) {
+        if (IsInRange(pos)) {
+            GameObject tile = (GameObject)Instantiate(gameObject, Map2Real(pos), transform.rotation, transform);
+            tile.transform.localScale = new Vector3(gridSize,gridSize,1);
+            map[pos.x, pos.y].type = type;
+            map[pos.x, pos.y].tile = tile;
+        }
+    }
+
+    public void PlaceObject(GameObject gameObject, Vector2Int pos)
+    {
+        if (IsInRange(pos))
+        {
+            Instantiate(gameObject, Map2Real(pos), transform.rotation, transform);
         }
     }
 
@@ -238,6 +344,14 @@ public class GeneratorV2 : MonoBehaviour
             for(int i =0; i<pathTiles.Count-1;i++)
             {
                 Debug.DrawLine(gen.Map2Real(pathTiles[i]),gen.Map2Real(pathTiles[i+1]),col,duration);
+            }
+        }
+
+        public void CreatePath(GeneratorV2 gen,GameObject pathTile,GameObject wallTile)
+        {
+            for (int i = 1; i < pathTiles.Count - 1; i++)
+            {
+                gen.PlaceTile(pathTile, pathTiles[i],TileType.path);
             }
         }
 
@@ -316,7 +430,7 @@ public class GeneratorV2 : MonoBehaviour
                         if (pathMap[x,y]==radius-1) {
                             foreach (Vector2Int vect in dirs)
                             {
-                                if (x + vect.x == Mathf.Clamp(x + vect.x,0,width-1) && y + vect.y == Mathf.Clamp(y + vect.y, 0, height-1)) {
+                                if ( x + vect.x == Mathf.Clamp(x + vect.x,0,width-1) && y + vect.y == Mathf.Clamp(y + vect.y, 0, height-1)) {
                                     if (pathMap[x + vect.x, y + vect.y] == -1)
                                     {
                                         pathMap[x + vect.x, y + vect.y] = radius;
@@ -347,12 +461,18 @@ public class GeneratorV2 : MonoBehaviour
         public TileType type;
         public int roomIndex;
         public RoomDoor door;
+        public GameObject tile;
     }
 
+    public MapTile[,] Map {
+        get {
+            return map;
+        }
+    }
     private MapTile[,] map;
     private Vector2 anchor;
-    private int mapWidth;
-    private int mapHeight;
+    public int mapWidth;
+    public int mapHeight;
 
     private void CreateMap(List<RoomInfo> rooms) {
 
@@ -429,6 +549,26 @@ public class GeneratorV2 : MonoBehaviour
         }
 
         return sb.ToString();
+    }
+
+    public RoomPrefab GetRoomAtPos(Vector2Int pos) {
+        int index = Map[pos.x, pos.y].roomIndex;
+        if (index >= 0) {
+            return roomList[index].info;
+        }
+        return null;
+    }
+
+    public int RoomTileAtPos(Vector2Int pos)
+    {
+        int index = Map[pos.x, pos.y].roomIndex;
+        if (index >= 0)
+        {
+            RoomInfo rm = roomList[index];
+            Vector2Int roomPos = rm.info.Map.Real2Map(Map2Real(pos), rm.gameObject.transform.position);
+            return rm.info.Map.tileMap[roomPos.x, roomPos.y];
+        }
+        return -1;
     }
 
     public Vector2 Map2Real(Vector2Int pos)
@@ -585,7 +725,7 @@ public class GeneratorV2 : MonoBehaviour
                             selected[random] = selected[random] - j;
                         }
                     }
-                    if (enemyCount == enemySpaceCounts.x && selected[random] <= possible.Count - j)
+                    if (enemyCount == enemySpaceCounts.x && selected[random] < possible.Count - j)
                     {
                         if (Mathf.Abs(diff) < Mathf.Abs(diff - (advantage - possible[selected[random] + j].advantageFactor)))
                         {

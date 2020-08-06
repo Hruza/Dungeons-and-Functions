@@ -106,11 +106,11 @@ MonoBehaviour:
   destroyOnDamageDealt: 0
   destroyOnAnyCollision: 0
   destroyOnWorldCollision: 1
-  onDamageParticles: {fileID: 4883967720516062909, guid: 45afa566470776c4a901664d1999c936,
+  onDamageParticles: {fileID: 2274686839426830114, guid: f1aa214a3453ca245b058604646dfcdd,
     type: 3}
   knockback: 0
   perpKnockback: 0
-  onDestroyParticles: {fileID: 4883967720516062909, guid: 45afa566470776c4a901664d1999c936,
+  onDestroyParticles: {fileID: 2274686839426830114, guid: f1aa214a3453ca245b058604646dfcdd,
     type: 3}
   destroyFirst: {fileID: 6901989831944089962}
   destroyTime: 0.3

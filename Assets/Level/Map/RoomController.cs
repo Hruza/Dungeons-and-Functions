@@ -20,6 +20,8 @@ public class RoomController : MonoBehaviour {
 
     List<GameObject> livingEnemies;
     Vector2 dimensions;
+
+    public Transform[] spawns;
     
     //todo: Public jen pro testovani
     private List<EnemyProperties> enemiesToSpawn;
@@ -44,10 +46,13 @@ public class RoomController : MonoBehaviour {
 
 	
 	void Start () {
-
+        if (spawns.Length == 0) {
+           // spawns = transform.GetChild(0);
+                }
         if(selfInitialize) Initialize(1, 1);
         enemyCount = 0;
-	}
+        livingEnemies = new List<GameObject>();
+    }
 
     /// <summary>
     /// Inicializuje mistnost s danou velikosti, tato operave musi byt provedena pred pouzitim mistnosti
@@ -84,16 +89,21 @@ public class RoomController : MonoBehaviour {
             EnemyProperties enemy = enemiesToSpawn[i]; 
             enemyCount++;
             Vector3 randPos;
-            if (spawnAllInCenter) randPos= Vector3.zero;
-            else randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * LevelGenerator.tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * LevelGenerator.tileSize);
-            GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, transform.position + randPos, transform.rotation);
+            if (spawnAllInCenter) randPos = transform.position;
+            else if (spawns.Length==0) {
+                randPos = transform.GetChild(i % transform.childCount ).position;
+            }
+            else {
+                randPos = spawns[i % spawns.Length].position;
+            }
+            GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, randPos, Quaternion.identity);
             currentEnemy.SetActive(false);
             NPC npc = currentEnemy.GetComponent<NPC>();
             if(npc!=null)
                 npc.Initialize(enemy);
             else
                 currentEnemy.GetComponent<EnemyAI>().Initialize(enemy);
-            GameObject particles = (GameObject)Instantiate(summoner, transform.position + randPos, transform.rotation);
+            GameObject particles = (GameObject)Instantiate(summoner, randPos, transform.rotation);
             particles.GetComponent<Summoner>().enemy = currentEnemy;
             livingEnemies.Add(currentEnemy);
             if (enemyCount >= cap) break;

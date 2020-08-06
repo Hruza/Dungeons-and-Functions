@@ -19,11 +19,17 @@ public class RoomDoor : MonoBehaviour
     public GameObject doorPart;
     public GameObject replacement;
 
+    private bool isDoor = true;
+
     [ExecuteInEditMode]
     public bool IsDoor {
         set {
             doorPart.SetActive(value);
             replacement.SetActive(!value);
+            isDoor = value;
+        }
+        get {
+            return isDoor;
         }
     }
 

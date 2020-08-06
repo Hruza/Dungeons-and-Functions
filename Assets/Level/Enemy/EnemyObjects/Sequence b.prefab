@@ -171,13 +171,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68720ba8889ef5428848919e4c80b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultTargetTolerance: 1.5
+  defaultTargetTolerance: 0.5
   obstacleAvoidance: 1
   maxSpeed: 30
   walkForce: 30
   giveUpTime: 5
   followPeriod: 0.25
   followType: 2
+  layersToAvoid:
+    serializedVersion: 2
+    m_Bits: 6144
 --- !u!114 &6737213514342858243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,8 +254,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2829739260714395861}
   - component: {fileID: 1448917472647969952}
-  - component: {fileID: 5748580581515893689}
-  - component: {fileID: 3140034280620732836}
   - component: {fileID: 5854311460611740556}
   m_Layer: 14
   m_Name: index
@@ -321,22 +322,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &5748580581515893689
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2812592219824245836}
-  m_Mesh: {fileID: 0}
---- !u!222 &3140034280620732836
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2812592219824245836}
-  m_CullTransparentMesh: 0
 --- !u!114 &5854311460611740556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,7 +365,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -397,7 +382,7 @@ MonoBehaviour:
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
-  m_textAlignment: 257
+  m_textAlignment: 65535
   m_isAlignmentEnumConverted: 0
   m_characterSpacing: 0
   m_wordSpacing: 0

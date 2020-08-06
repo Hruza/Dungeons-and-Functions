@@ -6,7 +6,18 @@ public abstract class Navigator : MonoBehaviour
 {
     protected Animator anim;
     public float defaultTargetTolerance=1f;
-    protected Rigidbody2D rb;
+    private Rigidbody2D rb;
+    protected Rigidbody2D RB {
+        get {
+            if (rb == null) {
+                rb = GetComponent<Rigidbody2D>();
+            }
+            return rb;
+        }
+        set {
+            rb = value;
+        }
+    }
     private EnemyAI AI;
     public enum Avoidance {none, avoidNearest};
     public Avoidance obstacleAvoidance=Avoidance.avoidNearest;
@@ -16,7 +27,6 @@ public abstract class Navigator : MonoBehaviour
     public virtual void Start()
     {
         anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
         Collider2D coll = GetComponent<Collider2D>();
         AI = GetComponent<EnemyAI>();
     }
@@ -66,8 +76,11 @@ public abstract class Navigator : MonoBehaviour
 
     protected void SendOutput(WalkingOutput output) {
         if (AI != null)
-            AI.SendMessage("WalkEnded",output);
+            AI.SendMessage("WalkEnded", output);
         else
+        {
             Debug.Log("unassigned AI");
+            this.gameObject.SendMessage("WalkEnded", output);
+        }
     }
 }

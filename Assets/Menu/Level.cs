@@ -98,6 +98,12 @@ public class Level : ScriptableObject
 
     public LevelGenerator.RoomConnectionPreset roomConnections =LevelGenerator.RoomConnectionPreset.addShortUnillAll;
 
+    public GeneratorV2.GeneratorPreset preset = GeneratorV2.GeneratorPreset.normal;
+
+    public bool bossRoom = false;
+    
+    public EnemyBundle[] bossEnemies;
+
     public ItemPattern[] loot;
 
     public SecretRoom[] secretRooms;

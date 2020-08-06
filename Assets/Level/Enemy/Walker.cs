@@ -13,6 +13,8 @@ public class Walker : Navigator
     public enum FollowType {basic, persistent, allknowing }
     public FollowType followType = FollowType.persistent;
 
+    public LayerMask layersToAvoid = 6144;
+
     public bool IsWalking {
         get {
             return currentWalk != null;
@@ -47,7 +49,7 @@ public class Walker : Navigator
 
     override public void Dash(Vector2 direction, float speed)
     {
-        rb.AddRelativeForce(10*speed * direction.normalized,ForceMode2D.Impulse);
+        RB.AddRelativeForce(10*speed * direction.normalized,ForceMode2D.Impulse);
     }
 
     public override void Stop()
@@ -136,19 +138,19 @@ public class Walker : Navigator
         while (Vector2.SqrMagnitude(target - transform.position) > tolerance * tolerance && Time.realtimeSinceStartup - startTime < giveUpTime)
         {
             dir = target - transform.position;
-            acceleration =(maxSpeed*dir.normalized)- rb.velocity;
+            acceleration =(maxSpeed*dir.normalized)- RB.velocity;
             norm = acceleration.magnitude;
             if (Vector2.SqrMagnitude(target - transform.position) >(detectionSize.x+ (defaultTargetTolerance))*( detectionSize.y + (defaultTargetTolerance))) {
                 ExtDebug.DrawBoxCast2D(Planify(transform.position) + (0.5f * detectionSize.x * dir.normalized), detectionSize, 0, dir, defaultTargetTolerance , Color.red);
-                if (Physics2D.BoxCast(Planify(transform.position) + (0.5f * detectionSize.x * dir.normalized), detectionSize, 0, dir, defaultTargetTolerance, LayerMask.GetMask("Map")))
+                if (Physics2D.BoxCast(Planify(transform.position) + (0.5f * detectionSize.x * dir.normalized), detectionSize, 0, dir, defaultTargetTolerance, layersToAvoid))
                 {
                     switch (obstacleAvoidance)
                     {
                         case Avoidance.none:
                             yield break;
                         case Avoidance.avoidNearest:
-                            if(rb.velocity!=Vector2.zero)
-                                acceleration = norm * NewDirection(rb.velocity);
+                            if(RB.velocity!=Vector2.zero)
+                                acceleration = norm * NewDirection(RB.velocity);
                             else
                                 acceleration = norm * NewDirection(dir);
                             break;
@@ -159,7 +161,7 @@ public class Walker : Navigator
             }
             if (norm > 0)
             {
-                rb.AddRelativeForce(Mathf.Min(1, walkForce / norm) * acceleration * 100 * Time.fixedDeltaTime);
+                RB.AddRelativeForce(Mathf.Min(1, walkForce / norm) * acceleration * 100 * Time.fixedDeltaTime);
             }
             yield return new WaitForFixedUpdate();
         }
@@ -177,7 +179,7 @@ public class Walker : Navigator
 
     private Vector2 ParalelDirection(Vector2 dir) {
         Vector2 newDir=Vector2.Perpendicular(dir);
-        RaycastHit2D hit= Physics2D.Raycast(transform.position, dir, detectionSize.x+ defaultTargetTolerance *2, LayerMask.GetMask("Map"));
+        RaycastHit2D hit= Physics2D.Raycast(transform.position, dir, detectionSize.x+ defaultTargetTolerance *2, layersToAvoid);
         Debug.DrawRay(transform.position, dir,Color.blue);
         Debug.DrawRay(hit.point,hit.normal,Color.cyan);
         if (hit != null)
@@ -200,7 +202,7 @@ public class Walker : Navigator
             rot = Quaternion.Euler(0,0, (4*((i % 2)-0.5f)*((i + 1)/2)/(raycount-1))*120);
             Debug.DrawRay(transform.position, (detectionSize.x + defaultTargetTolerance * 2)*(rot*dir).normalized, Color.blue);
 
-            bool possible = !Physics2D.CircleCast(transform.position + (0.5f * detectionSize.x * (rot * dir).normalized), 0.4f*(detectionSize.x+detectionSize.y), rot * dir, defaultTargetTolerance * 2, LayerMask.GetMask("Map"));
+            bool possible = !Physics2D.CircleCast(transform.position + (0.5f * detectionSize.x * (rot * dir).normalized), 0.4f*(detectionSize.x+detectionSize.y), rot * dir, defaultTargetTolerance * 2, layersToAvoid);
             ExtDebug.DrawBoxCast2D(transform.position + (0.5f * detectionSize.x * (rot * dir).normalized), detectionSize, 0, rot * dir, defaultTargetTolerance *2,possible?Color.green:Color.blue);
             if (possible)
             {

@@ -18,11 +18,11 @@ public class Follow : MonoBehaviour {
 
     private void Update()
     {
-        if(followSpeed==1) transform.position = target.transform.position;
+        if(followSpeed==1) transform.position = (Vector2)target.transform.position;
     }
     // Update is called once per frame
     void FixedUpdate () {
-        if (followSpeed != 1) transform.position = Vector3.Lerp(transform.position, target.transform.position, followSpeed);
+        if (followSpeed != 1) transform.position = Vector2.Lerp(transform.position, target.transform.position, followSpeed);
 	}
 
 }

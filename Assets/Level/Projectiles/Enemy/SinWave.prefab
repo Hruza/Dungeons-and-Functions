@@ -52,4 +52,5 @@ MonoBehaviour:
     type: 3}
   projectileDelay: 0.2
   spread: 0
+  startingDelay: 0
   projectileCount: 10

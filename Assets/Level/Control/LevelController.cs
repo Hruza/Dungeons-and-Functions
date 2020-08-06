@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 public class LevelController : MonoBehaviour {
-    public GameObject map;
+    public GeneratorV2 map;
     public GameObject menu;
     public GameObject playerDiedMenu;
     public GameObject bossBar;
@@ -25,7 +25,10 @@ public class LevelController : MonoBehaviour {
     public void RoomCleared()
     {
         clearedRoomCount++;
-        if (clearedRoomCount >= roomCountToClear) Interactable.exit.SetInteractable();    
+        if (clearedRoomCount >= roomCountToClear)
+        {
+            Interactable.exit.SetInteractable();
+        }
     }
 
     public void SetBossHP(int value) {
@@ -50,6 +53,7 @@ public class LevelController : MonoBehaviour {
     //Setup of level
     void Start() {
         Player.player.GetComponent<PlayerMovement>().enabled = false;
+        LeanTween.moveZ(Player.player,0,2f).setFrom(-30).setEaseOutBounce();
         Vignette vignette;
         if (volume.profile.TryGet<Vignette>(out vignette))
         {
@@ -69,7 +73,7 @@ public class LevelController : MonoBehaviour {
         if (level != null)
         {
             roomCountToClear = Mathf.CeilToInt(level.roomCount / 2f);
-            map.GetComponent<LevelGenerator>().Generate(level);
+            map.Generate(level);
             secrets = new List<SecretRoom>();
             //ToDo: Pridat veci
         }
@@ -102,13 +106,47 @@ public class LevelController : MonoBehaviour {
         menu.SetActive(false);
     }
 
+    public T GetEffect<T>(Volume volume) where T:UnityEngine.Rendering.VolumeComponent {
+        T effect;
+
+        if (volume.profile.Has<T>())
+        {
+            volume.profile.TryGet<T>(out effect);
+        }
+        else
+        {
+            effect = volume.profile.Add<T>(true);
+        }
+        effect.active = true;
+        return effect;
+    }
+
     /// <summary>
     /// Zavola se pri zabiti hrace
     /// </summary>
     public void PlayerDied() {
-        playerDiedMenu.SetActive(true);
+        ChromaticAberration aberration = GetEffect<ChromaticAberration>(volume);
+        LeanTween.value(volume.gameObject, 0, 1, 1f).setEasePunch().setOnUpdate((float flt) =>
+        {
+            aberration.intensity.value = flt;
+        }).setOnComplete(DeathMenu);
+
+        LensDistortion distortion = GetEffect<LensDistortion>(volume);
+        LeanTween.value(volume.gameObject, 0, -0.25f, 1f).setEasePunch().setOnUpdate((float flt) =>
+        {
+            distortion.intensity.Override(flt);
+        });
+
     }
 
+    private void DeathMenu()
+    {
+        playerDiedMenu.SetActive(true);
+        playerDiedMenu.GetComponent<CanvasGroup>().alpha = 0;
+        LeanTween.alphaCanvas(playerDiedMenu.GetComponent<CanvasGroup>(), 1, 1f).setFrom(0);
+        LeanTween.moveY(playerDiedMenu.GetComponent<RectTransform>(),0, 1f).setFrom(20).setEaseOutQuad();
+    }
+        
     /// <summary>
     /// Zavola se pri uspesnem ukonceni levelu
     /// </summary>
