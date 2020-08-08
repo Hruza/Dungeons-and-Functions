@@ -69,12 +69,6 @@ public class InvTooltip : MonoBehaviour
                 case Quality.C:
                     itemName.text += " + C";
                     break;
-                case Quality.Cplusplus:
-                    itemName.text += " + C++";
-                    break;
-                case Quality.Csharp:
-                    itemName.text += "+ C#";
-                    break;
             }
             StringBuilder sb=new StringBuilder();
             sb.AppendFormat("{0} level {1}\n",item.itemType, item.itemLevel);

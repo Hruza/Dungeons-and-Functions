@@ -46,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2273,6 +2274,62 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+  LifetimeByEmitterSpeedModule:
+    enabled: 0
+    m_Curve:
+      serializedVersion: 2
+      minMaxState: 1
+      scalar: 1
+      minScalar: 1
+      maxCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -0.8
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0.2
+          inSlope: -0.8
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      minCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_Range: {x: 0, y: 1}
   ForceModule:
     enabled: 0
     x:
@@ -4854,11 +4911,11 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 16b8dd60b12721c4e8364dfbb2d9a00a, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4896,6 +4953,8 @@ ParticleSystemRenderer:
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
+  m_FreeformStretching: 0
+  m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
@@ -4946,8 +5005,10 @@ GameObject:
   - component: {fileID: 5089034615900097074}
   - component: {fileID: 5051782505606363334}
   - component: {fileID: 5080002844248147128}
-  - component: {fileID: 5142646232458449146}
   - component: {fileID: 5159262130944431758}
+  - component: {fileID: 785230978126658720}
+  - component: {fileID: 8447837372116221270}
+  - component: {fileID: 3960174361623849854}
   m_Layer: 14
   m_Name: Sin
   m_TagString: Enemy
@@ -4986,6 +5047,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -5010,6 +5072,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!58 &5051782505606363334
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5038,7 +5101,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 30
+  m_Mass: 1
   m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -5047,43 +5110,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5142646232458449146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5101788237483465924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a581a54fcb0eaa4294e0b3f6b112f18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaknesses:
-    neutralMult: 1
-    AnlMult: 1
-    NumMult: 1
-    AlgMult: 1
-  enemyType: 2
-  defaultTargetTolerance: 1.5
-  invincible: 0
-  showBossHealth: 0
-  onDeathParticles: {fileID: 0}
-  isWalking: 0
-  acceleration: 10
-  maxSpeed: 5
-  obstacleDetectionDistance: 1
-  projectile: {fileID: 399382805345752599, guid: 16be72fb60f305c4aaab93a1ef75c645,
-    type: 3}
-  playerDistance: 10
-  projectileVelocity: 10
-  timeToStartShooting: 0.5
-  timeToStartMoving: 1
-  movingDistance: 5
-  walksCount: 3
-  barrageCount: 1
-  barrageDelay: 1.5
-  projectileSpeedByPlyerDistance: 0
 --- !u!95 &5159262130944431758
 Animator:
   serializedVersion: 3
@@ -5094,7 +5120,7 @@ Animator:
   m_GameObject: {fileID: 5101788237483465924}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 47251acd680d50249b07c8e0741a1811, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6996036de8461f347a0bffe831cce551, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5103,6 +5129,81 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &785230978126658720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5101788237483465924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8de76c109356d444845c1cab9098d23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 100
+  HP: 100
+  onDeathParticles: {fileID: 0}
+  disableOnDeath: []
+  deathTime: 0
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 1
+    NumMult: 1
+    AlgMult: 1
+  showBossHealth: 0
+--- !u!114 &8447837372116221270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5101788237483465924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68720ba8889ef5428848919e4c80b92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultTargetTolerance: 1
+  obstacleAvoidance: 1
+  maxSpeed: 20
+  walkForce: 30
+  giveUpTime: 5
+  followPeriod: 0.25
+  followType: 1
+  layersToAvoid:
+    serializedVersion: 2
+    m_Bits: 6144
+--- !u!114 &3960174361623849854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5101788237483465924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65953b7d84acbd9489e68138062d969b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  isBoss: 0
+  enemyType: 2
+  damageType: 2
+  projectile: {fileID: 399382805345752599, guid: 16be72fb60f305c4aaab93a1ef75c645,
+    type: 3}
+  shootingDistance: 10
+  minDistance: 3
+  maxDistance: 20
+  projectileVelocity: 10
+  barrageCount: 1
+  attackDelay: 2
+  waitTime: 3
+  barrageDelay: 0.5
+  shootingPointOffset: 1
+  projectileSpeedByPlyerDistance: 0
+  walkingTime: 4
+  walkingDistance: 5
 --- !u!1001 &4785519048335391461
 PrefabInstance:
   m_ObjectHideFlags: 0

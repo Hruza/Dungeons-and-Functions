@@ -33,7 +33,7 @@ public class EnemyBundle {
             }
             pos += bundle.count;
         }
-        if (shuffle) {
+        if (shuffle&& totalCount>1) {
             for (int i = 0; i < 500; i++)
             {
                 int a = Random.Range(0,totalCount);
@@ -82,6 +82,14 @@ public class Level : ScriptableObject
                     output.Add(bundle.enemyProperties);
                 }
             }
+            if (bossRoom)
+                foreach (EnemyBundle bundle in bossEnemies)
+                {
+                    if (!output.Contains(bundle.enemyProperties))
+                    {
+                        output.Add(bundle.enemyProperties);
+                    }
+                }
             output.Sort((x, y) => x.orderID.CompareTo(y.orderID));
             return output;
         }

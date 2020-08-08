@@ -19,7 +19,7 @@ public class Messager : MonoBehaviour
     }
     public static void ShowMessage(string text, Vector3 position, Color color, float textSize = 1)
     {
-        GameObject createdMessage = (GameObject)Instantiate(msg.messageObject, position, msg.transform.rotation);
+        GameObject createdMessage = (GameObject)Instantiate(msg.messageObject, position, Quaternion.identity);
         Message cmsg = createdMessage.GetComponent<Message>();
         cmsg.MessageText = text;
         if (textSize != 1) cmsg.Size = textSize;

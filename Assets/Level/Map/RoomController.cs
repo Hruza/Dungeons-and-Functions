@@ -135,9 +135,6 @@ public class RoomController : MonoBehaviour {
         {
             onClearObject.SendMessage("OnClear");
         }
-
-
-        Debug.Log("You are murderer!!");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

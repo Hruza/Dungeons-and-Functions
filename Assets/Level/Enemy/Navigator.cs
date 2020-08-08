@@ -79,7 +79,7 @@ public abstract class Navigator : MonoBehaviour
             AI.SendMessage("WalkEnded", output);
         else
         {
-            Debug.Log("unassigned AI");
+         //   Debug.Log("unassigned AI");
             this.gameObject.SendMessage("WalkEnded", output);
         }
     }

@@ -26,5 +26,5 @@ MonoBehaviour:
   aiType: 0
   baseDamage: 5
   perLevelDamageIncrement: 5
-  EnemyGameObject: {fileID: 5101788237483465924, guid: b53e52c61c466394c84820235b44b37f,
+  EnemyGameObject: {fileID: 5101788237483465924, guid: 8717076b2bc0bce4088c469a36c11030,
     type: 3}

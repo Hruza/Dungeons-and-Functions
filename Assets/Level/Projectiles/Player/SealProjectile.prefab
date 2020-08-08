@@ -33,7 +33,6 @@ Transform:
   m_Children:
   - {fileID: 6596670767565541724}
   - {fileID: 5924476498973787395}
-  - {fileID: 4363796701529314508}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -106,7 +105,7 @@ MonoBehaviour:
   destroyOnDamageDealt: 0
   destroyOnAnyCollision: 0
   destroyOnWorldCollision: 1
-  onDamageParticles: {fileID: 2274686839426830114, guid: f1aa214a3453ca245b058604646dfcdd,
+  onDamageParticles: {fileID: 2274686839426830114, guid: 78028ed6656b90c4ab2a4cc24043d946,
     type: 3}
   knockback: 0
   perpKnockback: 0
@@ -309,7 +308,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4363796701529314508}
   m_Father: {fileID: 6266954264778777067}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -388,12 +388,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8948359125361271913}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
-  m_Father: {fileID: 6266954264778777067}
-  m_RootOrder: 2
+  m_Father: {fileID: 5924476498973787395}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &4729289691030011995
 Light:

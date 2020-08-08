@@ -9,7 +9,7 @@ using UnityEngine.Tilemaps;
 
 public class RoomPrefab : MonoBehaviour
 {
-    public enum RoomType { combat, exit, treasure, start, boss };
+    public enum RoomType { combat, exit, treasure, start, boss, unused };
     public RoomType roomType;
     public GameObject walls;
     public GameObject floors;

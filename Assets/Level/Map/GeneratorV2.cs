@@ -91,6 +91,7 @@ public class GeneratorV2 : MonoBehaviour
             newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
             Vector2 dir = Quaternion.Euler(0, 0, 90f * Random.Range(0, 4)) * Vector2.up * gridSize;
             Deintersect(newRoom,dir, createdRooms);
+            newRoom.info.enemiesToSpawn =EnemyBundle.Merge(level.bossEnemies).ToList<EnemyProperties>();
             createdRooms.Add(newRoom);
             
             //create exit
@@ -112,15 +113,17 @@ public class GeneratorV2 : MonoBehaviour
 
         //create map
         CreateMap(createdRooms);
-        Debug.Log(StringifyMap());
 
         //create paths
         ConnectRooms(createdRooms,level.bossRoom);
 
         //create secrets
-        foreach (SecretRoom secret in level.secretRooms)
+        if (level.secretRooms != null)
         {
-            CreateSecret(secret);
+            foreach (SecretRoom secret in level.secretRooms)
+            {
+                CreateSecret(secret);
+            }
         }
 
         CreateBlackOutline();
@@ -183,7 +186,6 @@ public class GeneratorV2 : MonoBehaviour
 
     private void ConnectRooms(List<RoomInfo> roomList,bool bossRoomIncluded) {
         bool[,] connectionMatrix = new bool[roomList.Count, roomList.Count];
-        Debug.Log("connecting started");
         List<int> connected = new List<int> { 0 };
         while (connected.Count < roomList.Count)
         {
@@ -610,7 +612,8 @@ public class GeneratorV2 : MonoBehaviour
             if (room.info.roomType == RoomPrefab.RoomType.combat)
             {
                 List<EnemyProperties> basicEnemies = new List<EnemyProperties>();
-                while (basicEnemies.Count < room.info.minEnemies && i < enemies.Length) {
+                while (basicEnemies.Count < room.info.minEnemies && i < enemies.Length)
+                {
                     basicEnemies.Add(enemies[i]);
                     i++;
                 }

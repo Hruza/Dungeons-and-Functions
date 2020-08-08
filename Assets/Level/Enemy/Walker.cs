@@ -96,7 +96,6 @@ public class Walker : Navigator
             }
             else if (followType == FollowType.persistent)
             {
-                Debug.Log("He was there, searching for him");
                 if (!IsInLineOfSight(target))
                     timeSicneLastSeen += 0.5f;
                 currentPartialWalk = Walk(target.transform.position, tolerance,false);
@@ -110,17 +109,14 @@ public class Walker : Navigator
         }
         if ((target.transform.position - transform.position).sqrMagnitude > tolerance * tolerance && timeSicneLastSeen > giveUpTime)
         {
-            Debug.Log("Target lost");
             SendOutput(WalkingOutput.gaveUp);
         }
         else if (Time.realtimeSinceStartup - startTime >= timeLimit)
         {
-            Debug.Log("time up");
             SendOutput(WalkingOutput.timeUp);
         }
         else
         {
-            Debug.Log("Target Found!!");
             SendOutput(WalkingOutput.success);
         }
         yield return null;

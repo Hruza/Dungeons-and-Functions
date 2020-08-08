@@ -242,7 +242,10 @@ public class Enemy : NPC
                 GameObject spawned = (GameObject)Instantiate(selected.EnemyGameObject, (Vector3)Random.insideUnitCircle.normalized + transform.position, transform.rotation);
                 if (current.shootOnPlayer) spawned.GetComponent<Rigidbody2D>().velocity = current.catapultSpeed * (player.transform.position - spawned.transform.position).normalized;
                 else spawned.GetComponent<Rigidbody2D>().velocity = current.catapultSpeed * (spawned.transform.position - transform.position);
-                spawned.GetComponent<NPC>().Initialize(selected);
+                if(spawned.GetComponent<NPC>()!=null)
+                    spawned.GetComponent<NPC>().Initialize(selected);
+                else if(spawned.GetComponent<EnemyAI>()!=null)
+                    spawned.GetComponent<EnemyAI>().Initialize(selected);
             }
             yield return new WaitForSeconds(current.spawnDelay);
         }

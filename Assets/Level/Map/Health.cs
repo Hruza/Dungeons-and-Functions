@@ -27,6 +27,7 @@ public class Health : MonoBehaviour {
 
     public void GetDamage(Damager damage) {
         HP -=  damage.EvaluateDamage(weaknesses);
+        Messager.ShowMessage(damage.EvaluateDamage(weaknesses).ToString(), transform.position, Color.white, damage.type);
         if (HP <= 0) Die();
         if (anim != null) anim.SetTrigger("getDamage");
     }
