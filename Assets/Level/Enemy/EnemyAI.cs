@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Navigator))]
@@ -71,9 +72,12 @@ public class EnemyAI : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    private int score;
+
     public virtual void Initialize(EnemyProperties properties)
     {
         Level = properties.Level;
+        score = properties.score;
         health.Initialize(properties.baseHP + (Level * properties.perLevelHPIncrement), properties.weaknesses, isBoss,properties.name);
         Damage = properties.baseDamage + (Level * properties.perLevelDamageIncrement);
     }

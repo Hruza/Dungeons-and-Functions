@@ -13,20 +13,18 @@ MonoBehaviour:
   m_Name: ChalkBox
   m_EditorClassIdentifier: 
   name: A box of chalk
-  lowerItemLevel: 3
-  upperItemLevel: 10000
+  obtainableAsDrop: 1
+  level: 4
+  rarity: 0
   sprite: {fileID: 21300000, guid: 372ebfac87c7d1b48831f97b69bbf837, type: 3}
   itemComment: Because one piece is not enough for most proofs.
   isStarting: 0
-  fixedRarity: 0
-  fixedRarityValue: 0
   weaponType: 1
   damageType: 1
   lowerMinDamage: 0
   upperMinDamage: 1
   lowerMaxDamage: 2
   upperMaxDamage: 3
-  damageIncrementPerLevel: 1
   attackSpeed: 15
   gameObject: {fileID: 1305185763060277112, guid: be48bd212be61ed439dba716f431a0dc,
     type: 3}

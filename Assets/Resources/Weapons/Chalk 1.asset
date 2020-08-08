@@ -13,19 +13,18 @@ MonoBehaviour:
   m_Name: Chalk 1
   m_EditorClassIdentifier: 
   name: A Piece of Chalk
-  lowerItemLevel: 0
-  upperItemLevel: 2
+  obtainableAsDrop: 1
+  level: 1
+  rarity: 0
   sprite: {fileID: 21300000, guid: 273bd84ff7c09e64db632e237539068a, type: 3}
   itemComment: It feels good to write on the blackboard.
   isStarting: 1
-  fixedRarity: 0
-  fixedRarityValue: 0
   weaponType: 1
+  damageType: 0
   lowerMinDamage: 3
   upperMinDamage: 3
   lowerMaxDamage: 7
   upperMaxDamage: 7
-  damageIncrementPerLevel: 2
   attackSpeed: 30
   gameObject: {fileID: 1305185763060277112, guid: 2f215e75da236f944b2704d93ced9b35,
     type: 3}

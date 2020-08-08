@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 /// <summary>
 /// Trida, ktera obsahuje informace o enemy a ukazatel na jeho prefab
@@ -15,6 +16,8 @@ public class EnemyProperties : ScriptableObject {
     public new string name;
     public int orderID=1;
     public Sprite sprite;
+
+    public int score = 1;
 
     public int baseHP;
     public int perLevelHPIncrement;

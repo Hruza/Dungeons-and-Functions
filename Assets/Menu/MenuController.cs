@@ -200,16 +200,17 @@ public class MenuController : MonoBehaviour
             switch (part[0])
             {
                 case "give":
-                    if (part.Length < 2 || part.Length > 3) result = "wrong arguments";
+                    if (part.Length < 3 || part.Length >4 ) result = "wrong arguments";
                     else {
                         int level = int.Parse(part[1]);
+                        int score = int.Parse(part[2]);
                         int count = 1;
-                        if (part.Length == 3) count = int.Parse(part[2]);
+                        if (part.Length == 3) count = int.Parse(part[3]);
                         List<Item> reward = new List<Item>();
 
                         for (int i = 0; i < count; i++)
                         {
-                            reward.Add(Item.Generate(level));
+                            reward.Add(Item.Generate(level,score));
                         }
 
                         MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
@@ -219,17 +220,18 @@ public class MenuController : MonoBehaviour
                     }
                     break;
                 case "givew":
-                    if (part.Length < 2 || part.Length > 3) result = "wrong arguments";
+                    if (part.Length < 3 || part.Length > 4) result = "wrong arguments";
                     else
                     {
                         int level = int.Parse(part[1]);
+                        int score = int.Parse(part[2]);
                         int count = 1;
-                        if (part.Length == 3) count = int.Parse(part[2]);
+                        if (part.Length == 3) count = int.Parse(part[3]);
                         List<Item> reward = new List<Item>();
 
                         for (int i = 0; i < count; i++)
                         {
-                            reward.Add(WeaponItem.Generate(level));
+                            reward.Add(WeaponItem.Generate(level,score));
                         }
 
                         MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));

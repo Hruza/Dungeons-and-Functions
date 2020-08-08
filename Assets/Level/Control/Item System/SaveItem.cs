@@ -11,9 +11,6 @@ using System.Text;
 public class SaveItem
 {
     public string ItemName { get; protected set; }
-    public int ItemLevel { get; protected set; }
-
-    public Rarity ItemRarity { get; protected set; }
 
     public Quality ItemQuality { get; protected set; }
 
@@ -30,8 +27,6 @@ public class SaveWeapon : SaveItem
     public SaveWeapon(WeaponItem weaponItem)
     {
         ItemName = weaponItem.itemName;
-        ItemLevel = weaponItem.itemLevel;
-        ItemRarity = weaponItem.rarity;
         ItemQuality = weaponItem.quality;
         ItemStats = weaponItem.itemStats;
         MinDamage = weaponItem.minDamage;
@@ -53,8 +48,6 @@ public class SaveArmor : SaveItem
     public SaveArmor(ArmorItem armorItem)
     {
         ItemName = armorItem.itemName;
-        ItemLevel = armorItem.itemLevel;
-        ItemRarity = armorItem.rarity;
         ItemQuality = armorItem.quality;
         ItemStats = armorItem.itemStats;
         Armor = armorItem.armor;

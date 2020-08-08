@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.ProBuilder;
 
 /// <summary>
 /// všechny možné typy předmětů
@@ -15,7 +16,7 @@ public enum WeaponType { Melee, Ranged };
 /// <summary>
 /// možné kvality předmětů
 /// </summary>
-public enum Quality { Basic, C, Cplusplus, Csharp };
+public enum Quality { Basic, C };
 /// <summary>
 /// možné rarity zbraní
 /// </summary>
@@ -30,40 +31,27 @@ public enum Rarity
 /// <summary>
 /// Třída reprezentující předmět, který může hráč získat.
 /// </summary>
-[System.Serializable]
 public class Item
 {
-    private ItemPattern Pattern {
-        get {
-            if (pattern == null) {
-                switch (itemType)
-                {
-                    case ItemType.Armor:
-                        pattern = ArmorPattern.AllArmorPatterns.Find(x => x.name == itemName);
-                        break;
-                    case ItemType.Weapon:
-                        pattern = WeaponPattern.AllWeaponPatterns.Find(x => x.name == itemName);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return pattern;
-        }
-        set {
-            pattern = value;
-        }
-
-    }
-    private ItemPattern pattern;
+    public ItemPattern pattern;
     /// <summary>
     /// úroveň předmětu
     /// </summary>
-    public int itemLevel;
+    public int itemLevel{
+        get {
+            return pattern.level;
+        }
+    }
     /// <summary>
     /// jméno předmětu
     /// </summary>
-    public string itemName;
+    public string itemName
+    {
+        get
+        {
+            return pattern.name;
+        }
+    }
     /// <summary>
     /// kvalita předmětu
     /// </summary>
@@ -71,7 +59,13 @@ public class Item
     /// <summary>
     /// rarita předmětu
     /// </summary>
-    public Rarity rarity;
+    public Rarity rarity
+    {
+        get
+        {
+            return pattern.rarity;
+        }
+    }
     /// <summary>
     /// typ itemu
     /// </summary>
@@ -83,14 +77,20 @@ public class Item
     /// <summary>
     /// sprite itemu
     /// </summary>
-    public Sprite sprite;
+    public Sprite sprite
+    {
+        get
+        {
+            return pattern.sprite;
+        }
+    }
 
     /// <summary>
     /// komentar k itemu, ukaze se v tooltipu
     /// </summary>
     public string ItemComment {
         get {
-            return Pattern.itemComment;
+            return pattern.itemComment;
         }
     }
     /// <summary>
@@ -107,36 +107,17 @@ public class Item
     /// </summary>
     public const double rarityUpgrade = 1.1;
 
-    public void Awake()
-    {
-        quality = Probability.RandomQuality();
-        rarity = Probability.RandomRarity();
-    }
 
     /// <summary>
     /// bezparametrický kontruktor (nic neudělá)
     /// </summary>
     public Item()
     {
-        itemName = "GenericItem";
     }
 
-    /// <summary>
-    /// kontruktor vytvářející generický item s náhodnou raritou
-    /// </summary>
-    /// <param name="itemLevel"></param>
-    public Item(int itemLevel)
+    public Item(ItemPattern patt)
     {
-        this.itemLevel = itemLevel;
-        itemName = "GenericItem";
-
-        float random = 100 * UnityEngine.Random.value;
-        if (random > 80) rarity = Rarity.Unique;
-        else if (random > 50) rarity = Rarity.Rare;
-        else rarity = Rarity.Common;
-
-        /*quality = Probability.RandomQuality();
-        rarity = Probability.RandomRarity();*/
+        pattern = patt;
     }
 
     /// <summary>
@@ -146,43 +127,80 @@ public class Item
     /// <returns>vygenerovaný předmět</returns>
     private delegate Item GeneratingMethods(Item item);
 
-    /// <summary>
-    /// statická metoda sloužící pro generování náhodného itemu
-    /// </summary>
-    /// <param name="itemLevel">level vygenerovaného itemu (stejný, jako level monstra, ze kterého dropnul)</param>
-    /// <returns>vygenerovaný item</returns>
-    public static Item Generate(int itemLevel)
-    {
-        Item item = new Item(itemLevel);
 
-        //Seznam všech metod, které slouří pro generovnání náhodných předmětů.
-        /*var listOfMethods = new List<GeneratingMethods>
-        {
-            WeaponItem.Generate,
-            ArmorItem.Generate
-        };*/
+    public static Item Generate(int levelDifficulty, int score)
+    {
 
         int rand = UnityEngine.Random.Range(1, 101);
-
-        if (rand > 100 - weaponPropability) item = WeaponItem.Generate(item);
-        else if (rand > 100 - weaponPropability - armorPropability) item = ArmorItem.Generate(item);
-
-        //Zavolání náhodné metody, která vrátí náhodný předmět.
-        //item = listOfMethods[UnityEngine.Random.Range(0, listOfMethods.Count)](item);
-
+        Item item;
+        ItemPattern pattern = PickPattern(levelDifficulty,score);
+        switch (pattern.Type())
+        {
+            case ItemType.Weapon:
+                item = WeaponItem.Generate((WeaponPattern)pattern);
+                break;
+            case ItemType.Armor:
+                item = ArmorItem.Generate((ArmorPattern)pattern);
+                break;
+            default:
+                item = new Item();
+                break;
+        }
         return item;
     }
 
-    public static Item Generate(ItemPattern pattern, int itemLevel,bool noStats=false) {
-        Item item = new Item(itemLevel);
-        if (pattern.fixedRarity) item.rarity = pattern.fixedRarityValue;
+
+    static int lastDiff = -1;
+    static int lastScore = -1;
+    static List<ItemPattern> possiblePatts;
+    static float[] props;
+    static float sum;
+    static ItemPattern PickPattern(int levelDifficulty, int score) {
+        if (levelDifficulty != lastDiff || score != lastScore) {
+            lastDiff = levelDifficulty;
+            lastScore = score;
+            possiblePatts = WeaponPattern.AllWeaponPatterns.FindAll(p => (p.level <= levelDifficulty && p.obtainableAsDrop)).ConvertAll(x =>(ItemPattern)x );
+            possiblePatts.AddRange(ArmorPattern.AllArmorPatterns.FindAll(p => (p.level <= levelDifficulty && p.obtainableAsDrop)).ConvertAll(x => (ItemPattern)x ));
+            props = new float[possiblePatts.Count];
+            sum = 0;
+            for (int i=0; i<possiblePatts.Count; i++)
+            {
+                props[i] = possiblePatts[i].level / levelDifficulty;
+                props[i] /= Mathf.Pow( 2,(int)possiblePatts[i].rarity );
+                props[i] *= Distribution(possiblePatts[i].EvaluateScore(), score);
+                sum += props[i];
+            }
+        }
+
+        float rng = UnityEngine.Random.Range(0,sum);
+        float partialSum = 0;
+        for (int i = 0; i < possiblePatts.Count; i++)
+        {
+            partialSum += props[i];
+            if (partialSum > rng) {
+                return possiblePatts[i];
+            }
+        }
+        Debug.LogError("Something went horribly wrong in item picking");
+        return null;
+    }
+
+    public static float Distribution(float x,float center) {
+        x =3* (x - center) / center;
+        return x<=0? Mathf.Exp(-2*x*x) : 
+                     x>0.7? 0 :
+                          Mathf.Exp(-10*x)  ;
+    }
+
+    public static Item Generate(ItemPattern pattern, bool noStats=false) {
+        Item item = null;
         switch (pattern.Type())
         {
             case ItemType.Armor:
-                item=ArmorItem.Generate(item, (ArmorPattern)pattern,noStats);
+                item=ArmorItem.Generate( (ArmorPattern)pattern,noStats);
                 break;
             case ItemType.Weapon:
-                item=WeaponItem.Generate(item, (WeaponPattern)pattern, noStats);
+                item=WeaponItem.Generate((WeaponPattern)pattern, noStats);
                 break;
             default:
                 break;
@@ -209,7 +227,7 @@ public class Item
         }
         possibleStatPatterns = possibleStatPatterns.Shuffle();
 
-        numberOfStats = Math.Min(numberOfStats, possibleStatPatterns.Count); //může se stát, že nebude dost statů
+        numberOfStats = Mathf.Min(numberOfStats, possibleStatPatterns.Count); //může se stát, že nebude dost statů
         itemStats = new Stat[numberOfStats];
         for (int i = 0; i < numberOfStats; i++)
         {
@@ -220,77 +238,6 @@ public class Item
             itemStats[i] = stat;
         }
     }
-}
-
-/// <summary>
-/// Statická třída mající na starosti generování náhodných rarit a kvalit. Obsahuje i jednotilé pravděpodobnosti.
-/// </summary>
-public static class Probability
-{
-    /// <summary>
-    /// pravděpodobnosti, s jakými mohou být jednotlivé kvality vygenerovány
-    /// </summary>
-    private static Dictionary<Quality, double> qualityProbabilities = new Dictionary<Quality, double>
-    {
-        {Quality.Basic, 0.9 },
-        {Quality.C, 0.1 }
-    };
-
-    /// <summary>
-    /// pravděpodobnosti, s jakými mohou být jednotlivé rarity vygenerovány
-    /// </summary>
-    private static Dictionary<Rarity, double> rarityProbabilities = new Dictionary<Rarity, double>
-    {
-        {Rarity.Common, 0.85 },
-        {Rarity.Rare, 0.14 },
-        {Rarity.Unique, 0.1 }
-    };
-
-    /// <summary>
-    /// vygenerování náhodné kvality předmětu (pravděpodobnosti nejsou rozloženy stejnoměrně)
-    /// </summary>
-    /// <returns>náhodně vygenerovaná kvalita</returns>
-    public static Quality RandomQuality()
-    {
-        double total = 0;
-        foreach (double weight in qualityProbabilities.Values)
-            total += weight;
-
-        double random = (double)UnityEngine.Random.Range(0f, 1f);
-        double sum = 0;
-        foreach (Quality quality in Enum.GetValues(typeof(Quality)))
-        {
-            sum += qualityProbabilities[quality];
-            if (random <= sum)
-                return quality;
-        }
-
-        return Quality.Basic;
-    }
-
-    /// <summary>
-    /// vygenerování náhodné rarity předmětu (pravděpodobnosti rarit nejsou rozloženy náhodně)
-    /// </summary>
-    /// <returns>nááhodně vygenerovaná rarita</returns>
-    public static Rarity RandomRarity()
-    {
-        double total = 0;
-        foreach (double weight in rarityProbabilities.Values)
-            total += weight;
-
-        double random = (double)UnityEngine.Random.Range(0f, 1f);
-        double sum = 0;
-        foreach (Rarity rarity in Enum.GetValues(typeof(Rarity)))
-        {
-            sum += rarityProbabilities[rarity];
-            if (random <= sum)
-                return rarity;
-        }
-
-        return Rarity.Common;
-    }
-
-    
 }
 
 /// <summary>

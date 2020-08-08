@@ -58,25 +58,17 @@ public class PlayerProgress
             armors = new List<ArmorItem>();
             weapons = new List<WeaponItem>();
 
-            Item itemMold = new Item
-            {
-                itemLevel = 1,
-                rarity = Rarity.Common,
-                quality = Quality.Basic,
-                itemType = ItemType.Armor,
-                itemStats = new Stat[0],
-            };
             List<ArmorPattern> armorPatterns = ArmorPattern.AllArmorPatterns.FindAll(x => x.isStarting);
             List<WeaponPattern> weaponPatterns = WeaponPattern.AllWeaponPatterns.FindAll(x => x.isStarting);
 
             foreach (ArmorPattern pattern in armorPatterns)
             {
-                armors.Add(ArmorItem.Generate(itemMold,pattern,true));
+                armors.Add(ArmorItem.Generate(pattern));
             }
 
             foreach (WeaponPattern pattern in weaponPatterns)
             {
-                weapons.Add(WeaponItem.Generate(itemMold, pattern,true));
+                weapons.Add(WeaponItem.Generate( pattern));
             }
     }
 

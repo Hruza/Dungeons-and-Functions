@@ -13,20 +13,18 @@ MonoBehaviour:
   m_Name: lHospital
   m_EditorClassIdentifier: 
   name: L'Hospital
-  lowerItemLevel: 5
-  upperItemLevel: 10000
+  obtainableAsDrop: 1
+  level: 2
+  rarity: 1
   sprite: {fileID: 21300000, guid: 8ef1c12f7d8314b428edd57e9127e388, type: 3}
   itemComment: It's a cannon compared to...well, anything.
   isStarting: 0
-  fixedRarity: 0
-  fixedRarityValue: 0
   weaponType: 1
   damageType: 2
   lowerMinDamage: 10
   upperMinDamage: 13
   lowerMaxDamage: 19
   upperMaxDamage: 23
-  damageIncrementPerLevel: 3
   attackSpeed: 3
   gameObject: {fileID: 1305185763060277112, guid: 10eba79b1f221c04398f01f01cac51c3,
     type: 3}

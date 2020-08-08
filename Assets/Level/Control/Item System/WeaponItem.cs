@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 [System.Serializable]
@@ -8,11 +9,23 @@ public class WeaponItem : Item
     /// <summary>
     /// typ zbraně
     /// </summary>
-    public WeaponType weaponType;
+    public WeaponType weaponType
+    {
+        get
+        {
+            return ((WeaponPattern)pattern).weaponType;
+        }
+    }
     /// <summary>
     /// typ poškození zbraně
     /// </summary>
-    public Damager.DamageType damageType;
+    public Damager.DamageType damageType
+    {
+        get
+        {
+            return ((WeaponPattern)pattern).damageType;
+        }
+    }
     /// <summary>
     /// minimální poškození zbraně
     /// </summary>
@@ -24,52 +37,38 @@ public class WeaponItem : Item
     /// <summary>
     /// rychlost útoku zbraně
     /// </summary>
-    public int attackSpeed;
+    public int attackSpeed {
+        get {
+            return ((WeaponPattern)pattern).attackSpeed;
+        }
+    }
     /// <summary>
     /// game object zbraně
     /// </summary>
-    public GameObject weaponGameObject;
+    public GameObject weaponGameObject
+    {
+        get
+        {
+            return ((WeaponPattern)pattern).gameObject;
+        }
+    }
 
     public WeaponItem() : base()
     {
     }
 
-    public static WeaponItem Generate(Item item)
-    {
-        //vygenerování náhodného vzoru
-        WeaponPattern.AllWeaponPatterns = WeaponPattern.AllWeaponPatterns.Shuffle();
-        var pattern = WeaponPattern.AllWeaponPatterns.Find(w => (w.lowerItemLevel <= item.itemLevel && w.upperItemLevel >= item.itemLevel));
-
-        if (pattern == null)
-        {
-            Debug.Log("Neexistuje zbraň s daným item levelem.");
-            return null;
-        }
-        else
-        {
-            return Generate(item, pattern);
-        }
-    }
-
-    public static WeaponItem Generate(Item item,WeaponPattern pattern,bool noStats=false) {
+    public static WeaponItem Generate(WeaponPattern pattern,bool noStats=false) {
         //přiřazení vlastností, které mají všechny předměty společné
         WeaponItem weapon = new WeaponItem
         {
-            itemLevel = item.itemLevel,
-            rarity = item.rarity,
-            quality = item.quality,
             itemType = ItemType.Weapon,
             itemStats = new Stat[0],
+            quality = Quality.Basic,
 
             //přiřazení vlastností, které vycházejí ze vzoru
-            attackSpeed = pattern.attackSpeed,
-            sprite = pattern.sprite,
-            itemName = pattern.name,
-            weaponType = pattern.weaponType,
-            damageType = pattern.damageType,
-            weaponGameObject = pattern.gameObject,
-            minDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1),
-            maxDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1)
+            pattern = pattern,
+            minDamage = Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1),
+            maxDamage = Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1)
         };
         
         if(!noStats)weapon.GenerateStats();
@@ -84,20 +83,13 @@ public class WeaponItem : Item
         WeaponItem weapon = new WeaponItem
         {
             itemType = ItemType.Weapon,
-            itemLevel = save.ItemLevel,
-            rarity = save.ItemRarity,
+            pattern = pattern,
             quality = save.ItemQuality,
             minDamage = save.MinDamage,
             maxDamage = save.MaxDamage,
             itemStats = save.ItemStats,
 
             //přiřazení vlastností, které vycházejí ze vzoru
-            attackSpeed = pattern.attackSpeed,
-            damageType = pattern.damageType,
-            sprite = pattern.sprite,
-            itemName = pattern.name,
-            weaponType = pattern.weaponType,
-            weaponGameObject = pattern.gameObject
         };
 
         return weapon;

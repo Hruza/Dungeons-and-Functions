@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,13 +11,17 @@ public class ItemPattern : ScriptableObject
     /// </summary>
     public string name;
     /// <summary>
-    /// minimální možný item level, který může předmět mít
+    /// muze byt jako odmena za level
     /// </summary>
-    public int lowerItemLevel;
+    public bool obtainableAsDrop=true;
     /// <summary>
-    /// maximální možný item level, který může předmět mít
+    /// minimální obtížnost, při které se 
     /// </summary>
-    public int upperItemLevel;
+    public int level;
+    /// <summary>
+    /// rarita predmetu
+    /// </summary>
+    public Rarity rarity;
     /// <summary>
     /// sprite předmětu
     /// </summary>
@@ -30,10 +35,13 @@ public class ItemPattern : ScriptableObject
     /// </summary>
     public bool isStarting = false;
 
-    public bool fixedRarity = false;
-    public Rarity fixedRarityValue = Rarity.Common;
-
     public virtual ItemType Type() {
         return ItemType.none;
+    }
+
+    const int levelCoefficient = 5;
+    const int rarityCoefficient = 10;
+    public int EvaluateScore() {
+        return ( levelCoefficient * level ) + ( rarityCoefficient * (int)rarity );
     }
 }

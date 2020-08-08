@@ -21,10 +21,28 @@ public class LevelController : MonoBehaviour {
     private int roomCountToClear;
     private int clearedRoomCount;
     private Level level;
+    private static int score;
+
+    private static int Score {
+        get {
+            return score;
+        }
+        set {
+            score = value;
+            //ToDo: animation
+        }
+    }
+
+    static void KilledEnemy(int score) {
+        Score += score;
+    }
+
+    private const int roomClearedScore=5;
 
     public void RoomCleared()
     {
         clearedRoomCount++;
+        Score += roomClearedScore;
         if (clearedRoomCount >= roomCountToClear)
         {
             Interactable.exit.SetInteractable();
@@ -52,6 +70,7 @@ public class LevelController : MonoBehaviour {
 
     //Setup of level
     void Start() {
+        score = 0;
         Player.player.GetComponent<PlayerMovement>().enabled = false;
         LeanTween.moveZ(Player.player,0,2f).setFrom(-30).setEaseOutBounce();
         Vignette vignette;
@@ -152,7 +171,7 @@ public class LevelController : MonoBehaviour {
     /// </summary>
     public static void LevelSuccesfulyExit() {
         MenuController.playerProgress.LevelCompleted(MenuController.selectedLevel.progressID);
-        LevelResults result = new LevelResults(true, levelController.clearedRoomCount, levelController.level.roomCount,LevelController.secrets);
+        LevelResults result = new LevelResults(true, levelController.clearedRoomCount, levelController.level.roomCount,Score,LevelController.secrets);
         MenuController.LevelExit(result);
     }
 
@@ -161,7 +180,7 @@ public class LevelController : MonoBehaviour {
     /// </summary>
     public void Exit() {
         Time.timeScale = 1;
-        LevelResults result = new LevelResults(false, levelController.clearedRoomCount, levelController.level.roomCount,LevelController.secrets);
+        LevelResults result = new LevelResults(false, levelController.clearedRoomCount, levelController.level.roomCount,Score,LevelController.secrets);
         MenuController.LevelExit(result);
     }
 
@@ -172,11 +191,13 @@ public class LevelResults{
     public int clearedCount;
     public int totalRooms;
     public List<SecretRoom> secrets;
+    public int score;
 
-    public LevelResults(bool completed, int clearedCount, int totalRooms,List<SecretRoom> secrets) {
+    public LevelResults(bool completed, int clearedCount, int totalRooms, int score,List<SecretRoom> secrets) {
         this.completd = completed;
         this.clearedCount = clearedCount;
         this.totalRooms = totalRooms;
         this.secrets = secrets;
+        this.score = score;
     }
 }
