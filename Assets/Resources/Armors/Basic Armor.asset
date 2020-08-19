@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Basic Armor
   m_EditorClassIdentifier: 
   name: Basic Armor
-  lowerItemLevel: 1
-  upperItemLevel: 10000
+  obtainableAsDrop: 1
+  level: 0
+  rarity: 0
   sprite: {fileID: 21300000, guid: b92e541b30d44ab45a6eeb21bfd0ab5e, type: 3}
   itemComment: Looks nice, feels nice, won't help with math.
   isStarting: 0
-  lowerArmor: 0
-  upperArmor: 2
+  lowerArmor: 1
+  upperArmor: 3
   movementSpeedReduction: 0
-  armorIncrementPerLevel: 4

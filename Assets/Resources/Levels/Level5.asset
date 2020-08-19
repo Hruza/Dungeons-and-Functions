@@ -15,7 +15,8 @@ MonoBehaviour:
   levelName: Convergence
   progressID: 4
   lootAfterFinish: 1
-  difficulty: 4
+  isSecret: 0
+  difficulty: 2
   enemies:
   - count: 3
     enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
@@ -24,7 +25,12 @@ MonoBehaviour:
   - count: 3
     enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
   roomCount: 3
+  advantageFactor: 0
   generatorPreset: 0
   roomConnections: 1
+  preset: 0
+  bossRoom: 0
+  bossEnemies: []
   loot: []
   secretRooms: []
+  spawnEnemiesInCenter: 0

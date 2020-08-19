@@ -133,7 +133,7 @@ public class Projectile : MonoBehaviour {
         string tag = collision.gameObject.tag;
         if ((tag == "Enemy" && damageEnemies) || ((tag=="Shield" || tag == "Player") && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
         {
-            Damager.InflictDamage(collision.gameObject, damage, damageType);
+            Damager.InflictDamage(collision.gameObject, damage, rb.velocity, damageType);
             if (knockback + perpKnockback != 0)
             {
                 Vector2 dif=(Vector2)(collision.gameObject.transform.position - transform.position);
@@ -150,7 +150,7 @@ public class Projectile : MonoBehaviour {
         }
         else if (tag == "Destroyable" && damageDestroyables)
         {
-            Damager.InflictDamage(collision.gameObject, damage, damageType);
+            Damager.InflictDamage(collision.gameObject, damage, rb.velocity,damageType);
         }
         if (destroyOnAnyCollision) End();
         if (destroyOnWorldCollision && (collision.gameObject.layer == LayerMask.NameToLayer("Map") || tag == "Map" || tag=="Destroyable")) End() ;
@@ -184,7 +184,7 @@ public class Projectile : MonoBehaviour {
             {
                 Vector3 dir = coll.gameObject.transform.position - transform.position;
                 if (!Physics2D.Raycast(transform.position, dir, dir.magnitude, LayerMask.GetMask("Map", "Shield"))) {
-                    Damager.InflictDamage(coll.gameObject, explosionDamageMultiplicator * damage * explosionDamageDistribution.Evaluate(Mathf.Clamp((coll.gameObject.transform.position - transform.position).magnitude / explosionRadius, 0, 1)), damageType);
+                    Damager.InflictDamage(coll.gameObject, explosionDamageMultiplicator * damage * explosionDamageDistribution.Evaluate(Mathf.Clamp((coll.gameObject.transform.position - transform.position).magnitude / explosionRadius, 0, 1)),dir.normalized*damage, damageType);
                 }
             }
         }

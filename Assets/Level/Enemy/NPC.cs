@@ -111,9 +111,9 @@ public abstract class NPC : MonoBehaviour
     public virtual void Initialize(EnemyProperties properties)
     {
         Level = properties.Level;
-        MaxHP = properties.baseHP+(Level*properties.perLevelHPIncrement);
+        MaxHP = properties.baseHP;
         HP = MaxHP;
-        Damage = properties.baseDamage+(Level*properties.perLevelDamageIncrement);
+        Damage = properties.damage;
         weaknesses = properties.weaknesses;
         if (showBossHealth) LevelController.levelController.InitializeBossBar(properties.name,MaxHP);
     }

@@ -16,7 +16,7 @@ MonoBehaviour:
   progressID: 14
   lootAfterFinish: 1
   isSecret: 0
-  difficulty: 8
+  difficulty: 4
   enemies:
   - count: 10
     enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
@@ -33,8 +33,12 @@ MonoBehaviour:
   - count: 2
     enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
   roomCount: 1
+  advantageFactor: 0
   generatorPreset: 2
   roomConnections: 1
+  preset: 0
+  bossRoom: 0
+  bossEnemies: []
   loot: []
   secretRooms:
   - type: 1

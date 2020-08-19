@@ -205,7 +205,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 100
   HP: 100
-  onDeathParticles: {fileID: 0}
+  onDeathParticles: {fileID: 3256072869359664319, guid: bb95dca0b6768f94592cf9b4c245f0d4,
+    type: 3}
   disableOnDeath: []
   deathTime: 0
   weaknesses:

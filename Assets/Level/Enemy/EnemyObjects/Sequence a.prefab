@@ -226,7 +226,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 100
   HP: 100
-  onDeathParticles: {fileID: 9041619022694642387}
+  onDeathParticles: {fileID: 3256072869359664319, guid: bb95dca0b6768f94592cf9b4c245f0d4,
+    type: 3}
   disableOnDeath: []
   deathTime: 0
   weaknesses:
@@ -411,12 +412,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6157199a7e3044042a0f15bb485a2c62, type: 3}
---- !u!1 &9041619022694642387 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8847408700539712980, guid: 6157199a7e3044042a0f15bb485a2c62,
-    type: 3}
-  m_PrefabInstance: {fileID: 554514288962586375}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &50397324782087028 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 504697652382428275, guid: 6157199a7e3044042a0f15bb485a2c62,

@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Exponential
   orderID: 6
   sprite: {fileID: 21300000, guid: 65a6d0f678e2e49449893968641d2c23, type: 3}
+  score: 1
   baseHP: 20
-  perLevelHPIncrement: 6
   weaknesses:
     neutralMult: 1
     AnlMult: 1.2
@@ -24,7 +24,6 @@ MonoBehaviour:
     AlgMult: 0.8
   damageType: 0
   aiType: 0
-  baseDamage: 20
-  perLevelDamageIncrement: 5
+  damage: 15
   EnemyGameObject: {fileID: 5101788237483465924, guid: b4d7de73a4741f64781fccf72564e270,
     type: 3}

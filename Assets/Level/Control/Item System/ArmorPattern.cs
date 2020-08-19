@@ -19,10 +19,6 @@ public class ArmorPattern : ItemPattern
     /// </summary>
     public int movementSpeedReduction;
     /// <summary>
-    /// kolik armoru se prida za kazdy level
-    /// </summary>
-    public int armorIncrementPerLevel;
-    /// <summary>
     /// databáze všech možných brnění
     /// </summary>
     public static List<ArmorPattern> AllArmorPatterns;

@@ -8,6 +8,7 @@ public class Damager
 
     public int value;
     public DamageType type;
+    public Vector2 direction;
 
     static public Color GetColor(DamageType type) {
         switch (type)
@@ -25,26 +26,26 @@ public class Damager
         }
     }
 
-    public Damager(int damageValue, DamageType type = DamageType.neutral)
+    public Damager(int damageValue, Vector2 direction,DamageType type = DamageType.neutral)
     {
         this.value = damageValue;
         this.type = type;
     }
 
-    public Damager(float damageValue, DamageType type = DamageType.neutral)
+    public Damager(float damageValue, Vector2 direction, DamageType type = DamageType.neutral)
     {
         this.value = Mathf.RoundToInt(damageValue);
         this.type = type;
     }
 
-    static public void InflictDamage(GameObject damaged, float damageValue, DamageType type = DamageType.neutral)
+    static public void InflictDamage(GameObject damaged, float damageValue, Vector2 direction ,DamageType type = DamageType.neutral)
     {
-        InflictDamage(damaged, Mathf.RoundToInt(damageValue), type);
+        InflictDamage(damaged, Mathf.RoundToInt(damageValue),direction, type);
     }
 
-    static public void InflictDamage(GameObject damaged, int damageValue, DamageType type = DamageType.neutral)
+    static public void InflictDamage(GameObject damaged, int damageValue, Vector2 direction , DamageType type = DamageType.neutral)
     {
-        Damager dmg = new Damager(damageValue, type);
+        Damager dmg = new Damager(damageValue, direction,type);
         damaged.SendMessage("GetDamage", dmg, SendMessageOptions.DontRequireReceiver);
     }
 

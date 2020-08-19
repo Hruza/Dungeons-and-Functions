@@ -165,7 +165,7 @@ public class Item
             sum = 0;
             for (int i=0; i<possiblePatts.Count; i++)
             {
-                props[i] = possiblePatts[i].level / levelDifficulty;
+                props[i] = (float)possiblePatts[i].level / levelDifficulty;
                 props[i] /= Mathf.Pow( 2,(int)possiblePatts[i].rarity );
                 props[i] *= Distribution(possiblePatts[i].EvaluateScore(), score);
                 sum += props[i];
@@ -215,7 +215,10 @@ public class Item
     public void GenerateStats()
     {
         int numberOfStats = (int)rarity;
-
+        if (StatPattern.AllStatPatterns == null) {
+            Debug.LogError("Stats are not initiated");
+            return;
+        }
         List<StatPattern> possibleStatPatterns = StatPattern.AllStatPatterns.Where<StatPattern>
                                                 (s => (s.possibleItems.Contains(itemType) == true)).ToList();
         

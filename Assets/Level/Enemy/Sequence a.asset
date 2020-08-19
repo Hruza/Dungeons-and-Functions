@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Sequence a
   m_EditorClassIdentifier: 
   name: Sequence a
+  orderID: 1
   sprite: {fileID: 21300000, guid: 8843754396a61e949904c8ee9f1e6838, type: 3}
+  score: 1
   baseHP: 20
-  perLevelHPIncrement: 9
   weaknesses:
     neutralMult: 1
     AnlMult: 1
@@ -23,7 +24,6 @@ MonoBehaviour:
     AlgMult: 1.2
   damageType: 0
   aiType: 0
-  baseDamage: 20
-  perLevelDamageIncrement: 5
+  damage: 10
   EnemyGameObject: {fileID: 1815225491643999580, guid: 4151d1f3dfd8bde47853d6d8cae73fff,
     type: 3}

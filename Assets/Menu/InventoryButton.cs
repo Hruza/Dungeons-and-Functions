@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class InventoryButton : TooltipButton
 {
     public ItemInventory itemInventory;
+    public GameObject triggerOnClick;
     private Item item;
 
     [Header("Colors")]
@@ -14,7 +15,6 @@ public class InventoryButton : TooltipButton
     static public Color rareColor = Color.blue;
     static public Color uniqueColor = Color.magenta;
     static public Color legendaryColor = Color.yellow;
-
 
     public Image image;
     public Item CarriedItem{
@@ -61,7 +61,14 @@ public class InventoryButton : TooltipButton
 
     public void Click()
     {
-    itemInventory.ButtonClick(item);
+        if (itemInventory != null)
+        {
+            itemInventory.ButtonClick(item);
+        }
+        if (triggerOnClick != null) {
+            Debug.Log("Message sent");
+            triggerOnClick.SendMessage("ButtonClicked",this,SendMessageOptions.RequireReceiver);
+        }
     }
 
     public void OnScroll(UnityEngine.EventSystems.PointerEventData data) {

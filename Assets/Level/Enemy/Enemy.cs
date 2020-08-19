@@ -265,7 +265,7 @@ public class Enemy : NPC
 
                 col.GetComponent<PlayerMovement>().Knockback((col.transform.position - transform.position).normalized * CurrentPhase.knockback);
 
-                Damager.InflictDamage(col.gameObject, CurrentPhase.DamageMultiplier * Damage, damageType);
+                Damager.InflictDamage(col.gameObject, CurrentPhase.DamageMultiplier * Damage,(col.transform.position-transform.position).normalized, damageType);
 
             }
         }

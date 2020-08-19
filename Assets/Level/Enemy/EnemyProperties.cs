@@ -20,15 +20,14 @@ public class EnemyProperties : ScriptableObject {
     public int score = 1;
 
     public int baseHP;
-    public int perLevelHPIncrement;
 
     public Weaknesses weaknesses;
 
     public Damager.DamageType damageType;
     public AIType aiType;
 
-    public int baseDamage;
-    public int perLevelDamageIncrement;
+    public int damage;
+
 
     private int level;
     public int Level {

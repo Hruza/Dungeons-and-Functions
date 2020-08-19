@@ -80,6 +80,7 @@ public class MenuController : MonoBehaviour
         else
         {
             newPage = afterLevelPage;
+            pages[afterLevelPage].SetActive(true);
             pages[afterLevelPage].GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
             InitializeLevels();
             itemInventory.ReloadInventory();

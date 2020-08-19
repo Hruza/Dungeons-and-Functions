@@ -42,7 +42,7 @@ public class MeleeEnemyAI : EnemyAI
 
                 col.GetComponent<PlayerMovement>().Knockback((col.transform.position - transform.position).normalized * knockback);
 
-                Damager.InflictDamage(col.gameObject, Damage, damageType);
+                Damager.InflictDamage(col.gameObject, Damage, (col.transform.position - transform.position).normalized, damageType);
 
             }
         }

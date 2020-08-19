@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Sum of b
   orderID: 4
   sprite: {fileID: 21300000, guid: 3b0d445845a15504d8c81590bbb12848, type: 3}
+  score: 1
   baseHP: 70
-  perLevelHPIncrement: 5
   weaknesses:
     neutralMult: 1
     AnlMult: 1
@@ -24,7 +24,6 @@ MonoBehaviour:
     AlgMult: 0.8
   damageType: 0
   aiType: 0
-  baseDamage: 1
-  perLevelDamageIncrement: 0
+  damage: 5
   EnemyGameObject: {fileID: 4719645516164970819, guid: 978eecb630f3e9245ba7452a6ec66ee3,
     type: 3}

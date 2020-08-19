@@ -37,7 +37,7 @@ public class LevelController : MonoBehaviour {
         Score += score;
     }
 
-    private const int roomClearedScore=5;
+    private const int roomClearedScore = 5;
 
     public void RoomCleared()
     {
@@ -54,7 +54,7 @@ public class LevelController : MonoBehaviour {
             bossBar.GetComponent<Slider>().value = 0;
         }
         else
-            bossBar.GetComponent<Slider>().value= value;
+            bossBar.GetComponent<Slider>().value = value;
     }
 
     public void InitializeBossBar(string bossName, int maxHP) {
@@ -72,14 +72,14 @@ public class LevelController : MonoBehaviour {
     void Start() {
         score = 0;
         Player.player.GetComponent<PlayerMovement>().enabled = false;
-        LeanTween.moveZ(Player.player,0,2f).setFrom(-30).setEaseOutBounce();
+        LeanTween.moveZ(Player.player, 0, 2f).setFrom(-30).setEaseOutBounce();
         Vignette vignette;
         if (volume.profile.TryGet<Vignette>(out vignette))
         {
-             LeanTween.value(volume.gameObject, 0.3f, 0, 2f).setOnUpdate((float flt) =>
-             {
-                 vignette.intensity.value = flt;
-             }).setOnComplete(PlayerReady);
+            LeanTween.value(volume.gameObject, 0.3f, 0, 2f).setOnUpdate((float flt) =>
+            {
+                vignette.intensity.value = flt;
+            }).setOnComplete(PlayerReady);
         }
         else {
             Debug.LogWarning("No vignette");
@@ -98,7 +98,7 @@ public class LevelController : MonoBehaviour {
         }
     }
 
-    private bool inMenu=false;
+    private bool inMenu = false;
 
     private void Update()
     {
@@ -125,7 +125,7 @@ public class LevelController : MonoBehaviour {
         menu.SetActive(false);
     }
 
-    public T GetEffect<T>(Volume volume) where T:UnityEngine.Rendering.VolumeComponent {
+    public T GetEffect<T>(Volume volume) where T : UnityEngine.Rendering.VolumeComponent {
         T effect;
 
         if (volume.profile.Has<T>())
@@ -140,18 +140,40 @@ public class LevelController : MonoBehaviour {
         return effect;
     }
 
+
+    private ChromaticAberration aberration;
+    private ChromaticAberration Aberration
+    {
+        get {
+            if (aberration == null) {
+                aberration = GetEffect<ChromaticAberration>(volume);
+            }
+            return aberration;
+        }
+        set {
+            if (aberration == null)
+            {
+                aberration = GetEffect<ChromaticAberration>(volume);
+            }
+            value = aberration;
+        }
+    }
+
+    public void AberrationEffect() {
+        LeanTween.value(volume.gameObject, 0, 1, 1f).setEasePunch().setOnUpdate((float flt) =>
+        {
+            Aberration.intensity.value = flt;
+        });
+    }
+
     /// <summary>
     /// Zavola se pri zabiti hrace
     /// </summary>
     public void PlayerDied() {
-        ChromaticAberration aberration = GetEffect<ChromaticAberration>(volume);
-        LeanTween.value(volume.gameObject, 0, 1, 1f).setEasePunch().setOnUpdate((float flt) =>
-        {
-            aberration.intensity.value = flt;
-        }).setOnComplete(DeathMenu);
 
+        Invoke("DeathMenu",1);
         LensDistortion distortion = GetEffect<LensDistortion>(volume);
-        LeanTween.value(volume.gameObject, 0, -0.25f, 1f).setEasePunch().setOnUpdate((float flt) =>
+        LeanTween.value(volume.gameObject, 0, -0.25f, 2f).setEasePunch().setOnUpdate((float flt) =>
         {
             distortion.intensity.Override(flt);
         });
@@ -193,11 +215,19 @@ public class LevelResults{
     public List<SecretRoom> secrets;
     public int score;
 
+    public int additionalLoot = 0;
+
     public LevelResults(bool completed, int clearedCount, int totalRooms, int score,List<SecretRoom> secrets) {
         this.completd = completed;
         this.clearedCount = clearedCount;
         this.totalRooms = totalRooms;
         this.secrets = secrets;
         this.score = score;
+    }
+
+    public bool ClearedAll {
+        get {
+            return clearedCount == totalRooms;
+        }
     }
 }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour {
-    public int MaxHP=100;
-    public int HP = 100;
+    public int MaxHP=50;
+    public int HP = 50;
     public GameObject onDeathParticles;
     public Behaviour[] disableOnDeath;
     public float deathTime=0;
@@ -28,15 +28,17 @@ public class Health : MonoBehaviour {
     public void GetDamage(Damager damage) {
         HP -=  damage.EvaluateDamage(weaknesses);
         Messager.ShowMessage(damage.EvaluateDamage(weaknesses).ToString(), transform.position, Color.white, damage.type);
-        if (HP <= 0) Die();
+        if (HP <= 0) Die(damage);
         if (anim != null) anim.SetTrigger("getDamage");
     }
 
-    private void Die()
+    private void Die(Damager damage)
     {
+        Debug.Log(damage.direction);
         if (onDeathParticles != null)
         {
-            GameObject particles = (GameObject)Instantiate(onDeathParticles, transform.position, transform.rotation);
+            Debug.DrawRay(transform.position,damage.direction,Color.red,10);
+            GameObject particles = (GameObject)Instantiate(onDeathParticles, transform.position, Quaternion.Euler(0,0,Vector2.SignedAngle(Vector2.up,damage.direction)));
             Destroy(particles, 3);
         }
         Destroy(this.gameObject,deathTime);

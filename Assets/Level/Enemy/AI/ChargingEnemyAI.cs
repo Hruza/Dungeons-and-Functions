@@ -58,7 +58,7 @@ public class ChargingEnemyAI : EnemyAI
                 collided.Add(col);
                 col.GetComponent<PlayerMovement>().Knockback((col.transform.position - transform.position).normalized * knockback);
 
-                Damager.InflictDamage(col.gameObject, Damage, damageType);
+                Damager.InflictDamage(col.gameObject, Damage, (col.transform.position - transform.position).normalized, damageType);
 
             }
         }

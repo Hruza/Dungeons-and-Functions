@@ -67,7 +67,7 @@ public class MeleeEnemy : NPC
             {
                 
                 col.GetComponent<PlayerMovement>().Knockback((col.transform.position - transform.position).normalized*knockback);
-                Damager.InflictDamage(col.gameObject,Damage);
+                Damager.InflictDamage(col.gameObject,Damage,(col.transform.position-transform.position).normalized);
             }
         } 
         Decide();

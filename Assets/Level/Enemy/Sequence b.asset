@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Sequence b
   orderID: 2
   sprite: {fileID: 21300000, guid: a62de4a463e89e64fb7b94315db2d09f, type: 3}
+  score: 1
   baseHP: 20
-  perLevelHPIncrement: 6
   weaknesses:
     neutralMult: 1
     AnlMult: 1.2
@@ -24,7 +24,6 @@ MonoBehaviour:
     AlgMult: 1
   damageType: 0
   aiType: 0
-  baseDamage: 8
-  perLevelDamageIncrement: 5
+  damage: 8
   EnemyGameObject: {fileID: 1912209089370650, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
     type: 3}

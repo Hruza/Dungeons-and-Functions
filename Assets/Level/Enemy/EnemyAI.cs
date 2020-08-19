@@ -78,8 +78,8 @@ public class EnemyAI : MonoBehaviour
     {
         Level = properties.Level;
         score = properties.score;
-        health.Initialize(properties.baseHP + (Level * properties.perLevelHPIncrement), properties.weaknesses, isBoss,properties.name);
-        Damage = properties.baseDamage + (Level * properties.perLevelDamageIncrement);
+        health.Initialize(properties.baseHP , properties.weaknesses, isBoss,properties.name);
+        Damage = properties.damage ;
     }
 
     public void WalkEnded(Walker.WalkingOutput output) {

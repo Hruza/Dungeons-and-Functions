@@ -29,8 +29,8 @@ public class InvTooltip : MonoBehaviour
             itemName.text = enemy.name;
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("{0} enemy\n", enemy.aiType);
-            sb.AppendFormat("<b>HP:</b> {0}\n", enemy.baseHP + (enemy.perLevelHPIncrement * enemy.Level));
-            sb.AppendFormat("<b>Damage:</b> {0} <color=#{1}>{2}<color=black>\n", enemy.baseDamage + (enemy.Level * enemy.perLevelDamageIncrement), ColorUtility.ToHtmlStringRGB(Damager.GetColor(enemy.damageType)),enemy.damageType);
+            sb.AppendFormat("<b>HP:</b> {0}\n", enemy.baseHP);
+            sb.AppendFormat("<b>Damage:</b> {0} <color=#{1}>{2}<color=black>\n", enemy.damage, ColorUtility.ToHtmlStringRGB(Damager.GetColor(enemy.damageType)),enemy.damageType);
 
             sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.neutral));
             sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.numeric));
