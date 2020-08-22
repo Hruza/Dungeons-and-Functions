@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Dragable : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragHandler,IPointerDownHandler
 {
-    public InventoryButton button;
+    public InventorySlot button;
     public bool isStatic = true;
     private RectTransform tr;
     private void Awake() {

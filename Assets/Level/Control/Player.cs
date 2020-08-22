@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     }
     public GameObject cam;
 
+    public GameObject deathParticles;
+
     /*nápady na to jak by to mohlo být
     static public float damageMultiplier=1;
 
@@ -221,6 +223,7 @@ public class Player : MonoBehaviour
     private void Die()
     {
         LevelController.levelController.PlayerDied();
+        if(deathParticles!=null) Instantiate(deathParticles, transform.position, transform.rotation);
         this.gameObject.SetActive(false);    
     }
 
@@ -234,7 +237,7 @@ public class Player : MonoBehaviour
         if (armor == null)
             Armor = 0;
         else
-            Armor = ((ArmorItem)(armor)).armor * (100 + equip.AllStats["ArmorMultiplicative"]) / 100 + equip.AllStats["ArmorAdditive"];
+            Armor = ((ArmorItem)(armor)).Armor * (100 + equip.AllStats["ArmorMultiplicative"]) / 100 + equip.AllStats["ArmorAdditive"];
     }
 
     /// <summary>

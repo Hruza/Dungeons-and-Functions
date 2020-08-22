@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8430b7fc38646fd48a60d30020c089c2, type: 3}
   m_Name: Basic Armor
   m_EditorClassIdentifier: 
-  name: Basic Armor
+  name: Basic light armor
   obtainableAsDrop: 1
-  level: 0
+  level: 1
   rarity: 0
   sprite: {fileID: 21300000, guid: b92e541b30d44ab45a6eeb21bfd0ab5e, type: 3}
   itemComment: Looks nice, feels nice, won't help with math.
   isStarting: 0
-  lowerArmor: 1
-  upperArmor: 3
+  lowerArmor: 2
+  upperArmor: 4
   movementSpeedReduction: 0

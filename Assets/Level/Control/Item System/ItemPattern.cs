@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,12 +36,15 @@ public class ItemPattern : ScriptableObject
     /// </summary>
     public bool isStarting = false;
 
+
+    public ItemPattern upgrade;
+
     public virtual ItemType Type() {
         return ItemType.none;
     }
 
-    const int levelCoefficient = 5;
-    const int rarityCoefficient = 10;
+    public const int levelCoefficient = 9;
+    public const int rarityCoefficient = 5;
     public int EvaluateScore() {
         return ( levelCoefficient * level ) + ( rarityCoefficient * (int)rarity );
     }

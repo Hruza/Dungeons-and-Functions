@@ -108,8 +108,10 @@ public class Level : ScriptableObject
 
     public GeneratorV2.GeneratorPreset preset = GeneratorV2.GeneratorPreset.normal;
 
-    public bool bossRoom = false;
-    
+    public GameObject bossRoom;
+
+    public int enemiesPerWave=5;
+
     public EnemyBundle[] bossEnemies;
 
     public ItemPattern[] loot;

@@ -30,12 +30,14 @@ public class Damager
     {
         this.value = damageValue;
         this.type = type;
+        this.direction = direction;
     }
 
     public Damager(float damageValue, Vector2 direction, DamageType type = DamageType.neutral)
     {
         this.value = Mathf.RoundToInt(damageValue);
         this.type = type;
+        this.direction = direction;
     }
 
     static public void InflictDamage(GameObject damaged, float damageValue, Vector2 direction ,DamageType type = DamageType.neutral)

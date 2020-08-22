@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
-  m_Name: Sequence b
+  m_Name: Dummy
   m_EditorClassIdentifier: 
-  name: Sequence b
-  orderID: 2
-  sprite: {fileID: 21300000, guid: a62de4a463e89e64fb7b94315db2d09f, type: 3}
+  name: Dummy
+  orderID: 1
+  sprite: {fileID: 0}
   score: 1
-  baseHP: 20
+  baseHP: 500
   weaknesses:
     neutralMult: 1
-    AnlMult: 1.2
-    NumMult: 0.7
-    AlgMult: 1
+    AnlMult: 0
+    NumMult: 11
+    AlgMult: 0
   damageType: 0
   aiType: 0
-  damage: 8
-  EnemyGameObject: {fileID: 1912209089370650, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
+  damage: 0
+  EnemyGameObject: {fileID: 1912209089370650, guid: ad4da7bf36ec2db4a858df5b986fc42a,
     type: 3}

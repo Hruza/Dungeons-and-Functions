@@ -12128,6 +12128,16 @@ PrefabInstance:
       propertyPath: itemInventory
       value: 
       objectReference: {fileID: 2109465157}
+    - target: {fileID: 3444535224751842203, guid: f51060c793fc7784ab33068e9a14376b,
+        type: 3}
+      propertyPath: container
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444535224751842203, guid: f51060c793fc7784ab33068e9a14376b,
+        type: 3}
+      propertyPath: onlyContained
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5174204126752462789, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_Color.r
@@ -12147,16 +12157,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2109465157}
+      objectReference: {fileID: 1873459939}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DeequipClick
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InventorySlot, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6570783358158697624, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
@@ -13111,25 +13126,40 @@ PrefabInstance:
       propertyPath: itemInventory
       value: 
       objectReference: {fileID: 2109465157}
+    - target: {fileID: 3444535224751842203, guid: f51060c793fc7784ab33068e9a14376b,
+        type: 3}
+      propertyPath: container
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444535224751842203, guid: f51060c793fc7784ab33068e9a14376b,
+        type: 3}
+      propertyPath: onlyContained
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2109465157}
+      objectReference: {fileID: 1242160098}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DeequipClick
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InventorySlot, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6570783358158697624, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
@@ -15644,7 +15674,7 @@ RectTransform:
   m_Father: {fileID: 20376291}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.00000011920929, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -20168,25 +20198,40 @@ PrefabInstance:
       propertyPath: itemInventory
       value: 
       objectReference: {fileID: 2109465157}
+    - target: {fileID: 3444535224751842203, guid: f51060c793fc7784ab33068e9a14376b,
+        type: 3}
+      propertyPath: container
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444535224751842203, guid: f51060c793fc7784ab33068e9a14376b,
+        type: 3}
+      propertyPath: onlyContained
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2109465157}
+      objectReference: {fileID: 785754760}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DeequipClick
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6109818817503960600, guid: f51060c793fc7784ab33068e9a14376b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InventorySlot, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6570783358158697624, guid: f51060c793fc7784ab33068e9a14376b,
         type: 3}
@@ -26633,8 +26678,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190227
-  m_fontColor: {r: 0.5754717, g: 0, b: 0, a: 1}
+    rgba: 4280427184
+  m_fontColor: {r: 0.6886792, g: 0.13318795, b: 0.13318795, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -26709,7 +26754,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501736187}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -29426,14 +29471,14 @@ MonoBehaviour:
   m_text: Completed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87d33764699572d43b90c4b516e4b2cf, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: d0ec797c992397547b8440562ab3c69a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ea3df8348af09e84990e8852e42e43e4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283029503
-  m_fontColor: {r: 1, g: 0.8441859, b: 0.28773582, a: 1}
+    rgba: 4282627284
+  m_fontColor: {r: 0.8301887, g: 0.70675004, b: 0.26237094, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -31354,8 +31399,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 866599631}
   m_HandleRect: {fileID: 866599630}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.9999999
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

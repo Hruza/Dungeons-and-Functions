@@ -45,7 +45,7 @@ public class InventoryPanel : MonoBehaviour
     private void SetButton(GameObject button, int index) {
         if (itemPanel)
         {
-            InventoryButton buttonComp = button.GetComponent<InventoryButton>();
+            InventorySlot buttonComp = button.GetComponent<InventorySlot>();
             if (itemInventory != null) buttonComp.itemInventory = itemInventory;
             buttonComp.CarriedItem = Items[index];
         }

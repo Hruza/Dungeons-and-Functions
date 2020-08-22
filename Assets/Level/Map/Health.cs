@@ -34,13 +34,6 @@ public class Health : MonoBehaviour {
 
     private void Die(Damager damage)
     {
-        Debug.Log(damage.direction);
-        if (onDeathParticles != null)
-        {
-            Debug.DrawRay(transform.position,damage.direction,Color.red,10);
-            GameObject particles = (GameObject)Instantiate(onDeathParticles, transform.position, Quaternion.Euler(0,0,Vector2.SignedAngle(Vector2.up,damage.direction)));
-            Destroy(particles, 3);
-        }
         Destroy(this.gameObject,deathTime);
         if (deathTime > 0) {
             foreach (Behaviour behaviour in disableOnDeath)
@@ -48,6 +41,13 @@ public class Health : MonoBehaviour {
                 behaviour.enabled = false;
             }
             anim.SetTrigger("die");
+        }
+        if (onDeathParticles != null)
+        {
+            Debug.DrawRay(transform.position,damage.direction,Color.red,10);
+            GameObject particles = (GameObject)Instantiate(onDeathParticles, transform.position, Quaternion.Euler(0,0,Vector2.SignedAngle(Vector2.up,damage.direction)));
+            Destroy(particles, 3);
+            LevelController.levelController.ShakeCamera();
         }
     }
 }

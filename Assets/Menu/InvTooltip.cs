@@ -15,10 +15,10 @@ public class InvTooltip : MonoBehaviour
     private Item item;
     private EnemyProperties enemy;
 
-    public static readonly string[] rarityColors = { ColorUtility.ToHtmlStringRGB(InventoryButton.commonColor) ,
-                                                     ColorUtility.ToHtmlStringRGB(InventoryButton.rareColor),
-                                                     ColorUtility.ToHtmlStringRGB(InventoryButton.uniqueColor),
-                                                     ColorUtility.ToHtmlStringRGB(InventoryButton.legendaryColor) };
+    public static readonly string[] rarityColors = { ColorUtility.ToHtmlStringRGB(InventorySlot.commonColor) ,
+                                                     ColorUtility.ToHtmlStringRGB(InventorySlot.rareColor),
+                                                     ColorUtility.ToHtmlStringRGB(InventorySlot.uniqueColor),
+                                                     ColorUtility.ToHtmlStringRGB(InventorySlot.legendaryColor) };
 
     public EnemyProperties ShownEnemy {
         get {
@@ -30,12 +30,13 @@ public class InvTooltip : MonoBehaviour
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("{0} enemy\n", enemy.aiType);
             sb.AppendFormat("<b>HP:</b> {0}\n", enemy.baseHP);
-            sb.AppendFormat("<b>Damage:</b> {0} <color=#{1}>{2}<color=black>\n", enemy.damage, ColorUtility.ToHtmlStringRGB(Damager.GetColor(enemy.damageType)),enemy.damageType);
+            //sb.AppendFormat("<b>Damage:</b> {0} <color=#{1}>{2}<color=black>\n", enemy.damage, ColorUtility.ToHtmlStringRGB(Damager.GetColor(enemy.damageType)),enemy.damageType);
+            sb.AppendFormat("<b>Damage:</b> {0} \n", enemy.damage);
 
-            sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.neutral));
+            /*sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.neutral));
             sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.numeric));
             sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.analytic));
-            sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.algebraic));
+            sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.algebraic));*/
             sb.Append("\n");
             info.SetText(sb);
             GetComponent<RectTransform>().sizeDelta = new Vector2(210, 40 + info.preferredHeight);
@@ -71,7 +72,7 @@ public class InvTooltip : MonoBehaviour
                     break;
             }
             StringBuilder sb=new StringBuilder();
-            sb.AppendFormat("{0} level {1}\n",item.itemType, item.itemLevel);
+            sb.AppendFormat("{0} level {1} (score {2})\n",item.itemType, item.itemLevel,item.EvaluateScore());
             sb.AppendLine("<color=#"+rarityColors[item.rarity.GetHashCode()]+">"+item.rarity.ToString()+"<color=black>");
             int lines = 2;
             switch (item.itemType)
@@ -79,7 +80,7 @@ public class InvTooltip : MonoBehaviour
                 case ItemType.Armor:
                     ArmorItem am = (ArmorItem)item;
                     sb.AppendLine();
-                    sb.AppendFormat("<b>Armor:</b> {0}\n",am.armor);
+                    sb.AppendFormat("<b>Armor:</b> {0}\n",am.Armor);
                     sb.AppendFormat("<b>Speed reduction:</b> {0}\n", am.movementSpeedReduction);
                     lines += 3;
                     break;
@@ -87,7 +88,7 @@ public class InvTooltip : MonoBehaviour
                     sb.AppendLine();
                     WeaponItem wp = (WeaponItem)item;
                     sb.AppendLine(wp.weaponType.ToString());
-                    sb.AppendFormat("<b>Damage:</b> {0}-{1} <color=#{3}>{2}<color=black>\n", wp.minDamage, wp.maxDamage,wp.damageType, ColorUtility.ToHtmlStringRGB(Damager.GetColor(wp.damageType)));
+                    sb.AppendFormat("<b>Damage:</b> {0}-{1} <color=#{3}>{2}<color=black>\n", wp.MinDamage, wp.MaxDamage,wp.damageType, ColorUtility.ToHtmlStringRGB(Damager.GetColor(wp.damageType)));
                     sb.AppendFormat("<b>Attack speed:</b> {0}\n", wp.attackSpeed);
                     lines += 4;
                     break;

@@ -13,14 +13,12 @@ MonoBehaviour:
   m_Name: Hsuit
   m_EditorClassIdentifier: 
   name: "Hostiva\u0159 Suit"
-  lowerItemLevel: 8
-  upperItemLevel: 10000
+  obtainableAsDrop: 1
+  level: 4
+  rarity: 2
   sprite: {fileID: 21300000, guid: c533a58b44e846146884b503fd805d5d, type: 3}
-  itemComment: You have to run!...or do some other sport
+  itemComment: Swim faster or leave!
   isStarting: 0
-  fixedRarity: 0
-  fixedRarityValue: 0
   lowerArmor: 0
   upperArmor: 0
-  movementSpeedReduction: -5
-  armorIncrementPerLevel: 2
+  movementSpeedReduction: -2

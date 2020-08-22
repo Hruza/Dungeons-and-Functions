@@ -27,7 +27,8 @@ MonoBehaviour:
   generatorPreset: 0
   roomConnections: 2
   preset: 0
-  bossRoom: 0
+  bossRoom: {fileID: 0}
+  enemiesPerWave: 0
   bossEnemies: []
   loot: []
   secretRooms: []

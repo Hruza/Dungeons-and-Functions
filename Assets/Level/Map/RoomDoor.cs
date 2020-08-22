@@ -60,6 +60,9 @@ public class RoomDoor : MonoBehaviour
     public void OnClosed() {
         if(closedParticles!=null)
             closedParticles.Play();
+        if (LevelController.levelController != null) {
+            LevelController.levelController.ShakeCamera(0.5f);
+        }
     }
 
     public void OnOpen() {

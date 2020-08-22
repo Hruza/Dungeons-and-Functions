@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: ML Armor
   m_EditorClassIdentifier: 
   name: Math Lover Armor
-  lowerItemLevel: 4
-  upperItemLevel: 10000
+  obtainableAsDrop: 1
+  level: 2
+  rarity: 0
   sprite: {fileID: 21300000, guid: aeec81187a4582149b9c8b7c7b8e4b53, type: 3}
   itemComment: "The dream of every Matfyz\xE1k"
   isStarting: 0
-  lowerArmor: -3
-  upperArmor: 3
+  lowerArmor: 8
+  upperArmor: 12
   movementSpeedReduction: 2
-  armorIncrementPerLevel: 5

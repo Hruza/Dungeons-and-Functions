@@ -11,8 +11,8 @@ public class ItemInventory : MonoBehaviour
     public InventoryPanel otherPanel;
 
     [Header("Slots")]
-    public InventoryButton[] weapon;
-    public InventoryButton armor;
+    public InventorySlot[] weapon;
+    public InventorySlot armor;
 
     private PlayerProgress progress;
 
@@ -22,7 +22,7 @@ public class ItemInventory : MonoBehaviour
 
 
     public void ReloadInventory(){
-        defaultSize = armor.GetComponent<RectTransform>().sizeDelta;
+
         selectedWeapon = new WeaponItem[2];
         progress = MenuController.playerProgress;
         for (int i = 0; i <2; i++)
@@ -53,68 +53,51 @@ public class ItemInventory : MonoBehaviour
         armorPanel.Items = progress.armors.ConvertAll(x => (Item)x);
     }
 
-    /// <summary>
-    /// Zavola se pri stisknuti tlacitka s itemem, item bude vybrany pro hru
-    /// </summary>
-    /// <param name="item">item v tlacitku</param>
-    public void ButtonClick(Item item) {
-        switch (item.itemType)
+    public void ItemAdded(InventorySlot sender,Item item) {
+        if (sender == armor)
         {
-            case ItemType.Armor:
-                selectedArmor = item;
-                armor.CarriedItem = item;
-                Animate(armor);
-                break;
-            case ItemType.Weapon:
-                if ((selectedWeapon[0] == null || item.itemName == selectedWeapon[0].itemName) && (selectedWeapon[1]==null || item.itemName!=selectedWeapon[1].itemName) )
-                {
-                    selectedWeapon[0] = (WeaponItem)item;
-                    weapon[0].CarriedItem = item;
-                    Animate(weapon[0]);
-                }
-                else if ((selectedWeapon[1] == null || item.itemName == selectedWeapon[1].itemName ) && (selectedWeapon[0]==null || item.itemName != selectedWeapon[0].itemName))
-                {
-                    selectedWeapon[1] = (WeaponItem)item;
-                    weapon[1].CarriedItem = item;
-                    Animate(weapon[1]);
-                }
-                else if(selectedWeapon[0] != null && item.itemName != selectedWeapon[0].itemName && selectedWeapon[1]!=null && item.itemName != selectedWeapon[1].itemName)
-                {
-                    selectedWeapon[0] = (WeaponItem)item;
-                    weapon[0].CarriedItem = item;
-                    Animate(weapon[0]);
-                }
-                break;
-            default:
-                break;
+            selectedArmor = item;
+            return;
         }
-    }
-
-    private Vector2 defaultSize;
-
-    public void Animate(InventoryButton button) {
-        RectTransform tr = button.GetComponent<RectTransform>();
-        LeanTween.size(tr, defaultSize * 1.1f, 0.125f).setFrom(defaultSize).setRepeat(2).setLoopPingPong();
-    }
-
-    public void DeequipClick(int index) {
-        switch (index)
+        else if (sender == weapon[0])
         {
-            case 0:
-                weapon[0].CarriedItem = null;
-                selectedWeapon[0] = null;
-                break;
-            case 1:
-                weapon[1].CarriedItem = null;
+            selectedWeapon[0] = (WeaponItem)item;
+            if (selectedWeapon[1]==null || item.itemName == selectedWeapon[1].itemName) {
                 selectedWeapon[1] = null;
-                break;
-            case 3:
-                armor.CarriedItem = null;
-                selectedArmor = null;
-                break;
-            default:
-                break;
+                weapon[1].CarriedItem = null;
+            }
+            return;
         }
+        else if (sender == weapon[1]) {
+            selectedWeapon[1] = (WeaponItem)item;
+            if (selectedWeapon[0]==null || item.itemName == selectedWeapon[0].itemName)
+            {
+                selectedWeapon[0] = null;
+                weapon[0].CarriedItem = null;
+            }
+            return;
+        }
+        return;
+    }
+
+    public bool ItemRemoved(InventorySlot sender, Item item)
+    {
+        if (sender == armor)
+        {
+            selectedArmor = null;
+            return true;
+        }
+        else if (sender == weapon[0])
+        {
+            selectedWeapon[0] = null;
+            return true;
+        }
+        else if (sender == weapon[1])
+        {
+            selectedWeapon[1] = null;
+            return true;
+        }
+        return false;
     }
 
     public void PlayClick() {

@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultTargetTolerance: 0.5
   obstacleAvoidance: 1
-  maxSpeed: 30
+  maxSpeed: 40
   walkForce: 30
   giveUpTime: 5
   followPeriod: 0.25

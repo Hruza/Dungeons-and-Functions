@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
-  m_Name: Dummy
+  m_Name: SumA
   m_EditorClassIdentifier: 
-  name: Dummy
-  baseHP: 500
-  perLevelHPIncrement: 0
+  name: Sum of a
+  orderID: 3
+  sprite: {fileID: 21300000, guid: 3d6f5c2b848ee784bb39daa56fa96ddc, type: 3}
+  score: 4
+  baseHP: 60
   weaknesses:
     neutralMult: 1
-    AnlMult: 0
-    NumMult: 11
-    AlgMult: 0
-  baseDamage: 0
-  perLevelDamageIncrement: 0
-  EnemyGameObject: {fileID: 1912209089370650, guid: ad4da7bf36ec2db4a858df5b986fc42a,
+    AnlMult: 0.8
+    NumMult: 1.3
+    AlgMult: 1
+  damageType: 0
+  aiType: 0
+  damage: 5
+  EnemyGameObject: {fileID: 348684401349761664, guid: e89f05bab42e39c46843824ba4f123c0,
     type: 3}

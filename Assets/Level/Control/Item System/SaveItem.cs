@@ -29,8 +29,8 @@ public class SaveWeapon : SaveItem
         ItemName = weaponItem.itemName;
         ItemQuality = weaponItem.quality;
         ItemStats = weaponItem.itemStats;
-        MinDamage = weaponItem.minDamage;
-        MaxDamage = weaponItem.maxDamage;
+        MinDamage = weaponItem.MinDamage-((WeaponPattern)weaponItem.pattern).lowerMinDamage;
+        MaxDamage = weaponItem.MaxDamage-((WeaponPattern)weaponItem.pattern).lowerMaxDamage;
     }
 
     public WeaponItem GetItem()
@@ -50,7 +50,7 @@ public class SaveArmor : SaveItem
         ItemName = armorItem.itemName;
         ItemQuality = armorItem.quality;
         ItemStats = armorItem.itemStats;
-        Armor = armorItem.armor;
+        Armor = armorItem.Armor-((ArmorPattern)armorItem.pattern).lowerArmor;
     }
 
     public ArmorItem GetItem()

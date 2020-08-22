@@ -99,6 +99,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3685015955690508842, guid: f4b5b3ee458a3d6478eb566770dcc31d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3753987931419162490, guid: f4b5b3ee458a3d6478eb566770dcc31d,
         type: 3}
       propertyPath: m_LocalPosition.x

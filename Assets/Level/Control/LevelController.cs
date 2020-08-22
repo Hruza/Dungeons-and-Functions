@@ -37,12 +37,10 @@ public class LevelController : MonoBehaviour {
         Score += score;
     }
 
-    private const int roomClearedScore = 5;
-
     public void RoomCleared()
     {
         clearedRoomCount++;
-        Score += roomClearedScore;
+        Score += LevelResults.roomClearedScore;
         if (clearedRoomCount >= roomCountToClear)
         {
             Interactable.exit.SetInteractable();
@@ -166,6 +164,10 @@ public class LevelController : MonoBehaviour {
         });
     }
 
+    public void ShakeCamera(float magnitude=1) {
+        camera.gameObject.SendMessage("Shake",magnitude);
+    }
+
     /// <summary>
     /// Zavola se pri zabiti hrace
     /// </summary>
@@ -173,7 +175,7 @@ public class LevelController : MonoBehaviour {
 
         Invoke("DeathMenu",1);
         LensDistortion distortion = GetEffect<LensDistortion>(volume);
-        LeanTween.value(volume.gameObject, 0, -0.25f, 2f).setEasePunch().setOnUpdate((float flt) =>
+        LeanTween.value(volume.gameObject, 0, -0.5f, 3f).setEasePunch().setOnUpdate((float flt) =>
         {
             distortion.intensity.Override(flt);
         });
@@ -216,6 +218,8 @@ public class LevelResults{
     public int score;
 
     public int additionalLoot = 0;
+
+    public const int roomClearedScore = 2;
 
     public LevelResults(bool completed, int clearedCount, int totalRooms, int score,List<SecretRoom> secrets) {
         this.completd = completed;

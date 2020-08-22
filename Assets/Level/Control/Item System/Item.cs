@@ -39,7 +39,7 @@ public class Item
     /// </summary>
     public int itemLevel{
         get {
-            return pattern.level;
+            return pattern.level + (quality == Quality.C ?1 : 0);
         }
     }
     /// <summary>
@@ -49,7 +49,7 @@ public class Item
     {
         get
         {
-            return pattern.name;
+            return pattern.name + (quality==Quality.C?" +C":"");
         }
     }
     /// <summary>
@@ -97,15 +97,6 @@ public class Item
     /// seznam všech bpnusových statů, které má předmět
     /// </summary>
     public Stat[] itemStats;
-
-    /// <summary>
-    /// Konstanta určující, o kolik je vylepšen předmět.
-    /// </summary>
-    public const double qualityUpgrade = 1.07;
-    /// <summary>
-    /// Konstanta, která určuje o koik je lepší předmět vyšší rarity.
-    /// </summary>
-    public const double rarityUpgrade = 1.1;
 
 
     /// <summary>
@@ -186,7 +177,7 @@ public class Item
     }
 
     public static float Distribution(float x,float center) {
-        x =3* (x - center) / center;
+        x =2.5f* (x - center) / center;
         return x<=0? Mathf.Exp(-2*x*x) : 
                      x>0.7? 0 :
                           Mathf.Exp(-10*x)  ;
@@ -239,6 +230,20 @@ public class Item
             stat.value = UnityEngine.Random.Range(possibleStatPatterns[i].lowerRange, possibleStatPatterns[i].upperRange + 1);
             stat.value += Mathf.RoundToInt(possibleStatPatterns[i].incrementPerLvl * (itemLevel - 1));
             itemStats[i] = stat;
+        }
+    }
+
+    public int EvaluateScore() {
+        return pattern.EvaluateScore() + (quality==Quality.C?ItemPattern.levelCoefficient:0);
+    }
+
+    void Upgrade() {
+        if (quality == Quality.Basic)
+        {
+            quality = Quality.C;
+        }
+        else { 
+            
         }
     }
 }

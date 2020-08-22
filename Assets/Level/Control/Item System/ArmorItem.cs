@@ -8,7 +8,15 @@ public class ArmorItem : Item
     /// <summary>
     /// brnění
     /// </summary>
-    public int armor;
+    private int armor;
+    public int Armor {
+        get {
+            return armor + (quality == Quality.C ? ((ArmorPattern)pattern).armorUpgrade : 0);
+        }
+        set {
+            armor = value;
+        }
+    }
     /// <summary>
     /// zpomalení hráče
     /// </summary>
@@ -31,7 +39,7 @@ public class ArmorItem : Item
             quality = Quality.Basic,
             itemType = ItemType.Armor,
             itemStats = new Stat[0],
-            armor = Random.Range(pattern.lowerArmor, pattern.upperArmor + 1)
+            Armor = Random.Range(pattern.lowerArmor, pattern.upperArmor + 1)
         };
 
         if(!noStats) armor.GenerateStats();
@@ -48,7 +56,7 @@ public class ArmorItem : Item
             pattern = pattern,
             itemType = ItemType.Armor,
             quality = save.ItemQuality,
-            armor = save.Armor,
+            Armor = Mathf.Min(save.Armor+pattern.lowerArmor,pattern.upperArmor),
             itemStats = save.ItemStats,
         };
 

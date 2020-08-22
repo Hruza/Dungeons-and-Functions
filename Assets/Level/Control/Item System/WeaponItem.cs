@@ -29,17 +29,39 @@ public class WeaponItem : Item
     /// <summary>
     /// minimální poškození zbraně
     /// </summary>
-    public int minDamage;
+    private int minDamage;
+    public int MinDamage
+    {
+        get
+        {
+            return minDamage + (quality == Quality.C ? ((WeaponPattern)pattern).damageUpgrade : 0);
+        }
+        set
+        {
+            minDamage = value;
+        }
+
+    }
     /// <summary>
     /// maximální poškození zbraně
     /// </summary>
-    public int maxDamage;
+    private int maxDamage;
+    public int MaxDamage
+    {
+        get {
+            return maxDamage + (quality == Quality.C ? ((WeaponPattern)pattern).damageUpgrade : 0);
+        }
+        set {
+            maxDamage = value;
+        }
+
+    }
     /// <summary>
     /// rychlost útoku zbraně
     /// </summary>
     public int attackSpeed {
         get {
-            return ((WeaponPattern)pattern).attackSpeed;
+            return ((WeaponPattern)pattern).attackSpeed + (quality == Quality.C ? ((WeaponPattern)pattern).speedUpgrade : 0);
         }
     }
     /// <summary>
@@ -67,8 +89,8 @@ public class WeaponItem : Item
 
             //přiřazení vlastností, které vycházejí ze vzoru
             pattern = pattern,
-            minDamage = Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1),
-            maxDamage = Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1)
+            MinDamage = Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1),
+            MaxDamage = Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1)
         };
         
         if(!noStats)weapon.GenerateStats();
@@ -85,8 +107,8 @@ public class WeaponItem : Item
             itemType = ItemType.Weapon,
             pattern = pattern,
             quality = save.ItemQuality,
-            minDamage = save.MinDamage,
-            maxDamage = save.MaxDamage,
+            MinDamage =Mathf.Min(save.MinDamage+pattern.lowerMinDamage,pattern.upperMinDamage),
+            MaxDamage = Mathf.Min(save.MaxDamage+pattern.upperMaxDamage,pattern.upperMaxDamage),
             itemStats = save.ItemStats,
 
             //přiřazení vlastností, které vycházejí ze vzoru
@@ -101,7 +123,7 @@ public class WeaponItem : Item
     /// <returns>rozsah poškození</returns>
     public int Range()
     {
-        return maxDamage - minDamage;
+        return MaxDamage - MinDamage;
     }
 
     public int GetStat(string name)
@@ -116,7 +138,7 @@ public class WeaponItem : Item
 
     public int TotalMinDamage( EquipManager equip)
     {
-        return minDamage * (100 + (equip.AllStats["DamageMultiplicative"]) +  GetStat("DamageMultiplicative")) / 100 + equip.AllStats["DamageAdditive"]+GetStat("DamageAdditive");
+        return MinDamage * (100 + (equip.AllStats["DamageMultiplicative"]) +  GetStat("DamageMultiplicative")) / 100 + equip.AllStats["DamageAdditive"]+GetStat("DamageAdditive");
     }
 
     public int TotalAttackSpeed(EquipManager equip)

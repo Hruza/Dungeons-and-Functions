@@ -13414,6 +13414,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -13429,6 +13430,54 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65466d9808d94d446b50bd7ffc7ec8cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  speed: 5
+  magnitudeModifier: 0.8
+  timeMagnitude:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.012500763
+      value: -0.009433746
+      inSlope: 13.616021
+      outSlope: 13.616021
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.061874345
+      value: 1.0032593
+      inSlope: 0.027113918
+      outSlope: 0.027113918
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9958191
+      value: 0.0047187805
+      inSlope: 0.023202458
+      outSlope: 0.023202458
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.54427105
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -16878,7 +16927,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &644632452
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17228,7 +17277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20ee02a517c75d4d99cceece039873d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 13
+  speed: 10
   knockbackResistance: 10
   playerMovementReduction: 0
 --- !u!50 &648295443
@@ -17267,6 +17316,8 @@ MonoBehaviour:
   hpBar: {fileID: 400234105}
   hpText: {fileID: 1562171620}
   cam: {fileID: 0}
+  deathParticles: {fileID: 7261635628876610451, guid: 097a2c5b418bd474c89ef5e65ecaeae3,
+    type: 3}
   filip: {fileID: 1008366000}
   shieldBar: {fileID: 1729758482}
   shield: {fileID: 1508288092}
@@ -17290,14 +17341,10 @@ MonoBehaviour:
     quality: 0
     itemType: 0
     itemStats: []
-    minDamage: 0
-    maxDamage: 0
   - pattern: {fileID: 0}
     quality: 0
     itemType: 0
     itemStats: []
-    minDamage: 0
-    maxDamage: 0
   weaponPanel:
   - {fileID: 1486914642}
   - {fileID: 2074614832}
@@ -32779,7 +32826,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

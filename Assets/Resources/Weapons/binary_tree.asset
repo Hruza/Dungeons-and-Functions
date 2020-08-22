@@ -20,7 +20,7 @@ MonoBehaviour:
   itemComment: Programmers use it a lot, can be useful.
   isStarting: 0
   weaponType: 1
-  damageType: 3
+  damageType: 0
   lowerMinDamage: 5
   upperMinDamage: 6
   lowerMaxDamage: 9

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: HSNotes 1
   m_EditorClassIdentifier: 
   name: High School Notes
-  lowerItemLevel: 0
-  upperItemLevel: 1
+  obtainableAsDrop: 1
+  level: 1
+  rarity: 0
   sprite: {fileID: 21300000, guid: 57bfca0a202d4c143a530484b925c31a, type: 3}
   itemComment: It will be useless after the first week.
   isStarting: 1
-  lowerArmor: 0
-  upperArmor: 0
+  lowerArmor: 1
+  upperArmor: 1
   movementSpeedReduction: 1
-  armorIncrementPerLevel: 1

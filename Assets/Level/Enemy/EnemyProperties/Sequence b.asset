@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
-  m_Name: Exponential
+  m_Name: Sequence b
   m_EditorClassIdentifier: 
-  name: Exponential
-  orderID: 6
-  sprite: {fileID: 21300000, guid: 65a6d0f678e2e49449893968641d2c23, type: 3}
+  name: Sequence b
+  orderID: 2
+  sprite: {fileID: 21300000, guid: a62de4a463e89e64fb7b94315db2d09f, type: 3}
   score: 1
-  baseHP: 20
+  baseHP: 25
   weaknesses:
     neutralMult: 1
     AnlMult: 1.2
-    NumMult: 1
-    AlgMult: 0.8
+    NumMult: 0.7
+    AlgMult: 1
   damageType: 0
   aiType: 0
-  damage: 15
-  EnemyGameObject: {fileID: 5101788237483465924, guid: b4d7de73a4741f64781fccf72564e270,
+  damage: 8
+  EnemyGameObject: {fileID: 1912209089370650, guid: e2ad0f9f46ef3ab4ba48f30573e5813a,
     type: 3}

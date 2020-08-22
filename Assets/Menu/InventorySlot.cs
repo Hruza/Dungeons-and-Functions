@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryButton : TooltipButton
+public class InventorySlot : TooltipButton,IDropHandler,IBeginDragHandler,IDragHandler
 {
     public ItemInventory itemInventory;
     public GameObject triggerOnClick;
     private Item item;
+
+    public bool container = false;
+
+    public ItemType onlyContained;
 
     [Header("Colors")]
     static public Color commonColor = Color.white;
@@ -17,6 +21,9 @@ public class InventoryButton : TooltipButton
     static public Color legendaryColor = Color.yellow;
 
     public Image image;
+
+    public GameObject plusC;
+
     public Item CarriedItem{
         get {
             return item;
@@ -26,6 +33,7 @@ public class InventoryButton : TooltipButton
             {
                 item = value;
                 image.sprite = item.sprite;
+                plusC.SetActive(item.quality==Quality.C);
                     switch (item.rarity)
                     {
                         case Rarity.Common:
@@ -61,18 +69,53 @@ public class InventoryButton : TooltipButton
 
     public void Click()
     {
-        if (itemInventory != null)
-        {
-            itemInventory.ButtonClick(item);
-        }
         if (triggerOnClick != null) {
             Debug.Log("Message sent");
             triggerOnClick.SendMessage("ButtonClicked",this,SendMessageOptions.RequireReceiver);
+        }
+        if(container && itemInventory != null){
+            CarriedItem = null;
+            itemInventory.ItemRemoved(this,CarriedItem);
         }
     }
 
     public void OnScroll(UnityEngine.EventSystems.PointerEventData data) {
         itemInventory.GetComponent<ScrollRect>().OnScroll(data);
+    }
+
+    public GameObject dragedItemObject;
+
+    Vector2 defaultSize;
+    void Start() {
+        defaultSize = GetComponent<RectTransform>().sizeDelta;
+    }
+    public void OnDrop(PointerEventData eventData)
+    {
+        Debug.Log(DragedItem.dragedItem);
+        if (DragedItem.dragedItem != null && (onlyContained==ItemType.none || onlyContained== DragedItem.dragedItem.itemType) && container ) {
+            itemInventory.ItemAdded(this, DragedItem.dragedItem);
+            CarriedItem = DragedItem.dragedItem;
+            LeanTween.size(GetComponent<RectTransform>(), defaultSize * 1.1f, 0.125f).setFrom(defaultSize).setRepeat(2).setLoopPingPong();
+
+        }  
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        Debug.Log("drag");
+        if (CarriedItem!=null && dragedItemObject != null)
+        {
+            GameObject draged = (GameObject)Instantiate(dragedItemObject, transform.position, transform.rotation, transform.root);
+            draged.GetComponent<DragedItem>().CarriedItem = CarriedItem;
+            if (container) {
+                CarriedItem = null;
+            }
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        
     }
 
     //todo: Tooltip

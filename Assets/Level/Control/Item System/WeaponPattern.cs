@@ -32,10 +32,17 @@ public class WeaponPattern : ItemPattern
     /// rychlost útoku zbraně
     /// </summary>
     public int attackSpeed;
+
+    [Header("Quality upgrade")]
+    public int damageUpgrade;
+
+    public int speedUpgrade;
+
     /// <summary>
     /// game object zbraně
     /// </summary>
     public GameObject gameObject;
+
 
     /// <summary>
     /// databáze všech možných zbraní

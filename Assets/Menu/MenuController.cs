@@ -206,7 +206,7 @@ public class MenuController : MonoBehaviour
                         int level = int.Parse(part[1]);
                         int score = int.Parse(part[2]);
                         int count = 1;
-                        if (part.Length == 3) count = int.Parse(part[3]);
+                        if (part.Length == 4) count = int.Parse(part[3]);
                         List<Item> reward = new List<Item>();
 
                         for (int i = 0; i < count; i++)

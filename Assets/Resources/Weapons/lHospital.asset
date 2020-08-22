@@ -20,7 +20,7 @@ MonoBehaviour:
   itemComment: It's a cannon compared to...well, anything.
   isStarting: 0
   weaponType: 1
-  damageType: 2
+  damageType: 0
   lowerMinDamage: 10
   upperMinDamage: 13
   lowerMaxDamage: 19

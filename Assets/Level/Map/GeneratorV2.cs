@@ -85,13 +85,13 @@ public class GeneratorV2 : MonoBehaviour
             createdRooms.Add(newRoom);
         }
 
-        if (level.bossRoom) {
-            RoomInfo rm = GetRoomOfType(RoomPrefab.RoomType.boss);
+        if (level.bossRoom!=null) {
+            RoomInfo rm = new RoomInfo { gameObject=level.bossRoom,info=level.bossRoom.GetComponent<RoomPrefab>()};
             newRoomObject = Instantiate(rm.gameObject, transform.position, transform.rotation * Quaternion.Euler(0, 0, 90f * Random.Range(0, 4)), transform);
             newRoom = new RoomInfo { gameObject = newRoomObject, info = newRoomObject.GetComponent<RoomPrefab>() };
             Vector2 dir = Quaternion.Euler(0, 0, 90f * Random.Range(0, 4)) * Vector2.up * gridSize;
             Deintersect(newRoom,dir, createdRooms);
-            newRoom.info.enemiesToSpawn =EnemyBundle.Merge(level.bossEnemies).ToList<EnemyProperties>();
+            newRoom.info.enemiesToSpawn =EnemyBundle.Merge(level.bossEnemies,false).ToList<EnemyProperties>();
             createdRooms.Add(newRoom);
             
             //create exit

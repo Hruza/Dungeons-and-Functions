@@ -93,8 +93,9 @@ public class Rewards : MonoBehaviour
         foreach (Item extra in extras)
         {
             GameObject newButton = Instantiate(button, transform);
-            newButton.GetComponent<InventoryButton>().CarriedItem = extra;
+            newButton.GetComponent<InventorySlot>().CarriedItem = extra;
             newButton.GetComponent<CanvasGroup>().alpha = 0;
+            newButton.GetComponent<InventorySlot>().triggerOnClick = null;
             buttons.Add(newButton);
         }
         foreach (GameObject gameObject in buttons)
@@ -137,7 +138,7 @@ public class Rewards : MonoBehaviour
             GameObject newButton = Instantiate(button, transform);
             newButton.GetComponent<CanvasGroup>().alpha = 0;
             confirmButton.GetComponent<CanvasGroup>().interactable = false;
-            button.GetComponent<InventoryButton>().triggerOnClick = this.gameObject;
+            newButton.GetComponent<InventorySlot>().triggerOnClick = this.gameObject;
             buttons.Add(newButton);
         }
         foreach (GameObject gameObject in buttons)
@@ -151,14 +152,14 @@ public class Rewards : MonoBehaviour
         yield return null;
     }
 
-    InventoryButton chosenItem=null;
+    InventorySlot chosenItem=null;
 
-    public void ButtonClicked(InventoryButton button) {
+    public void ButtonClicked(InventorySlot button) {
         Debug.Log("Message recieved");
         if (chosenItem != null) {
             LeanTween.size(chosenItem.GetComponent<RectTransform>(), 200 * Vector2.one, 0.2f);
         }
-        chosenItem=((InventoryButton)button);
+        chosenItem=((InventorySlot)button);
         LeanTween.size(chosenItem.GetComponent<RectTransform>(), 270 * Vector2.one, 0.2f);
         confirmButton.GetComponent<CanvasGroup>().alpha = 1;
         confirmButton.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -168,16 +169,16 @@ public class Rewards : MonoBehaviour
     IEnumerator Roulette(GameObject button) {
         button.GetComponent<CanvasGroup>().blocksRaycasts = false;
         button.GetComponent<CanvasGroup>().interactable = false;
-        button.GetComponent<InventoryButton>().showTooltip = false;
+        button.GetComponent<InventorySlot>().showTooltip = false;
         Item[] items = new Item[20];
         for (int i = 0; i < 20; i++)
         {
             items[i]=Item.Generate(level.difficulty, result.score);
         }
-        LeanTween.value(0, 19, 3f).setOnUpdate((float flt )=>  button.GetComponent<InventoryButton>().CarriedItem=items[Mathf.RoundToInt(flt)]).setEaseOutQuad();
+        LeanTween.value(0, 19, 3f).setOnUpdate((float flt )=>  button.GetComponent<InventorySlot>().CarriedItem=items[Mathf.RoundToInt(flt)]).setEaseOutQuad();
         yield return new WaitForSeconds(2.8f);
         LeanTween.scale(button.gameObject, 1.5f * gameObject.transform.localScale, 0.5f).setEasePunch();
-        button.GetComponent<InventoryButton>().showTooltip = true;
+        button.GetComponent<InventorySlot>().showTooltip = true;
         button.GetComponent<CanvasGroup>().interactable = true;
         button.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
-  m_Name: Sin
+  m_Name: SumB
   m_EditorClassIdentifier: 
-  name: Sin
-  orderID: 7
-  sprite: {fileID: 21300000, guid: 0feeb5f93c45fab49942b287afb2f8be, type: 3}
-  score: 1
-  baseHP: 20
+  name: Sum of b
+  orderID: 4
+  sprite: {fileID: 21300000, guid: 3b0d445845a15504d8c81590bbb12848, type: 3}
+  score: 4
+  baseHP: 65
   weaknesses:
     neutralMult: 1
     AnlMult: 1
@@ -24,6 +24,6 @@ MonoBehaviour:
     AlgMult: 0.8
   damageType: 0
   aiType: 0
-  damage: 15
-  EnemyGameObject: {fileID: 5101788237483465924, guid: 8717076b2bc0bce4088c469a36c11030,
+  damage: 5
+  EnemyGameObject: {fileID: 4719645516164970819, guid: 978eecb630f3e9245ba7452a6ec66ee3,
     type: 3}

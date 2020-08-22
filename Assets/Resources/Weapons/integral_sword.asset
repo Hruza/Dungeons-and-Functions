@@ -20,7 +20,7 @@ MonoBehaviour:
   itemComment: You have always wanted it, didn't you?
   isStarting: 0
   weaponType: 0
-  damageType: 2
+  damageType: 0
   lowerMinDamage: 2
   upperMinDamage: 3
   lowerMaxDamage: 10

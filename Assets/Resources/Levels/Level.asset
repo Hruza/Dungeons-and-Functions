@@ -18,15 +18,16 @@ MonoBehaviour:
   isSecret: 0
   difficulty: 8
   enemies:
-  - count: 1
-    enemyProperties: {fileID: 11400000, guid: f1e26f0594b35ae41ad6e825a316a272, type: 2}
-  - count: 1
-    enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
-  - count: 1
-    enemyProperties: {fileID: 11400000, guid: 9adc81e5454154e4587a3ec3294f8684, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: be440bb653d7f9240bf85fbd502b0dfc, type: 2}
   roomCount: 1
+  advantageFactor: 0
   generatorPreset: 0
   roomConnections: 1
+  preset: 0
+  bossRoom: {fileID: 0}
+  enemiesPerWave: 0
+  bossEnemies: []
   loot: []
   secretRooms:
   - type: 0
