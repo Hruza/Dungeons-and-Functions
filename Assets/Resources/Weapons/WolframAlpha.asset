@@ -14,16 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Wolfram Alpha
   obtainableAsDrop: 1
-  level: 3
-  rarity: 1
+  level: 1
+  rarity: 2
   sprite: {fileID: 21300000, guid: 714f99f62b9a50842aa2e1644bf26861, type: 3}
   itemComment: One site to solve them all (at once).
   isStarting: 0
+  upgrade: {fileID: 0}
   weaponType: 1
   damageType: 0
-  lowerMinDamage: 0
-  upperMinDamage: 1
-  lowerMaxDamage: 2
-  upperMaxDamage: 3
+  lowerMinDamage: 1
+  upperMinDamage: 2
+  lowerMaxDamage: 3
+  upperMaxDamage: 4
   attackSpeed: 10
+  damageUpgrade: 0
+  speedUpgrade: 0
   gameObject: {fileID: 1023424732719212, guid: a691a113e11cd2b4b9d284585cc412ba, type: 3}

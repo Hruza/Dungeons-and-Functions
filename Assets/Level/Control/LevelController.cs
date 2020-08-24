@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using TMPro;
 
 public class LevelController : MonoBehaviour {
     public GeneratorV2 map;
@@ -13,6 +14,7 @@ public class LevelController : MonoBehaviour {
     public GameObject bossBar;
     public Text tBossName;
     public static LevelController levelController;
+    public TextMeshProUGUI scoreValue;
 
     public Camera camera;
     public Volume volume;
@@ -28,12 +30,17 @@ public class LevelController : MonoBehaviour {
             return score;
         }
         set {
+            if (levelController != null) { 
+                levelController.scoreValue.text = value.ToString();
+                LeanTween.scale(levelController.scoreValue.gameObject, 1.5f *defaultScale , 0.5f).setEasePunch();
+            }
             score = value;
             //ToDo: animation
         }
     }
+    private static Vector3 defaultScale;
 
-    static void KilledEnemy(int score) {
+    static public void KilledEnemy(int score) {
         Score += score;
     }
 
@@ -68,7 +75,6 @@ public class LevelController : MonoBehaviour {
 
     //Setup of level
     void Start() {
-        score = 0;
         Player.player.GetComponent<PlayerMovement>().enabled = false;
         LeanTween.moveZ(Player.player, 0, 2f).setFrom(-30).setEaseOutBounce();
         Vignette vignette;
@@ -94,6 +100,8 @@ public class LevelController : MonoBehaviour {
             secrets = new List<SecretRoom>();
             //ToDo: Pridat veci
         }
+        Score = 0;
+        defaultScale = scoreValue.gameObject.transform.localScale;
     }
 
     private bool inMenu = false;

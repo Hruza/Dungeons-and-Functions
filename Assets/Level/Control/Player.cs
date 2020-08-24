@@ -194,6 +194,7 @@ public class Player : MonoBehaviour
         if (heal <= 0) //heal nemuze byt zaporny
             Debug.Log("Heal je " + heal.ToString() + ", je to správně?", this);
         else
+            Messager.ShowMessage(heal.ToString(), transform.position, Color.green);
             HP = HP + heal;
     }
 

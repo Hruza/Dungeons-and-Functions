@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.ProBuilder;
+using UnityEditor.Rendering.Universal;
 
 /// <summary>
 /// všechny možné typy předmětů
@@ -110,6 +111,19 @@ public class Item
     {
         pattern = patt;
     }
+
+    public Item CopyItem()
+    {
+        switch (itemType)
+        {
+            case ItemType.Armor:
+                return (Item)(new ArmorItem(this));
+            case ItemType.Weapon:
+                return (Item)(new WeaponItem(this));
+        }
+        return null;
+    }
+
 
     /// <summary>
     /// Delegát obsahující metodu sloužící pro vygenerování předmětu.
@@ -237,14 +251,16 @@ public class Item
         return pattern.EvaluateScore() + (quality==Quality.C?ItemPattern.levelCoefficient:0);
     }
 
-    void Upgrade() {
-        if (quality == Quality.Basic)
-        {
-            quality = Quality.C;
+    public bool IsUpgradable {
+        get {
+            return quality == Quality.Basic || pattern.upgrade != null;
         }
-        else { 
-            
-        }
+    }
+
+    public Item Upgrade() {
+        Item up=Generate(pattern.upgrade);
+        up.itemStats = itemStats;
+        return up;
     }
 }
 

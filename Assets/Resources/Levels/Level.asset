@@ -33,10 +33,5 @@ MonoBehaviour:
   - type: 0
     unlockedLevel: 
     loot: []
-  - type: 0
-    unlockedLevel: 
-    loot: []
-  - type: 0
-    unlockedLevel: 
-    loot: []
+    room: {fileID: 0}
   spawnEnemiesInCenter: 0

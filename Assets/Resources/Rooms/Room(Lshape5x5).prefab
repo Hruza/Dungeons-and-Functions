@@ -302,8 +302,8 @@ MonoBehaviour:
   walls: {fileID: 3080629080453389421}
   floors: {fileID: 4434338505753590836}
   doors: {fileID: 752739701534008478}
-  minEnemies: 2
-  maxEnemies: 3
+  minEnemies: 1
+  maxEnemies: 2
   advantageFactor: 0
   cellSize: 4
   controller: {fileID: 4501466409532941277}

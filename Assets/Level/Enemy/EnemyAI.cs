@@ -74,6 +74,10 @@ public class EnemyAI : MonoBehaviour
 
     private int score;
 
+    public void Died() {
+        LevelController.KilledEnemy(score);
+    }
+
     public virtual void Initialize(EnemyProperties properties)
     {
         Level = properties.Level;

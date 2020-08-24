@@ -30,6 +30,15 @@ public class ArmorItem : Item
     {
     }
 
+    public ArmorItem(Item item) : base()
+    {
+            pattern = item.pattern;
+            quality = item.quality;
+            itemType = ItemType.Armor;
+            itemStats = item.itemStats;
+        Armor = ((ArmorItem)item).armor;
+    }
+
     public static ArmorItem Generate( ArmorPattern pattern,bool noStats=false)
     {
         //přiřazení vlastností, které mají všechny předměty společné
@@ -41,8 +50,6 @@ public class ArmorItem : Item
             itemStats = new Stat[0],
             Armor = Random.Range(pattern.lowerArmor, pattern.upperArmor + 1)
         };
-
-        if(!noStats) armor.GenerateStats();
 
         return armor;
     }

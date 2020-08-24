@@ -207,8 +207,8 @@ MonoBehaviour:
   isBoss: 0
   enemyType: 0
   damageType: 0
-  attackRadius: 2
-  playerDistance: 2
+  attackRadius: 2.5
+  playerDistance: 2.5
   attackDuration: 0.5
   waitTime: 2
   knockback: 8

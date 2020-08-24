@@ -127,11 +127,12 @@ public class Level : ScriptableObject
     }
 }
 
-public enum SecretRoomType{ extraRandomItem , unlockLevel, extraItem };
+public enum SecretRoomType{ extraRandomItem , unlockLevel, extraItem, heal };
 
 [System.Serializable]
 public class SecretRoom {
     public SecretRoomType type = SecretRoomType.extraRandomItem;
     public string unlockedLevel;
     public ItemPattern[] loot;
+    public GameObject room;
 }

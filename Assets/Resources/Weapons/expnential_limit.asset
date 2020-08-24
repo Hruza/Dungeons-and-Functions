@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Exponential limit
   obtainableAsDrop: 1
-  level: 4
+  level: 2
   rarity: 1
   sprite: {fileID: 21300000, guid: d770319f508ab8c4fabea1373a00b971, type: 3}
   itemComment: It explodes to infinity. Quite literally.
   isStarting: 0
+  upgrade: {fileID: 0}
   weaponType: 1
   damageType: 0
   lowerMinDamage: 6
@@ -26,5 +27,7 @@ MonoBehaviour:
   lowerMaxDamage: 11
   upperMaxDamage: 13
   attackSpeed: 10
+  damageUpgrade: 0
+  speedUpgrade: 0
   gameObject: {fileID: 2580363577854814769, guid: e81601acd29ecf24b8a6ae67932e849c,
     type: 3}

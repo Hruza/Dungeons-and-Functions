@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class InventoryPanel : MonoBehaviour
 {
     public GameObject buttonPrefab;
-    public ItemInventory itemInventory;
 
     private int delta;
     private int maxColumns;
@@ -46,7 +45,6 @@ public class InventoryPanel : MonoBehaviour
         if (itemPanel)
         {
             InventorySlot buttonComp = button.GetComponent<InventorySlot>();
-            if (itemInventory != null) buttonComp.itemInventory = itemInventory;
             buttonComp.CarriedItem = Items[index];
         }
         else

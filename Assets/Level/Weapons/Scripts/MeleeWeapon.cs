@@ -7,12 +7,13 @@ public class MeleeWeapon : Weapon
 {
     public float angleOfSwing=120;
     public GameObject swingingThing;
-    public float delay = 0f;
+    private float delay = 0f;
     public float knockback=1f;
     public bool autoAttack = false;
     private bool ready = true;
     private int lastSwingDir=1;
     public bool changeDirections = true;
+    public float swingingSpeed = 4f;
 
     List<GameObject> attacked;
 
@@ -33,24 +34,30 @@ public class MeleeWeapon : Weapon
 
     protected override void Primary()
     {
-        base.Primary();
-        ready = false;
-        attacked = new List<GameObject>();
-        StartCoroutine(WeaponSwing());
+        if (ready)
+        {
+            base.Primary();
+            ready = false;
+            attacked = new List<GameObject>();
+            StartCoroutine(WeaponSwing());
+        }
     }
 
     protected IEnumerator WeaponSwing() {
         swingingThing.SetActive(true);
         swingingThing.transform.localRotation = Quaternion.Euler(0,0,-lastSwingDir*(angleOfSwing/2));
         float angle = 0;
+        float t = 0;
         while (angle<angleOfSwing)
         {
-            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime*angleOfSwing*attackSpeed/10);
-            angle += Time.deltaTime*angleOfSwing*attackSpeed/10;
+            swingingThing.transform.Rotate(0,0,lastSwingDir*Time.deltaTime*angleOfSwing*attackSpeed* swingingSpeed / 10);
+            angle += Time.deltaTime * angleOfSwing * attackSpeed*swingingSpeed/10;
+            t += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
         if(changeDirections) lastSwingDir *= -1;
         swingingThing.SetActive(false);
+        delay = Mathf.Max((10 / attackSpeed)-t,0);
         Invoke("Reset", delay);
         yield return null;
     }

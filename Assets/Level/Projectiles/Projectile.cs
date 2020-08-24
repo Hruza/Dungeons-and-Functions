@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour {
 
     [Header("On Destroy")]
     public GameObject onDestroyParticles;
-
+    public bool particleColorByProjectileColor = false;
     public GameObject destroyFirst;
     public float destroyTime;
 
@@ -51,17 +51,28 @@ public class Projectile : MonoBehaviour {
     public float turningSpeed = 1f;
 
     private Rigidbody2D rb;
+    private Rigidbody2D RB {
+        get {
+            if (rb == null) {
+                rb = GetComponent<Rigidbody2D>();
+            }
+            return rb;
+        }
+        set {
+            rb = GetComponent<Rigidbody2D>();
+        }
+    }
     private float t;
     private Vector2 v0;
     private Vector2 perp;
     virtual protected void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        transform.rotation = Quaternion.FromToRotation(Vector3.right, rb.velocity);
+
+        transform.rotation = Quaternion.FromToRotation(Vector3.right, RB.velocity);
         if (projectileType != ProjectileType.classic)
         {
             t = 0;
-            v0 = rb.velocity;
+            v0 = RB.velocity;
             perp = new Vector2(-v0.y, v0.x);
         }
         Invoke("End", lifetime);
@@ -73,7 +84,7 @@ public class Projectile : MonoBehaviour {
         GameObject candidate = null;
         float min=0;
         foreach (Collider2D tgt in tgts) {
-            if (((tgt.tag == "Enemy" && damageEnemies) || ( tgt.tag == "Player" && damagePlayer)) && Vector2.Angle(tgt.transform.position - transform.position, rb.velocity) < detectionAngle)
+            if (((tgt.tag == "Enemy" && damageEnemies) || ( tgt.tag == "Player" && damagePlayer)) && Vector2.Angle(tgt.transform.position - transform.position, RB.velocity) < detectionAngle)
             {
                 if (candidate == null) {
                     candidate = tgt.gameObject;
@@ -100,17 +111,17 @@ public class Projectile : MonoBehaviour {
                 break;
             case ProjectileType.sin:
                 t += Time.deltaTime;
-                rb.velocity = v0 + perp * (3*t * Mathf.Cos(t*15));
+                RB.velocity = v0 + perp * (3*t * Mathf.Cos(t*15));
                 break;
             case ProjectileType.cos:
                 break;
             case ProjectileType.homing:
                 if (target != null)
                 {
-                    float angle = Vector2.SignedAngle(rb.velocity, target.transform.position - transform.position);
+                    float angle = Vector2.SignedAngle(RB.velocity, target.transform.position - transform.position);
                     Quaternion rot= Quaternion.Euler(0, 0, turningSpeed*Time.fixedDeltaTime*Mathf.Sign(angle));
-                    rb.velocity = rot * rb.velocity;
-                    transform.rotation = Quaternion.FromToRotation(Vector3.right,rb.velocity);
+                    RB.velocity = rot * RB.velocity;
+                    transform.rotation = Quaternion.FromToRotation(Vector3.right,RB.velocity);
 
                 }
                 break;
@@ -133,11 +144,11 @@ public class Projectile : MonoBehaviour {
         string tag = collision.gameObject.tag;
         if ((tag == "Enemy" && damageEnemies) || ((tag=="Shield" || tag == "Player") && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
         {
-            Damager.InflictDamage(collision.gameObject, damage, rb.velocity, damageType);
+            Damager.InflictDamage(collision.gameObject, damage, RB.velocity, damageType);
             if (knockback + perpKnockback != 0)
             {
                 Vector2 dif=(Vector2)(collision.gameObject.transform.position - transform.position);
-                Vector2 perpVelocity = Vector2.Perpendicular(rb.velocity.normalized);
+                Vector2 perpVelocity = Vector2.Perpendicular(RB.velocity.normalized);
                 float coefficient = Vector2.Dot(dif, perpVelocity);
 
                 collision.gameObject.SendMessage("Knockback", knockback *dif.normalized+(perpKnockback*Mathf.Sign(coefficient)*perpVelocity) , SendMessageOptions.DontRequireReceiver);
@@ -150,7 +161,7 @@ public class Projectile : MonoBehaviour {
         }
         else if (tag == "Destroyable" && damageDestroyables)
         {
-            Damager.InflictDamage(collision.gameObject, damage, rb.velocity,damageType);
+            Damager.InflictDamage(collision.gameObject, damage, RB.velocity,damageType);
         }
         if (destroyOnAnyCollision) End();
         if (destroyOnWorldCollision && (collision.gameObject.layer == LayerMask.NameToLayer("Map") || tag == "Map" || tag=="Destroyable")) End() ;
@@ -166,6 +177,7 @@ public class Projectile : MonoBehaviour {
         if (onDestroyParticles != null)
         {
             GameObject particles=(GameObject)Instantiate(onDestroyParticles, transform.position, transform.rotation);
+            if (particleColorByProjectileColor) particles.GetComponentInChildren<ParticleSystem>().startColor = GetComponentInChildren<MeshRenderer>().material.color;
             Destroy(particles, 3);
         }
         if (destroyFirst != null) Destroy(destroyFirst) ;

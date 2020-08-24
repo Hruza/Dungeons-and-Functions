@@ -11,6 +11,7 @@ using System.Linq;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 //using System;
 
 public class GeneratorV2 : MonoBehaviour
@@ -22,6 +23,7 @@ public class GeneratorV2 : MonoBehaviour
 
     public GameObject pathTile;
     public GameObject wallTile;
+    public GameObject secretWallTile;
     public GameObject blackTile;
 
     public float additionalPathsCoefficient = 1.2f;
@@ -161,8 +163,103 @@ public class GeneratorV2 : MonoBehaviour
         }
     }
 
-    private void CreateSecret(SecretRoom secret) { 
-        
+    private void CreateSecret(SecretRoom secret) {
+        for (int i = 0; i < 10; i++)
+        {
+
+            Vector2 start = Random.insideUnitCircle * gridSize * Mathf.Max(mapHeight, mapWidth)+(Vector2)transform.position;
+            Vector2 dir = ((Vector2)transform.position - start).normalized;
+            while (!IsInRange(Real2Map(start)))
+            {
+                start = start + (gridSize * dir);
+
+                Debug.DrawRay(transform.position, start,Color.red,5);
+            }
+
+            Vector2Int mapStart = Real2Map(start);
+            if (Map[mapStart.x, mapStart.y].type != TileType.none)
+            {
+                Debug.Log("Secrets: Started from nonempty block, repeating");
+                continue;
+            }
+            Vector2Int closest = GetClosestPath(mapStart,true);
+
+            if (closest == -Vector2Int.one)
+            {
+                Debug.Log("Secrets: Closest path not found");
+                continue;
+            }
+
+            List<Vector2Int> possibleDirs = new List<Vector2Int>();
+
+            Vector2Int[] dirs = new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            Vector2Int point;
+            foreach (Vector2Int vect in dirs)
+            {
+                point = closest + (2 * vect);
+                if (IsInRange(point) && Map[point.x, point.y].type == TileType.none)
+                {
+                    possibleDirs.Add(vect);
+                }
+
+                Debug.DrawLine(Map2Real(closest), Map2Real(point), Color.red, 1);
+            }
+
+            if (possibleDirs.Count == 0)
+            {
+                Debug.Log("Secrets: Path bloc is not suitable");
+                continue;
+            }
+
+            Vector2Int chosenDir = possibleDirs[Random.Range(0, possibleDirs.Count)];
+
+            PlaceTile(secretWallTile, closest + chosenDir, TileType.secret);
+            PlaceTile(secret.room, closest + (2 * chosenDir), TileType.secret);
+            Map[(closest + (2 * chosenDir)).x, (closest + (2 * chosenDir)).y].tile.GetComponentInChildren<Interactable>().Secret = secret;   
+            break;
+        }
+    }
+
+    private Vector2Int GetClosestPath(Vector2Int from,bool avoidSecrets=false) {
+        Queue<Vector2Int> paths = new Queue<Vector2Int>();
+        HashSet<Vector2Int> searched = new HashSet<Vector2Int>();
+        paths.Enqueue(from);
+        Vector2Int current;
+        while (paths.Count>0)
+        {
+            current = paths.Dequeue();
+            if (searched.Contains(current)) {
+                continue;
+            }
+            searched.Add(current);
+
+            Vector2Int[] dirs = new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            Vector2Int point;
+            foreach (Vector2Int vect in dirs)
+            {
+                point = current + vect;
+                if ( IsInRange(point) && (map[point.x, point.y].type != TileType.room) && (map[point.x, point.y].type != TileType.secret))
+                {
+                    Debug.DrawLine(Map2Real(current),Map2Real(point),Color.green,1);
+                    if (map[point.x, point.y].type == TileType.path)
+                    {
+                        if (!avoidSecrets)
+                        {
+                            return point;
+                        }
+                        else if (!IsAdjacent(point.x,point.y,TileType.secret)) {
+                            return point;
+                        }
+                    }
+                    else
+                    {
+                        paths.Enqueue(point);
+                    }
+                    }
+            }
+
+        }
+        return -Vector2Int.one;
     }
 
     private int ManhattanMetric(Vector2Int a, Vector2Int b)
@@ -315,6 +412,9 @@ public class GeneratorV2 : MonoBehaviour
             GameObject tile = (GameObject)Instantiate(gameObject, Map2Real(pos), transform.rotation, transform);
             tile.transform.localScale = new Vector3(gridSize,gridSize,1);
             map[pos.x, pos.y].type = type;
+            if (map[pos.x, pos.y].tile != null) {
+                Destroy(map[pos.x, pos.y].tile);
+            }
             map[pos.x, pos.y].tile = tile;
         }
     }
@@ -458,7 +558,7 @@ public class GeneratorV2 : MonoBehaviour
         }
     }
 
-    public enum TileType { none , room , path ,wall , door }
+    public enum TileType { none , room , path ,wall , door, secret }
     public struct MapTile {
         public TileType type;
         public int roomIndex;

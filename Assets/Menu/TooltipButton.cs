@@ -9,12 +9,11 @@ public abstract class TooltipButton : MonoBehaviour, IPointerEnterHandler,IPoint
     public GameObject tooltipPrefab;
     public bool showTooltip=true;
 
-    protected void ShowTooltip(Item item,ItemInventory itemInventory=null)
+    protected void ShowTooltip(Item item)
     {
         if (item != null && tooltip == null && showTooltip)
         {
-            if (itemInventory != null) tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, itemInventory.transform);
-            else tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, transform.parent.parent);
+            tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, transform.root);
             tooltip.GetComponent<InvTooltip>().Item = item;
             StartCoroutine(MoveTooltip());
         }

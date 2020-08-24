@@ -14,17 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Integral Sword
   obtainableAsDrop: 1
-  level: 5
-  rarity: 2
+  level: 3
+  rarity: 1
   sprite: {fileID: 21300000, guid: 1c117725dbde38649ba5c2a39a89e326, type: 3}
   itemComment: You have always wanted it, didn't you?
   isStarting: 0
+  upgrade: {fileID: 0}
   weaponType: 0
   damageType: 0
-  lowerMinDamage: 2
-  upperMinDamage: 3
-  lowerMaxDamage: 10
-  upperMaxDamage: 13
+  lowerMinDamage: 8
+  upperMinDamage: 10
+  lowerMaxDamage: 11
+  upperMaxDamage: 15
   attackSpeed: 25
+  damageUpgrade: 0
+  speedUpgrade: 0
   gameObject: {fileID: 6766358523322256936, guid: 16dbbb6aa0e3ab941bebfdf8f626afe2,
     type: 3}

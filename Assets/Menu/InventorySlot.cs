@@ -54,6 +54,7 @@ public class InventorySlot : TooltipButton,IDropHandler,IBeginDragHandler,IDragH
             }
             else {
                 item = null;
+                plusC.SetActive(false);
                 image.sprite = null;
                 GetComponent<Image>().color = Color.white;
             }
@@ -63,7 +64,7 @@ public class InventorySlot : TooltipButton,IDropHandler,IBeginDragHandler,IDragH
 
     public override void OnPointerEnter(PointerEventData data)
     {
-        ShowTooltip(CarriedItem,itemInventory);
+        ShowTooltip(CarriedItem);
     }
 
 
@@ -79,10 +80,6 @@ public class InventorySlot : TooltipButton,IDropHandler,IBeginDragHandler,IDragH
         }
     }
 
-    public void OnScroll(UnityEngine.EventSystems.PointerEventData data) {
-        itemInventory.GetComponent<ScrollRect>().OnScroll(data);
-    }
-
     public GameObject dragedItemObject;
 
     Vector2 defaultSize;
@@ -95,9 +92,12 @@ public class InventorySlot : TooltipButton,IDropHandler,IBeginDragHandler,IDragH
         if (DragedItem.dragedItem != null && (onlyContained==ItemType.none || onlyContained== DragedItem.dragedItem.itemType) && container ) {
             itemInventory.ItemAdded(this, DragedItem.dragedItem);
             CarriedItem = DragedItem.dragedItem;
-            LeanTween.size(GetComponent<RectTransform>(), defaultSize * 1.1f, 0.125f).setFrom(defaultSize).setRepeat(2).setLoopPingPong();
-
+            ClickEffect();
         }  
+    }
+
+    public void ClickEffect() {
+        LeanTween.size(GetComponent<RectTransform>(), defaultSize * 1.1f, 0.125f).setFrom(defaultSize).setRepeat(2).setLoopPingPong();
     }
 
     public void OnBeginDrag(PointerEventData eventData)

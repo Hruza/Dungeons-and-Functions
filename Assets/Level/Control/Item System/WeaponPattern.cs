@@ -34,9 +34,9 @@ public class WeaponPattern : ItemPattern
     public int attackSpeed;
 
     [Header("Quality upgrade")]
-    public int damageUpgrade;
+    public int damageUpgrade=2;
 
-    public int speedUpgrade;
+    public int speedUpgrade=2;
 
     /// <summary>
     /// game object zbraně

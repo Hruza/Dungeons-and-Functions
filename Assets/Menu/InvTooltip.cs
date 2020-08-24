@@ -58,6 +58,13 @@ public class InvTooltip : MonoBehaviour
         return "";
     }
 
+    public void Clear(string main, string properties)
+    {
+        itemName.text = main;
+        info.text = properties;
+        GetComponent<RectTransform>().sizeDelta = new Vector2(210, 40 + info.preferredHeight);
+    }
+
     public Item Item {
         get {
             return item;
@@ -65,12 +72,6 @@ public class InvTooltip : MonoBehaviour
         set {
             item = value;
             itemName.text= item.itemName;
-            switch(item.quality)
-            {
-                case Quality.C:
-                    itemName.text += " + C";
-                    break;
-            }
             StringBuilder sb=new StringBuilder();
             sb.AppendFormat("{0} level {1} (score {2})\n",item.itemType, item.itemLevel,item.EvaluateScore());
             sb.AppendLine("<color=#"+rarityColors[item.rarity.GetHashCode()]+">"+item.rarity.ToString()+"<color=black>");
@@ -114,7 +115,7 @@ public class InvTooltip : MonoBehaviour
             sb.Append("\n ");
             info.SetText(sb);
             GetComponent<RectTransform>().sizeDelta = new Vector2(210, 40 + info.preferredHeight);
-            CheckConstrains();
+            if(flipOnX || flipOnY) CheckConstrains();
         }
     }
 

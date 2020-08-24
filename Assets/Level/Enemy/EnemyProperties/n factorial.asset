@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: n factorial
   m_EditorClassIdentifier: 
   name: n factorial
-  orderID: 4
+  orderID: 3
   sprite: {fileID: 21300000, guid: 0428c7a288db0c048b748eb86173bab0, type: 3}
   score: 2
-  baseHP: 60
+  baseHP: 50
   weaknesses:
     neutralMult: 1
     AnlMult: 1
@@ -24,6 +24,6 @@ MonoBehaviour:
     AlgMult: 1.2
   damageType: 0
   aiType: 0
-  damage: 20
+  damage: 15
   EnemyGameObject: {fileID: 1815225491643999580, guid: 338ff6b6314f2524584937b72542a62e,
     type: 3}

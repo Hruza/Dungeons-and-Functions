@@ -19,7 +19,6 @@ public class MenuController : MonoBehaviour
 
     static public EquipManager equipManager;
 
-    public ItemInventory itemInventory;
     public GameObject[] pages;
     public int startingPage=1;
     public int afterLevelPage=2;
@@ -83,7 +82,6 @@ public class MenuController : MonoBehaviour
             pages[afterLevelPage].SetActive(true);
             pages[afterLevelPage].GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
             InitializeLevels();
-            itemInventory.ReloadInventory();
         }
         SwitchPage();
     }
@@ -92,7 +90,6 @@ public class MenuController : MonoBehaviour
         SetPage(0);
         InitializeLevels();
         equipManager = new EquipManager();
-        itemInventory.ReloadInventory();
     }
 
     public void ChoosePlayer(PlayerProgress progress) {
@@ -174,7 +171,6 @@ public class MenuController : MonoBehaviour
     {
         playerProgress = new PlayerProgress(true);
         ChangeLevel(0);
-        itemInventory.ReloadInventory();
     }
 
     public GameObject commandLine;
@@ -217,7 +213,6 @@ public class MenuController : MonoBehaviour
                         MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
                         MenuController.playerProgress.weapons.AddRange(reward.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
                         result = count.ToString()+" item(s) given";
-                        itemInventory.ReloadInventory();
                     }
                     break;
                 case "givew":
@@ -238,7 +233,6 @@ public class MenuController : MonoBehaviour
                         MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
                         MenuController.playerProgress.weapons.AddRange(reward.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
                         result = count.ToString() + " item(s) given";
-                        itemInventory.ReloadInventory();
                     }
                     break;
                 case "setlevel":

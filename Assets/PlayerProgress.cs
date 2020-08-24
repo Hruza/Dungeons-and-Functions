@@ -181,5 +181,37 @@ public class PlayerProgress
         }
         return players.ToArray();
     }
+
+    public void AddItem(Item item) {
+        switch (item.itemType)
+        {
+            case ItemType.Armor:
+                armors.Add((ArmorItem)item);
+                break;
+            case ItemType.Weapon:
+                weapons.Add((WeaponItem)item);
+                break;
+            case ItemType.none:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void DestroyItem(Item item) {
+        switch (item.itemType)
+        {
+            case ItemType.Armor:
+                armors.Remove((ArmorItem)item);
+                break;
+            case ItemType.Weapon:
+                weapons.Remove((WeaponItem)item);
+                break;
+            case ItemType.none:
+                break;
+            default:
+                break;
+        }
+    }
 }
 

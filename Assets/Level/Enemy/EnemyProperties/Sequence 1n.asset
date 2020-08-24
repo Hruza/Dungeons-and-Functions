@@ -16,7 +16,7 @@ MonoBehaviour:
   orderID: 3
   sprite: {fileID: 21300000, guid: a1cda995507949347b06de38bfc5d92c, type: 3}
   score: 2
-  baseHP: 40
+  baseHP: 15
   weaknesses:
     neutralMult: 1
     AnlMult: 1

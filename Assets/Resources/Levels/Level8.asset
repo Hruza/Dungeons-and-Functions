@@ -31,5 +31,9 @@ MonoBehaviour:
   enemiesPerWave: 0
   bossEnemies: []
   loot: []
-  secretRooms: []
+  secretRooms:
+  - type: 0
+    unlockedLevel: 
+    loot: []
+    room: {fileID: 3362167600122864025, guid: 386aa6b1fcef5f940ae76d62b2530b30, type: 3}
   spawnEnemiesInCenter: 0

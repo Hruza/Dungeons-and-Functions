@@ -79,6 +79,18 @@ public class WeaponItem : Item
     {
     }
 
+    public WeaponItem(Item item)
+    {
+        itemType = ItemType.Weapon;
+        itemStats = item.itemStats;
+        quality = item.quality;
+
+        //přiřazení vlastností, které vycházejí ze vzoru
+        pattern = item.pattern;
+        MinDamage = ((WeaponItem)item).minDamage;
+        MaxDamage = ((WeaponItem)item).maxDamage;
+    }
+
     public static WeaponItem Generate(WeaponPattern pattern,bool noStats=false) {
         //přiřazení vlastností, které mají všechny předměty společné
         WeaponItem weapon = new WeaponItem
@@ -93,7 +105,6 @@ public class WeaponItem : Item
             MaxDamage = Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1)
         };
         
-        if(!noStats)weapon.GenerateStats();
 
         return weapon;
     }

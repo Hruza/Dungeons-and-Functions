@@ -34,6 +34,9 @@ public class Health : MonoBehaviour {
 
     private void Die(Damager damage)
     {
+        if (GetComponent<EnemyAI>()!=null) {
+            GetComponent<EnemyAI>().Died();
+        }
         Destroy(this.gameObject,deathTime);
         if (deathTime > 0) {
             foreach (Behaviour behaviour in disableOnDeath)

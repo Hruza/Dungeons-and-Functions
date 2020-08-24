@@ -14,6 +14,7 @@ public class Minimap : MonoBehaviour
     public Color wallColor;
     public Color floorColor;
     public Color pathColor;
+    public Color secretColor;
 
     public static Minimap minimap
     {
@@ -107,6 +108,9 @@ public class Minimap : MonoBehaviour
                 case GeneratorV2.TileType.path:
                 case GeneratorV2.TileType.door:
                     col = pathColor;
+                    break;
+                case GeneratorV2.TileType.secret:
+                    col = secretColor;
                     break;
                 default:
                     break;

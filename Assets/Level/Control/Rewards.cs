@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Rewards : MonoBehaviour
 {
-    public int lootForCompletion=2;
+    public int lootForCompletion=1;
     public int lootForCleared=1;
 
 
@@ -203,19 +203,7 @@ public class Rewards : MonoBehaviour
     public void Confirm() {
         if (MenuController.playerProgress != null)
         {
-            switch (chosenItem.CarriedItem.itemType)
-            {
-                case ItemType.Armor:
-                    MenuController.playerProgress.armors.Add((ArmorItem)chosenItem.CarriedItem);
-                    break;
-                case ItemType.Weapon:
-                    MenuController.playerProgress.weapons.Add((WeaponItem)chosenItem.CarriedItem);
-                    break;
-                case ItemType.none:
-                    break;
-                default:
-                    break;
-            }
+            MenuController.playerProgress.AddItem(chosenItem.CarriedItem);
         }
         MenuController.SaveProgress();
         MenuController.menuController.SetPage(3);
