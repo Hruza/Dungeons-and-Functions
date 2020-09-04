@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
   m_Name: csmg
   m_EditorClassIdentifier: 
-  name: C.S.M.G.
+  itemName: C.S.M.G.
   obtainableAsDrop: 0
   level: 4
   rarity: 3
@@ -22,12 +22,12 @@ MonoBehaviour:
   upgrade: {fileID: 0}
   weaponType: 1
   damageType: 0
-  lowerMinDamage: 4
-  upperMinDamage: 4
-  lowerMaxDamage: 5
-  upperMaxDamage: 6
+  lowerMinDamage: 5
+  upperMinDamage: 6
+  lowerMaxDamage: 7
+  upperMaxDamage: 8
   attackSpeed: 50
-  damageUpgrade: 0
-  speedUpgrade: 0
   gameObject: {fileID: 4466194430588224100, guid: 9b4b94dc1b4b20b4bad8460bb17c5a46,
     type: 3}
+  damageUpgrade: 0
+  speedUpgrade: 5

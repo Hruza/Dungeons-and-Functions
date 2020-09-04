@@ -82,8 +82,8 @@ public class EnemyAI : MonoBehaviour
     {
         Level = properties.Level;
         score = properties.score;
-        health.Initialize(properties.baseHP , properties.weaknesses, isBoss,properties.name);
-        Damage = properties.damage ;
+        health.Initialize(properties.HP , properties.weaknesses, isBoss,properties.name);
+        Damage = properties.Damage ;
     }
 
     public void WalkEnded(Walker.WalkingOutput output) {
@@ -172,5 +172,17 @@ public class EnemyAI : MonoBehaviour
             ball.GetComponent<Rigidbody2D>().velocity = forward * velocity;
             ball.GetComponent<Projectile>().damage = damage;
         }
+    }
+
+    protected GameObject ShootEnemyTowardsPlayer(EnemyProperties enemy, float velocity, int damage, bool proportionalToPlayerDistance = false, float shootingPointOffset = 0.5f)
+    {
+        Vector3 forward = (Player.player.transform.position - transform.position).normalized;
+        GameObject ball = (GameObject)Instantiate(enemy.EnemyGameObject, transform.position + forward * shootingPointOffset, transform.rotation);
+        if (proportionalToPlayerDistance) velocity *= (Player.player.transform.position - transform.position).magnitude;
+        if (ball.GetComponent<EnemyAI>() != null)
+        {
+            ball.GetComponent<EnemyAI>().Initialize(enemy);
+        }
+        return ball;
     }
 }

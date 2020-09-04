@@ -5177,7 +5177,9 @@ GameObject:
   - component: {fileID: 8447323935650614488}
   - component: {fileID: 8420682799936167662}
   - component: {fileID: 2198875794649396944}
-  - component: {fileID: 4190474706728072257}
+  - component: {fileID: -4648213516698499972}
+  - component: {fileID: 2461621720530589541}
+  - component: {fileID: 6625848998760955332}
   m_Layer: 14
   m_Name: SumAB
   m_TagString: Enemy
@@ -5298,7 +5300,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.3, y: -0.1}
   m_Size: {x: 3.1, y: 2}
   m_Direction: 1
---- !u!114 &4190474706728072257
+--- !u!114 &-4648213516698499972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5307,89 +5309,72 @@ MonoBehaviour:
   m_GameObject: {fileID: 8469044018469754020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e0e5b77970d7c4fa6599d840ac9dfa, type: 3}
+  m_Script: {fileID: 11500000, guid: c68720ba8889ef5428848919e4c80b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultTargetTolerance: 1
+  obstacleAvoidance: 1
+  maxSpeed: 30
+  walkForce: 30
+  giveUpTime: 5
+  followPeriod: 0.25
+  followType: 1
+  layersToAvoid:
+    serializedVersion: 2
+    m_Bits: 6144
+--- !u!114 &2461621720530589541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8469044018469754020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8de76c109356d444845c1cab9098d23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 50
+  HP: 50
+  onDeathParticles: {fileID: 0}
+  disableOnDeath: []
+  deathTime: 0
   weaknesses:
     neutralMult: 1
     AnlMult: 1
     NumMult: 1
     AlgMult: 1
-  enemyType: 1
-  defaultTargetTolerance: 1
-  invincible: 0
   showBossHealth: 0
-  onDeathParticles: {fileID: 0}
-  isWalking: 0
-  acceleration: 15
-  maxSpeed: 3
-  obstacleDetectionDistance: 1
+--- !u!114 &6625848998760955332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8469044018469754020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19da20c18a807784994c0f690d0365eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  isBoss: 0
+  enemyType: 1
   damageType: 0
-  phases:
-  - PhaseType: 3
-    goToPlayer: 1
-    playerDistance: 8
-    timeToStart: 2
-    timeToStartNext: 0
-    walkingDistance: 2
-    DamageMultiplier: 1
-    walksCount: 0
-    projectile: {fileID: 0}
-    projectileVelocity: 0
-    barrageCount: 0
-    barrageDelay: 0
-    shootingPointOffset: 0
-    projectileSpeedByPlyerDistance: 0
-    attackRadius: 0
-    attackDelay: 0
-    attackDuration: 0
-    knockback: 0
-    spawnedObjects:
-    - {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
-    - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
-    spawnedLevelDiference: -1
-    catapultSpeed: 10
-    shootOnPlayer: 1
-    spawnCount: 2
-    spawnDelay: 2
-    overrideWeaknesses: 0
-    weakness:
-      neutralMult: 1
-      AnlMult: 1
-      NumMult: 1
-      AlgMult: 1
-  - PhaseType: 0
-    goToPlayer: 0
-    playerDistance: 6
-    timeToStart: 0
-    timeToStartNext: 3
-    walkingDistance: 8
-    DamageMultiplier: 0
-    walksCount: 4
-    projectile: {fileID: 0}
-    projectileVelocity: 0
-    barrageCount: 0
-    barrageDelay: 0
-    shootingPointOffset: 0
-    projectileSpeedByPlyerDistance: 0
-    attackRadius: 0
-    attackDelay: 0
-    attackDuration: 0
-    knockback: 0
-    spawnedObjects: []
-    spawnedLevelDiference: 0
-    catapultSpeed: 0
-    shootOnPlayer: 0
-    spawnCount: 0
-    spawnDelay: 0
-    overrideWeaknesses: 0
-    weakness:
-      neutralMult: 1
-      AnlMult: 1
-      NumMult: 1
-      AlgMult: 1
-  onStartTrigger: []
-  onEndTrigger: []
+  spawned:
+  - {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
+  - {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  spawningDistance: 7
+  minDistance: 6
+  maxDistance: 12
+  projectileVelocity: 10
+  spawnDelay: 1.5
+  waitTime: 0.8
+  timeBetweenSpawns: 0.5
+  spawningPointOffset: 1
+  enemySpeedByPlyerDistance: 1
+  walkingTime: 2
+  walkingDistance: 10
 --- !u!1001 &3676915317984135859
 PrefabInstance:
   m_ObjectHideFlags: 0

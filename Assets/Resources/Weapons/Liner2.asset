@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
+  m_Name: Liner2
+  m_EditorClassIdentifier: 
+  itemName: A Set of Rulers
+  obtainableAsDrop: 0
+  level: 4
+  rarity: 2
+  sprite: {fileID: 21300000, guid: d13e073cba733774080f8017adc52577, type: 3}
+  itemComment: The ultimate underlining tools
+  isStarting: 0
+  upgrade: {fileID: 0}
+  weaponType: 1
+  damageType: 0
+  lowerMinDamage: 3
+  upperMinDamage: 4
+  lowerMaxDamage: 7
+  upperMaxDamage: 8
+  attackSpeed: 40
+  gameObject: {fileID: 4708867003122692430, guid: 177e3f0bc071c6d48bb44e63c0febeba,
+    type: 3}
+  damageUpgrade: 0
+  speedUpgrade: 10

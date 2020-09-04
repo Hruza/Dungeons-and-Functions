@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
   m_Name: lHospital
   m_EditorClassIdentifier: 
-  name: L'Hospital
+  itemName: L'Hospital rule
   obtainableAsDrop: 1
   level: 3
   rarity: 1
   sprite: {fileID: 21300000, guid: 8ef1c12f7d8314b428edd57e9127e388, type: 3}
-  itemComment: It's a cannon compared to...well, anything.
+  itemComment: Send enemies to L'HOSPITAL :D ...get it?
   isStarting: 0
   upgrade: {fileID: 0}
   weaponType: 1
   damageType: 0
-  lowerMinDamage: 27
-  upperMinDamage: 33
-  lowerMaxDamage: 37
-  upperMaxDamage: 43
+  lowerMinDamage: 28
+  upperMinDamage: 32
+  lowerMaxDamage: 38
+  upperMaxDamage: 42
   attackSpeed: 3
-  damageUpgrade: 0
-  speedUpgrade: 0
   gameObject: {fileID: 1305185763060277112, guid: 10eba79b1f221c04398f01f01cac51c3,
     type: 3}
+  damageUpgrade: 15
+  speedUpgrade: 0

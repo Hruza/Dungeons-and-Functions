@@ -92,13 +92,17 @@ public class MenuController : MonoBehaviour
         equipManager = new EquipManager();
     }
 
+    private void SetDifficulty() { 
+        
+    }
+
     public void ChoosePlayer(PlayerProgress progress) {
         playerProgress = progress;
         PlayerSelected();
     }
 
-    public void NewPlayer(string playerName) {
-        playerProgress = new PlayerProgress(true, playerName);
+    public void NewPlayer(string playerName,PlayerProgress.Difficulty difficulty) {
+        playerProgress = new PlayerProgress(true,difficulty, playerName);
         PlayerSelected();
     }
 
@@ -164,15 +168,6 @@ public class MenuController : MonoBehaviour
         savePanel.Show(players);
     }
 
-    /// <summary>
-    /// Vymaže progres hráče, tedy vytvoří novou instanci proměnné playerProgress.
-    /// </summary>
-    public void ClearProgress()
-    {
-        playerProgress = new PlayerProgress(true);
-        ChangeLevel(0);
-    }
-
     public GameObject commandLine;
     private bool CLactive = false;
 
@@ -197,8 +192,9 @@ public class MenuController : MonoBehaviour
             switch (part[0])
             {
                 case "give":
-                    if (part.Length < 3 || part.Length >4 ) result = "wrong arguments";
-                    else {
+                    if (part.Length < 3 || part.Length > 4) result = "wrong arguments";
+                    else
+                    {
                         int level = int.Parse(part[1]);
                         int score = int.Parse(part[2]);
                         int count = 1;
@@ -207,12 +203,12 @@ public class MenuController : MonoBehaviour
 
                         for (int i = 0; i < count; i++)
                         {
-                            reward.Add(Item.Generate(level,score));
+                            reward.Add(Item.Generate(level, score));
                         }
 
                         MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
                         MenuController.playerProgress.weapons.AddRange(reward.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
-                        result = count.ToString()+" item(s) given";
+                        result = count.ToString() + " item(s) given";
                     }
                     break;
                 case "givew":
@@ -227,7 +223,7 @@ public class MenuController : MonoBehaviour
 
                         for (int i = 0; i < count; i++)
                         {
-                            reward.Add(WeaponItem.Generate(level,score));
+                            reward.Add(WeaponItem.Generate(level, score));
                         }
 
                         MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
@@ -235,9 +231,25 @@ public class MenuController : MonoBehaviour
                         result = count.ToString() + " item(s) given";
                     }
                     break;
+                case "giveall":
+                    List<Item> rewards = new List<Item>();
+                    foreach (ItemPattern item in WeaponPattern.AllWeaponPatterns)
+                    {
+                        rewards.Add(Item.Generate(item));
+                    }
+                    foreach (ItemPattern item in ArmorPattern.AllArmorPatterns)
+                    {
+                        rewards.Add(Item.Generate(item));
+                    }
+                    MenuController.playerProgress.armors.AddRange(rewards.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
+                    MenuController.playerProgress.weapons.AddRange(rewards.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
+                    result = "All items given";
+
+                    break;
                 case "setlevel":
                     if (part.Length > 2) result = "wrong arguments";
-                    else {
+                    else
+                    {
                         playerProgress.ProgressLevel = int.Parse(part[1]);
                         result = "progress level was set to " + int.Parse(part[1]).ToString();
                     }

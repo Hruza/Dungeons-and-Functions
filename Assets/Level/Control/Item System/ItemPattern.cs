@@ -10,7 +10,7 @@ public class ItemPattern : ScriptableObject
     /// <summary>
     /// jméno předmětu
     /// </summary>
-    public string name;
+    public string itemName;
     /// <summary>
     /// muze byt jako odmena za level
     /// </summary>
@@ -43,7 +43,7 @@ public class ItemPattern : ScriptableObject
         return ItemType.none;
     }
 
-    public const int levelCoefficient = 9;
+    public const int levelCoefficient = 11;
     public const int rarityCoefficient = 5;
     public int EvaluateScore() {
         return ( levelCoefficient * level ) + ( rarityCoefficient * (int)rarity );

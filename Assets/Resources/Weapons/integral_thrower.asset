@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
   m_Name: integral_thrower
   m_EditorClassIdentifier: 
-  name: Integralrang
+  itemName: Integralrang
   obtainableAsDrop: 1
-  level: 0
-  rarity: 0
-  sprite: {fileID: 21300000, guid: f7bbeb1617f755242a020cce8f7fd0f6, type: 3}
-  itemComment: It's like a boomerang, but more integral.
+  level: 4
+  rarity: 2
+  sprite: {fileID: 21300000, guid: cc81198aeff09d94d957c444264e4c60, type: 3}
+  itemComment: They look similar, don't they?
   isStarting: 0
   upgrade: {fileID: 0}
   weaponType: 1
   damageType: 0
-  lowerMinDamage: 4
-  upperMinDamage: 4
-  lowerMaxDamage: 5
-  upperMaxDamage: 7
+  lowerMinDamage: 5
+  upperMinDamage: 6
+  lowerMaxDamage: 7
+  upperMaxDamage: 9
   attackSpeed: 50
-  damageUpgrade: 0
-  speedUpgrade: 0
   gameObject: {fileID: 1023424732719212, guid: 3af8ae0ca01705d48ad5f504bab3c86e, type: 3}
+  damageUpgrade: 0
+  speedUpgrade: 10

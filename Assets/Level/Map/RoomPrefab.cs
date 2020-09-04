@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
+﻿using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.Tilemaps;
 
 public class RoomPrefab : MonoBehaviour
 {

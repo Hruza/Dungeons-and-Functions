@@ -17,12 +17,21 @@ public class ArmorItem : Item
             armor = value;
         }
     }
+
+    public int AdditionalHP
+    {
+        get
+        {
+            return ((ArmorPattern)pattern).additionalHP + (quality == Quality.C ? ((ArmorPattern)pattern).HPUpgrade : 0);
+        }
+    }
+
     /// <summary>
     /// zpomalení hráče
     /// </summary>
     public int movementSpeedReduction {
         get {
-            return ((ArmorPattern)pattern).movementSpeedReduction;
+            return ((ArmorPattern)pattern).movementSpeedReduction + (quality == Quality.C ? ((ArmorPattern)pattern).speedUpgrade : 0); ;
         }
     }
 
@@ -56,7 +65,9 @@ public class ArmorItem : Item
 
     public static ArmorItem Generate(SaveArmor save)
     {
-        ArmorPattern pattern = ArmorPattern.AllArmorPatterns.Find(x => x.name == save.ItemName);
+        ArmorPattern pattern = ArmorPattern.AllArmorPatterns.Find(x => x.itemName == save.ItemName);
+
+        if (pattern == null) return null;
         //přiřazení vlastností, které jsou uložené
         ArmorItem armor = new ArmorItem
         {

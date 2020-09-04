@@ -1,17 +1,7 @@
-﻿using System.Collections;
-using System.Text;
+﻿using System.Text;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.XR.WSA;
-using System.Security.Principal;
 using System.Linq;
-using UnityEngine.UIElements;
-using UnityEditor.Experimental.GraphView;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 //using System;
 
 public class GeneratorV2 : MonoBehaviour
@@ -408,7 +398,7 @@ public class GeneratorV2 : MonoBehaviour
     }
 
     public void PlaceTile(GameObject gameObject, Vector2Int pos, TileType type) {
-        if (IsInRange(pos)) {
+        if (IsInRange(pos) && gameObject!=null) {
             GameObject tile = (GameObject)Instantiate(gameObject, Map2Real(pos), transform.rotation, transform);
             tile.transform.localScale = new Vector3(gridSize,gridSize,1);
             map[pos.x, pos.y].type = type;

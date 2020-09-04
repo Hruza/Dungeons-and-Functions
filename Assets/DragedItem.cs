@@ -41,7 +41,7 @@ public class DragedItem : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Input.mousePosition+relativePos;
+        transform.position = Input.mousePosition;
         if (Input.GetKeyUp(KeyCode.Mouse0)) {
             Destroy(this.gameObject);
             dragedItem = null;

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 using TMPro;
+using System;
 
 public class InvTooltip : MonoBehaviour
 {
@@ -29,9 +30,9 @@ public class InvTooltip : MonoBehaviour
             itemName.text = enemy.name;
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("{0} enemy\n", enemy.aiType);
-            sb.AppendFormat("<b>HP:</b> {0}\n", enemy.baseHP);
+            sb.AppendFormat("<b>HP:</b> {0}\n", enemy.HP);
             //sb.AppendFormat("<b>Damage:</b> {0} <color=#{1}>{2}<color=black>\n", enemy.damage, ColorUtility.ToHtmlStringRGB(Damager.GetColor(enemy.damageType)),enemy.damageType);
-            sb.AppendFormat("<b>Damage:</b> {0} \n", enemy.damage);
+            sb.AppendFormat("<b>Damage:</b> {0} \n", enemy.Damage);
 
             /*sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.neutral));
             sb.Append(Weakness(enemy.weaknesses, Damager.DamageType.numeric));
@@ -65,58 +66,85 @@ public class InvTooltip : MonoBehaviour
         GetComponent<RectTransform>().sizeDelta = new Vector2(210, 40 + info.preferredHeight);
     }
 
-    public Item Item {
-        get {
-            return item;
-        }
-        set {
-            item = value;
-            itemName.text= item.itemName;
-            StringBuilder sb=new StringBuilder();
-            sb.AppendFormat("{0} level {1} (score {2})\n",item.itemType, item.itemLevel,item.EvaluateScore());
-            sb.AppendLine("<color=#"+rarityColors[item.rarity.GetHashCode()]+">"+item.rarity.ToString()+"<color=black>");
-            int lines = 2;
-            switch (item.itemType)
-            {
-                case ItemType.Armor:
-                    ArmorItem am = (ArmorItem)item;
-                    sb.AppendLine();
-                    sb.AppendFormat("<b>Armor:</b> {0}\n",am.Armor);
-                    sb.AppendFormat("<b>Speed reduction:</b> {0}\n", am.movementSpeedReduction);
-                    lines += 3;
-                    break;
-                case ItemType.Weapon:
-                    sb.AppendLine();
-                    WeaponItem wp = (WeaponItem)item;
-                    sb.AppendLine(wp.weaponType.ToString());
-                    sb.AppendFormat("<b>Damage:</b> {0}-{1} <color=#{3}>{2}<color=black>\n", wp.MinDamage, wp.MaxDamage,wp.damageType, ColorUtility.ToHtmlStringRGB(Damager.GetColor(wp.damageType)));
-                    sb.AppendFormat("<b>Attack speed:</b> {0}\n", wp.attackSpeed);
-                    lines += 4;
-                    break;
-                default:
-                    break;
-            }
-            if (item.itemStats.Length>0)
-            {
-                sb.Append("\n");
-                lines++;
-                foreach (Stat stat in item.itemStats)
+    public Color upgrade;
+    public Color neutral;
+    public Color downgrade;
+
+    string Comparer(int newVal, int oldVal,bool lowerBetter=false) {
+        Color col = neutral;
+        int dif = newVal - oldVal;
+        if (lowerBetter? dif < 0 : dif > 0) col = upgrade;
+        if (lowerBetter? dif > 0 : dif < 0) col = downgrade;
+        return string.Format("<color=#{0}>({1}{2})<color=black>",ColorUtility.ToHtmlStringRGB(col),dif>0?"+":"",dif);
+    }
+
+
+    public void ShowItem(Item value, Item comparedTo = null)
+    {
+        item = value;
+        itemName.text = item.itemName;
+        StringBuilder sb = new StringBuilder();
+        sb.AppendFormat("{0} level {1} (score {2})\n", item.itemType, item.itemLevel, item.EvaluateScore());
+        sb.AppendLine("<color=#" + rarityColors[item.rarity.GetHashCode()] + ">" + item.rarity.ToString() + "<color=black>");
+        int lines = 2;
+        switch (item.itemType)
+        {
+            case ItemType.Armor:
+                ArmorItem am = (ArmorItem)item;
+                sb.AppendLine();
+                if (comparedTo != null)
                 {
-                    sb.AppendFormat(" {0} +{1}\n", stat.name, stat.value);
-                    lines++;
+                    sb.AppendFormat("<b>Armor:</b> {0} {1}\n", am.Armor, Comparer(am.Armor, ((ArmorItem)comparedTo).Armor));
+                    sb.AppendFormat("<b>Speed reduction:</b> {0} {1}\n", am.movementSpeedReduction, Comparer(am.movementSpeedReduction, ((ArmorItem)comparedTo).movementSpeedReduction, true));
+                    sb.AppendFormat("<b>Additional HP:</b> {0} {1}\n", am.AdditionalHP, Comparer(am.AdditionalHP, ((ArmorItem)comparedTo).AdditionalHP));
                 }
-            }
-            if (item.ItemComment != "")
-            {
-                sb.Append("\n");
-                sb.Append("<i>"+item.ItemComment+"</i>");
-                lines += 2;
-            }
-            sb.Append("\n ");
-            info.SetText(sb);
-            GetComponent<RectTransform>().sizeDelta = new Vector2(210, 40 + info.preferredHeight);
-            if(flipOnX || flipOnY) CheckConstrains();
+                else
+                {
+                    sb.AppendFormat("<b>Armor:</b> {0}\n", am.Armor);
+                    sb.AppendFormat("<b>Speed reduction:</b> {0}\n", am.movementSpeedReduction);
+                    sb.AppendFormat("<b>Additional HP:</b> {0}\n", am.AdditionalHP);
+                }
+                lines += 3;
+                break;
+            case ItemType.Weapon:
+                sb.AppendLine();
+                WeaponItem wp = (WeaponItem)item;
+                sb.AppendLine(wp.weaponType.ToString());
+                if (comparedTo != null)
+                {
+                    sb.AppendFormat("<b>Damage:</b> {0} {2}-{1} {3} \n", wp.MinDamage, wp.MaxDamage, Comparer(wp.MinDamage,((WeaponItem)comparedTo).MinDamage ), Comparer(wp.MaxDamage,((WeaponItem)comparedTo).MaxDamage));
+                    sb.AppendFormat("<b>Attack speed:</b> {0} {1}\n", wp.attackSpeed, Comparer(wp.attackSpeed,((WeaponItem)comparedTo).attackSpeed) );
+                }
+                else
+                {
+                    sb.AppendFormat("<b>Damage:</b> {0}-{1} \n", wp.MinDamage, wp.MaxDamage);
+                    sb.AppendFormat("<b>Attack speed:</b> {0}\n", wp.attackSpeed);
+                }
+                lines += 4;
+                break;
+            default:
+                break;
         }
+        if (item.itemStats.Length > 0)
+        {
+            sb.Append("\n");
+            lines++;
+            foreach (Stat stat in item.itemStats)
+            {
+                sb.AppendFormat(" {0} +{1}\n", stat.name, stat.value);
+                lines++;
+            }
+        }
+        if (item.ItemComment != "")
+        {
+            sb.Append("\n");
+            sb.Append("<i>" + item.ItemComment + "</i>");
+            lines += 2;
+        }
+        sb.Append("\n ");
+        info.SetText(sb);
+        GetComponent<RectTransform>().sizeDelta = new Vector2(210, 40 + info.preferredHeight);
+        if (flipOnX || flipOnY) CheckConstrains();
     }
 
     private void CheckConstrains()

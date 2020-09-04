@@ -50,6 +50,7 @@ public class Phase
     public float walkingDistance=5f;
 
     public float DamageMultiplier=1f;
+    public float intakeDamageMultiplier = 1f;
 
     [Header("Walking around")]
     public int walksCount = 1;
@@ -143,6 +144,9 @@ public class Enemy : NPC
         foreach (GameObject trig in onStartTrigger)
         {
             trig.SendMessage("OnPhaseStart", currentPhaseIndex, SendMessageOptions.DontRequireReceiver);
+        }
+        if (CurrentPhase.overrideWeaknesses) {
+            CurrentPhase.weakness.neutralMult = CurrentPhase.intakeDamageMultiplier;
         }
         Weakness = CurrentPhase.overrideWeaknesses ? CurrentPhase.weakness : null;
         phaseStage = Stages.started;

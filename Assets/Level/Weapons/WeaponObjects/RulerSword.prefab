@@ -46,6 +46,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -57,6 +59,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -154,12 +157,14 @@ MonoBehaviour:
   minDamage: 50
   maxDamage: 100
   attackSpeed: 0
+  controller: {fileID: 0}
+  damageType: 0
   angleOfSwing: 120
   swingingThing: {fileID: 655780302609189670}
-  delay: 0
   knockback: 10
   autoAttack: 0
   changeDirections: 1
+  swingingSpeed: 2
 --- !u!50 &3267352998927893802
 Rigidbody2D:
   serializedVersion: 4

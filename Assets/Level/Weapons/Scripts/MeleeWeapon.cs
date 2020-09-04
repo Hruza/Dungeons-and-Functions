@@ -57,7 +57,7 @@ public class MeleeWeapon : Weapon
         }
         if(changeDirections) lastSwingDir *= -1;
         swingingThing.SetActive(false);
-        delay = Mathf.Max((10 / attackSpeed)-t,0);
+        delay = Mathf.Max((10f / attackSpeed)-t,0);
         Invoke("Reset", delay);
         yield return null;
     }

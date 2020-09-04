@@ -67,7 +67,6 @@ public class InventorySlot : TooltipButton,IDropHandler,IBeginDragHandler,IDragH
         ShowTooltip(CarriedItem);
     }
 
-
     public void Click()
     {
         if (triggerOnClick != null) {

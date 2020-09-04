@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
   m_Name: Chalk_Colored
   m_EditorClassIdentifier: 
-  name: A Piece of Colored Chalk
+  itemName: Colored Chalk
   obtainableAsDrop: 0
   level: 3
   rarity: 1
   sprite: {fileID: 21300000, guid: f29419cf49b5eef46bf4e85044526c06, type: 3}
   itemComment: It feels good to write on the blackboard.
-  isStarting: 1
+  isStarting: 0
   upgrade: {fileID: 0}
   weaponType: 1
   damageType: 0
-  lowerMinDamage: 5
-  upperMinDamage: 6
-  lowerMaxDamage: 8
-  upperMaxDamage: 9
+  lowerMinDamage: 6
+  upperMinDamage: 8
+  lowerMaxDamage: 9
+  upperMaxDamage: 11
   attackSpeed: 30
-  damageUpgrade: 0
-  speedUpgrade: 0
   gameObject: {fileID: 1305185763060277112, guid: f1d70222f97598543bb78b9c3f77712a,
     type: 3}
+  damageUpgrade: 2
+  speedUpgrade: 2

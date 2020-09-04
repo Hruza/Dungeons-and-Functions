@@ -26,7 +26,7 @@ public class SaveWeapon : SaveItem
 
     public SaveWeapon(WeaponItem weaponItem)
     {
-        ItemName = weaponItem.itemName;
+        ItemName = weaponItem.pattern.itemName;
         ItemQuality = weaponItem.quality;
         ItemStats = weaponItem.itemStats;
         MinDamage = weaponItem.MinDamage-((WeaponPattern)weaponItem.pattern).lowerMinDamage;
@@ -47,7 +47,7 @@ public class SaveArmor : SaveItem
 
     public SaveArmor(ArmorItem armorItem)
     {
-        ItemName = armorItem.itemName;
+        ItemName = armorItem.pattern.itemName;
         ItemQuality = armorItem.quality;
         ItemStats = armorItem.itemStats;
         Armor = armorItem.Armor-((ArmorPattern)armorItem.pattern).lowerArmor;

@@ -19,8 +19,12 @@ public class ArmorPattern : ItemPattern
     /// </summary>
     public int movementSpeedReduction;
 
+    public int additionalHP;
+
     [Header("Quality upgrade")]
     public int armorUpgrade;
+
+    public int HPUpgrade;
 
     public int speedUpgrade;
 

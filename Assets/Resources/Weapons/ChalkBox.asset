@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
   m_Name: ChalkBox
   m_EditorClassIdentifier: 
-  name: A box of chalk
+  itemName: A Box of Chalk
   obtainableAsDrop: 1
   level: 2
   rarity: 0
   sprite: {fileID: 21300000, guid: 372ebfac87c7d1b48831f97b69bbf837, type: 3}
   itemComment: Because one piece is not enough for most proofs.
   isStarting: 0
-  upgrade: {fileID: 0}
+  upgrade: {fileID: 11400000, guid: 9cf4200b0adec4145a892ea7e91b629e, type: 2}
   weaponType: 1
   damageType: 0
-  lowerMinDamage: 1
-  upperMinDamage: 2
-  lowerMaxDamage: 3
-  upperMaxDamage: 4
-  attackSpeed: 15
-  damageUpgrade: 0
-  speedUpgrade: 0
+  lowerMinDamage: 2
+  upperMinDamage: 3
+  lowerMaxDamage: 4
+  upperMaxDamage: 5
+  attackSpeed: 14
   gameObject: {fileID: 1305185763060277112, guid: be48bd212be61ed439dba716f431a0dc,
     type: 3}
+  damageUpgrade: 0
+  speedUpgrade: 5

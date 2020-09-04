@@ -46,6 +46,18 @@ public abstract class Navigator : MonoBehaviour
         return true;
     }
 
+    protected float speedCoefficient=1;
+    
+    public void DbfSlowness(float time,float coefficient=0.6f) {
+        speedCoefficient = coefficient;
+        CancelInvoke("ResetSpeedCoefficient");
+        Invoke("ResetSpeedCoefficient",time);
+    }
+
+    private void ResetSpeedCoefficient() {
+        speedCoefficient = 1;
+    }
+
     virtual public void GoToTarget(GameObject target)
     {
         GoToTarget(target, defaultTargetTolerance);

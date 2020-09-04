@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Rewards : MonoBehaviour
@@ -36,7 +35,6 @@ public class Rewards : MonoBehaviour
         {
             rewardCount+=lootForCompletion;
             if (result.ClearedAll) rewardCount+=lootForCleared;
-            rewardCount += result.additionalLoot;
         }
         foreach (SecretRoom secret in result.secrets)
         {
@@ -108,12 +106,13 @@ public class Rewards : MonoBehaviour
         {
             nextButton.GetComponent<CanvasGroup>().interactable = true;
             nextButton.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            MoveYFrom(nextButton, 70, true);
         }
         else { 
             GetComponentInParent<LevelExit>().backButton.GetComponent<CanvasGroup>().interactable = true;
             GetComponentInParent<LevelExit>().backButton.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            MoveYFrom(GetComponentInParent<LevelExit>().backButton, 70, true);
         }
-        MoveYFrom(nextButton, 70, true);
         yield return null;
     }
 

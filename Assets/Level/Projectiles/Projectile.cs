@@ -6,7 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
     public int damage = 1;
     public float lifetime = 10;
-    public enum ProjectileType { classic,sin,cos,homing }
+    public enum ProjectileType { classic,sin,cos,homing, boomerang }
     public ProjectileType projectileType;
 
     [HideInInspector]
@@ -22,6 +22,13 @@ public class Projectile : MonoBehaviour {
     public GameObject onDamageParticles;
     public float knockback = 0f;
     public float perpKnockback=0f;
+    public bool inflictSlowness = false;
+
+    [HideInInspector]
+    public float slownessModifier=1;
+    [HideInInspector]
+    public float slownessTime=1;
+
 
     [Header("On Destroy")]
     public GameObject onDestroyParticles;
@@ -49,6 +56,11 @@ public class Projectile : MonoBehaviour {
     public float detectionAngle = 60f;
     [HideInInspector]
     public float turningSpeed = 1f;
+
+    [HideInInspector]
+    public float timeToStart = 2f;
+    [HideInInspector]
+    public bool returnOnCollision = true;
 
     private Rigidbody2D rb;
     private Rigidbody2D RB {
@@ -103,6 +115,8 @@ public class Projectile : MonoBehaviour {
 
     private GameObject target;
 
+    bool collided = false;
+
     private void FixedUpdate()
     {
         switch (projectileType)
@@ -125,6 +139,19 @@ public class Projectile : MonoBehaviour {
 
                 }
                 break;
+            case ProjectileType.boomerang:
+                t += Time.deltaTime;
+                target = Player.player;
+                if (t > (lifetime / 4) || (collided && returnOnCollision)) {
+                    float angle = Vector2.SignedAngle(RB.velocity, target.transform.position - transform.position);
+                    Quaternion rot = Quaternion.Euler(0, 0, turningSpeed * Time.fixedDeltaTime * Mathf.Sign(angle));
+                    RB.velocity = rot * RB.velocity;
+                    transform.rotation = Quaternion.FromToRotation(Vector3.right, RB.velocity);
+                    if ((target.transform.position - transform.position).sqrMagnitude < 2) {
+                        End();
+                    }
+                }
+                break;
             default:
                 break;
         }
@@ -140,11 +167,13 @@ public class Projectile : MonoBehaviour {
         Collided(collision);
     }
 
-    private void Collided(Collider2D collision) {
+    protected void Collided(Collider2D collision) {
         string tag = collision.gameObject.tag;
+            collided = true;
         if ((tag == "Enemy" && damageEnemies) || ((tag=="Shield" || tag == "Player") && damagePlayer) || (tag == "Destroyable" && damageDestroyables))
         {
-            Damager.InflictDamage(collision.gameObject, damage, RB.velocity, damageType);
+            Damager.InflictDamage(collision.gameObject, damage, RB.velocity==Vector2.zero?(Vector2)(collision.transform.position-transform.position):RB.velocity, damageType);
+            if (inflictSlowness && collision.GetComponent<Navigator>()!=null) collision.GetComponent<Navigator>().DbfSlowness(slownessTime,slownessModifier);
             if (knockback + perpKnockback != 0)
             {
                 Vector2 dif=(Vector2)(collision.gameObject.transform.position - transform.position);
@@ -176,7 +205,7 @@ public class Projectile : MonoBehaviour {
 
         if (onDestroyParticles != null)
         {
-            GameObject particles=(GameObject)Instantiate(onDestroyParticles, transform.position, transform.rotation);
+            GameObject particles=(GameObject)Instantiate(onDestroyParticles, transform.position, Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.right, RB.velocity)));
             if (particleColorByProjectileColor) particles.GetComponentInChildren<ParticleSystem>().startColor = GetComponentInChildren<MeshRenderer>().material.color;
             Destroy(particles, 3);
         }

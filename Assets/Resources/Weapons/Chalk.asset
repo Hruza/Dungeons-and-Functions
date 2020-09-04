@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
   m_Name: Chalk
   m_EditorClassIdentifier: 
-  name: A Piece of Chalk
+  itemName: A Piece of Chalk
   obtainableAsDrop: 1
   level: 1
   rarity: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
   lowerMaxDamage: 4
   upperMaxDamage: 6
   attackSpeed: 30
-  damageUpgrade: 0
-  speedUpgrade: 0
   gameObject: {fileID: 1305185763060277112, guid: 2f215e75da236f944b2704d93ced9b35,
     type: 3}
+  damageUpgrade: 2
+  speedUpgrade: 5

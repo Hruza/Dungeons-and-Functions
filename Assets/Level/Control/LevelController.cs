@@ -225,8 +225,6 @@ public class LevelResults{
     public List<SecretRoom> secrets;
     public int score;
 
-    public int additionalLoot = 0;
-
     public const int roomClearedScore = 2;
 
     public LevelResults(bool completed, int clearedCount, int totalRooms, int score,List<SecretRoom> secrets) {

@@ -14,7 +14,7 @@ public abstract class TooltipButton : MonoBehaviour, IPointerEnterHandler,IPoint
         if (item != null && tooltip == null && showTooltip)
         {
             tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, transform.root);
-            tooltip.GetComponent<InvTooltip>().Item = item;
+            tooltip.GetComponent<InvTooltip>().ShowItem(item);
             StartCoroutine(MoveTooltip());
         }
     }
@@ -39,6 +39,12 @@ public abstract class TooltipButton : MonoBehaviour, IPointerEnterHandler,IPoint
     }
 
     public void OnPointerExit(PointerEventData data)
+    {
+        if (tooltip != null)
+            Destroy(tooltip);
+    }
+
+    public void OnDisable()
     {
         if (tooltip != null)
             Destroy(tooltip);

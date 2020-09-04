@@ -125,6 +125,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int startingHP = 20;
+
     void Start() {
         //  player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
@@ -135,8 +137,8 @@ public class Player : MonoBehaviour
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
         Name = "Player";
-        MaxHP = 20;
-        if(equip!=null) MaxHP+=equip.AllStats["MaxHP"];
+        MaxHP = Difficulties.PlayerHealth(startingHP);
+        if(equip!=null) MaxHP+=equip.AllStats["MaxHP"]+((armor==null)?0:armor.AdditionalHP);
         HP = MaxHP; 
         Armor = 0;
         Regeneration = 0;

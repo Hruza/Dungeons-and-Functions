@@ -16,7 +16,7 @@ MonoBehaviour:
   orderID: 1
   sprite: {fileID: 21300000, guid: 94ace3d6301828f41bbe06c7cc7baddd, type: 3}
   score: 1
-  baseHP: 30
+  baseHP: 50
   weaknesses:
     neutralMult: 1
     AnlMult: 1
@@ -24,6 +24,6 @@ MonoBehaviour:
     AlgMult: 0.5
   damageType: 0
   aiType: 0
-  damage: 10
+  damage: 15
   EnemyGameObject: {fileID: 4522790131674068969, guid: 272167dd98e042e409316d69a74d8ae8,
     type: 3}

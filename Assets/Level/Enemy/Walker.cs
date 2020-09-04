@@ -6,6 +6,16 @@ public class Walker : Navigator
 {
     protected IEnumerator currentWalk;
     public float maxSpeed = 30;
+    private float MaxSpeed {
+        get {
+            if (MenuController.playerProgress == null)
+            {
+                return maxSpeed * speedCoefficient;
+            }
+            else
+                return Difficulties.EnemySpeed(maxSpeed)* speedCoefficient;
+        }
+    }
     public float walkForce = 30;
     public float giveUpTime = 5;
     private Vector2 detectionSize;
@@ -134,7 +144,7 @@ public class Walker : Navigator
         while (Vector2.SqrMagnitude(target - transform.position) > tolerance * tolerance && Time.realtimeSinceStartup - startTime < giveUpTime)
         {
             dir = target - transform.position;
-            acceleration =(maxSpeed*dir.normalized)- RB.velocity;
+            acceleration =(MaxSpeed*dir.normalized)- RB.velocity;
             norm = acceleration.magnitude;
             if (Vector2.SqrMagnitude(target - transform.position) >(detectionSize.x+ (defaultTargetTolerance))*( detectionSize.y + (defaultTargetTolerance))) {
                 ExtDebug.DrawBoxCast2D(Planify(transform.position) + (0.5f * detectionSize.x * dir.normalized), detectionSize, 0, dir, defaultTargetTolerance , Color.red);

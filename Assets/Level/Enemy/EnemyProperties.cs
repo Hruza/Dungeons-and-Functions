@@ -21,12 +21,25 @@ public class EnemyProperties : ScriptableObject {
 
     public int baseHP;
 
+    public int HP {
+        get {
+            return Difficulties.EnemyHP(baseHP);
+        }
+    }
+
     public Weaknesses weaknesses;
 
     public Damager.DamageType damageType;
     public AIType aiType;
 
     public int damage;
+
+    public int Damage {
+        get
+        {
+            return Difficulties.EnemyDamage(damage);
+        }
+    }
 
 
     private int level;

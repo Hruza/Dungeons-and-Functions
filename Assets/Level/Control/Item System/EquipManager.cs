@@ -14,7 +14,7 @@ public class EquipManager
     /// <summary>
     /// seznam všech zbraní, které hráč může využívat
     /// </summary>
-    public List<WeaponItem> EquippedWeapons { get; private set; }
+    public WeaponItem[] EquippedWeapons { get; private set; }
 
     /// <summary>
     /// seznam a hodnota každého bonusového statu, který má hráč na sobě
@@ -24,7 +24,7 @@ public class EquipManager
     public EquipManager()
     {
         EquippedItems = new List<Item>();
-        EquippedWeapons = new List<WeaponItem>();
+        EquippedWeapons = new WeaponItem[2];
         AllStats = new Dictionary<string, int>();
 
         foreach (StatPattern statPattern in StatPattern.AllStatPatterns)
@@ -93,33 +93,15 @@ public class EquipManager
     }
 
     /// <summary>
-    /// Vymění zbraň hráči.
-    /// </summary>
-    /// <param name="newWeapon">nová zbraň</param>
-    /// <param name="oldWeapon">stará zbraň, která má být odebrána</param>
-    public void EquipWeapon(WeaponItem newWeapon, WeaponItem oldWeapon)
-    {
-        //odebrání staré zbraně
-        if (oldWeapon != null)
-        {
-            //DeductStats(oldWeapon.itemStats);
-            EquippedWeapons.Remove(oldWeapon);
-        }
-
-        //přidání nové zbraně
-        //AddStats(newWeapon.itemStats);
-        EquippedWeapons.Add(newWeapon);
-    }
-
-    /// <summary>
     /// Přidá zbraň hráči.
     /// </summary>
     /// <param name="newWeapon">nová zbraň, která má být přidána</param>
-    public void EquipWeapon(WeaponItem newWeapon)
+    public void EquipWeapon(WeaponItem newWeapon,int index)
     {
-        //přidání nové zbraně
-     //   AddStats(newWeapon.itemStats);
-        EquippedWeapons.Add(newWeapon);
+        if (index < 2 && index >= 0)
+        {
+            EquippedWeapons[index]=newWeapon;
+        }
     }
 
 }

@@ -200,13 +200,13 @@ MonoBehaviour:
   damageType: 2
   projectile: {fileID: 7279045933345513403, guid: 72d85605aec010544b62863d60b79ae7,
     type: 3}
-  shootingDistance: 9
+  shootingDistance: 8
   minDistance: 4
   maxDistance: 12
   projectileVelocity: 20
   barrageCount: 1
-  attackDelay: 0.5
-  waitTime: 0.8
+  attackDelay: 1
+  waitTime: 1.5
   barrageDelay: 0.5
   shootingPointOffset: 1
   projectileSpeedByPlyerDistance: 0

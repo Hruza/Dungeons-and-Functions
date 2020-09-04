@@ -111,7 +111,8 @@ public class WeaponItem : Item
 
     public static WeaponItem Generate(SaveWeapon save)
     {
-        WeaponPattern pattern = WeaponPattern.AllWeaponPatterns.Find(x => x.name == save.ItemName);
+        WeaponPattern pattern = WeaponPattern.AllWeaponPatterns.Find(x => x.itemName == save.ItemName);
+        if (pattern == null) return null;
         //přiřazení vlastností, které jsou uložené
         WeaponItem weapon = new WeaponItem
         {

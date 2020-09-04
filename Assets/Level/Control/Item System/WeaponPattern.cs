@@ -33,15 +33,15 @@ public class WeaponPattern : ItemPattern
     /// </summary>
     public int attackSpeed;
 
-    [Header("Quality upgrade")]
-    public int damageUpgrade=2;
-
-    public int speedUpgrade=2;
-
     /// <summary>
     /// game object zbraně
     /// </summary>
     public GameObject gameObject;
+
+    [Header("Quality upgrade")]
+    public int damageUpgrade=2;
+
+    public int speedUpgrade=2;
 
 
     /// <summary>

@@ -21,6 +21,7 @@ public class ShopInventory : ItemInventory
     public GameObject upgradeButton;
     public Image scrollArrow;
 
+    public Button backButton;
     public override void ItemAdded(InventorySlot sender, Item item)
     {
         if (sender == upgradeSlot && item == sacrificeSlot.CarriedItem) {
@@ -33,7 +34,7 @@ public class ShopInventory : ItemInventory
 
         if (sender == upgradeSlot)
         {
-            fromTooltip.Item = item;
+            fromTooltip.ShowItem(item);
             if (item.IsUpgradable)
             {
                 Item newItem=new Item();
@@ -46,7 +47,7 @@ public class ShopInventory : ItemInventory
                 {
                     newItem = item.Upgrade();
                 }
-                toTooltip.Item = newItem;
+                toTooltip.ShowItem(newItem,item);
                 upgradedSlot.CarriedItem = newItem;
             }
         }
@@ -101,13 +102,15 @@ public class ShopInventory : ItemInventory
         
         MenuController.playerProgress.DestroyItem(sacrificing);
 
+        MenuController.SaveProgress();
+
         StartCoroutine(UpgradeSequence());
     }
 
     private float upgradeTime = 1f;
 
     private IEnumerator UpgradeSequence() {
-
+        backButton.interactable = false;
         upgradeGroup.interactable = false;
         upgradeGroup.blocksRaycasts = false;
         LeanTween.value(0, 1, upgradeTime).setOnUpdate((float flt) =>
@@ -125,11 +128,13 @@ public class ShopInventory : ItemInventory
 
         yield return new WaitForSeconds(upgradeTime / 2);
 
-        upgradedSlot.CarriedItem = null;
+
         upgradedSlot.ClickEffect();
 
         yield return new WaitForSeconds(upgradeTime);
 
+        upgradedSlot.CarriedItem = null;
+        upgradedSlot.ClickEffect();
         scrollArrow.fillAmount = 0;
 
         fromTooltip.Clear("Item to Upgrade", "");
@@ -139,6 +144,7 @@ public class ShopInventory : ItemInventory
         upgradeGroup.blocksRaycasts = true;
         
         ReloadInventory();
+        backButton.interactable = true;
     }
  
     private void ShowMessage(string msg) {

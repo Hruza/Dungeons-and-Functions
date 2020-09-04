@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.ProBuilder;
-using UnityEditor.Rendering.Universal;
 
 /// <summary>
 /// všechny možné typy předmětů
@@ -50,7 +48,7 @@ public class Item
     {
         get
         {
-            return pattern.name + (quality==Quality.C?" +C":"");
+            return pattern.itemName + (quality==Quality.C?" +C":"");
         }
     }
     /// <summary>
@@ -193,7 +191,6 @@ public class Item
     public static float Distribution(float x,float center) {
         x =2.5f* (x - center) / center;
         return x<=0? Mathf.Exp(-2*x*x) : 
-                     x>0.7? 0 :
                           Mathf.Exp(-10*x)  ;
     }
 

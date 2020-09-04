@@ -22,16 +22,8 @@ public class LevelPreaparationInventory : ItemInventory
         progress = MenuController.playerProgress;
         for (int i = 0; i < 2; i++)
         {
-            if (MenuController.equipManager.EquippedWeapons.Count > i)
-            {
                 selectedWeapon[i] = MenuController.equipManager.EquippedWeapons[i];
                 weapon[i].CarriedItem = (Item)selectedWeapon[i];
-            }
-            else
-            {
-                selectedWeapon[i] = null;
-                weapon[i].CarriedItem = null;
-            }
         }
         if (MenuController.equipManager.EquippedItems.Count > 0)
         {
@@ -43,7 +35,6 @@ public class LevelPreaparationInventory : ItemInventory
             selectedArmor = null;
             armor.CarriedItem = null;
         }
-        MenuController.equipManager = new EquipManager();
     }
 
     public override void ItemAdded(InventorySlot sender, Item item)
@@ -104,7 +95,7 @@ public class LevelPreaparationInventory : ItemInventory
             }
             for (int i = 0; i < 2; i++)
             {
-                if (selectedWeapon[i] != null) MenuController.equipManager.EquipWeapon(selectedWeapon[i]);
+               MenuController.equipManager.EquipWeapon(selectedWeapon[i],i);
             }
             MenuController.PlayLevel();
         }

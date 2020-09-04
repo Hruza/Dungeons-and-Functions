@@ -23,7 +23,7 @@ MonoBehaviour:
     NumMult: 1
     AlgMult: 0.8
   damageType: 0
-  aiType: 0
+  aiType: 1
   damage: 15
   EnemyGameObject: {fileID: 5101788237483465924, guid: b4d7de73a4741f64781fccf72564e270,
     type: 3}

@@ -30,7 +30,22 @@ public class PlayerMovement : MonoBehaviour {
 
     static public Vector3 Forward() {
         Vector3 vect = new Vector3(lookDir.x, lookDir.y, 0);
-        return vect;
+        return vect.normalized;
+    }
+
+    static public Vector3 MouseWorldPos()
+    {
+        Plane plane = new Plane(Vector3.forward, Vector3.zero);
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        float enter = 0.0f;
+
+        if (plane.Raycast(ray, out enter))
+        {
+            return ray.GetPoint(enter);
+        }
+        return Vector3.zero;
     }
 
     private void FixedUpdate() {
@@ -88,7 +103,6 @@ public class PlayerMovement : MonoBehaviour {
     void Rotate() {
         lookDir= Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
         lookDir.y /= -slope;
-        lookDir.Normalize();
 
         float rot = Mathf.Rad2Deg * Mathf.Atan2(lookDir.y, lookDir.x);
         this.transform.rotation = Quaternion.Euler(0, 0, rot);
