@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8430b7fc38646fd48a60d30020c089c2, type: 3}
+  m_Name: HSNotes
+  m_EditorClassIdentifier: 
+  itemName: High School Notes Armor
+  obtainableAsDrop: 1
+  level: 1
+  rarity: 0
+  sprite: {fileID: 21300000, guid: 1475703b2b861a24aad73c5b90cb160b, type: 3}
+  itemComment: Useless after the first week.
+  isStarting: 1
+  upgrade: {fileID: 11400000, guid: 079721b9a4ef99649898d34ccff06152, type: 2}
+  lowerArmor: 1
+  upperArmor: 3
+  movementSpeedReduction: 1
+  additionalHP: 0
+  armorUpgrade: 2
+  HPUpgrade: 0
+  speedUpgrade: 0

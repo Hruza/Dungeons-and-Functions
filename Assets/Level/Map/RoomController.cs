@@ -6,6 +6,11 @@ using UnityEngine;
 public class RoomController : MonoBehaviour {
 
     int enemyCount;
+
+    public int wave=5;
+    public int maxWave=10;
+
+
     public GameObject[] triggerOnClear;
     public GameObject[] triggerOnEnter;
 
@@ -15,11 +20,13 @@ public class RoomController : MonoBehaviour {
 
     List<GameObject> livingEnemies;
     Vector2 dimensions;
+
+    public Transform[] spawns;
     
     //todo: Public jen pro testovani
-    public EnemyProperties[] enemiesToSpawn;
-    public EnemyProperties[] EnemiesToSpawn {
-        private get {
+    private List<EnemyProperties> enemiesToSpawn;
+    public List<EnemyProperties> EnemiesToSpawn {
+        get {
             return enemiesToSpawn;
         }
         set {
@@ -39,10 +46,13 @@ public class RoomController : MonoBehaviour {
 
 	
 	void Start () {
-
+        if (spawns.Length == 0) {
+           // spawns = transform.GetChild(0);
+                }
         if(selfInitialize) Initialize(1, 1);
-        
-	}
+        enemyCount = 0;
+        livingEnemies = new List<GameObject>();
+    }
 
     /// <summary>
     /// Inicializuje mistnost s danou velikosti, tato operave musi byt provedena pred pouzitim mistnosti
@@ -72,18 +82,28 @@ public class RoomController : MonoBehaviour {
     /// Spawne vsechny enemies v listu enemiesToSpawn, pozice je nahodna v ramci mistnosti.
     /// </summary>
     void SpawnEnemies() {
-        if (enemiesToSpawn.Length - enemyCount > 9) cap = enemyCount + 5;
-        else cap = 10;
-        foreach (EnemyProperties enemy in enemiesToSpawn)
+        if (enemiesToSpawn.Count - enemyCount > maxWave) cap = enemyCount + wave;
+        else cap = enemyCount + wave+1;
+        for (int i = enemyCount; i < enemiesToSpawn.Count; i++)
         {
+            EnemyProperties enemy = enemiesToSpawn[i]; 
             enemyCount++;
             Vector3 randPos;
-            if (spawnAllInCenter) randPos= Vector3.zero;
-            else randPos = new Vector3(( Random.value - 0.5f) * (dimensions.x - 0.1f) * LevelGenerator.tileSize, (Random.value - 0.5f) * (dimensions.y - 0.1f) * LevelGenerator.tileSize);
-            GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, transform.position + randPos, transform.rotation);
+            if (spawnAllInCenter) randPos = transform.position;
+            else if (spawns.Length==0) {
+                randPos = transform.GetChild(i % transform.childCount ).position;
+            }
+            else {
+                randPos = spawns[i % spawns.Length].position;
+            }
+            GameObject currentEnemy = (GameObject)Instantiate(enemy.EnemyGameObject, randPos, Quaternion.identity);
             currentEnemy.SetActive(false);
-            currentEnemy.GetComponent<NPC>().Initialize(enemy);
-            GameObject particles = (GameObject)Instantiate(summoner, transform.position + randPos, transform.rotation);
+            NPC npc = currentEnemy.GetComponent<NPC>();
+            if(npc!=null)
+                npc.Initialize(enemy);
+            else
+                currentEnemy.GetComponent<EnemyAI>().Initialize(enemy);
+            GameObject particles = (GameObject)Instantiate(summoner, randPos, transform.rotation);
             particles.GetComponent<Summoner>().enemy = currentEnemy;
             livingEnemies.Add(currentEnemy);
             if (enemyCount >= cap) break;
@@ -104,7 +124,7 @@ public class RoomController : MonoBehaviour {
             {
                 yield return new WaitForSeconds(0.5f);
             }
-            if (enemyCount == enemiesToSpawn.Length) cleared = true;
+            if (enemyCount == enemiesToSpawn.Count) cleared = true;
             else {
                 SpawnEnemies();
             }
@@ -115,15 +135,11 @@ public class RoomController : MonoBehaviour {
         {
             onClearObject.SendMessage("OnClear");
         }
-
-
-        Debug.Log("You are murderer!!");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!entered) {
-            if (!initiated && !selfInitialize) Debug.LogError("Room " + this.ToString() + " is not initialized");
 
             foreach (GameObject onEnterObject in triggerOnEnter)
             {
@@ -132,9 +148,18 @@ public class RoomController : MonoBehaviour {
 
             //Debug.Log(enemiesToSpawn);
             entered = true;
-            SpawnEnemies();
+            if (enemiesToSpawn.Count > 0)
+            {
+                SpawnEnemies();
 
-            StartCoroutine(CheckCleared());
+                StartCoroutine(CheckCleared());
+            }
+            else {
+                foreach (GameObject onClearObject in triggerOnClear)
+                {
+                    onClearObject.SendMessage("OnClear");
+                }
+            }
         }
 
     }

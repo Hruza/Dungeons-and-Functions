@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
   m_Name: OPintegral_throwetOP
   m_EditorClassIdentifier: 
-  name: IntegralrangOP
-  lowerItemLevel: 9999
-  upperItemLevel: 10000
+  itemName: OP
+  obtainableAsDrop: 0
+  level: 0
+  rarity: 0
   sprite: {fileID: 21300000, guid: f7bbeb1617f755242a020cce8f7fd0f6, type: 3}
   itemComment: It's like a boomerang, but more integral.
   isStarting: 0
-  fixedRarity: 0
-  fixedRarityValue: 0
+  upgrade: {fileID: 0}
   weaponType: 1
+  damageType: 0
   lowerMinDamage: 50
   upperMinDamage: 50
   lowerMaxDamage: 60
   upperMaxDamage: 60
-  damageIncrementPerLevel: 1
   attackSpeed: 50
   gameObject: {fileID: 1023424732719212, guid: 3af8ae0ca01705d48ad5f504bab3c86e, type: 3}
+  damageUpgrade: 2
+  speedUpgrade: 2

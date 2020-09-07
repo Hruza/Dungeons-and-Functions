@@ -10,6 +10,8 @@ public class WeaponPattern : ItemPattern
     /// typ zbraně
     /// </summary>
     public WeaponType weaponType;
+
+    public Damager.DamageType damageType;
     /// <summary>
     /// dolní hranice minimálnoho poškození zbraně
     /// </summary>
@@ -27,17 +29,20 @@ public class WeaponPattern : ItemPattern
     /// </summary>
     public int upperMaxDamage;
     /// <summary>
-    /// Kolik damage za level se prida k zakladu
-    /// </summary>
-    public int damageIncrementPerLevel;
-    /// <summary>
     /// rychlost útoku zbraně
     /// </summary>
     public int attackSpeed;
+
     /// <summary>
     /// game object zbraně
     /// </summary>
     public GameObject gameObject;
+
+    [Header("Quality upgrade")]
+    public int damageUpgrade=2;
+
+    public int speedUpgrade=2;
+
 
     /// <summary>
     /// databáze všech možných zbraní

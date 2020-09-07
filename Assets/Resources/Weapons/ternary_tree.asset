@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
+  m_Name: ternary_tree
+  m_EditorClassIdentifier: 
+  itemName: Ternary tree
+  obtainableAsDrop: 0
+  level: 4
+  rarity: 2
+  sprite: {fileID: 21300000, guid: 9b2470658bafbc24daf1a5faefea17f6, type: 3}
+  itemComment: Wow, that escalated quicky!
+  isStarting: 0
+  upgrade: {fileID: 0}
+  weaponType: 1
+  damageType: 0
+  lowerMinDamage: 2
+  upperMinDamage: 3
+  lowerMaxDamage: 4
+  upperMaxDamage: 5
+  attackSpeed: 20
+  gameObject: {fileID: 5470122422084412188, guid: cd545a69d9ce0274f8fc0c92e079a525,
+    type: 3}
+  damageUpgrade: 2
+  speedUpgrade: 3

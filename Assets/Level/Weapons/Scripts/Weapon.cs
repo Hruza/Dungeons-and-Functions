@@ -7,6 +7,9 @@ public class Weapon : MonoBehaviour
     public int minDamage;
     public int maxDamage;
     public int attackSpeed;
+    public WeaponController controller;
+
+    public Damager.DamageType damageType;
 
     protected virtual void Update()
     {
@@ -16,7 +19,7 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Primary()
     {
-
+        controller.Cooldown(10f/attackSpeed);
     }
 
     protected virtual void Secondary()

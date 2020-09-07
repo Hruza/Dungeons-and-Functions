@@ -16,28 +16,43 @@ MonoBehaviour:
   progressID: 14
   lootAfterFinish: 1
   isSecret: 0
-  difficulty: 8
-  enemies:
-  - count: 10
-    enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
-  - count: 10
+  difficulty: 4
+  enemies: []
+  roomCount: 0
+  advantageFactor: 0
+  generatorPreset: 2
+  roomConnections: 1
+  preset: 0
+  bossRoom: {fileID: 5550197903366734747, guid: ef2fbd58e283f2549ab812ade6efca4d,
+    type: 3}
+  enemiesPerWave: 8
+  bossEnemies:
+  - count: 5
     enemyProperties: {fileID: 11400000, guid: e092dc0c57ce72e40a27362772b9de05, type: 2}
-  - count: 4
+  - count: 3
+    enemyProperties: {fileID: 11400000, guid: c3470de253412f244b8ec61716a1c2e9, type: 2}
+  - count: 6
+    enemyProperties: {fileID: 11400000, guid: be440bb653d7f9240bf85fbd502b0dfc, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
+  - count: 2
     enemyProperties: {fileID: 11400000, guid: cfe1f04ef746e144d96e445970fd9320, type: 2}
+  - count: 6
+    enemyProperties: {fileID: 11400000, guid: d164ba2bf44dd6a4dbe5549d00d5ab73, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
+  - count: 8
+    enemyProperties: {fileID: 11400000, guid: 95715ca1a258f09439548e1c047786ef, type: 2}
   - count: 4
     enemyProperties: {fileID: 11400000, guid: 9adc81e5454154e4587a3ec3294f8684, type: 2}
   - count: 2
     enemyProperties: {fileID: 11400000, guid: 1a6fa466ff344aa42b543a9603b511a8, type: 2}
   - count: 2
-    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
-  - count: 2
-    enemyProperties: {fileID: 11400000, guid: b4eaf7cb457c2c84984577f3abb5b328, type: 2}
-  roomCount: 1
-  generatorPreset: 2
-  roomConnections: 1
+    enemyProperties: {fileID: 11400000, guid: 1a6fa466ff344aa42b543a9603b511a8, type: 2}
   loot: []
   secretRooms:
   - type: 1
     unlockedLevel: ???
     loot: []
+    room: {fileID: 5722960097995567609, guid: 69f9e734700c74c4c84b84cf411cc78a, type: 3}
   spawnEnemiesInCenter: 0

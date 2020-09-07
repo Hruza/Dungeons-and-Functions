@@ -38,7 +38,6 @@ public class ExponentialProjectile : Projectile
                 angle = (spread / 2) - (spread * (i / (degree - 1f)));
                 newDir = transform.rotation * Quaternion.Euler(0, 0, angle);
                 proj = (GameObject)Instantiate(this.gameObject,transform.position,newDir);
-                Debug.Log(newDir * Vector3.forward);
                 proj.GetComponent<Rigidbody2D>().velocity = newDir * Vector3.right*speed;
                 proj.GetComponent<Projectile>().damage = damage;
                 proj.GetComponent<ExponentialProjectile>().depth = depth - 1;

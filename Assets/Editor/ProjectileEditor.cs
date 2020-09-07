@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Runtime.Remoting.Messaging;
+using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(Projectile))]
@@ -11,6 +12,8 @@ public class ProjectileEditor : Editor
     SerializedProperty detectionDistance;
     SerializedProperty detectionAngle;
     SerializedProperty turningSpeed;
+    SerializedProperty timeToStart;
+    SerializedProperty returnOnCollision;
 
     SerializedProperty explosionDamageMultiplicator;
     SerializedProperty explosionRadius;
@@ -19,22 +22,32 @@ public class ProjectileEditor : Editor
     SerializedProperty explosionDamagePlayer;
     SerializedProperty explosionDamageDestroyables;
 
+    SerializedProperty inflictSlowness;
+    SerializedProperty slownessModifier;
+    SerializedProperty slownessTime;
+
     void OnEnable()
     {
         detectionDistance = serializedObject.FindProperty("detectionDistance") ;
         detectionAngle = serializedObject.FindProperty("detectionAngle");
         turningSpeed = serializedObject.FindProperty("turningSpeed");
+        timeToStart = serializedObject.FindProperty("timeToStart");
+        returnOnCollision = serializedObject.FindProperty("returnOnCollision");
 
-        explosionDamageMultiplicator=serializedObject.FindProperty("explosionDamageMultiplicator");
+        explosionDamageMultiplicator =serializedObject.FindProperty("explosionDamageMultiplicator");
         explosionRadius=serializedObject.FindProperty("explosionRadius");
         explosionDamageDistribution=serializedObject.FindProperty("explosionDamageDistribution");
         explosionDamageEnemies=serializedObject.FindProperty("explosionDamageEnemies");
         explosionDamagePlayer=serializedObject.FindProperty("explosionDamagePlayer");
         explosionDamageDestroyables=serializedObject.FindProperty("explosionDamageDestroyables");
 
+        slownessModifier = serializedObject.FindProperty("slownessModifier");
+        slownessTime = serializedObject.FindProperty("slownessTime");
+
     }
 
     bool showHoming = false;
+    bool showSlowness = false;
     public override void OnInspectorGUI()
     {
         base.DrawDefaultInspector();
@@ -60,7 +73,22 @@ public class ProjectileEditor : Editor
             EditorGUI.indentLevel--;
         }
 
-        if(tgt.projectileType==Projectile.ProjectileType.homing)
+        if (tgt.inflictSlowness)
+        {
+            showSlowness = EditorGUILayout.Foldout(showSlowness, new GUIContent("Slowness"), EditorStyles.boldFont);
+            if (showSlowness)
+            {
+                EditorGUI.indentLevel++;
+
+                EditorGUILayout.PropertyField(slownessTime, new GUIContent("Slowness Time"));
+
+                EditorGUILayout.PropertyField(slownessModifier, new GUIContent("Slowness modifier"));
+
+                EditorGUI.indentLevel--;
+            }
+        }
+
+        if (tgt.projectileType==Projectile.ProjectileType.homing)
         {
 
             showHoming=EditorGUILayout.Foldout(showHoming, new GUIContent("Homing"), EditorStyles.boldFont);
@@ -73,6 +101,24 @@ public class ProjectileEditor : Editor
                 EditorGUILayout.PropertyField(detectionAngle, new GUIContent("Detection angle"));
                 EditorGUILayout.PropertyField(turningSpeed, new GUIContent("Turning speed"));
                 
+                EditorGUI.indentLevel--;
+
+            }
+        }
+        if (tgt.projectileType == Projectile.ProjectileType.boomerang)
+        {
+
+            showHoming = EditorGUILayout.Foldout(showHoming, new GUIContent("Booemrang"), EditorStyles.boldFont);
+
+            if (showHoming)
+            {
+                EditorGUI.indentLevel++;
+
+                EditorGUILayout.PropertyField(turningSpeed, new GUIContent("Turning speed"));
+
+                EditorGUILayout.PropertyField(timeToStart, new GUIContent("Time to return"));
+                EditorGUILayout.PropertyField(returnOnCollision, new GUIContent("Return on collision"));
+
                 EditorGUI.indentLevel--;
 
             }

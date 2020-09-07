@@ -18,10 +18,16 @@ public class ArmorPattern : ItemPattern
     /// o kolik je zpomalen hráč, když má toto brnění
     /// </summary>
     public int movementSpeedReduction;
-    /// <summary>
-    /// kolik armoru se prida za kazdy level
-    /// </summary>
-    public int armorIncrementPerLevel;
+
+    public int additionalHP;
+
+    [Header("Quality upgrade")]
+    public int armorUpgrade;
+
+    public int HPUpgrade;
+
+    public int speedUpgrade;
+
     /// <summary>
     /// databáze všech možných brnění
     /// </summary>

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
+  m_Name: n factorial
+  m_EditorClassIdentifier: 
+  name: n factorial
+  orderID: 3
+  sprite: {fileID: 21300000, guid: 0428c7a288db0c048b748eb86173bab0, type: 3}
+  score: 2
+  baseHP: 50
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 1
+    NumMult: 0.7
+    AlgMult: 1.2
+  damageType: 0
+  aiType: 0
+  damage: 13
+  EnemyGameObject: {fileID: 1815225491643999580, guid: 338ff6b6314f2524584937b72542a62e,
+    type: 3}

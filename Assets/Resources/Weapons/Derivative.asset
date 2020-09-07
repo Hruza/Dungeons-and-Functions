@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
+  m_Name: Derivative
+  m_EditorClassIdentifier: 
+  itemName: Derivative on Interval
+  obtainableAsDrop: 1
+  level: 3
+  rarity: 1
+  sprite: {fileID: 21300000, guid: 71db232e4d2cdf14e8e5c48b3232903e, type: 3}
+  itemComment: Change the rate of change!
+  isStarting: 0
+  upgrade: {fileID: 0}
+  weaponType: 1
+  damageType: 0
+  lowerMinDamage: 1
+  upperMinDamage: 3
+  lowerMaxDamage: 5
+  upperMaxDamage: 5
+  attackSpeed: 10
+  gameObject: {fileID: 1305185763060277112, guid: adf80b60827ee964488ca17e10bb3746,
+    type: 3}
+  damageUpgrade: 2
+  speedUpgrade: 0

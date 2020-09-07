@@ -21,16 +21,31 @@ public class PlayerMovement : MonoBehaviour {
 
     public int playerMovementReduction;
 
-    private bool knockbacked=false;
+    private bool knockbacked = false;
 
-    void Start () {
+    void Start() {
         slope = Mathf.Cos(Mathf.Abs(Camera.main.transform.rotation.eulerAngles.x % 180));
         rbody = GetComponent<Rigidbody2D>();
     }
 
     static public Vector3 Forward() {
-        Vector3 vect=new Vector3(lookDir.x,lookDir.y,0);
-        return vect;
+        Vector3 vect = new Vector3(lookDir.x, lookDir.y, 0);
+        return vect.normalized;
+    }
+
+    static public Vector3 MouseWorldPos()
+    {
+        Plane plane = new Plane(Vector3.forward, Vector3.zero);
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        float enter = 0.0f;
+
+        if (plane.Raycast(ray, out enter))
+        {
+            return ray.GetPoint(enter);
+        }
+        return Vector3.zero;
     }
 
     private void FixedUpdate() {
@@ -40,7 +55,7 @@ public class PlayerMovement : MonoBehaviour {
     void Update()
     {
 
-	}
+    }
 
     public void Knockback(Vector2 direction) {
         knockbacked = true;
@@ -48,10 +63,10 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private IEnumerator Knocking(Vector2 direction) {
-        Vector2 dampen = direction.normalized*knockbackResistance;
-        while (dampen.x*direction.x>0) {
+        Vector2 dampen = direction.normalized * knockbackResistance;
+        while (dampen.x * direction.x > 0) {
             rbody.velocity = direction;
-            direction -= dampen*Time.deltaTime;
+            direction -= dampen * Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
         knockbacked = false;
@@ -69,9 +84,17 @@ public class PlayerMovement : MonoBehaviour {
         moveDir.y *= Mathf.Sqrt(1 - moveDir.x * moveDir.x * 0.5f);
         moveDir.x *= Mathf.Sqrt(1 - moveDir.y * moveDir.y * 0.5f);
 
-        moveDir *= speed*(1-(playerMovementReduction*0.1f));
-        rbody.velocity = moveDir;
+        moveDir *= speed * (1 - (playerMovementReduction * 0.1f));
+        moveDir += additionalForce;
+        additionalForce = Vector2.zero;
 
+        rbody.velocity = moveDir;
+    }
+
+    private Vector2 additionalForce;
+    public void AddForce(Vector2 force) {
+        Debug.Log(force);
+        additionalForce += force;
     }
 
     /// <summary>
@@ -80,7 +103,6 @@ public class PlayerMovement : MonoBehaviour {
     void Rotate() {
         lookDir= Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
         lookDir.y /= -slope;
-        lookDir.Normalize();
 
         float rot = Mathf.Rad2Deg * Mathf.Atan2(lookDir.y, lookDir.x);
         this.transform.rotation = Quaternion.Euler(0, 0, rot);

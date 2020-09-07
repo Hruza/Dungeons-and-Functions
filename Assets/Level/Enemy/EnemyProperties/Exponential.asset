@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b18879e5749a03d409499f1919c90b73, type: 3}
+  m_Name: Exponential
+  m_EditorClassIdentifier: 
+  name: Exponential
+  orderID: 6
+  sprite: {fileID: 21300000, guid: 65a6d0f678e2e49449893968641d2c23, type: 3}
+  score: 4
+  baseHP: 80
+  weaknesses:
+    neutralMult: 1
+    AnlMult: 1.2
+    NumMult: 1
+    AlgMult: 0.8
+  damageType: 0
+  aiType: 1
+  damage: 15
+  EnemyGameObject: {fileID: 5101788237483465924, guid: b4d7de73a4741f64781fccf72564e270,
+    type: 3}

@@ -45,7 +45,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDamage: 0
   maxDamage: 0
+  attackSpeed: 0
+  controller: {fileID: 0}
+  damageType: 0
   velocity: 10
-  projectile: {fileID: 1964618269413152, guid: 2b76f2c9c139a76458a268ab2a917f0c, type: 3}
-  delay: 0.2
+  projectile: {fileID: 1964618269413152, guid: 341a097be5f58d34994c61f485b13f0f, type: 3}
+  onShootParticles: {fileID: 0}
   autoFire: 1
+  spread: 0
+  projectilesPerShot: 1
+  uniformSpread: 0
+  offset: 1

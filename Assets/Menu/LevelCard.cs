@@ -7,7 +7,7 @@ public class LevelCard : MonoBehaviour
 {
     public Text tName;
     public Text tDifficulty;
-    public Text tEnemies;
+    public InventoryPanel enemyPanel;
     public Button playButton;
 
     public Level Info {
@@ -15,6 +15,7 @@ public class LevelCard : MonoBehaviour
             tName.text = value.levelName;
             tDifficulty.text=value.difficulty.ToString();
             playButton.interactable = value.Playable;
+            enemyPanel.Enemies = value.EnemyTypes;
         }
     }
 }

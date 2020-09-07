@@ -36,6 +36,7 @@ public class ShootProjectile : Weapon
 
     protected override void Primary()
     {
+        base.Primary();
         ready = false;
         Invoke("Reset", 10f / attackSpeed);
         Vector3 forward = PlayerMovement.Forward();
@@ -52,6 +53,7 @@ public class ShootProjectile : Weapon
             }
             ball.GetComponent<Rigidbody2D>().velocity = spreadRotation*forward * velocity;
             ball.GetComponent<Projectile>().damage = Random.Range(minDamage, maxDamage + 1);
+            ball.GetComponent<Projectile>().damageType = damageType;
         }
         if (onShootParticles != null)
         {

@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
         }
         set { }
     }
+    public GameObject cam;
+
+    public GameObject deathParticles;
 
     /*nápady na to jak by to mohlo být
     static public float damageMultiplier=1;
@@ -122,22 +125,26 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int startingHP = 20;
+
     void Start() {
         //  player = this.gameObject;
         rbody = GetComponent<Rigidbody2D>();
         equip = MenuController.equipManager;
+        if (equip == null) equip = new EquipManager();
         ArmorItem armor=((ArmorItem)equip.EquippedItems.Find(i => i.itemType == ItemType.Armor));
         if (armor != null) GetComponent<PlayerMovement>().playerMovementReduction = armor.movementSpeedReduction; 
 
         //vychozi hodnoty (ze zacatku hlavne pro ucely testovani)
         Name = "Player";
-        MaxHP = 50+equip.AllStats["MaxHP"];
+        MaxHP = Difficulties.PlayerHealth(startingHP);
+        if(equip!=null) MaxHP+=equip.AllStats["MaxHP"]+((armor==null)?0:armor.AdditionalHP);
         HP = MaxHP; 
         Armor = 0;
         Regeneration = 0;
-        shieldDechargeRate = (10 * defaultShieldDechargeRate) / (10 + equip.AllStats["ShieldBoost"]);
+        if (equip != null){ shieldDechargeRate = (10 * defaultShieldDechargeRate) / (10 + equip.AllStats["ShieldBoost"]);
         SetArmor();
-        SetRegeneration();
+        SetRegeneration();}
 
         if (MenuController.playerProgress.playerName == "Filip") filip.SetActive(true);
 	}
@@ -189,6 +196,7 @@ public class Player : MonoBehaviour
         if (heal <= 0) //heal nemuze byt zaporny
             Debug.Log("Heal je " + heal.ToString() + ", je to správně?", this);
         else
+            Messager.ShowMessage(heal.ToString(), transform.position, Color.green);
             HP = HP + heal;
     }
 
@@ -196,15 +204,19 @@ public class Player : MonoBehaviour
     /// Hrac obdrzi poskozeni, ktere muze byt snizeno o jeho brneni.
     /// </summary>
     /// <param name="damage">obdrzene poskozeni</param>
-    public void GetDamage(int damage)
+    public void GetDamage(Damager damage)
     {
         //hrac vzdy obdrzi alespon jeden bod zraneni bez ohledu na hodnotu brneni
-        int realDamage= Mathf.Max(1, damage - Armor);
+        int realDamage= Mathf.Max(1, damage.value - Armor);
         HP -= realDamage;
-        Debug.Log("Hrac dostal "+damage.ToString()+" damage");
+       // Debug.Log("Hrac dostal "+damage.ToString()+" damage");
         Messager.ShowMessage(realDamage.ToString(), transform.position, Color.red);
+        // cam.transform.GetChild(0)
         if (HP <= 0)
             Die();
+        else {
+            LevelController.levelController.AberrationEffect();
+        }
     }
 
     //TODO - lehce provizorni
@@ -214,6 +226,7 @@ public class Player : MonoBehaviour
     private void Die()
     {
         LevelController.levelController.PlayerDied();
+        if(deathParticles!=null) Instantiate(deathParticles, transform.position, transform.rotation);
         this.gameObject.SetActive(false);    
     }
 
@@ -227,7 +240,7 @@ public class Player : MonoBehaviour
         if (armor == null)
             Armor = 0;
         else
-            Armor = ((ArmorItem)(armor)).armor * (100 + equip.AllStats["ArmorMultiplicative"]) / 100 + equip.AllStats["ArmorAdditive"];
+            Armor = ((ArmorItem)(armor)).Armor * (100 + equip.AllStats["ArmorMultiplicative"]) / 100 + equip.AllStats["ArmorAdditive"];
     }
 
     /// <summary>

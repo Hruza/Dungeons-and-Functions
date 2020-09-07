@@ -15,25 +15,23 @@ MonoBehaviour:
   levelName: Test
   progressID: 0
   lootAfterFinish: 1
-  isSecret: 0
+  isSecret: 1
   difficulty: 8
   enemies:
-  - count: 3
-    enemyProperties: {fileID: 11400000, guid: f1e26f0594b35ae41ad6e825a316a272, type: 2}
   - count: 1
-    enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
+    enemyProperties: {fileID: 11400000, guid: cfe1f04ef746e144d96e445970fd9320, type: 2}
   roomCount: 1
+  advantageFactor: 0
   generatorPreset: 0
   roomConnections: 1
+  preset: 0
+  bossRoom: {fileID: 0}
+  enemiesPerWave: 0
+  bossEnemies: []
   loot: []
   secretRooms:
   - type: 0
     unlockedLevel: 
     loot: []
-  - type: 0
-    unlockedLevel: 
-    loot: []
-  - type: 0
-    unlockedLevel: 
-    loot: []
+    room: {fileID: 0}
   spawnEnemiesInCenter: 0

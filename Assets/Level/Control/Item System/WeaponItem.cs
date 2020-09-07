@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 [System.Serializable]
@@ -8,90 +9,121 @@ public class WeaponItem : Item
     /// <summary>
     /// typ zbraně
     /// </summary>
-    public WeaponType weaponType;
+    public WeaponType weaponType
+    {
+        get
+        {
+            return ((WeaponPattern)pattern).weaponType;
+        }
+    }
+    /// <summary>
+    /// typ poškození zbraně
+    /// </summary>
+    public Damager.DamageType damageType
+    {
+        get
+        {
+            return ((WeaponPattern)pattern).damageType;
+        }
+    }
     /// <summary>
     /// minimální poškození zbraně
     /// </summary>
-    public int minDamage;
+    private int minDamage;
+    public int MinDamage
+    {
+        get
+        {
+            return minDamage + (quality == Quality.C ? ((WeaponPattern)pattern).damageUpgrade : 0);
+        }
+        set
+        {
+            minDamage = value;
+        }
+
+    }
     /// <summary>
     /// maximální poškození zbraně
     /// </summary>
-    public int maxDamage;
+    private int maxDamage;
+    public int MaxDamage
+    {
+        get {
+            return maxDamage + (quality == Quality.C ? ((WeaponPattern)pattern).damageUpgrade : 0);
+        }
+        set {
+            maxDamage = value;
+        }
+
+    }
     /// <summary>
     /// rychlost útoku zbraně
     /// </summary>
-    public int attackSpeed;
+    public int attackSpeed {
+        get {
+            return ((WeaponPattern)pattern).attackSpeed + (quality == Quality.C ? ((WeaponPattern)pattern).speedUpgrade : 0);
+        }
+    }
     /// <summary>
     /// game object zbraně
     /// </summary>
-    public GameObject weaponGameObject;
+    public GameObject weaponGameObject
+    {
+        get
+        {
+            return ((WeaponPattern)pattern).gameObject;
+        }
+    }
 
     public WeaponItem() : base()
     {
     }
 
-    public static WeaponItem Generate(Item item)
+    public WeaponItem(Item item)
     {
-        //vygenerování náhodného vzoru
-        WeaponPattern.AllWeaponPatterns = WeaponPattern.AllWeaponPatterns.Shuffle();
-        var pattern = WeaponPattern.AllWeaponPatterns.Find(w => (w.lowerItemLevel <= item.itemLevel && w.upperItemLevel >= item.itemLevel));
+        itemType = ItemType.Weapon;
+        itemStats = item.itemStats;
+        quality = item.quality;
 
-        if (pattern == null)
-        {
-            Debug.Log("Neexistuje zbraň s daným item levelem.");
-            return null;
-        }
-        else
-        {
-            return Generate(item, pattern);
-        }
+        //přiřazení vlastností, které vycházejí ze vzoru
+        pattern = item.pattern;
+        MinDamage = ((WeaponItem)item).minDamage;
+        MaxDamage = ((WeaponItem)item).maxDamage;
     }
 
-    public static WeaponItem Generate(Item item,WeaponPattern pattern,bool noStats=false) { 
+    public static WeaponItem Generate(WeaponPattern pattern,bool noStats=false) {
         //přiřazení vlastností, které mají všechny předměty společné
         WeaponItem weapon = new WeaponItem
         {
-            itemLevel = item.itemLevel,
-            rarity = item.rarity,
-            quality = item.quality,
             itemType = ItemType.Weapon,
             itemStats = new Stat[0],
+            quality = Quality.Basic,
 
             //přiřazení vlastností, které vycházejí ze vzoru
-            attackSpeed = pattern.attackSpeed,
-            sprite = pattern.sprite,
-            itemName = pattern.name,
-            weaponType = pattern.weaponType,
-            weaponGameObject = pattern.gameObject,
-            minDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1),
-            maxDamage = item.itemLevel * pattern.damageIncrementPerLevel + Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1)
+            pattern = pattern,
+            MinDamage = Random.Range(pattern.lowerMinDamage, pattern.upperMinDamage + 1),
+            MaxDamage = Random.Range(pattern.lowerMaxDamage, pattern.upperMaxDamage + 1)
         };
         
-        if(!noStats)weapon.GenerateStats();
 
         return weapon;
     }
 
     public static WeaponItem Generate(SaveWeapon save)
     {
-        WeaponPattern pattern = WeaponPattern.AllWeaponPatterns.Find(x => x.name == save.ItemName);
+        WeaponPattern pattern = WeaponPattern.AllWeaponPatterns.Find(x => x.itemName == save.ItemName);
+        if (pattern == null) return null;
         //přiřazení vlastností, které jsou uložené
         WeaponItem weapon = new WeaponItem
         {
             itemType = ItemType.Weapon,
-            itemLevel = save.ItemLevel,
-            rarity = save.ItemRarity,
+            pattern = pattern,
             quality = save.ItemQuality,
-            minDamage = save.MinDamage,
-            maxDamage = save.MaxDamage,
+            MinDamage =Mathf.Min(save.MinDamage+pattern.lowerMinDamage,pattern.upperMinDamage),
+            MaxDamage = Mathf.Min(save.MaxDamage+pattern.upperMaxDamage,pattern.upperMaxDamage),
             itemStats = save.ItemStats,
 
             //přiřazení vlastností, které vycházejí ze vzoru
-            attackSpeed = pattern.attackSpeed,
-            sprite = pattern.sprite,
-            itemName = pattern.name,
-            weaponType = pattern.weaponType,
-            weaponGameObject = pattern.gameObject
         };
 
         return weapon;
@@ -103,7 +135,7 @@ public class WeaponItem : Item
     /// <returns>rozsah poškození</returns>
     public int Range()
     {
-        return maxDamage - minDamage;
+        return MaxDamage - MinDamage;
     }
 
     public int GetStat(string name)
@@ -118,7 +150,7 @@ public class WeaponItem : Item
 
     public int TotalMinDamage( EquipManager equip)
     {
-        return minDamage * (100 + (equip.AllStats["DamageMultiplicative"]) +  GetStat("DamageMultiplicative")) / 100 + equip.AllStats["DamageAdditive"]+GetStat("DamageAdditive");
+        return MinDamage * (100 + (equip.AllStats["DamageMultiplicative"]) +  GetStat("DamageMultiplicative")) / 100 + equip.AllStats["DamageAdditive"]+GetStat("DamageAdditive");
     }
 
     public int TotalAttackSpeed(EquipManager equip)

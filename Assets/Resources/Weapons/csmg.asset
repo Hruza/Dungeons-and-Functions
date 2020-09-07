@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
   m_Name: csmg
   m_EditorClassIdentifier: 
-  name: C.S.M.G.
-  lowerItemLevel: 10000
-  upperItemLevel: 10000
+  itemName: C.S.M.G.
+  obtainableAsDrop: 0
+  level: 4
+  rarity: 3
   sprite: {fileID: 21300000, guid: 94ace3d6301828f41bbe06c7cc7baddd, type: 3}
   itemComment: Cute Seal Machine Gun
   isStarting: 0
-  fixedRarity: 1
-  fixedRarityValue: 3
+  upgrade: {fileID: 0}
   weaponType: 1
-  lowerMinDamage: 1
-  upperMinDamage: 2
-  lowerMaxDamage: 3
-  upperMaxDamage: 5
-  damageIncrementPerLevel: 2
+  damageType: 0
+  lowerMinDamage: 5
+  upperMinDamage: 6
+  lowerMaxDamage: 7
+  upperMaxDamage: 8
   attackSpeed: 50
   gameObject: {fileID: 4466194430588224100, guid: 9b4b94dc1b4b20b4bad8460bb17c5a46,
     type: 3}
+  damageUpgrade: 0
+  speedUpgrade: 5

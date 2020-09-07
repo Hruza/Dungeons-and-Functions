@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public enum InteractableType {exit,treasure };
+    public enum InteractableType {exit,treasure, heal };
+    public int healAmount;
     public InteractableType type;
-
+    public GameObject onDestroyParticles;
     public SecretRoom Secret {
         get {
             return secret;
         }
         set {
-            type = InteractableType.treasure;
             secret = value;
         }
     }
@@ -46,8 +46,13 @@ public class Interactable : MonoBehaviour
             case InteractableType.exit:
                 LevelController.LevelSuccesfulyExit();
                 break;
+            case InteractableType.heal:
+                Player.player.GetComponent<Player>().Heal(healAmount);
+                if (onDestroyParticles != null)
+                    Destroy(Instantiate(onDestroyParticles, transform.position, transform.rotation), 5f);
+                Destroy(this.gameObject);
+                break;
             case InteractableType.treasure:
-                LevelController.secrets.Add(Secret);
                 switch (Secret.type)
                 {
                     case SecretRoomType.extraRandomItem:
@@ -62,7 +67,10 @@ public class Interactable : MonoBehaviour
                     default:
                         break;
                 }
+                if(onDestroyParticles!=null)
+                    Destroy(Instantiate(onDestroyParticles, transform.position,transform.rotation),5f);
                 Destroy(this.gameObject);
+                LevelController.secrets.Add(Secret);
                 break;
             default:
                 break;

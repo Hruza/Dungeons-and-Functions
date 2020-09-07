@@ -46,6 +46,8 @@ MonoBehaviour:
   minDamage: 1
   maxDamage: 1
   attackSpeed: 0
+  controller: {fileID: 0}
+  damageType: 0
   velocity: 10
   projectile: {fileID: 5833570703180412478, guid: 3626d329c53e27f4f83bae3d21bda24d,
     type: 3}
@@ -53,6 +55,6 @@ MonoBehaviour:
     type: 3}
   autoFire: 0
   spread: 30
-  projectilesPerShot: 7
+  projectilesPerShot: 5
   uniformSpread: 1
   offset: 0.5

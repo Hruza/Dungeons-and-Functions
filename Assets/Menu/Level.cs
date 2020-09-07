@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [System.Serializable]
 public class EnemyBundle {
@@ -32,7 +33,7 @@ public class EnemyBundle {
             }
             pos += bundle.count;
         }
-        if (shuffle) {
+        if (shuffle&& totalCount>1) {
             for (int i = 0; i < 500; i++)
             {
                 int a = Random.Range(0,totalCount);
@@ -71,14 +72,47 @@ public class Level : ScriptableObject
     /// Enemies v levelu
     /// </summary>
     public EnemyBundle[] enemies;
+
+    public List<EnemyProperties> EnemyTypes {
+        get {
+            List<EnemyProperties> output = new List<EnemyProperties>();
+            foreach (EnemyBundle bundle in enemies)
+            {
+                if (!output.Contains(bundle.enemyProperties)) {
+                    output.Add(bundle.enemyProperties);
+                }
+            }
+            if (bossRoom)
+                foreach (EnemyBundle bundle in bossEnemies)
+                {
+                    if (!output.Contains(bundle.enemyProperties))
+                    {
+                        output.Add(bundle.enemyProperties);
+                    }
+                }
+            output.Sort((x, y) => x.orderID.CompareTo(y.orderID));
+            return output;
+        }
+
+    }
     /// <summary>
     /// Pocet mistnosi
     /// </summary>
     public int roomCount=1;
 
+    public int advantageFactor = 0;
+
     public LevelGenerator.GeneratorPreset generatorPreset = LevelGenerator.GeneratorPreset.normal;
 
     public LevelGenerator.RoomConnectionPreset roomConnections =LevelGenerator.RoomConnectionPreset.addShortUnillAll;
+
+    public GeneratorV2.GeneratorPreset preset = GeneratorV2.GeneratorPreset.normal;
+
+    public GameObject bossRoom;
+
+    public int enemiesPerWave=5;
+
+    public EnemyBundle[] bossEnemies;
 
     public ItemPattern[] loot;
 
@@ -93,11 +127,12 @@ public class Level : ScriptableObject
     }
 }
 
-public enum SecretRoomType{ extraRandomItem , unlockLevel, extraItem };
+public enum SecretRoomType{ extraRandomItem , unlockLevel, extraItem, heal };
 
 [System.Serializable]
 public class SecretRoom {
     public SecretRoomType type = SecretRoomType.extraRandomItem;
     public string unlockedLevel;
     public ItemPattern[] loot;
+    public GameObject room;
 }

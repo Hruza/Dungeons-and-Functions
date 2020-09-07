@@ -16,17 +16,28 @@ MonoBehaviour:
   progressID: 8
   lootAfterFinish: 1
   isSecret: 0
-  difficulty: 5
+  difficulty: 3
   enemies:
   - count: 3
     enemyProperties: {fileID: 11400000, guid: cfe1f04ef746e144d96e445970fd9320, type: 2}
-  - count: 3
+  - count: 2
     enemyProperties: {fileID: 11400000, guid: 6332b0d129534f8489148475a250bdc9, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: d164ba2bf44dd6a4dbe5549d00d5ab73, type: 2}
+  - count: 2
+    enemyProperties: {fileID: 11400000, guid: be440bb653d7f9240bf85fbd502b0dfc, type: 2}
   roomCount: 4
+  advantageFactor: 0
   generatorPreset: 0
   roomConnections: 2
+  preset: 0
+  bossRoom: {fileID: 0}
+  enemiesPerWave: 0
+  bossEnemies: []
   loot: []
   secretRooms:
   - type: 0
     unlockedLevel: 
     loot: []
+    room: {fileID: 3362167600122864025, guid: 386aa6b1fcef5f940ae76d62b2530b30, type: 3}
+  spawnEnemiesInCenter: 0

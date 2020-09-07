@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,27 +13,37 @@ public class SavePanel : MonoBehaviour
 
     public InputField playerNameField;
 
+    public TMP_Dropdown dropdown;
+
     public Text errorText;
 
     public void Show(PlayerProgress[] players) {
+        bool unlocked = false;
         if (buttons == null) buttons = new List<GameObject>();
         for (int i = 0; i < players.Length; i++)
         {
             if (buttons.Count <= i)
             {
                 buttons.Add((GameObject)Instantiate(buttonPrefab, transform));
-                buttons[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(10, -10-i * 80);
-                GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,20+i*80);
+                //GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,20+i*80);
                 buttons[i].GetComponent<PlayerButton>().savePanel = this;
             }
             buttons[i].GetComponent<PlayerButton>().Progress = players[i];
+            if (players[i].difficulty == PlayerProgress.Difficulty.fields
+               || (players[i].difficulty == PlayerProgress.Difficulty.nerd && players[i].ProgressLevel >= 15)
+                ) {
+                unlocked = true;
+            }
         }
         for (int i = players.Length; i < buttons.Count;)
         {
             Destroy(buttons[i]);
             buttons.RemoveAt(i);
         }
-
+        if (unlocked && dropdown.options.Count<5) {
+            TMP_Dropdown.OptionData data= new TMP_Dropdown.OptionData("Fields Medal Winner");
+            dropdown.options.Add(data);
+        }
     }
 
     public void ChoosePlayer(PlayerProgress player) {
@@ -53,7 +65,7 @@ public class SavePanel : MonoBehaviour
     public void NewPlayer() {
         if (IsValidName(playerNameField.text)) {
             errorText.text = "";
-            MenuController.menuController.NewPlayer(playerNameField.text);
+            MenuController.menuController.NewPlayer(playerNameField.text,(PlayerProgress.Difficulty)dropdown.value);
         }
         else {
             errorText.text = "Error. Not a valid name.";

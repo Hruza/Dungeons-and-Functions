@@ -8,111 +8,77 @@ public class ArmorItem : Item
     /// <summary>
     /// brnění
     /// </summary>
-    public int armor;
+    private int armor;
+    public int Armor {
+        get {
+            return armor + (quality == Quality.C ? ((ArmorPattern)pattern).armorUpgrade : 0);
+        }
+        set {
+            armor = value;
+        }
+    }
+
+    public int AdditionalHP
+    {
+        get
+        {
+            return ((ArmorPattern)pattern).additionalHP + (quality == Quality.C ? ((ArmorPattern)pattern).HPUpgrade : 0);
+        }
+    }
+
     /// <summary>
     /// zpomalení hráče
     /// </summary>
-    public int movementSpeedReduction;
+    public int movementSpeedReduction {
+        get {
+            return ((ArmorPattern)pattern).movementSpeedReduction + (quality == Quality.C ? ((ArmorPattern)pattern).speedUpgrade : 0); ;
+        }
+    }
 
     public ArmorItem() : base()
     {
     }
 
-    public ArmorItem(Item item)
+    public ArmorItem(Item item) : base()
     {
-        itemLevel = item.itemLevel;
-        rarity = item.rarity;
-        quality = item.quality;
-        itemType = ItemType.Armor;
+            pattern = item.pattern;
+            quality = item.quality;
+            itemType = ItemType.Armor;
+            itemStats = item.itemStats;
+        Armor = ((ArmorItem)item).armor;
     }
 
-    public static ArmorItem Generate(Item item)
-    {
-        //vygenerování náhodného vzoru
-        ArmorPattern.AllArmorPatterns = ArmorPattern.AllArmorPatterns.Shuffle();
-        var pattern = ArmorPattern.AllArmorPatterns.Find(w => (w.lowerItemLevel <= item.itemLevel && w.upperItemLevel >= item.itemLevel));
-
-        if (pattern == null)
-        {
-            Debug.Log("Neexistuje brnění s daným item levelem.");
-            return null;
-        }
-
-        ArmorItem armor = Generate(item, pattern);
-
-        return armor;
-    }
-
-    public static ArmorItem Generate(Item item, ArmorPattern pattern,bool noStats=false)
+    public static ArmorItem Generate( ArmorPattern pattern,bool noStats=false)
     {
         //přiřazení vlastností, které mají všechny předměty společné
         ArmorItem armor = new ArmorItem
         {
-            itemLevel = item.itemLevel,
-            rarity = item.rarity,
-            quality = item.quality,
+            pattern=pattern,
+            quality = Quality.Basic,
             itemType = ItemType.Armor,
             itemStats = new Stat[0],
-
-            //přiřazení vlastností, které vycházejí ze vzoru
-            itemName = pattern.name,
-            sprite = pattern.sprite,
-            movementSpeedReduction = pattern.movementSpeedReduction,
-            armor = item.itemLevel * pattern.armorIncrementPerLevel + Random.Range(pattern.lowerArmor, pattern.upperArmor + 1)
+            Armor = Random.Range(pattern.lowerArmor, pattern.upperArmor + 1)
         };
-
-        //vylepšení brnění v případě, že má vyšší kvalitu
-        if (armor.quality == Quality.C)
-        {
-            armor.Upgrade();
-            armor.quality = Quality.C;
-        }
-
-        //vylepšení brnění v případě, že má vyšší raritu
-        if (armor.rarity == Rarity.Rare)
-            armor.armor = (int)(armor.armor * rarityUpgrade);
-        if (armor.rarity == Rarity.Unique)
-            armor.armor = (int)(armor.armor * qualityUpgrade * qualityUpgrade);
-
-        if(!noStats) armor.GenerateStats();
 
         return armor;
     }
 
     public static ArmorItem Generate(SaveArmor save)
     {
-        ArmorPattern pattern = ArmorPattern.AllArmorPatterns.Find(x => x.name == save.ItemName);
+        ArmorPattern pattern = ArmorPattern.AllArmorPatterns.Find(x => x.itemName == save.ItemName);
+
+        if (pattern == null) return null;
         //přiřazení vlastností, které jsou uložené
         ArmorItem armor = new ArmorItem
         {
+            pattern = pattern,
             itemType = ItemType.Armor,
-            itemLevel = save.ItemLevel,
-            rarity = save.ItemRarity,
             quality = save.ItemQuality,
-            armor = save.Armor,
+            Armor = Mathf.Min(save.Armor+pattern.lowerArmor,pattern.upperArmor),
             itemStats = save.ItemStats,
-
-            //přiřazení vlastností, které vycházejí ze vzoru
-            sprite = pattern.sprite,
-            itemName = pattern.name,
-            movementSpeedReduction = pattern.movementSpeedReduction,
         };
 
         return armor;
     }
 
-    /// <summary>
-    /// Metoda sloužící pro vylepšování brnění (zvyšuje kvalitu).
-    /// </summary>
-    public void Upgrade()
-    {
-        if (quality == Quality.Csharp)
-        {
-            Debug.Log("Pokoušíš se vylepšit předmět, který už vylepšit nelze.");
-            return;
-        }
-        quality = Extensions.NextElement(quality);
-
-        armor = (int)(armor * qualityUpgrade);
-    }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Linq;
 using System.IO;
 using System;
@@ -18,10 +19,11 @@ public class MenuController : MonoBehaviour
 
     static public EquipManager equipManager;
 
-    public ItemInventory itemInventory;
-    public GameObject mainMenu;
-    public GameObject levelExitMenu;
-    public GameObject savesMenu;
+    public GameObject[] pages;
+    public int startingPage=1;
+    public int afterLevelPage=2;
+
+    public enum MenuPage { main,saves,exit,inventory,levels}
 
     /// <summary>
     /// Reference na kartu levelu
@@ -59,33 +61,39 @@ public class MenuController : MonoBehaviour
     {
         menuController = this;
         //ToDo:load progress
-
+        foreach (GameObject pageObj in pages)
+        {
+            pageObj.SetActive(false);
+        }
 
         if (startedFirst)
         {
             WeaponPattern.AllWeaponPatterns = Resources.LoadAll<WeaponPattern>("Weapons").ToList<WeaponPattern>();
             ArmorPattern.AllArmorPatterns = Resources.LoadAll<ArmorPattern>("Armors").ToList<ArmorPattern>();
             StatPattern.AllStatPatterns = Resources.LoadAll<StatPattern>("Stats").ToList<StatPattern>();
+            newPage = startingPage;
             LoadProgress();
             equipManager = new EquipManager();
             startedFirst = false;
         }
         else
         {
-            savesMenu.SetActive(false);
-            levelExitMenu.SetActive(true);
-            levelExitMenu.GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
+            newPage = afterLevelPage;
+            pages[afterLevelPage].SetActive(true);
+            pages[afterLevelPage].GetComponent<LevelExit>().LevelEnded(lastLevelCompleted);
             InitializeLevels();
-            itemInventory.ReloadInventory();
         }
+        SwitchPage();
     }
 
     private void PlayerSelected() {
-        savesMenu.SetActive(false);
-        mainMenu.SetActive(true);
+        SetPage(0);
         InitializeLevels();
         equipManager = new EquipManager();
-        itemInventory.ReloadInventory();
+    }
+
+    private void SetDifficulty() { 
+        
     }
 
     public void ChoosePlayer(PlayerProgress progress) {
@@ -93,8 +101,8 @@ public class MenuController : MonoBehaviour
         PlayerSelected();
     }
 
-    public void NewPlayer(string playerName) {
-        playerProgress = new PlayerProgress(true, playerName);
+    public void NewPlayer(string playerName,PlayerProgress.Difficulty difficulty) {
+        playerProgress = new PlayerProgress(true,difficulty, playerName);
         PlayerSelected();
     }
 
@@ -160,13 +168,117 @@ public class MenuController : MonoBehaviour
         savePanel.Show(players);
     }
 
-    /// <summary>
-    /// Vymaže progres hráče, tedy vytvoří novou instanci proměnné playerProgress.
-    /// </summary>
-    public void ClearProgress()
+    public GameObject commandLine;
+    private bool CLactive = false;
+
+    public void Update()
     {
-        playerProgress = new PlayerProgress(true);
-        ChangeLevel(0);
-        itemInventory.ReloadInventory();
+        if (Input.GetKeyDown(KeyCode.P)) {
+            CLactive = !CLactive;
+            commandLine.SetActive(CLactive);
+        }
+    }
+
+    public void getcommand() {
+        Command(commandLine.GetComponent<InputField>().text);
+    }
+
+    public void Command(string com) {
+        try
+        {
+            string result = "";
+            string[] sep = new String[1] { " " };
+            string[] part = com.Split(sep,StringSplitOptions.RemoveEmptyEntries);
+            switch (part[0])
+            {
+                case "give":
+                    if (part.Length < 3 || part.Length > 4) result = "wrong arguments";
+                    else
+                    {
+                        int level = int.Parse(part[1]);
+                        int score = int.Parse(part[2]);
+                        int count = 1;
+                        if (part.Length == 4) count = int.Parse(part[3]);
+                        List<Item> reward = new List<Item>();
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            reward.Add(Item.Generate(level, score));
+                        }
+
+                        MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
+                        MenuController.playerProgress.weapons.AddRange(reward.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
+                        result = count.ToString() + " item(s) given";
+                    }
+                    break;
+                case "givew":
+                    if (part.Length < 3 || part.Length > 4) result = "wrong arguments";
+                    else
+                    {
+                        int level = int.Parse(part[1]);
+                        int score = int.Parse(part[2]);
+                        int count = 1;
+                        if (part.Length == 3) count = int.Parse(part[3]);
+                        List<Item> reward = new List<Item>();
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            reward.Add(WeaponItem.Generate(level, score));
+                        }
+
+                        MenuController.playerProgress.armors.AddRange(reward.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
+                        MenuController.playerProgress.weapons.AddRange(reward.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
+                        result = count.ToString() + " item(s) given";
+                    }
+                    break;
+                case "giveall":
+                    List<Item> rewards = new List<Item>();
+                    foreach (ItemPattern item in WeaponPattern.AllWeaponPatterns)
+                    {
+                        rewards.Add(Item.Generate(item));
+                    }
+                    foreach (ItemPattern item in ArmorPattern.AllArmorPatterns)
+                    {
+                        rewards.Add(Item.Generate(item));
+                    }
+                    MenuController.playerProgress.armors.AddRange(rewards.FindAll(x => x.itemType == ItemType.Armor).ConvertAll(x => (ArmorItem)x));
+                    MenuController.playerProgress.weapons.AddRange(rewards.FindAll(x => x.itemType == ItemType.Weapon).ConvertAll(x => (WeaponItem)x));
+                    result = "All items given";
+
+                    break;
+                case "setlevel":
+                    if (part.Length > 2) result = "wrong arguments";
+                    else
+                    {
+                        playerProgress.ProgressLevel = int.Parse(part[1]);
+                        result = "progress level was set to " + int.Parse(part[1]).ToString();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            commandLine.GetComponent<InputField>().text = result;
+        }
+        catch (Exception)
+        {
+            commandLine.GetComponent<InputField>().text="UKNOWN COMMAND";
+        }
+    }
+
+    private int currentPage=0;
+    public void SetPage(int page) {
+        if ((currentPage != page) && page < pages.Length)
+        {
+            newPage = page;
+            LeanTween.alphaCanvas(pages[currentPage].GetComponent<CanvasGroup>(), 0, 0.25f).setOnComplete(SwitchPage);
+        }
+    }
+    private int newPage;
+    private void SwitchPage() {
+        pages[currentPage].SetActive(false);
+        pages[newPage].GetComponent<CanvasGroup>().alpha = 0;
+        pages[newPage].SetActive(true);
+        LeanTween.alphaCanvas(pages[newPage].GetComponent<CanvasGroup>(), 1, 0.25f);
+        currentPage = newPage;
     }
 }

@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd7349a6ec1eaf429b60c5e492a9d32, type: 3}
   m_Name: binary_tree
   m_EditorClassIdentifier: 
-  name: Binary tree
-  lowerItemLevel: 2
-  upperItemLevel: 5
+  itemName: Binary tree
+  obtainableAsDrop: 1
+  level: 2
+  rarity: 2
   sprite: {fileID: 21300000, guid: e06d790da85303d42b7052662b741610, type: 3}
   itemComment: Programmers use it a lot, can be useful.
   isStarting: 0
-  fixedRarity: 0
-  fixedRarityValue: 0
+  upgrade: {fileID: 11400000, guid: ad978e4b521999d4992478f07383cf97, type: 2}
   weaponType: 1
-  lowerMinDamage: 5
-  upperMinDamage: 6
-  lowerMaxDamage: 9
-  upperMaxDamage: 12
-  damageIncrementPerLevel: 2
+  damageType: 0
+  lowerMinDamage: 2
+  upperMinDamage: 3
+  lowerMaxDamage: 4
+  upperMaxDamage: 6
   attackSpeed: 20
   gameObject: {fileID: 1854209793912833320, guid: 280d349a1f5224342b53c6479f7514a2,
     type: 3}
+  damageUpgrade: 1
+  speedUpgrade: 2

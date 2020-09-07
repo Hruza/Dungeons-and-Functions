@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8430b7fc38646fd48a60d30020c089c2, type: 3}
-  m_Name: Hsuit
+  m_Name: HSuit
   m_EditorClassIdentifier: 
-  name: "Hostiva\u0159 Suit"
-  lowerItemLevel: 8
-  upperItemLevel: 10000
-  sprite: {fileID: 21300000, guid: c533a58b44e846146884b503fd805d5d, type: 3}
-  itemComment: You have to run!...or do some other sport
+  itemName: "Hostiva\u0159 Set"
+  obtainableAsDrop: 0
+  level: 4
+  rarity: 2
+  sprite: {fileID: 21300000, guid: 10733ea103a4f434ea940b1f7a38d9ed, type: 3}
+  itemComment: Is it worth the travel?
   isStarting: 0
-  fixedRarity: 0
-  fixedRarityValue: 0
-  lowerArmor: 0
-  upperArmor: 0
-  movementSpeedReduction: -5
-  armorIncrementPerLevel: 2
+  upgrade: {fileID: 0}
+  lowerArmor: 2
+  upperArmor: 2
+  movementSpeedReduction: -3
+  additionalHP: 0
+  armorUpgrade: 0
+  HPUpgrade: 0
+  speedUpgrade: -1

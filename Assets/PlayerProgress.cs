@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.ProBuilder;
 
 [System.Serializable]
 public class PlayerProgress
@@ -28,6 +29,29 @@ public class PlayerProgress
 
     public List<string> unlockedLevels;
 
+    public enum Difficulty { abacus,lazy,student, nerd, fields}
+
+    public static string DiffToString(Difficulty diff) {
+        switch (diff)
+        {
+            case Difficulty.abacus:
+                return "Baby with Abacus";
+            case Difficulty.lazy:
+                return "Lazy Student";
+           case Difficulty.student:
+                return "Average Student";
+            case Difficulty.nerd:
+                return "Nerdy Student";
+            case Difficulty.fields:
+                return "Fields Medal Winner";
+            default:
+                break;
+        }
+        return "";
+    }
+
+    public Difficulty difficulty; 
+
     public int ProgressLevel { get; set; }
 
     public void LevelCompleted(int difficulty)
@@ -37,10 +61,10 @@ public class PlayerProgress
     }
 
     public PlayerProgress() {
-
+        difficulty = Difficulty.student;
     }
 
-    public PlayerProgress(bool starting,string playerName="hra")
+    public PlayerProgress(bool starting,Difficulty difficulty,string playerName="hra")
     {
         this.playerName = playerName;
         if (starting)
@@ -49,6 +73,7 @@ public class PlayerProgress
             saveArmors = new SaveArmor[0];
             unlockedLevels = new List<string>();
             ProgressLevel = 0;
+            this.difficulty = difficulty;
             SetStartingItems();
         }
     }
@@ -58,52 +83,32 @@ public class PlayerProgress
             armors = new List<ArmorItem>();
             weapons = new List<WeaponItem>();
 
-            Item itemMold = new Item
-            {
-                itemLevel = 1,
-                rarity = Rarity.Common,
-                quality = Quality.Basic,
-                itemType = ItemType.Armor,
-                itemStats = new Stat[0],
-            };
             List<ArmorPattern> armorPatterns = ArmorPattern.AllArmorPatterns.FindAll(x => x.isStarting);
             List<WeaponPattern> weaponPatterns = WeaponPattern.AllWeaponPatterns.FindAll(x => x.isStarting);
 
             foreach (ArmorPattern pattern in armorPatterns)
             {
-                armors.Add(ArmorItem.Generate(itemMold,pattern,true));
+                armors.Add(ArmorItem.Generate(pattern));
             }
 
             foreach (WeaponPattern pattern in weaponPatterns)
             {
-                weapons.Add(WeaponItem.Generate(itemMold, pattern,true));
+                weapons.Add(WeaponItem.Generate( pattern));
             }
     }
 
     private void UpdateSaves()
     {
-        int i = 0;
-        if (saveWeapons.Length < weapons.Count)
-        {
-            i = saveWeapons.Length;
-            Array.Resize<SaveWeapon>(ref saveWeapons, weapons.Count);
-            while (i < weapons.Count)
-            {
-                SaveWeapon newSave = new SaveWeapon(weapons[i]);
-                saveWeapons[i] = newSave;
-                i++;
-            }
+        saveWeapons = new SaveWeapon[weapons.Count];
+        for (int i = 0; i < weapons.Count; i++)
+        { 
+            saveWeapons[i] =  new SaveWeapon(weapons[i]);
         }
-        if (saveArmors.Length < armors.Count)
+
+        saveArmors = new SaveArmor[armors.Count];
+        for (int i = 0; i < armors.Count; i++)
         {
-            i = saveArmors.Length;
-            Array.Resize<SaveArmor>(ref saveArmors, armors.Count);
-            while (i < armors.Count)
-            {
-                SaveArmor newSave = new SaveArmor(armors[i]);
-                saveArmors[i]=newSave;
-                i++;
-            }
+            saveArmors[i] = new SaveArmor(armors[i]);
         }
     }
 
@@ -111,12 +116,14 @@ public class PlayerProgress
     {
         weapons = new List<WeaponItem>();
         foreach (SaveWeapon weapon in saveWeapons) {
-            weapons.Add(weapon.GetItem());
+            WeaponItem wp = weapon.GetItem();
+            if(wp!=null) weapons.Add(wp);
         }
         armors = new List<ArmorItem>();
         foreach (SaveArmor armor in saveArmors)
         {
-            armors.Add(armor.GetItem());
+            ArmorItem arm = armor.GetItem();
+            if(arm!=null)armors.Add(arm);
         }
     }
 
@@ -188,6 +195,38 @@ public class PlayerProgress
             }
         }
         return players.ToArray();
+    }
+
+    public void AddItem(Item item) {
+        switch (item.itemType)
+        {
+            case ItemType.Armor:
+                armors.Add((ArmorItem)item);
+                break;
+            case ItemType.Weapon:
+                weapons.Add((WeaponItem)item);
+                break;
+            case ItemType.none:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void DestroyItem(Item item) {
+        switch (item.itemType)
+        {
+            case ItemType.Armor:
+                armors.Remove((ArmorItem)item);
+                break;
+            case ItemType.Weapon:
+                weapons.Remove((WeaponItem)item);
+                break;
+            case ItemType.none:
+                break;
+            default:
+                break;
+        }
     }
 }
 
