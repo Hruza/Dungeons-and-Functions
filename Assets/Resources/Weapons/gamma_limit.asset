@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: gamma_limit
   m_EditorClassIdentifier: 
   itemName: Gamma
-  obtainableAsDrop: 1
+  obtainableAsDrop: 0
   level: 4
   rarity: 1
   sprite: {fileID: 21300000, guid: 16359c8f6532ca7438ab3b1a0e0624cc, type: 3}

@@ -85,4 +85,8 @@ public class MinimapDrawer : Graphic
         }
         this.SetVerticesDirty();
     }
+
+    public void ChangeColor(Vector2Int pos,Color col) {
+        tiles[tiles.FindIndex(x => x.pos == pos)]= new MinimapTile { color=col,pos=pos,type= tiles.Find(x => x.pos == pos).type };
+    }
 }

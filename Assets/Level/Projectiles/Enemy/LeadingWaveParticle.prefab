@@ -199,7 +199,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 3
+  m_Intensity: 1
   m_Range: 1.2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -367,10 +367,14 @@ MonoBehaviour:
     type: 3}
   knockback: 0
   perpKnockback: 0
+  inflictSlowness: 0
+  slownessModifier: 1
+  slownessTime: 1
   onDestroyParticles: {fileID: 8383171363793807810, guid: e65f5441824fc0b4dbc9ddf9c71225e7,
     type: 3}
+  particleColorByProjectileColor: 0
   destroyFirst: {fileID: 0}
-  destroyTime: 5
+  destroyTime: 3
   explosion: 0
   explosionDamageMultiplicator: 1
   explosionRadius: 2
@@ -404,6 +408,8 @@ MonoBehaviour:
   detectionDistance: 6
   detectionAngle: 60
   turningSpeed: 1
+  timeToStart: 2
+  returnOnCollision: 1
 --- !u!1 &8926007466113887282
 GameObject:
   m_ObjectHideFlags: 0

@@ -134,5 +134,4 @@ public class SecretRoom {
     public SecretRoomType type = SecretRoomType.extraRandomItem;
     public string unlockedLevel;
     public ItemPattern[] loot;
-    public GameObject room;
 }

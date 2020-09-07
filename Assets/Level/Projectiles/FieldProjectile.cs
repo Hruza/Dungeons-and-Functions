@@ -12,6 +12,9 @@ public class FieldProjectile : Projectile
 
     static GameObject instance;
 
+    public int minDamage;
+    public int maxDamage;
+
     protected override void Start()
     {
         collided = new Dictionary<Collider2D, float>();
@@ -20,6 +23,8 @@ public class FieldProjectile : Projectile
             Destroy(instance);
         }
         instance = gameObject;
+        minDamage = damage;
+        Random.Range(minDamage, maxDamage + 1);
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -30,11 +35,13 @@ public class FieldProjectile : Projectile
             if (Time.time - t > damageIntervals)
             {
                 collided[other] = Time.time;
+                damage= Random.Range(minDamage, maxDamage + 1); 
                 Collided(other);
             }
         }
         else {
             collided.Add(other,Time.time);
+            damage= Random.Range(minDamage, maxDamage + 1); 
             Collided(other);
         }
     }

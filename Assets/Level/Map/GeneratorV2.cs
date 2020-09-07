@@ -18,6 +18,13 @@ public class GeneratorV2 : MonoBehaviour
 
     public float additionalPathsCoefficient = 1.2f;
 
+
+    [Header("Secret Rooms")]
+    public GameObject extraLoot;
+    public GameObject unlockLevel;
+    public GameObject extraItem;
+    public GameObject heal;
+
     private void Start()
     {
         if (debugMode) {
@@ -203,10 +210,29 @@ public class GeneratorV2 : MonoBehaviour
 
             Vector2Int chosenDir = possibleDirs[Random.Range(0, possibleDirs.Count)];
 
-            PlaceTile(secretWallTile, closest + chosenDir, TileType.secret);
-            PlaceTile(secret.room, closest + (2 * chosenDir), TileType.secret);
-            Map[(closest + (2 * chosenDir)).x, (closest + (2 * chosenDir)).y].tile.GetComponentInChildren<Interactable>().Secret = secret;   
+            if (SecretRoomOfType(secret.type) != null)
+            {
+                PlaceTile(secretWallTile, closest + chosenDir, TileType.secret);
+                PlaceTile(SecretRoomOfType(secret.type), closest + (2 * chosenDir), TileType.secret);
+                Map[(closest + (2 * chosenDir)).x, (closest + (2 * chosenDir)).y].tile.GetComponentInChildren<Interactable>().Secret = secret;
+            }
             break;
+        }
+    }
+
+    private GameObject SecretRoomOfType( SecretRoomType roomType ) {
+        switch (roomType)
+        {
+            case SecretRoomType.extraRandomItem:
+                return extraLoot;
+            case SecretRoomType.unlockLevel:
+                return unlockLevel;
+            case SecretRoomType.extraItem:
+                return extraItem;
+            case SecretRoomType.heal:
+                return heal;
+            default:
+                return null;
         }
     }
 
@@ -563,7 +589,10 @@ public class GeneratorV2 : MonoBehaviour
     }
     private MapTile[,] map;
     private Vector2 anchor;
+
+    [HideInInspector]
     public int mapWidth;
+    [HideInInspector]
     public int mapHeight;
 
     private void CreateMap(List<RoomInfo> rooms) {
@@ -588,9 +617,14 @@ public class GeneratorV2 : MonoBehaviour
         }
     }
 
+    public static Vector2Int exitPos;
+
     void RoomToMap(RoomInfo room,int roomIndex) {
         Vector2Int roomLB = Real2Map(room.info.Map.Map2Real(Vector2Int.zero,room.gameObject.transform.position));
         room.doors = new List<Vector2Int>();
+        if (room.info.roomType == RoomPrefab.RoomType.exit) { 
+            exitPos= new Vector2Int(roomLB.x + 1, roomLB.y + 1);
+        }
         for (int i = 0; i < room.info.Map.width; i++)
         {
             for (int j = 0; j < room.info.Map.height; j++)

@@ -182,6 +182,7 @@ public class EnemyAI : MonoBehaviour
         if (ball.GetComponent<EnemyAI>() != null)
         {
             ball.GetComponent<EnemyAI>().Initialize(enemy);
+            ball.GetComponent<EnemyAI>().score = 0;
         }
         return ball;
     }

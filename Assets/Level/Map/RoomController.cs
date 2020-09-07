@@ -155,6 +155,7 @@ public class RoomController : MonoBehaviour {
                 StartCoroutine(CheckCleared());
             }
             else {
+                LevelController.levelController.RoomCleared();
                 foreach (GameObject onClearObject in triggerOnClear)
                 {
                     onClearObject.SendMessage("OnClear");

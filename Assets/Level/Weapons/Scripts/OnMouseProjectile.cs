@@ -47,7 +47,12 @@ public class OnMouseProjectile : Weapon
             }
             GameObject ball = (GameObject)Instantiate(projectile, mouse+spreadVector, Quaternion.identity);
             ball.GetComponent<Rigidbody2D>().velocity = transform.rotation*velocity;
-            ball.GetComponent<Projectile>().damage = Random.Range(minDamage, maxDamage + 1);
+            if (ball.GetComponent<FieldProjectile>() != null) {
+                ball.GetComponent<FieldProjectile>().damage = minDamage;
+                ball.GetComponent<FieldProjectile>().maxDamage = maxDamage;
+            }
+            else
+                ball.GetComponent<Projectile>().damage = Random.Range(minDamage, maxDamage + 1);
             ball.GetComponent<Projectile>().damageType = damageType;
         }
         if (onShootParticles != null)

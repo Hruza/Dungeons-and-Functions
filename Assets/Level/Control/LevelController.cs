@@ -25,6 +25,8 @@ public class LevelController : MonoBehaviour {
     private Level level;
     private static int score;
 
+    public static bool exitOpen=false;
+
     private static int Score {
         get {
             return score;
@@ -50,6 +52,7 @@ public class LevelController : MonoBehaviour {
         Score += LevelResults.roomClearedScore;
         if (clearedRoomCount >= roomCountToClear)
         {
+            exitOpen = true;
             Interactable.exit.SetInteractable();
         }
     }
@@ -75,6 +78,7 @@ public class LevelController : MonoBehaviour {
 
     //Setup of level
     void Start() {
+        exitOpen = false;
         Player.player.GetComponent<PlayerMovement>().enabled = false;
         LeanTween.moveZ(Player.player, 0, 2f).setFrom(-30).setEaseOutBounce();
         Vignette vignette;

@@ -11,6 +11,8 @@ public class Minimap : MonoBehaviour
     public Color floorColor;
     public Color pathColor;
     public Color secretColor;
+    public Color closedExitColor;
+    public Color openExitColor;
 
     public static Minimap minimap
     {
@@ -110,6 +112,9 @@ public class Minimap : MonoBehaviour
                     break;
                 default:
                     break;
+            }
+            if (pos == GeneratorV2.exitPos) {
+                col = LevelController.exitOpen ? openExitColor : closedExitColor;
             }
 
             toDraw.Add(new MinimapDrawer.MinimapTile { pos=current,color=col,type=tileType});

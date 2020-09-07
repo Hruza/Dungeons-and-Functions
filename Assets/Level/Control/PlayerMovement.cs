@@ -41,6 +41,11 @@ public class PlayerMovement : MonoBehaviour {
 
         float enter = 0.0f;
 
+        RaycastHit hit;
+        if (Physics.Raycast(ray,out hit)) {
+            Debug.Log(hit.collider.gameObject);
+        }
+
         if (plane.Raycast(ray, out enter))
         {
             return ray.GetPoint(enter);
@@ -93,7 +98,6 @@ public class PlayerMovement : MonoBehaviour {
 
     private Vector2 additionalForce;
     public void AddForce(Vector2 force) {
-        Debug.Log(force);
         additionalForce += force;
     }
 

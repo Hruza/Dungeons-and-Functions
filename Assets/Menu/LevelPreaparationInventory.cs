@@ -22,13 +22,25 @@ public class LevelPreaparationInventory : ItemInventory
         progress = MenuController.playerProgress;
         for (int i = 0; i < 2; i++)
         {
+            if (MenuController.equipManager.EquippedWeapons[i] == null || MenuController.playerProgress.weapons.Contains(MenuController.equipManager.EquippedWeapons[i]))
+            {
                 selectedWeapon[i] = MenuController.equipManager.EquippedWeapons[i];
                 weapon[i].CarriedItem = (Item)selectedWeapon[i];
+            }
+            else {
+                weapon[i].CarriedItem = null;
+            }
         }
         if (MenuController.equipManager.EquippedItems.Count > 0)
         {
-            selectedArmor = MenuController.equipManager.EquippedItems[0];
-            armor.CarriedItem = selectedArmor;
+            if (MenuController.equipManager.EquippedItems[0] == null || (MenuController.playerProgress.armors.Contains((ArmorItem)MenuController.equipManager.EquippedItems[0])))
+            {
+                selectedArmor = MenuController.equipManager.EquippedItems[0];
+                armor.CarriedItem = selectedArmor;
+            }
+            else {
+                armor.CarriedItem = null;
+            }
         }
         else
         {

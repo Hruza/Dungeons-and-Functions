@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  lifetime: 20
+  lifetime: 5
   projectileType: 0
   damageType: 0
   damageEnemies: 1
@@ -171,7 +171,7 @@ MonoBehaviour:
   perpKnockback: 0
   inflictSlowness: 1
   slownessModifier: 0.6
-  slownessTime: 0.25
+  slownessTime: 0.3
   onDestroyParticles: {fileID: 0}
   particleColorByProjectileColor: 0
   destroyFirst: {fileID: 0}
@@ -211,7 +211,7 @@ MonoBehaviour:
   turningSpeed: 1
   timeToStart: 2
   returnOnCollision: 1
-  damageIntervals: 0.2
+  damageIntervals: 0.25
   onlyOneInstance: 1
 --- !u!95 &2897580915629849635
 Animator:

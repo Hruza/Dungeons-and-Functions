@@ -22,11 +22,11 @@ MonoBehaviour:
   upgrade: {fileID: 0}
   weaponType: 1
   damageType: 0
-  lowerMinDamage: 1
+  lowerMinDamage: 2
   upperMinDamage: 3
   lowerMaxDamage: 5
   upperMaxDamage: 5
-  attackSpeed: 10
+  attackSpeed: 4
   gameObject: {fileID: 1305185763060277112, guid: adf80b60827ee964488ca17e10bb3746,
     type: 3}
   damageUpgrade: 2
