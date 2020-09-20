@@ -24,9 +24,9 @@ public class ArmorPattern : ItemPattern
     [Header("Quality upgrade")]
     public int armorUpgrade;
 
-    public int HPUpgrade;
-
     public int speedUpgrade;
+
+    public int HPUpgrade;
 
     /// <summary>
     /// databáze všech možných brnění

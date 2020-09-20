@@ -173,7 +173,8 @@ public class MenuController : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tilde)) {
+        if (Input.GetKeyDown(KeyCode.BackQuote))
+        {
             CLactive = !CLactive;
             commandLine.SetActive(CLactive);
         }

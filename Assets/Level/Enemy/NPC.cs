@@ -316,7 +316,7 @@ public abstract class NPC : MonoBehaviour
     }
 
     //================================================Other====================================================
-    
+
     //ToDo: jinak!
     /*
     public GameObject messageText;   
@@ -340,12 +340,13 @@ public abstract class NPC : MonoBehaviour
     /// <summary>
     /// smrt nepritele
     /// </summary>
+    public float particlesTime = 3;
     protected void Die()
     {
         if (onDeathParticles != null)
         {
             GameObject particles = (GameObject)Instantiate(onDeathParticles, transform.position, transform.rotation);
-            Destroy(particles, 3);
+            Destroy(particles, particlesTime);
         }
         Destroy(this.gameObject);
     }

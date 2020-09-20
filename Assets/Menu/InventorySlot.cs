@@ -67,6 +67,12 @@ public class InventorySlot : TooltipButton,IDropHandler,IBeginDragHandler,IDragH
         ShowTooltip(CarriedItem);
     }
 
+    public void DoubleClick() {
+        LevelPreaparationInventory.instance.EquipItem(item);
+    }
+
+    private float lastClick=0;
+
     public void Click()
     {
         if (triggerOnClick != null) {
@@ -77,7 +83,16 @@ public class InventorySlot : TooltipButton,IDropHandler,IBeginDragHandler,IDragH
             CarriedItem = null;
             itemInventory.ItemRemoved(this,CarriedItem);
         }
-    }
+        if (Time.time - lastClick < 0.5f)
+        {
+            lastClick = 0;
+            DoubleClick();
+        }
+        else
+        {
+            lastClick = Time.time;
+        }
+     }
 
     public GameObject dragedItemObject;
 
@@ -87,12 +102,16 @@ public class InventorySlot : TooltipButton,IDropHandler,IBeginDragHandler,IDragH
     }
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log(DragedItem.dragedItem);
-        if (DragedItem.dragedItem != null && (onlyContained==ItemType.none || onlyContained== DragedItem.dragedItem.itemType) && container ) {
-            itemInventory.ItemAdded(this, DragedItem.dragedItem);
-            CarriedItem = DragedItem.dragedItem;
+        SetItem(DragedItem.dragedItem);
+    }
+
+    public void SetItem(Item item) {
+        if (item != null && (onlyContained == ItemType.none || onlyContained == item.itemType) && container)
+        {
+            itemInventory.ItemAdded(this, item);
+            CarriedItem = item;
             ClickEffect();
-        }  
+        }
     }
 
     public void ClickEffect() {

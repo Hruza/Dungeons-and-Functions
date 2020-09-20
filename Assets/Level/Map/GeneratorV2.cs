@@ -717,7 +717,7 @@ public class GeneratorV2 : MonoBehaviour
             right = Mathf.Max(right, rm.gameObject.transform.position.x + (gridSize * rm.info.Width));
             top = Mathf.Max(top, rm.gameObject.transform.position.y + (gridSize * rm.info.Width));
         }
-        return new Vector4(left,bottom,right,top);
+        return new Vector4(left-gridSize,bottom- gridSize, right+ gridSize, top+ gridSize);
     }
 
     public Vector2 Gridify(Vector2 pos) {
@@ -821,7 +821,7 @@ public class GeneratorV2 : MonoBehaviour
         //correcting
         Vector2 enemySpaceCounts;
         int random;
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 200; i++)
         {
             enemySpaceCounts = CountEnemySpace(selected, possible);
             random = Random.Range(0,roomCount);

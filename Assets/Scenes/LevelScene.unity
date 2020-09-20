@@ -3215,7 +3215,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 15, y: 15}
+  m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1361947772
 MonoBehaviour:
@@ -3230,15 +3230,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.7607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.87058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d80a990b42fb33e4c973bf21391cfd5e, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 9234d5a77a9e1124dacd9051912af7ef, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4441,8 +4441,10 @@ MonoBehaviour:
   drawer: {fileID: 1158733307}
   wallColor: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 1}
   floorColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  pathColor: {r: 0.5849056, g: 0.013794942, b: 0.013794942, a: 1}
-  secretColor: {r: 0.7735849, g: 0, b: 0, a: 1}
+  pathColor: {r: 0.35359558, g: 0.5177654, b: 0.5471698, a: 1}
+  secretColor: {r: 0.17412782, g: 0.27374044, b: 0.4056604, a: 1}
+  closedExitColor: {r: 0.72300005, g: 0.08525943, b: 0.08525943, a: 1}
+  openExitColor: {r: 0.23069492, g: 0.5943396, b: 0.17101279, a: 1}
 --- !u!331 &1830410411
 SpriteMask:
   m_ObjectHideFlags: 0

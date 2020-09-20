@@ -37,10 +37,19 @@ public class Minimap : MonoBehaviour
 
     RectTransform rt;
 
+    bool exitOpen = false;
+
     void Update()
     {
+
         if (rt != null)
         {
+            if (LevelController.exitOpen && !exitOpen) {
+                exitOpen = true;
+                if (discovered[GeneratorV2.exitPos.x, GeneratorV2.exitPos.y]) {
+                    drawer.ChangeColor(GeneratorV2.exitPos, openExitColor);
+                }
+            }
             if (NewTile() && !discovered[lastTile.x, lastTile.y])
             {
                 DiscoverNeighborhood(lastTile);
@@ -113,7 +122,7 @@ public class Minimap : MonoBehaviour
                 default:
                     break;
             }
-            if (pos == GeneratorV2.exitPos) {
+            if (current == GeneratorV2.exitPos) {
                 col = LevelController.exitOpen ? openExitColor : closedExitColor;
             }
 

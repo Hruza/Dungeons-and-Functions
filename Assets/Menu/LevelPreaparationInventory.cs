@@ -14,9 +14,11 @@ public class LevelPreaparationInventory : ItemInventory
     private WeaponItem[] selectedWeapon;
     private Item selectedArmor;
 
+    static public LevelPreaparationInventory instance;
 
     public override void ReloadInventory()
     {
+        instance = this;
         base.ReloadInventory();
         selectedWeapon = new WeaponItem[2];
         progress = MenuController.playerProgress;
@@ -46,6 +48,29 @@ public class LevelPreaparationInventory : ItemInventory
         {
             selectedArmor = null;
             armor.CarriedItem = null;
+        }
+    }
+
+    public void EquipItem(Item item) {
+        switch (item.itemType)
+        {
+            case ItemType.Armor:
+                armor.SetItem(item);
+                break;
+            case ItemType.Weapon:
+                if (selectedWeapon[0] != null || (selectedWeapon[0] != null  && selectedWeapon[1] != null))
+                {
+                    weapon[1].SetItem(item);
+                }
+                else
+                {
+                    weapon[0].SetItem(item);
+                }
+                break;
+            case ItemType.none:
+                break;
+            default:
+                break;
         }
     }
 

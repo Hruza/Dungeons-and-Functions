@@ -25,5 +25,5 @@ MonoBehaviour:
   movementSpeedReduction: 1
   additionalHP: 25
   armorUpgrade: 2
-  HPUpgrade: 0
-  speedUpgrade: 10
+  speedUpgrade: 0
+  HPUpgrade: 10

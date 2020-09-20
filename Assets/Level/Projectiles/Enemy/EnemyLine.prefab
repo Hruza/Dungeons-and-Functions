@@ -104,7 +104,6 @@ GameObject:
   - component: {fileID: 7328677441849275647}
   - component: {fileID: 7336618745149546037}
   - component: {fileID: 7247516899687748783}
-  - component: {fileID: 7247542712627599711}
   m_Layer: 13
   m_Name: EnemyLine
   m_TagString: Untagged
@@ -184,12 +183,15 @@ MonoBehaviour:
   damageEnemies: 0
   damagePlayer: 1
   damageDestroyables: 0
-  destroyOnDamageDealt: 0
+  destroyOnDamageDealt: 1
   destroyOnAnyCollision: 0
   destroyOnWorldCollision: 0
   onDamageParticles: {fileID: 0}
   knockback: 0
   perpKnockback: 0
+  inflictSlowness: 0
+  slownessModifier: 1
+  slownessTime: 1
   onDestroyParticles: {fileID: 0}
   particleColorByProjectileColor: 0
   destroyFirst: {fileID: 0}
@@ -229,19 +231,6 @@ MonoBehaviour:
   turningSpeed: 1
   timeToStart: 2
   returnOnCollision: 1
---- !u!114 &7247542712627599711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7279045933345513403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cef26c02e7d24d4296c93706a0be54f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cislo: {fileID: 0}
 --- !u!1 &8926007466113887282
 GameObject:
   m_ObjectHideFlags: 0

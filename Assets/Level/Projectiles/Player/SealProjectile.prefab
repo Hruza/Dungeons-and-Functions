@@ -109,8 +109,12 @@ MonoBehaviour:
     type: 3}
   knockback: 0
   perpKnockback: 0
+  inflictSlowness: 0
+  slownessModifier: 1
+  slownessTime: 1
   onDestroyParticles: {fileID: 2274686839426830114, guid: f1aa214a3453ca245b058604646dfcdd,
     type: 3}
+  particleColorByProjectileColor: 0
   destroyFirst: {fileID: 6901989831944089962}
   destroyTime: 0.3
   explosion: 0
@@ -128,6 +132,8 @@ MonoBehaviour:
   detectionDistance: 6
   detectionAngle: 60
   turningSpeed: 1
+  timeToStart: 2
+  returnOnCollision: 1
 --- !u!114 &7659875950619643798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,7 +395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8948359125361271913}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.01}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 5924476498973787395}

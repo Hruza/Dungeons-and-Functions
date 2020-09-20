@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Rewards : MonoBehaviour
 {
-    public int lootForCompletion=1;
-    public int lootForCleared=1;
+    const int lootForCompletion=1;
+    const int lootForCleared=1;
 
 
     public GameObject rouletteButton;
@@ -216,6 +216,6 @@ public class Rewards : MonoBehaviour
 
     private void MoveYFrom(GameObject gobj,float to,bool makeVisible=true) {
         LeanTween.alphaCanvas(gobj.GetComponent<CanvasGroup>(), makeVisible?1:0, 1f).setFrom(makeVisible ? 0 : 1);
-        LeanTween.moveY(gobj.GetComponent<RectTransform>(), gobj.GetComponent<RectTransform>().localPosition.y, 1f).setFrom(gobj.GetComponent<RectTransform>().localPosition.y + to).setEaseOutQuad();
+        LeanTween.moveY(gobj.GetComponent<RectTransform>(), gobj.GetComponent<RectTransform>().anchoredPosition.y, 1f).setFrom(gobj.GetComponent<RectTransform>().anchoredPosition.y + to).setEaseOutQuad();
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChalkBox 1
   m_EditorClassIdentifier: 
   itemName: A Box of Colored Chalk
-  obtainableAsDrop: 1
+  obtainableAsDrop: 0
   level: 4
   rarity: 0
   sprite: {fileID: 21300000, guid: b04aaf02b8843074985f9608ba66b6b0, type: 3}

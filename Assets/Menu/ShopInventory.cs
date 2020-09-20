@@ -90,6 +90,10 @@ public class ShopInventory : ItemInventory
             return;
         }
 
+        MenuController.playerProgress.DestroyItem(sacrificing);
+
+        ReloadInventory();
+
         if (upgrading.quality == Quality.Basic)
         {
             upgrading.quality = Quality.C;
@@ -100,7 +104,6 @@ public class ShopInventory : ItemInventory
             MenuController.playerProgress.DestroyItem(upgrading);
         }
         
-        MenuController.playerProgress.DestroyItem(sacrificing);
 
         MenuController.SaveProgress();
 
