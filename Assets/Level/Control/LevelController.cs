@@ -49,6 +49,7 @@ public class LevelController : MonoBehaviour {
     public void RoomCleared()
     {
         clearedRoomCount++;
+        TutorialController.TriggerEvent("cleared");
         Score += LevelResults.roomClearedScore;
         if (clearedRoomCount >= roomCountToClear)
         {

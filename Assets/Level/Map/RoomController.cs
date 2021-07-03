@@ -150,6 +150,7 @@ public class RoomController : MonoBehaviour {
             entered = true;
             if (enemiesToSpawn.Count > 0)
             {
+                TutorialController.TriggerEvent("entered");
                 SpawnEnemies();
 
                 StartCoroutine(CheckCleared());

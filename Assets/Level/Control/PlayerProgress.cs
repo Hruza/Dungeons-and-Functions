@@ -4,7 +4,6 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine.ProBuilder;
 
 [System.Serializable]
 public class PlayerProgress

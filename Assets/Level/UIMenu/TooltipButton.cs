@@ -29,6 +29,16 @@ public abstract class TooltipButton : MonoBehaviour, IPointerEnterHandler,IPoint
         }
     }
 
+    protected void ShowTooltip(string text)
+    {
+        if ( tooltip == null && showTooltip)
+        {
+            tooltip = (GameObject)Instantiate(tooltipPrefab, Input.mousePosition, tooltipPrefab.transform.rotation, transform.parent.parent);
+            tooltip.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
+            StartCoroutine(MoveTooltip());
+        }
+    }
+
     public IEnumerator MoveTooltip()
     {
         while (tooltip != null)

@@ -61,7 +61,9 @@ public class GeneratorV2 : MonoBehaviour
 
     public enum GeneratorPreset { normal,boss };
 
-    public void Generate(Level level) {
+    public void Generate(Level level,int seed =-1) {
+        if (seed != -1) Random.InitState(seed);
+        
         //load rooms
         EnemyProperties[] enemies = EnemyBundle.Merge(level.enemies);
         List<RoomInfo> selectedRooms = PickRooms(level.roomCount,enemies.Length,level.advantageFactor);
